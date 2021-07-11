@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
-import { Table } from '../components';
+import { CardsTable } from '../components';
 
 const Home = () => {
   return (
@@ -33,7 +33,7 @@ const Home = () => {
       </Head>
 
       <main className={styles.main}>
-        <Table />
+        <CardsTable />
       </main>
 
       <footer className={styles.footer}>
