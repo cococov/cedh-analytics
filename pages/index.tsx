@@ -44,7 +44,7 @@ const Home = () => {
         >
           Made with ❤ by {' '}
           <span className={styles.logo}>
-            <Image src="/carrot_compost.png" alt="Carrot Compost logo" width={72} height={72} />
+            <Image src="/carrot_compost.svg" alt="Carrot Compost logo" width={72} height={72} />
           </span>
         </a>
       </footer>
