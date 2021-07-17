@@ -1,6 +1,6 @@
 import MaterialTable, { Action } from 'material-table';
 
-interface Table<RowData extends object> {
+interface ITable<RowData extends object> {
   columns: object[];
   data: object[];
   title?: string;
@@ -15,7 +15,7 @@ interface Table<RowData extends object> {
   isLoading: boolean;
 }
 
-const Table: React.FC<Table<{}>> = ({
+const Table: React.FC<ITable<{}>> = ({
   columns,
   data,
   title,

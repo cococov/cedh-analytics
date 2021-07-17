@@ -2812,6 +2812,11 @@ raf@^3.4.1:
   dependencies:
     performance-now "^2.1.0"
 
+rambda@^6.8.2:
+  version "6.8.2"
+  resolved "https://registry.yarnpkg.com/rambda/-/rambda-6.8.2.tgz#77c54b8fea19b8d1c93b1244028569ca9a3c1779"
+  integrity sha512-fIVr6nuqfHfJTguthGsWF930DkNq/ENraeSpYBj1kYvO/ieacux7rj2NW27JwwFrllFJwXkLpGyFMz99EwCJ3Q==
+
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/randombytes/-/randombytes-2.1.0.tgz#df6f84372f0270dc65cdf6291349ab7a473d4f2a"

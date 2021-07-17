@@ -1,3 +1,4 @@
+import styles from '../../styles/Home.module.css';
 import React, { useState, useEffect } from 'react';
 import Table from '../table';
 
@@ -32,17 +33,19 @@ const CardsTable: React.FC = () => {
   }, [])
 
   return (
-    <Table
-      columns={columns}
-      data={cards}
-      defaultNumberOfRows={5}
-      isLoading={isLoading}
-      canExport={true}
-      canExportAllData={true}
-      canFilter={false}
-      rowHeight="5rem"
-      title="cEDH Cards"
-    />
+    <span className={styles['cards-table']}>
+      <Table
+        columns={columns}
+        data={cards}
+        defaultNumberOfRows={5}
+        isLoading={isLoading}
+        canExport={true}
+        canExportAllData={true}
+        canFilter={false}
+        rowHeight="5rem"
+        title="cEDH Cards"
+      />
+    </span>
   )
 }
 
