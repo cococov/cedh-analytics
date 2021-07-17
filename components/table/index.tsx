@@ -13,6 +13,11 @@ interface ITable<RowData extends object> {
   withGrouping?: boolean;
   actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
   isLoading: boolean;
+  onRowClick?: (
+    event?: React.MouseEvent,
+    rowData?: RowData,
+    toggleDetailPanel?: (panelIndex?: number) => void
+  ) => void;
 }
 
 const Table: React.FC<ITable<{}>> = ({
@@ -28,6 +33,7 @@ const Table: React.FC<ITable<{}>> = ({
   withGrouping,
   actions,
   isLoading,
+  onRowClick,
 }) => {
 
   return (
@@ -53,6 +59,7 @@ const Table: React.FC<ITable<{}>> = ({
           fontWeight: 700,
         },
       }}
+      onRowClick={onRowClick}
     />
   );
 };

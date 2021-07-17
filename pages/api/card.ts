@@ -26,20 +26,34 @@ const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) => {
-  const rawResult = await fetch(`https://api.scryfall.com/cards/named?exact=${req.query.card}`);
+  const rawResult = await fetch(`https://api.scryfall.com/cards/named?exact=${req.query.name}`);
   const result = await rawResult.json();
+  const rawAllPrints = await fetch(result['prints_search_uri']);
+  const allPrints = await rawAllPrints.json();
+
+  const print = allPrints['data'].reduce(
+    (accumulator: any, current: any) => {
+      if(!current['prices']['usd']) return accumulator;
+      if(current['border_color'] === 'gold') return accumulator;
+      const currentPrice = parseFloat(current['prices']['usd']);
+      const accumulatedPrice = parseFloat(accumulator['prices']['usd']);
+      if(currentPrice >= accumulatedPrice) return accumulator;
+      return current;
+    },
+    result
+  );
 
   res.status(200).json({
-    type: result['type_line'],
-    mana_cost: result['mana_cost'],
-    cmc: result['cmc'],
-    color_identity: result['color_identity'],
-    rarity: result['rarity'],
-    text: result['oracle_text'],
-    gathererId: result['multiverse_ids'][0],
-    averagePrice: result['prices']['usd'],
-    isReservedList: result['reserved'],
-    image_uris: result['image_uris'],
+    type: print['type_line'],
+    mana_cost: print['mana_cost'],
+    cmc: print['cmc'],
+    color_identity: print['color_identity'],
+    rarity: print['rarity'],
+    text: print['oracle_text'],
+    gathererId: print['multiverse_ids'][0],
+    averagePrice: print['prices']['usd'],
+    isReservedList: print['reserved'],
+    image_uris: print['image_uris'],
   });
 }
 

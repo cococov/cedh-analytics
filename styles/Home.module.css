@@ -23,7 +23,7 @@
 }
 
 .cards-table {
-  flex          : 3;
+  flex: 3;
 }
 
 @media (min-width: 600px) {
@@ -40,12 +40,39 @@
 }
 
 .card-info {
-  display         : flex;
-  flex            : 1;
+  display: flex;
+}
+
+.card-info .card-text-container {
+  margin-left : 2rem;
+  margin-right: 2rem;
+}
+
+.card-info .card-name {
+  text-align: left;
+}
+
+.card-info .card-type {
+  text-align: left;
 }
 
 .card-info .card-text {
-  margin-left: 2rem;
+  text-align  : justify;
+  text-justify: inter-word;
+}
+
+.card-info .card-image {
+  align-self: center;
+  flex-shrink: 0;
+  max-width  : 256;
+  max-height : 366;
+  min-width  : 256;
+  min-height : 366;
+}
+
+.card-info .card-gatherer {
+  color      : #422273;
+  font-weight: 700;
 }
 
 .footer {

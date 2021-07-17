@@ -1,10 +1,12 @@
 import styles from '../../styles/Home.module.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Table from '../table';
+import { CardContext } from '../../contexts';
 
 const CardsTable: React.FC = () => {
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { handleChangeCard } = useContext(CardContext);
   const columns = [
     {
       title: 'Name',
@@ -14,8 +16,8 @@ const CardsTable: React.FC = () => {
       editable: 'never',
     },
     {
-      title: 'Occurences',
-      field: 'Occurences',
+      title: 'Occurrences',
+      field: 'Occurrences',
       grouping: false,
       filtering: false,
       editable: 'never',
@@ -44,6 +46,7 @@ const CardsTable: React.FC = () => {
         canFilter={false}
         rowHeight="5rem"
         title="cEDH Cards"
+        onRowClick={(_e, rowData) => handleChangeCard((rowData || {})['Card Name'])}
       />
     </span>
   )
