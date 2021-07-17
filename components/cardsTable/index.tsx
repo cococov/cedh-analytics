@@ -46,7 +46,7 @@ const CardsTable: React.FC = () => {
         canFilter={false}
         rowHeight="5rem"
         title="cEDH Cards"
-        onRowClick={(_e, rowData) => handleChangeCard((rowData || {})['Card Name'])}
+        onRowClick={(_e, rowData = {}) => handleChangeCard(rowData['Card Name'])}
       />
     </span>
   )

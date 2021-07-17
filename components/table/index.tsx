@@ -1,8 +1,12 @@
 import MaterialTable, { Action } from 'material-table';
 
-interface ITable<RowData extends object> {
+interface RowData {
+  'Card Name'?: string;
+  'Occurrences'?: string;
+}
+interface ITable {
   columns: object[];
-  data: object[];
+  data: RowData[];
   title?: string;
   defaultNumberOfRows?: number;
   rowHeight?: string;
@@ -20,7 +24,7 @@ interface ITable<RowData extends object> {
   ) => void;
 }
 
-const Table: React.FC<ITable<{}>> = ({
+const Table: React.FC<ITable> = ({
   columns,
   data,
   title,
