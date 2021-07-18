@@ -100,6 +100,12 @@
   flex: 3;
 }
 
+@media (max-width: 1500px) {
+  .left-span {
+    flex: none;
+  }
+}
+
 .cards-table {
   flex: 3;
 }
@@ -163,6 +169,34 @@
 .card-info .card-gatherer {
   color      : #422273;
   font-weight: 700;
+}
+
+@media (max-width: 1725px) {
+  @media (min-width: 1500px) {
+    .card-info {
+      flex-wrap: wrap;
+    }
+
+    .card-info .card-text-container {
+      margin-left : 0;
+      margin-right: 2rem;
+    }
+
+    .card-info .card-image {
+      margin-left: 2rem;
+    }
+  }
+
+  @media (max-width: 1203px) {
+    .card-info {
+      flex-wrap: wrap;
+    }
+
+    .card-info .card-text-container {
+      margin-left : 0;
+      margin-right: 2rem;
+    }
+  }
 }
 
 /* Base Layout */

@@ -2,11 +2,14 @@ import styles from '../../styles/Home.module.css';
 import React, { useState, useEffect, useContext } from 'react';
 import Table from '../table';
 import { CardContext } from '../../contexts';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 const CardsTable: React.FC = () => {
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { handleChangeCard } = useContext(CardContext);
+  const [renderKey, setRenderKey] = useState(`render-${Math.random()}`)
+  const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
   const columns = [
     {
       title: 'Name',
@@ -34,12 +37,17 @@ const CardsTable: React.FC = () => {
     fetchCards();
   }, [])
 
+  useEffect(() => {
+    setRenderKey(`render-${Math.random()}`);
+  }, [isLargeVerticalScreen])
+
   return (
     <span className={styles['cards-table']}>
       <Table
+        key={renderKey}
         columns={columns}
         data={cards}
-        defaultNumberOfRows={5}
+        defaultNumberOfRows={isLargeVerticalScreen ? 10 : 5}
         isLoading={isLoading}
         canExport={true}
         canExportAllData={true}
