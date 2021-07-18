@@ -5,6 +5,10 @@ const Header: React.FC = () => {
     <Head>
       <title>cEDH Card List</title>
       <meta name="description" content="All cEDH cards." />
+      <meta property="og:image" content="/carrot_compost.svg" />
+      <meta property="og:title" content="cEDH Analytics" />
+      <meta property="og:url" content="https://cedh-analytics.vercel.app/" />
+      <meta property="og:description" content="All cEDH cards." />
       <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
       <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
       <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
@@ -22,6 +26,8 @@ const Header: React.FC = () => {
       <meta name="msapplication-TileColor" content="#ffffff" />
       <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
       <meta name="theme-color" content="#ffffff" />
+      <meta name="keywords" content="Magic, Gathering, MagicTheGathering, magicthegathering, magic, cedh, cEDH" />
+      <meta name="author" content="CoCoCov"></meta>
       <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
