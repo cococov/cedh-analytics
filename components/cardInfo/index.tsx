@@ -4,6 +4,7 @@ import styles from '../../styles/Home.module.css';
 import Tooltip from '@material-ui/core/Tooltip';
 import { CardContext } from '../../contexts';
 import Loading from '../loading';
+import { split } from 'rambda';
 
 
 const CardInfo: React.FC = () => {
@@ -30,8 +31,13 @@ const CardInfo: React.FC = () => {
                 <h2 className={styles['card-name']}>{selectedCard || 'Card Name'}</h2>
                 <h3 className={styles['card-type']}>{cardType || 'Type'}</h3>
                 <p className={styles['card-text']} >
-                  {cardText || 'Oracle text.'}
+                  {split('--DIVIDE--', cardText)[0] || 'Oracle text.'}
                 </p>
+                {split('--DIVIDE--', cardText).length > 1 && (
+                  <p className={styles['card-text']} >
+                    {split('--DIVIDE--', cardText)[1] || 'Oracle text.'}
+                  </p>
+                )}
                 <p>
                   <b>Average Price: </b>${averagePrice} {isReservedList &&
                     <Tooltip

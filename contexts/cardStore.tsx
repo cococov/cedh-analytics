@@ -48,10 +48,18 @@ export const CardProvider: React.FC = ({ children }) => {
       const rawResult = await fetch(`/api/card?name=${cardName}`);
       const result = await rawResult.json();
 
-      if (!!result['card_faces']) {
+      if (!!result['card_faces'] && !!result['card_faces'][0]['image_uris']) {
         setCardImage(result['card_faces'][0]['image_uris']['large']);
         setCardType(result['card_faces'][0]['type_line']);
         setCardText(result['card_faces'][0]['oracle_text']);
+      } else if (!!result['card_faces'] && !result['card_faces'][0]['image_uris']) {
+        setCardImage(result['image_uris']['large']);
+        setCardType(result['card_faces'][0]['type_line']);
+        setCardText(`\
+        ${result['card_faces'][0]['oracle_text']}
+        --DIVIDE--
+        ${result['card_faces'][1]['oracle_text']}
+        `);
       } else {
         setCardImage(result['image_uris']['large']);
         setCardType(result['type']);
