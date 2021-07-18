@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { includes } from 'rambda';
 
 type ImageUris = {
   small: string;
@@ -30,14 +31,19 @@ const handler = async (
   const result = await rawResult.json();
   const rawAllPrints = await fetch(result['prints_search_uri']);
   const allPrints = await rawAllPrints.json();
+  const GARBAGE_EDITIONS = ['Intl. Collectors’ Edition', 'Collectors’ Edition', 'Legacy Championship', 'Summer Magic / Edgar'];
 
   const print = allPrints['data'].reduce(
     (accumulator: any, current: any) => {
-      if(!current['prices']['usd']) return accumulator;
-      if(current['border_color'] === 'gold') return accumulator;
+      if (current['digital']) return accumulator;
+      if (current['oversized']) return accumulator;
+      if (current['border_color'] === 'gold') return accumulator;
+      if (includes(current['set_name'], GARBAGE_EDITIONS)) return accumulator;
+      if (!current['prices']['usd']) return accumulator;
       const currentPrice = parseFloat(current['prices']['usd']);
       const accumulatedPrice = parseFloat(accumulator['prices']['usd']);
-      if(currentPrice >= accumulatedPrice) return accumulator;
+      if (currentPrice >= accumulatedPrice) return accumulator;
+      if (current['multiverse_ids'].length === 0) return { ...current, multiverse_ids: accumulator['multiverse_ids'] }
       return current;
     },
     result
