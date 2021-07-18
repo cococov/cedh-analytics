@@ -5,7 +5,7 @@ const Header: React.FC = () => {
     <Head>
       <title>cEDH Card List</title>
       <meta name="description" content="All cEDH cards." />
-      <meta property="og:image" content="/carrot_compost.svg" />
+      <meta property="og:image" content="/carrot_compost.png" />
       <meta property="og:title" content="cEDH Analytics" />
       <meta property="og:url" content="https://cedh-analytics.vercel.app/" />
       <meta property="og:description" content="All cEDH cards." />
