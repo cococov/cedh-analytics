@@ -21,6 +21,7 @@ type Data = {
   averagePrice: string;
   isReservedList: boolean;
   image_uris: ImageUris;
+  card_faces: [object];
 }
 
 const handler = async (
@@ -60,6 +61,7 @@ const handler = async (
     averagePrice: print['prices']['usd'],
     isReservedList: print['reserved'],
     image_uris: print['image_uris'],
+    card_faces: print['card_faces'],
   });
 }
 
