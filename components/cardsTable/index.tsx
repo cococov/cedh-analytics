@@ -10,6 +10,7 @@ const CardsTable: React.FC = () => {
   const { handleChangeCard } = useContext(CardContext);
   const [renderKey, setRenderKey] = useState(`render-${Math.random()}`)
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
+  const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const columns = [
     {
       title: 'Name',
@@ -47,7 +48,7 @@ const CardsTable: React.FC = () => {
         key={renderKey}
         columns={columns}
         data={cards}
-        defaultNumberOfRows={isLargeVerticalScreen ? 10 : 5}
+        defaultNumberOfRows={(isLargeVerticalScreen || isSmallScreen) ? 10 : 5}
         isLoading={isLoading}
         canExport={true}
         canExportAllData={true}

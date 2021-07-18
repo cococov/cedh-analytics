@@ -110,7 +110,7 @@
   flex: 3;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 857px) {
   .cards-table {
     padding-left : 5rem;
     padding-right: 5rem;
@@ -123,6 +123,14 @@
   display       : flex;
   flex          : 3;
   flex-direction: column;
+}
+
+@media (max-width: 857px) {
+  .card-info-container {
+    flex: none;
+    visibility: hidden;
+    display: none;
+  }
 }
 
 .card-info {
