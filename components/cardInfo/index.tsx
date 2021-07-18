@@ -1,12 +1,22 @@
 import { useContext } from 'react';
 import Image from 'next/image';
 import styles from '../../styles/Home.module.css';
+import Tooltip from '@material-ui/core/Tooltip';
 import { CardContext } from '../../contexts';
 import Loading from '../loading';
 
 
 const CardInfo: React.FC = () => {
-  const { selectedCard, cardImage, cardType, cardText, averagePrice, gathererId, isLoading } = useContext(CardContext);
+  const {
+    selectedCard,
+    cardImage,
+    cardType,
+    cardText,
+    averagePrice,
+    gathererId,
+    isReservedList,
+    isLoading
+  } = useContext(CardContext);
   return (
     <span className={styles['card-info-container']}>
       <span className={styles['card-info']}>
@@ -22,7 +32,15 @@ const CardInfo: React.FC = () => {
                 <p className={styles['card-text']} >
                   {cardText || 'Oracle text.'}
                 </p>
-                <p><b>Average Price: </b>${averagePrice}</p>
+                <p>
+                  <b>Average Price: </b>${averagePrice} {isReservedList &&
+                    <Tooltip
+                      title="Reserved List"
+                      aria-label="Reserved List"
+                    >
+                      <span className={styles['card-reserved-list']}>💎</span>
+                    </Tooltip>}
+                </p>
                 <a
                   className={styles['card-gatherer']}
                   rel="author noopener noreferrer"

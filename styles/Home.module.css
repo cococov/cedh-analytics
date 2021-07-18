@@ -129,6 +129,10 @@
   opacity    : 30%;
 }
 
+.card-info .card-reserved-list {
+  cursor: default;
+}
+
 .card-info .card-text-container {
   margin-left : 2rem;
   margin-right: 2rem;
