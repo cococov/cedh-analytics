@@ -11,6 +11,7 @@ const DEFAULT_VALUES = {
   cardText: '',
   averagePrice: 0,
   gathererId: 0,
+  isLoading: false,
   handleChangeCard: (_cardName: string | undefined) => { }
 };
 
@@ -27,19 +28,29 @@ export const CardProvider: React.FC = ({ children }) => {
   const [cardImage, setCardImage] = useState(DEFAULT_VALUES['cardImage']);
   const [cardType, setCardType] = useState(DEFAULT_VALUES['cardType']);
   const [cardText, setCardText] = useState(DEFAULT_VALUES['cardText']);
-  const [averagePrice, setAveragePrice] = useState(DEFAULT_VALUES['averagePrice']);
   const [gathererId, setGathererId] = useState(DEFAULT_VALUES['gathererId']);
+  const [averagePrice, setAveragePrice] = useState(DEFAULT_VALUES['averagePrice']);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const requestData = async () => {
+      setIsLoading(true);
+      setCardImage(DEFAULT_VALUES['cardImage']);
+      setCardType(DEFAULT_VALUES['cardType']);
+      setCardText(DEFAULT_VALUES['cardText']);
+      setGathererId(DEFAULT_VALUES['gathererId']);
+      setAveragePrice(DEFAULT_VALUES['averagePrice']);
+
       const cardName = replace(/\s/g, '%20', selectedCard);
       const rawResult = await fetch(`/api/card?name=${cardName}`);
       const result = await rawResult.json();
+
       setCardImage(result['image_uris']['large']);
       setCardType(result['type']);
       setCardText(result['text']);
       setGathererId(result['gathererId']);
       setAveragePrice(parseFloat(result['averagePrice']));
+      setIsLoading(false);
     };
 
     !!selectedCard && requestData();
@@ -58,6 +69,7 @@ export const CardProvider: React.FC = ({ children }) => {
         cardText,
         gathererId,
         averagePrice,
+        isLoading,
         handleChangeCard,
       }}
     >
