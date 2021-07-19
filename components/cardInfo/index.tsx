@@ -39,7 +39,7 @@ const CardInfo: React.FC = () => {
                   </p>
                 )}
                 <p>
-                  <b>Average Price: </b>${averagePrice}
+                  <b>Average Price: </b>${averagePrice || 'NO_DATA'}
                 </p>
                 <a
                   className={styles['card-gatherer']}

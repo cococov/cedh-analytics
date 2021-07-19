@@ -17,9 +17,9 @@ const fetchData = async (cardName: string) => {
       if (current['oversized']) return accumulator;
       if (current['border_color'] === 'gold') return accumulator;
       if (includes(current['set_name'], GARBAGE_EDITIONS)) return accumulator;
-      if (!current['prices']['usd']) return accumulator;
-      const currentPrice = parseFloat(current['prices']['usd']);
-      const accumulatedPrice = parseFloat(accumulator['prices']['usd']);
+      if (!current['prices']['usd'] && !current['prices']['usd_foil']) return accumulator;
+      const currentPrice = !!current['prices']['usd'] ? parseFloat(current['prices']['usd']) : parseFloat(current['prices']['usd_foil']);
+      const accumulatedPrice = !!accumulator['prices']['usd'] ? parseFloat(accumulator['prices']['usd']) : parseFloat(accumulator['prices']['usd_foil']);
       if (currentPrice >= accumulatedPrice) return accumulator;
       if (current['multiverse_ids'].length === 0) return { ...current, multiverse_ids: accumulator['multiverse_ids'] }
       return current;
@@ -35,7 +35,7 @@ const fetchData = async (cardName: string) => {
     rarity: print['rarity'],
     text: print['oracle_text'],
     gathererId: print['multiverse_ids'][0],
-    averagePrice: print['prices']['usd'],
+    averagePrice: !!print['prices']['usd'] ? print['prices']['usd'] : print['prices']['usd_foil'],
     isReservedList: print['reserved'],
     image_uris: print['image_uris'],
     card_faces: print['card_faces'],
