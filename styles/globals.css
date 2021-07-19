@@ -14,3 +14,9 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* MUI override */
+
+.MuiSelect-select {
+  max-width: 5rem;
+}

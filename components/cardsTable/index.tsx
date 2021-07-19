@@ -16,37 +16,94 @@ const CardsTable: React.FC = () => {
       title: 'Name',
       field: 'cardName',
       grouping: false,
-      filtering: true,
+      filtering: false,
       editable: 'never',
+      cellStyle: {
+        minWidth: '13rem'
+      },
     },
     {
       title: 'Occurrences',
       field: 'Occurrences',
+      type: 'numeric',
+      align: 'center',
       grouping: false,
       filtering: false,
       editable: 'never',
+      searchable: false,
       defaultSort: 'desc',
     },
     {
       title: 'Type',
       field: 'typeLine',
-      grouping: true,
-      filtering: false,
+      grouping: false,
+      filtering: true,
       editable: 'never',
+      searchable: false,
+      lookup: {
+        'Artifact': 'Artifact',
+        'Land': 'Land',
+        'Instant': 'Instant',
+        'Sorcery': 'Sorcery',
+        'Enchantment': 'Enchantment',
+        'Creature': 'Creature',
+        'Planeswalker': 'Planeswalker',
+        'Sorcery // Land': 'Sorcery // Land',
+        'Instant // Land': 'Instant // Land',
+      },
+      cellStyle: {
+        minWidth: '9rem'
+      },
     },
     {
       title: 'Identity',
       field: 'colorIdentity',
-      grouping: true,
-      filtering: false,
+      align: 'center',
+      grouping: false,
+      filtering: true,
       editable: 'never',
+      searchable: false,
+      lookup: {
+        'C': 'C',
+        'U': 'U',
+        'B': 'B',
+        'R': 'R',
+        'G': 'G',
+        'W': 'W',
+        'BU': 'BU',
+        'RU': 'RU',
+        'BR': 'BR',
+        'GU': 'GU',
+        'BG': 'BG',
+        'UW': 'UW',
+        'GW': 'GW',
+        'BW': 'BW',
+        'GR': 'GR',
+        'GUW': 'GUW',
+        'RW': 'RW',
+        'BGR': 'BGR',
+        'BGRUW': 'BGRUW',
+        'BRU': 'BRU',
+        'BGU': 'BGU',
+        'BGW': 'BGW',
+        'BUW': 'BUW',
+        'BRW': 'BRW',
+        'RUW': 'RUW',
+        'GRW': 'GRW',
+        'GRUW': 'GRUW',
+        'GRU': 'GRU',
+        'BRUW': 'BRUW',
+        'BGRU': 'BGRU',
+      },
     },
     {
       title: 'Reserved List',
       field: 'reserved',
-      grouping: true,
-      filtering: false,
+      align: 'center',
+      grouping: false,
+      filtering: true,
       editable: 'never',
+      searchable: false,
       lookup: {
         'true': 'Yes',
         'false': 'No',
@@ -82,8 +139,8 @@ const CardsTable: React.FC = () => {
         isLoading={isLoading}
         canExport={true}
         canExportAllData={true}
-        canFilter={false}
-        withGrouping={true}
+        canFilter={true}
+        withGrouping={false}
         rowHeight="5rem"
         title="cEDH Cards"
         onRowClick={(_e, rowData = {}) => handleChangeCard(rowData['cardName'])}

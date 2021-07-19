@@ -20,7 +20,7 @@
   flex-wrap      : wrap;
 }
 
-@media (max-width: 857px) {
+@media (max-width: 767px) {
   .main {
     display: block;
   }
@@ -136,7 +136,7 @@
   flex-direction: column;
 }
 
-@media (max-width: 857px) {
+@media (max-width: 1170px) {
   .card-info-container {
     flex      : none;
     visibility: hidden;
@@ -190,7 +190,7 @@
   font-weight: 700;
 }
 
-@media (max-width: 1725px) {
+@media (max-width: 1860px) {
   @media (min-width: 1500px) {
     .card-info {
       flex-wrap: wrap;
@@ -206,7 +206,7 @@
     }
   }
 
-  @media (max-width: 1203px) {
+  @media (max-width: 1385px) {
     .card-info {
       flex-wrap: wrap;
     }
