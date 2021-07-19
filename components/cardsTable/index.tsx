@@ -12,7 +12,7 @@ const CardsTable: React.FC = () => {
   const [renderKey, setRenderKey] = useState(`render-${Math.random()}`)
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
-  const columns = [
+  const [columns] = useState([
     {
       title: 'Name',
       field: 'cardName',
@@ -117,7 +117,7 @@ const CardsTable: React.FC = () => {
         'false': 'No',
       },
     },
-  ];
+  ]);
 
   useEffect(() => {
     const fetchCards = async () => {
