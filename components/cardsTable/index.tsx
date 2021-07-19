@@ -1,4 +1,5 @@
 import styles from '../../styles/Home.module.css';
+import Image from 'next/image';
 import React, { useState, useEffect, useContext } from 'react';
 import Table from '../table';
 import { CardContext } from '../../contexts';
@@ -94,6 +95,13 @@ const CardsTable: React.FC = () => {
         'GRU': 'GRU',
         'BRUW': 'BRUW',
         'BGRU': 'BGRU',
+      },
+      cellStyle: {
+        minWidth: '8rem'
+      },
+      render: (rowData: any, type: any) => {
+        const value = type === 'row' ? rowData.colorIdentity : rowData;
+        return type === 'row' ? <span>{value.split('').map((icon: string) => <Image src={`/${icon}.png`} alt={icon} width={18} height={18} />)}</span> : value;
       },
     },
     {
