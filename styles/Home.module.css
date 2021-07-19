@@ -34,13 +34,15 @@
 /* MTG Loading */
 
 .mtg-loading-container {
-  display   : flex;
-  align-self: center;
+  display        : flex;
+  flex-grow      : 1;
+  align-self     : center;
+  justify-content: center;
 }
 
 .mtg-loading {
   display              : grid;
-  grid-template-columns: 45px 45px 45px 45px 45px;
+  grid-template-columns: 45px 45px 45px;
   grid-template-rows   : 45px 45px 45px;
   justify-content      : center;
   justify-items        : center;
@@ -52,7 +54,7 @@
   width        : 13px;
   height       : 12.5px;
   border-radius: 100%;
-  grid-column  : 3;
+  grid-column  : 2;
   grid-row     : 1;
   position     : relative;
   z-index      : 2;
@@ -63,7 +65,7 @@
   width        : 13px;
   height       : 12.5px;
   border-radius: 100%;
-  grid-column  : 4;
+  grid-column  : 3;
   grid-row     : 2;
   position     : relative;
   z-index      : 2;
@@ -75,7 +77,7 @@
   width        : 13px;
   height       : 12.5px;
   border-radius: 100%;
-  grid-column  : 3;
+  grid-column  : 2;
   grid-row     : 3;
   position     : relative;
   z-index      : 2;
@@ -86,7 +88,7 @@
   width        : 13px;
   height       : 12.5px;
   border-radius: 100%;
-  grid-column  : 3;
+  grid-column  : 2;
   grid-row     : 3;
   position     : relative;
   z-index      : 2;
@@ -97,7 +99,7 @@
   width        : 13px;
   height       : 12.5px;
   border-radius: 100%;
-  grid-column  : 2;
+  grid-column  : 1;
   grid-row     : 2;
   position     : relative;
   z-index      : 2;
@@ -134,6 +136,7 @@
   display       : flex;
   flex          : 3;
   flex-direction: column;
+  margin-right  : 1rem;
 }
 
 @media (max-width: 1170px) {
@@ -149,9 +152,12 @@
 }
 
 .card-info .no-card-selected {
+  flex-grow  : 1;
   align-self : center;
   margin-left: 1rem;
   opacity    : 30%;
+  text-align : center;
+  font-size  : 1.3rem;
 }
 
 .card-info .card-reserved-list {
@@ -160,12 +166,11 @@
 
 .card-info .card-reserved-list-container {
   cursor: default;
-  float: right;
+  float : right;
 }
 
 .card-info .card-text-container {
-  margin-left : 2rem;
-  margin-right: 2rem;
+  margin-left: 2rem;
 }
 
 .card-info .card-name {
@@ -182,12 +187,10 @@
 }
 
 .card-info .card-image {
-  align-self : center;
   flex-shrink: 0;
-  max-width  : 256;
-  max-height : 366;
-  min-width  : 256;
-  min-height : 366;
+  flex-grow  : 1;
+  align-self : center;
+  text-align : center;
 }
 
 .card-info .card-gatherer {
@@ -202,12 +205,7 @@
     }
 
     .card-info .card-text-container {
-      margin-left : 0;
-      margin-right: 2rem;
-    }
-
-    .card-info .card-image {
-      margin-left: 2rem;
+      margin-left: 0;
     }
   }
 
@@ -217,8 +215,7 @@
     }
 
     .card-info .card-text-container {
-      margin-left : 0;
-      margin-right: 2rem;
+      margin-left: 0;
     }
   }
 }
