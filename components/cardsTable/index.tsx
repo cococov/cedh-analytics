@@ -14,7 +14,7 @@ const CardsTable: React.FC = () => {
   const columns = [
     {
       title: 'Name',
-      field: 'Card Name',
+      field: 'cardName',
       grouping: false,
       filtering: true,
       editable: 'never',
@@ -25,13 +25,43 @@ const CardsTable: React.FC = () => {
       grouping: false,
       filtering: false,
       editable: 'never',
+      defaultSort: 'desc',
+    },
+    {
+      title: 'Type',
+      field: 'typeLine',
+      grouping: true,
+      filtering: false,
+      editable: 'never',
+    },
+    {
+      title: 'Identity',
+      field: 'colorIdentity',
+      grouping: true,
+      filtering: false,
+      editable: 'never',
+    },
+    {
+      title: 'Reserved List',
+      field: 'reserved',
+      grouping: true,
+      filtering: false,
+      editable: 'never',
+      lookup: {
+        'true': 'Yes',
+        'false': 'No',
+      },
     },
   ];
 
   useEffect(() => {
     const fetchCards = async () => {
-      const result = await fetch('/competitiveCards.json');
-      setCards(await result.json());
+      const rawResult = await fetch('/competitiveCards.json');
+      const result = await rawResult.json();
+      setCards(result.map((data: any) => {
+        const newColorIdentity = data['colorIdentity'].join('');
+        return { ...data, colorIdentity: newColorIdentity === '' ? 'C' : newColorIdentity }
+      }));
       setIsLoading(false);
     }
 
@@ -53,9 +83,10 @@ const CardsTable: React.FC = () => {
         canExport={true}
         canExportAllData={true}
         canFilter={false}
+        withGrouping={true}
         rowHeight="5rem"
         title="cEDH Cards"
-        onRowClick={(_e, rowData = {}) => handleChangeCard(rowData['Card Name'])}
+        onRowClick={(_e, rowData = {}) => handleChangeCard(rowData['cardName'])}
       />
     </span>
   )

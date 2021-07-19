@@ -1,8 +1,11 @@
 import MaterialTable, { Action } from 'material-table';
 
 interface RowData {
-  'Card Name'?: string;
+  'cardName'?: string;
   'Occurrences'?: string;
+  'typeLine'?: string;
+  'colorIdentity'?: string;
+  'reserved'?: string;
 }
 interface ITable {
   columns: object[];
