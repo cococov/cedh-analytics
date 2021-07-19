@@ -10,7 +10,7 @@ Install dependences:
 yarn
 ```
 
-First, run the development server:
+Run the development server:
 
 ```bash
 yarn dev
