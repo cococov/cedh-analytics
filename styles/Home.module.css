@@ -20,6 +20,17 @@
   flex-wrap      : wrap;
 }
 
+@media (max-width: 857px) {
+  .main {
+    display: block;
+  }
+
+  .container {
+    display: block;
+  }
+
+}
+
 /* MTG Loading */
 
 .mtg-loading-container {
