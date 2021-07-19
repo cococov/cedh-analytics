@@ -39,13 +39,7 @@ const CardInfo: React.FC = () => {
                   </p>
                 )}
                 <p>
-                  <b>Average Price: </b>${averagePrice} {isReservedList &&
-                    <Tooltip
-                      title="Reserved List"
-                      aria-label="Reserved List"
-                    >
-                      <span className={styles['card-reserved-list']}>💎</span>
-                    </Tooltip>}
+                  <b>Average Price: </b>${averagePrice}
                 </p>
                 <a
                   className={styles['card-gatherer']}
@@ -55,6 +49,16 @@ const CardInfo: React.FC = () => {
                 >
                   Gatherer
                 </a>
+                <span className={styles['card-reserved-list-container']}>
+                  {isReservedList &&
+                    <Tooltip
+                      title="Reserved List"
+                      aria-label="Reserved List"
+                    >
+                      <span className={styles['card-reserved-list']}>💎</span>
+                    </Tooltip>
+                  }
+                </span>
               </span>
             ) : <h2 className={styles['no-card-selected']} >NO CARD SELECTED</h2>
           )

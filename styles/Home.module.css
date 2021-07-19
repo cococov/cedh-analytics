@@ -158,6 +158,11 @@
   cursor: default;
 }
 
+.card-info .card-reserved-list-container {
+  cursor: default;
+  float: right;
+}
+
 .card-info .card-text-container {
   margin-left : 2rem;
   margin-right: 2rem;
