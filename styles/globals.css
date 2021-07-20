@@ -20,3 +20,7 @@ a {
 .MuiSelect-select {
   max-width: 5rem;
 }
+
+.MuiButton-containedPrimary {
+  background-color: #422273 !important;
+}

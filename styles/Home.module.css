@@ -20,6 +20,31 @@
   flex-wrap      : wrap;
 }
 
+.notFound {
+  display        : flex;
+  flex-direction : column;
+  flex           : 1;
+  justify-content: center;
+  align-items    : center;
+  margin-bottom  : 3.5rem;
+}
+
+.notFoundImage {
+  display        : flex;
+  flex-direction : column;
+  flex           : 1;
+  justify-content: center;
+  align-items    : center;
+  margin         : 0 -0.5rem;
+}
+
+.notFoundText {
+  display       : flex;
+  flex-direction: column;
+  flex-grow     : 1;
+  text-align    : center;
+}
+
 @media (max-width: 767px) {
   .main {
     display: block;

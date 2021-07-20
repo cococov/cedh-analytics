@@ -1,14 +1,17 @@
 import Head from 'next/head';
 
-const Header: React.FC = () => {
+const Header: React.FC<{
+  title: string | string[] | undefined,
+  description: string | undefined
+}> = ({ title, description }) => {
   return (
     <Head>
-      <title>cEDH Card List</title>
-      <meta name="description" content="All cEDH cards." />
+      <title>Carrot Compost {!!title && `| ${title}`}</title>
+      <meta name="description" content={description || "cEDH Analytics."} />
       <meta property="og:image" content="/carrot_compost.png" />
-      <meta property="og:title" content="cEDH Analytics" />
+      <meta property="og:title" content={`Carrot Compost ${!!title && `| ${title}`}`} />
       <meta property="og:url" content="https://cedh-analytics.vercel.app/" />
-      <meta property="og:description" content="All cEDH cards." />
+      <meta property="og:description" content={description} />
       <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
       <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
       <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />

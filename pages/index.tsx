@@ -1,22 +1,20 @@
 import styles from '../styles/Home.module.css';
-import { CardsTable, CardInfo, Header, Footer } from '../components';
+import { CardsTable, CardInfo, Layout } from '../components';
 import { AppProvider, CardProvider } from '../contexts';
 
 const Home = () => {
   return (
-    <div className={styles.container}>
-      <Header />
+    <Layout title="cEDH Card List" description="All cEDH cards.">
       <AppProvider>
         <main className={styles.main}>
           <CardProvider>
-            <span className={styles['left-span']}/>
+            <span className={styles['left-span']} />
             <CardsTable />
             <CardInfo />
           </CardProvider>
         </main>
-        <Footer />
       </AppProvider>
-    </div>
+    </Layout>
   )
 }
 
