@@ -1,13 +1,12 @@
 import { useContext, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import Link from "next/link";
 import { useRouter } from 'next/router';
-import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 import styles from '../../styles/Home.module.css';
 import { CardContext } from '../../contexts';
-import Loading from '../loading';
 import { split } from 'rambda';
+import Loading from '../loading';
+import ButtonLink from '../buttonLink';
 
 
 const CardInfoPage: React.FC<{ name: string }> = ({ name }) => {
@@ -82,11 +81,9 @@ const CardInfoPage: React.FC<{ name: string }> = ({ name }) => {
           )
         }
       </span>
-      <Button variant="contained" color="primary">
-          <Link href="/">
-            ⬅ Home
-          </Link>
-        </Button>
+      <ButtonLink variant="contained" color="primary" href="/">
+        ⬅ Home
+      </ButtonLink>
     </span >
   )
 }

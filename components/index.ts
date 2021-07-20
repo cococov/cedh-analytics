@@ -5,3 +5,4 @@ export { default as CardsTable } from './cardsTable';
 export { default as CardInfo } from './cardInfo';
 export { default as Layout } from './layout';
 export { default as CardInfoPage } from './cardInfoPage';
+export { default as ButtonLink } from './buttonLink';
