@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Error: NextPage<Props> = ({ statusCode }) => (
-  <Layout title="Bad Request">
+  <Layout title={`statusCode`}>
     <div className={styles.notFound}>
       <span className={styles.notFoundImage}>
         <Image
@@ -22,6 +22,7 @@ const Error: NextPage<Props> = ({ statusCode }) => (
       </span>
       <span className={styles.notFoundText}>
         <h1>{statusCode}</h1>
+        <h3>Error</h3>
         <ButtonLink variant="contained" color="primary" href="/">
           ⬅ Home
         </ButtonLink>
