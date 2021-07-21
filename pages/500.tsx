@@ -3,7 +3,7 @@ import Layout from "../components/layout";
 import styles from '../styles/Home.module.css';
 import { ButtonLink } from '../components';
 
-const custom500 = () => (
+const Custom500 = () => (
   <Layout title="Server Error">
     <div className={styles.notFound}>
       <span className={styles.notFoundImage}>
@@ -26,4 +26,4 @@ const custom500 = () => (
   </Layout>
 );
 
-export default custom500;
+export default Custom500;

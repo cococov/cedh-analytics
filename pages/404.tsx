@@ -3,7 +3,7 @@ import Layout from "../components/layout";
 import styles from '../styles/Home.module.css';
 import { ButtonLink } from '../components';
 
-const custom404 = () => (
+const Custom404 = () => (
   <Layout title="Page Not Found">
     <div className={styles.notFound}>
       <span className={styles.notFoundImage}>
@@ -26,4 +26,4 @@ const custom404 = () => (
   </Layout>
 );
 
-export default custom404;
+export default Custom404;

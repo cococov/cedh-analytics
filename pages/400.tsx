@@ -3,7 +3,7 @@ import Layout from "../components/layout";
 import styles from '../styles/Home.module.css';
 import { ButtonLink } from '../components';
 
-const custom400 = () => (
+const Custom400 = () => (
   <Layout title="Bad Request">
     <div className={styles.notFound}>
       <span className={styles.notFoundImage}>
@@ -26,4 +26,4 @@ const custom400 = () => (
   </Layout>
 );
 
-export default custom400;
+export default Custom400;

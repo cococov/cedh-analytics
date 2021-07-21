@@ -1,9 +1,14 @@
 import Image from "next/image";
+import { NextPage  } from 'next'
 import Layout from "../components/layout";
 import styles from '../styles/Home.module.css';
 import { ButtonLink } from '../components';
 
-const Error = () => (
+interface Props {
+  statusCode?: number;
+}
+
+const Error: NextPage<Props> = ({ statusCode }) => (
   <Layout title="Bad Request">
     <div className={styles.notFound}>
       <span className={styles.notFoundImage}>
@@ -16,8 +21,7 @@ const Error = () => (
         />
       </span>
       <span className={styles.notFoundText}>
-        <h1>400</h1>
-        <h3>Bad Request</h3>
+        <h1>{statusCode}</h1>
         <ButtonLink variant="contained" color="primary" href="/">
           ⬅ Home
         </ButtonLink>
@@ -25,5 +29,10 @@ const Error = () => (
     </div>
   </Layout>
 );
+
+Error.getInitialProps = async ({ res, err }) => {
+  const statusCode = res ? res.statusCode : err ? err.statusCode : 404
+  return { statusCode: statusCode }
+}
 
 export default Error;
