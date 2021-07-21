@@ -129,7 +129,7 @@ export const CardProvider: React.FC = ({ children }) => {
     };
 
     !!selectedCard && requestData();
-  }, [selectedCard])
+  }, [selectedCard]);
 
   const handleChangeCard = (cardName: string | undefined) => {
     setSelectedCard(cardName || '');
