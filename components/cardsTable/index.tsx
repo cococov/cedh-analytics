@@ -1,11 +1,13 @@
 import styles from '../../styles/Home.module.css';
+import { useRouter } from 'next/router'
 import Image from 'next/image';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import Table from '../table';
 import { CardContext } from '../../contexts';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 const CardsTable: React.FC = () => {
+  const router = useRouter()
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { handleChangeCard } = useContext(CardContext);
@@ -135,7 +137,15 @@ const CardsTable: React.FC = () => {
 
   useEffect(() => {
     setRenderKey(`render-${Math.random()}`);
-  }, [isLargeVerticalScreen])
+  }, [isLargeVerticalScreen]);
+
+  const handleClickRow = useCallback((_e, rowData = {}) => {
+    if(isSmallScreen){
+      router.push(`/cards/${rowData['cardName']}`);
+    } else {
+      handleChangeCard(rowData['cardName']);
+    }
+  }, [isSmallScreen])
 
   return (
     <span className={styles['cards-table']}>
@@ -151,7 +161,7 @@ const CardsTable: React.FC = () => {
         withGrouping={false}
         rowHeight="5rem"
         title="cEDH Cards"
-        onRowClick={(_e, rowData = {}) => handleChangeCard(rowData['cardName'])}
+        onRowClick={handleClickRow}
       />
     </span>
   )

@@ -18,7 +18,7 @@ const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathe
   <span className={styles['card-info-container']}>
     <span className={styles['home-button-container']}>
       <ButtonLink variant="contained" color="primary" href="/">
-        ⬅ Home
+        Home
       </ButtonLink>
     </span>
     <h1 className={styles['card-name']}>{cardName || 'Card Name'}</h1>
