@@ -1,0 +1,35 @@
+.card-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: start;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.card-text {
+  text-align: justify;
+}
+
+.home-button-container{
+  width: 100%;
+}
+
+.card-reserved-list{
+  opacity: 0.5;
+  color: #422273;
+  margin-top: -10px;
+}

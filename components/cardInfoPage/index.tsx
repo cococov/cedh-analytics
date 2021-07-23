@@ -1,6 +1,5 @@
 import Image from 'next/image';
-import Tooltip from '@material-ui/core/Tooltip';
-import styles from '../../styles/Home.module.css';
+import styles from '../../styles/CardPage.module.css';
 import { split } from 'rambda';
 import ButtonLink from '../buttonLink';
 
@@ -17,13 +16,21 @@ type CardProps = {
 
 const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, cardImage }: CardProps) => (
   <span className={styles['card-info-container']}>
+    <span className={styles['home-button-container']}>
+      <ButtonLink variant="contained" color="primary" href="/">
+        ⬅ Home
+      </ButtonLink>
+    </span>
+    <h1 className={styles['card-name']}>{cardName || 'Card Name'}</h1>
+    {isReservedList &&
+      <h2 className={styles['card-reserved-list']}> Reserved List</h2>
+    }
     <span className={styles['card-info']}>
-      <span className={styles['card-image']}>
+      <span>
         <Image src={cardImage || '/mtg-back.jpg'} alt={`${cardName} image`} width={256} height={366} />
       </span>
       < span className={styles['card-text-container']}>
-        <h2 className={styles['card-name']}>{cardName || 'Card Name'}</h2>
-        <h3 className={styles['card-type']}>{cardType || 'Type'}</h3>
+        <h3>{cardType || 'Type'}</h3>
         <p className={styles['card-text']} >
           {split('--DIVIDE--', cardText)[0] || 'Oracle text.'}
         </p>
@@ -35,29 +42,11 @@ const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathe
         <p>
           <b>Average Price: </b>${averagePrice || 'NO_DATA'}
         </p>
-        <a
-          className={styles['card-gatherer']}
-          rel="author noopener noreferrer"
-          target="_blank"
-          href={`https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=${gathererId}`}
-        >
+        <ButtonLink variant="contained" color="primary" href={`https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=${gathererId}`}>
           Gatherer
-        </a>
-        <span className={styles['card-reserved-list-container']}>
-          {isReservedList &&
-            <Tooltip
-              title="Reserved List"
-              aria-label="Reserved List"
-            >
-              <span className={styles['card-reserved-list']}>💎</span>
-            </Tooltip>
-          }
-        </span>
+        </ButtonLink>
       </span>
     </span>
-    <ButtonLink variant="contained" color="primary" href="/">
-      ⬅ Home
-    </ButtonLink>
   </span >
 )
 

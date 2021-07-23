@@ -1,9 +1,7 @@
-import { useEffect } from 'react';
 import { useRouter } from 'next/router'
 import styles from '../../../styles/Home.module.css';
 import { CardInfoPage, Layout } from '../../../components';
-import { AppProvider, CardProvider } from '../../../contexts';
-import { includes, T } from 'rambda';
+import { includes } from 'rambda';
 
 
 type CardsProps = {
@@ -20,25 +18,19 @@ const Cards = ({ cardType, cardText, gathererId, averagePrice, isReservedList, c
   const { name } = router.query
 
   return (
-    <div className={styles.container}>
-      <Layout title={name} description={`${name} info.`}>
-        <AppProvider>
-          <main className={styles.main}>
-            <CardProvider>
-              <CardInfoPage
-                cardName={typeof (name) === "string" ? name : ''}
-                cardType={cardType}
-                cardText={cardText}
-                gathererId={gathererId}
-                averagePrice={averagePrice}
-                isReservedList={isReservedList}
-                cardImage={cardImage}
-              />
-            </CardProvider>
-          </main>
-        </AppProvider>
-      </Layout>
-    </div >
+    <Layout title={name} description={`${name} info.`}>
+      <main className={styles.main}>
+        <CardInfoPage
+          cardName={typeof (name) === "string" ? name : ''}
+          cardType={cardType}
+          cardText={cardText}
+          gathererId={gathererId}
+          averagePrice={averagePrice}
+          isReservedList={isReservedList}
+          cardImage={cardImage}
+        />
+      </main>
+    </Layout>
   )
 }
 
@@ -80,7 +72,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
       result
     );
 
-    if(!print['multiverse_ids'][0] || print['multiverse_ids'][0] === 0) {
+    if (!print['multiverse_ids'][0] || print['multiverse_ids'][0] === 0) {
       throw new Error("Card Not found");
     }
 
