@@ -126,7 +126,7 @@ const CardsTable: React.FC = () => {
       const rawResult = await fetch('/competitiveCards.json');
       const result = await rawResult.json();
       setCards(result.map((data: any) => {
-        const newColorIdentity = data['colorIdentity'].join('');
+        const newColorIdentity = data['colorIdentity'];
         return { ...data, colorIdentity: newColorIdentity === '' ? 'C' : newColorIdentity }
       }));
       setIsLoading(false);
