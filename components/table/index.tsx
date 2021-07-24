@@ -1,4 +1,4 @@
-import MaterialTable, { Action } from 'material-table';
+import MaterialTable, { Action } from '@material-table/core';
 
 interface RowData {
   'cardName'?: string;
