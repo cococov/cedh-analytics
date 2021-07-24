@@ -54,8 +54,6 @@ const CardsTable: React.FC = () => {
         'Enchantment': 'Enchantment',
         'Creature': 'Creature',
         'Planeswalker': 'Planeswalker',
-        'Sorcery // Land': 'Sorcery // Land',
-        'Instant // Land': 'Instant // Land',
       },
       cellStyle: {
         minWidth: '9rem'
