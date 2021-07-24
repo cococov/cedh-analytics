@@ -40,7 +40,7 @@ const CardsTable: React.FC = () => {
     },
     {
       title: 'Type',
-      field: 'typeLine',
+      field: 'type',
       grouping: false,
       filtering: true,
       editable: 'never',
