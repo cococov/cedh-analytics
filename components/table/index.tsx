@@ -1,4 +1,5 @@
 import MaterialTable, { Action } from '@material-table/core';
+import { ExportCsv, ExportPdf } from '@material-table/exporters';
 
 interface RowData {
   'cardName'?: string;
@@ -10,11 +11,10 @@ interface RowData {
 interface ITable {
   columns: object[];
   data: RowData[];
-  title?: string;
+  title: string;
   defaultNumberOfRows?: number;
   rowHeight?: string;
   canExportAllData?: boolean;
-  canExport?: boolean;
   canFilter?: boolean;
   isDraggable?: boolean;
   withGrouping?: boolean;
@@ -34,7 +34,6 @@ const Table: React.FC<ITable> = ({
   defaultNumberOfRows,
   rowHeight,
   canExportAllData,
-  canExport,
   canFilter,
   isDraggable,
   withGrouping,
@@ -51,12 +50,17 @@ const Table: React.FC<ITable> = ({
       actions={actions}
       isLoading={isLoading}
       options={{
-        exportButton: canExport,
+        exportMenu: [{
+          label: 'Export PDF',
+          exportFunc: (cols, datas) => ExportPdf(cols, datas, title)
+        }, {
+          label: 'Export CSV',
+          exportFunc: (cols, datas) => ExportCsv(cols, datas, title)
+        }],
         pageSize: defaultNumberOfRows,
         draggable: isDraggable,
         grouping: withGrouping,
         exportAllData: canExportAllData,
-        exportFileName: title,
         filtering: canFilter,
         emptyRowsWhenPaging: false,
         rowStyle: {

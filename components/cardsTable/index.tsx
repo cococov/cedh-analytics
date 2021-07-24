@@ -181,7 +181,6 @@ const CardsTable: React.FC = () => {
         defaultNumberOfRows={(isLargeVerticalScreen || isSmallScreen) ? 10 : 5}
         isLoading={isLoading}
         isDraggable={false}
-        canExport={true}
         canExportAllData={true}
         canFilter={true}
         withGrouping={false}

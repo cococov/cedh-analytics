@@ -8,7 +8,7 @@ type NextLinkProps = Omit<ButtonProps, 'href'> &
 
 const NextLink = ({ href, as, prefetch, locale, ...props }: LinkProps, ref: Ref<LinkRef>) => (
   <Link href={href} as={as} prefetch={prefetch} locale={locale} passHref>
-    <Button buttonRef={ref} {...props} />
+    <Button ref={ref} {...props} />
   </Link>
 )
 
