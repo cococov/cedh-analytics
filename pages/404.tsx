@@ -8,7 +8,7 @@ const Custom404 = () => (
     <div className={styles.notFound}>
       <span className={styles.notFoundImage}>
         <Image
-          src="/fblthp.jpg"
+          src="/images/fblthp.jpg"
           alt="lost"
           layout="intrinsic"
           width={600}

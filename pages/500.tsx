@@ -8,7 +8,7 @@ const Custom500 = () => (
     <div className={styles.notFound}>
       <span className={styles.notFoundImage}>
         <Image
-          src="/muddle-the-mixture.jpg"
+          src="/images/muddle-the-mixture.jpg"
           alt="Bad"
           layout="intrinsic"
           width={600}

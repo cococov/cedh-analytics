@@ -13,7 +13,7 @@ const Error: NextPage<Props> = ({ statusCode }) => (
     <div className={styles.notFound}>
       <span className={styles.notFoundImage}>
         <Image
-          src="/Oath_of_Liliana.jpg"
+          src="/images/Oath_of_Liliana.jpg"
           alt="Bad"
           layout="intrinsic"
           width={600}

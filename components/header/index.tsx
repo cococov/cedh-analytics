@@ -8,7 +8,7 @@ const Header: React.FC<{
     <Head>
       <title>Carrot Compost {!!title && `| ${title}`}</title>
       <meta name="description" content={description || "cEDH Analytics."} />
-      <meta property="og:image" content="/carrot_compost.png" />
+      <meta property="og:image" content="/images/carrot_compost.png" />
       <meta property="og:title" content={`Carrot Compost ${!!title && `| ${title}`}`} />
       <meta property="og:url" content="https://cedh-analytics.vercel.app/" />
       <meta property="og:description" content={description} />

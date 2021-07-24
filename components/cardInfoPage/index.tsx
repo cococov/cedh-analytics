@@ -27,7 +27,7 @@ const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathe
     }
     <span className={styles['card-info']}>
       <span>
-        <Image src={cardImage || '/mtg-back.jpg'} alt={`${cardName} image`} width={256} height={366} />
+        <Image src={cardImage || '/images/mtg-back.jpg'} alt={`${cardName} image`} width={256} height={366} />
       </span>
       < span className={styles['card-text-container']}>
         <h3>{cardType || 'Type'}</h3>

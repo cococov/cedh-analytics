@@ -1,7 +1,7 @@
-import styles from '../../styles/Home.module.css';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useRouter } from 'next/router'
 import Image from 'next/image';
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import styles from '../../styles/Home.module.css';
 import Table from '../table';
 import { CardContext } from '../../contexts';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
@@ -107,7 +107,7 @@ const CardsTable: React.FC = () => {
       },
       render: (rowData: any, type: any) => {
         const value = type === 'row' ? rowData.colorIdentity : rowData;
-        return type === 'row' ? <span>{value.split('').map((icon: string) => <Image src={`/${icon}.png`} alt={icon} width={18} height={18} />)}</span> : value;
+        return type === 'row' ? <span>{value.split('').map((icon: string) => <Image src={`/images/${icon}.png`} alt={icon} width={18} height={18} />)}</span> : value;
       },
     },
     {
@@ -148,7 +148,7 @@ const CardsTable: React.FC = () => {
 
   useEffect(() => {
     const fetchCards = async () => {
-      const rawResult = await fetch('/competitiveCards.json');
+      const rawResult = await fetch('/data/competitiveCards.json');
       const result = await rawResult.json();
       setCards(result.map((data: any) => {
         const newColorIdentity = data['colorIdentity'];
