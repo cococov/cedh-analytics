@@ -51,6 +51,7 @@ const Table: React.FC<ITable> = ({
       actions={actions}
       isLoading={isLoading}
       options={{
+        cspNonce: `cspNonce-${Math.random()}`,
         exportButton: canExport,
         pageSize: defaultNumberOfRows,
         draggable: isDraggable,

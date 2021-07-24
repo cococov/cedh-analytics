@@ -8,19 +8,20 @@ import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 const CardsTable: React.FC = () => {
   const router = useRouter()
+  const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
+  const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { handleChangeCard } = useContext(CardContext);
   const [renderKey, setRenderKey] = useState(`render-${Math.random()}`)
-  const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
-  const isSmallScreen = useMediaQuery('(max-width: 600px)');
-  const [columns] = useState([
+  const [columns, setColumns] = useState([
     {
       title: 'Name',
       field: 'cardName',
       grouping: false,
       filtering: false,
       editable: 'never',
+      hidden: false,
       cellStyle: {
         minWidth: '13rem'
       },
@@ -33,6 +34,7 @@ const CardsTable: React.FC = () => {
       grouping: false,
       filtering: false,
       editable: 'never',
+      hidden: false,
       searchable: false,
       defaultSort: 'desc',
     },
@@ -42,6 +44,7 @@ const CardsTable: React.FC = () => {
       grouping: false,
       filtering: true,
       editable: 'never',
+      hidden: false,
       searchable: false,
       lookup: {
         'Artifact': 'Artifact',
@@ -65,6 +68,7 @@ const CardsTable: React.FC = () => {
       grouping: false,
       filtering: true,
       editable: 'never',
+      hidden: false,
       searchable: false,
       lookup: {
         'C': 'C',
@@ -113,6 +117,7 @@ const CardsTable: React.FC = () => {
       grouping: false,
       filtering: true,
       editable: 'never',
+      hidden: false,
       searchable: false,
       lookup: {
         'true': 'Yes',
@@ -120,6 +125,26 @@ const CardsTable: React.FC = () => {
       },
     },
   ]);
+
+  useEffect(() => {
+    if (isSmallScreen) {
+      setColumns((previous: any) => {
+        return previous.map((current: any) => {
+          if (current.field !== 'cardName' && current.field !== 'Occurrences') {
+            return { ...current, hidden: true };
+          }
+          return current;
+        });
+      });
+    } else {
+      setColumns((previous: any) => {
+        return previous.map((current: any) => {
+          return { ...current, hidden: false };
+        });
+      });
+    }
+    setRenderKey(`render-${Math.random()}`);
+  }, [isSmallScreen]);
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -140,7 +165,7 @@ const CardsTable: React.FC = () => {
   }, [isLargeVerticalScreen]);
 
   const handleClickRow = useCallback((_e, rowData = {}) => {
-    if(isSmallScreen){
+    if (isSmallScreen) {
       router.push(`/cards/${rowData['cardName']}`);
     } else {
       handleChangeCard(rowData['cardName']);
@@ -155,6 +180,7 @@ const CardsTable: React.FC = () => {
         data={cards}
         defaultNumberOfRows={(isLargeVerticalScreen || isSmallScreen) ? 10 : 5}
         isLoading={isLoading}
+        isDraggable={false}
         canExport={true}
         canExportAllData={true}
         canFilter={true}
