@@ -141,6 +141,7 @@
 @media (max-width: 1500px) {
   .left-span {
     flex: none;
+    display: none;
   }
 }
 

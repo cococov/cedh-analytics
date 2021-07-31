@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { replace, includes } from 'rambda';
+import DATA from '../public/data/competitiveCards.json';
 
 /**
  * Requests
@@ -69,6 +70,7 @@ const DEFAULT_VALUES = {
   cardText: '',
   averagePrice: 0,
   gathererId: 0,
+  cardLists: Array(),
   isLoading: false,
   isReservedList: false,
   handleChangeCard: (_cardName: string | undefined) => { }
@@ -87,6 +89,7 @@ export const CardProvider: React.FC = ({ children }) => {
   const [cardImage, setCardImage] = useState(DEFAULT_VALUES['cardImage']);
   const [cardType, setCardType] = useState(DEFAULT_VALUES['cardType']);
   const [cardText, setCardText] = useState(DEFAULT_VALUES['cardText']);
+  const [cardLists, setCardLists] = useState<Array<{ cardListName: string, cardListUrl: string }> | any[]>(DEFAULT_VALUES['cardLists']);
   const [gathererId, setGathererId] = useState(DEFAULT_VALUES['gathererId']);
   const [averagePrice, setAveragePrice] = useState(DEFAULT_VALUES['averagePrice']);
   const [isReservedList, setIsReservedList] = useState(DEFAULT_VALUES['isReservedList']);
@@ -131,8 +134,15 @@ export const CardProvider: React.FC = ({ children }) => {
     !!selectedCard && requestData();
   }, [selectedCard]);
 
-  const handleChangeCard = (cardName: string | undefined) => {
+  const handleChangeCard = async (cardName: string | undefined) => {
     setSelectedCard(cardName || '');
+    const card = DATA.find((current: any) => current['cardName'] === cardName);
+    const cardLists: Array<{ cardListName: string, cardListUrl: string }> | any[] = card
+      ?.deckLinks
+      ?.map((current: string, index: number) => (
+        { cardListName: card?.deckNames[index], cardListUrl: current }
+      )) || [];
+    setCardLists(cardLists);
   };
 
   return (
@@ -146,6 +156,7 @@ export const CardProvider: React.FC = ({ children }) => {
         averagePrice,
         isReservedList,
         isLoading,
+        cardLists,
         handleChangeCard,
       }}
     >

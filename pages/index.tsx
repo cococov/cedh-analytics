@@ -1,5 +1,5 @@
 import styles from '../styles/Home.module.css';
-import { CardsTable, CardInfo, Layout } from '../components';
+import { CardsTable, CardInfo, DeckLists, Layout } from '../components';
 import { AppProvider, CardProvider } from '../contexts';
 
 const Home = () => (
@@ -7,7 +7,9 @@ const Home = () => (
     <AppProvider>
       <main className={styles.main}>
         <CardProvider>
-          <span className={styles['left-span']} />
+          <span className={styles['left-span']}>
+            <DeckLists />
+          </span>
           <CardsTable />
           <CardInfo />
         </CardProvider>

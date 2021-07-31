@@ -156,7 +156,7 @@ const CardsTable: React.FC = () => {
     }
 
     fetchCards();
-  }, [])
+  }, []);
 
   useEffect(() => {
     setRenderKey(`render-${Math.random()}`);

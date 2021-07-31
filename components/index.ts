@@ -3,6 +3,7 @@ export { default as Footer } from './footer';
 export { default as Table } from './table';
 export { default as CardsTable } from './cardsTable';
 export { default as CardInfo } from './cardInfo';
+export { default as DeckLists } from './deckLists';
 export { default as Layout } from './layout';
 export { default as CardInfoPage } from './cardInfoPage';
 export { default as ButtonLink } from './buttonLink';
