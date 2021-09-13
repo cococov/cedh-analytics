@@ -64,7 +64,7 @@ const handler = async (
       image_uris: print['image_uris'],
       card_faces: print['card_faces'],
     });
-  } catch (e) {
+  } catch (e: any) {
     res.status(500).json(e);
   }
 }
