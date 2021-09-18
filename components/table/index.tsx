@@ -3,7 +3,7 @@ import { ExportCsv, ExportPdf } from '@material-table/exporters';
 
 interface RowData {
   'cardName'?: string;
-  'Occurrences'?: string;
+  'occurrences'?: string;
   'typeLine'?: string;
   'colorIdentity'?: string;
   'reserved'?: string;

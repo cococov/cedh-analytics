@@ -28,7 +28,7 @@ const CardsTable: React.FC = () => {
     },
     {
       title: 'Occurrences',
-      field: 'Occurrences',
+      field: 'occurrences',
       type: 'numeric',
       align: 'center',
       grouping: false,
@@ -128,7 +128,7 @@ const CardsTable: React.FC = () => {
     if (isSmallScreen) {
       setColumns((previous: any) => {
         return previous.map((current: any) => {
-          if (current.field !== 'cardName' && current.field !== 'Occurrences') {
+          if (current.field !== 'cardName' && current.field !== 'occurrences') {
             return { ...current, hidden: true };
           }
           return current;
