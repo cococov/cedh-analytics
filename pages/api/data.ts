@@ -222,7 +222,7 @@ const handler = async (
         const newValue: cardDataHash = reduce(
           (accumulated2: cardDataHash, current2): cardDataHash => {
             const hash: CardData = {
-              occurrences: 0,
+              occurrences: 1,
               cardName: current2.card.name,
               colorIdentity: current2.card.color_identity.join(''),
               deckLinks: [current.deck.url],
