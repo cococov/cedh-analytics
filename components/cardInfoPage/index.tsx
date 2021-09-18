@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styles from '../../styles/CardPage.module.css';
-import { split } from 'rambda';
+import { split } from 'ramda';
 import ButtonLink from '../buttonLink';
 
 

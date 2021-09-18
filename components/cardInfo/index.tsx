@@ -4,7 +4,7 @@ import styles from '../../styles/Home.module.css';
 import Tooltip from '@material-ui/core/Tooltip';
 import { CardContext } from '../../contexts';
 import Loading from '../loading';
-import { split } from 'rambda';
+import { split } from 'ramda';
 
 
 const CardInfo: React.FC = () => {

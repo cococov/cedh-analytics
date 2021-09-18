@@ -1,5 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { reduce, filter, includes, split, trim, map } from 'rambda';
+import {
+  reduce,
+  filter,
+  includes,
+  split,
+  trim,
+  map,
+} from 'ramda';
 
 type DbCommander = {
   name: string,

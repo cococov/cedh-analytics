@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { replace, includes } from 'rambda';
+import { replace, includes } from 'ramda';
 import DATA from '../public/data/competitiveCards.json';
 
 /**

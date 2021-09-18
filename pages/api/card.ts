@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { includes } from 'rambda';
+import { includes } from 'ramda';
 
 type ImageUris = {
   small: string;
