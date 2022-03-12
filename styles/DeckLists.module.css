@@ -38,6 +38,8 @@
 
 .card-lists {
   padding-inline-start: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .card-list {
@@ -48,4 +50,8 @@
   border-color  : #ccc;
   height: 2.5rem;
   padding-left: 1rem;
+}
+
+.card-list:hover {
+  background-color: rgba(0, 0, 0, 0.04);
 }
