@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
   return (
     <footer className={styles.footer}>
       <a
-        href="https://github.com/cococov"
+        href="https://www.moxfield.com/users/cococov"
         target="_blank"
         rel="noopener noreferrer"
       >
