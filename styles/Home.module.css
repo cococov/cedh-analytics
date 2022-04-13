@@ -175,6 +175,7 @@
 
 .card-info {
   display: flex;
+  align-self: flex-start;
 }
 
 .card-info .no-card-selected {
