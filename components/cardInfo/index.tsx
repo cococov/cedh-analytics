@@ -5,6 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { CardContext } from '../../contexts';
 import Loading from '../loading';
 import { split } from 'ramda';
+import CardBack from '../../public/images/mtg-back.jpg';
 
 
 const CardInfo: React.FC = () => {
@@ -22,7 +23,7 @@ const CardInfo: React.FC = () => {
     <span className={styles['card-info-container']}>
       <span className={styles['card-info']}>
         <span className={styles['card-image']}>
-          <Image src={cardImage || '/images/mtg-back.jpg'} alt={`${selectedCard} image`} width={256} height={366} />
+          <Image src={cardImage || CardBack} alt={`${selectedCard} image`} width={256} height={366} />
         </span>
         {
           isLoading ? <Loading /> : (

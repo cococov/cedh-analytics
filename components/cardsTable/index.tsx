@@ -5,6 +5,22 @@ import styles from '../../styles/Home.module.css';
 import Table from '../table';
 import { CardContext } from '../../contexts';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
+import B from '../../public/images/B.png';
+import G from '../../public/images/G.png';
+import R from '../../public/images/R.png';
+import U from '../../public/images/U.png';
+import W from '../../public/images/W.png';
+import C from '../../public/images/C.png';
+
+const IDENTITY_COLORS = {
+  B: B,
+  G: G,
+  R: R,
+  U: U,
+  W: W,
+  C: C
+}
+
 
 const CardsTable: React.FC = () => {
   const router = useRouter()
@@ -105,7 +121,7 @@ const CardsTable: React.FC = () => {
       },
       render: (rowData: any, type: any) => {
         const value = type === 'row' ? rowData.colorIdentity : rowData;
-        return type === 'row' ? <span>{value.split('').map((icon: string) => <Image src={`/images/${icon}.png`} alt={icon} width={18} height={18} />)}</span> : value;
+        return type === 'row' ? <span>{value.split('').map((icon: 'B'|'G'|'R'|'U'|'W'|'C') => <Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} />)}</span> : value;
       },
     },
     {
