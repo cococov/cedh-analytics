@@ -197,7 +197,7 @@
 }
 
 .card-info .card-text-container {
-  margin-left: 2rem;
+  margin-left: 0rem;
 }
 
 .card-info .card-name {
@@ -218,6 +218,7 @@
   flex-grow  : 1;
   align-self : center;
   text-align : center;
+  margin-right: 2rem;
 }
 
 .card-info .card-gatherer {
@@ -230,19 +231,11 @@
     .card-info {
       flex-wrap: wrap;
     }
-
-    .card-info .card-text-container {
-      margin-left: 0;
-    }
   }
 
   @media (max-width: 1385px) {
     .card-info {
       flex-wrap: wrap;
-    }
-
-    .card-info .card-text-container {
-      margin-left: 0;
     }
   }
 }
