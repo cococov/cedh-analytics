@@ -162,7 +162,7 @@ const CardsTable: React.FC = () => {
 
   useEffect(() => {
     const fetchCards = async () => {
-      const rawResult = await fetch('/data/competitiveCards_5.json');
+      const rawResult = await fetch('/data/competitiveCards_6.json');
       const result = await rawResult.json();
       setCards(result.map((data: any) => {
         const newColorIdentity = data['colorIdentity'];
