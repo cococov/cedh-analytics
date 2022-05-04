@@ -9,8 +9,9 @@ const Header: React.FC<{
       <title>Carrot Compost {!!title && `| ${title}`}</title>
       <meta name="description" content={description || "cEDH Analytics."} />
       <meta property="og:image" content="/images/carrot_compost_white.png" />
+      <meta property="og:site_name" content="cEDH Analytics" />
       <meta property="og:title" content={`Carrot Compost ${!!title && `| ${title}`}`} />
-      <meta property="og:url" content="https://cedh-analytics.juanlamas.dev/" />
+      <meta property="og:url" content="https://cedh-analytics.com/" />
       <meta property="og:description" content={description} />
       <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
       <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
