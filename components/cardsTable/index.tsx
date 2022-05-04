@@ -199,7 +199,7 @@ const CardsTable: React.FC = () => {
         canFilter={true}
         withGrouping={false}
         rowHeight="5rem"
-        title="cEDH Cards"
+        title="Cards Played"
         onRowClick={handleClickRow}
       />
     </span>
