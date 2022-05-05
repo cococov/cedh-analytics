@@ -140,7 +140,7 @@
 
 @media (max-width: 1500px) {
   .left-span {
-    flex: none;
+    flex   : none;
     display: none;
   }
 }
@@ -174,7 +174,7 @@
 }
 
 .card-info {
-  display: flex;
+  display   : flex;
   align-self: flex-start;
 }
 
@@ -214,10 +214,10 @@
 }
 
 .card-info .card-image {
-  flex-shrink: 0;
-  flex-grow  : 1;
-  align-self : center;
-  text-align : center;
+  flex-shrink : 0;
+  flex-grow   : 1;
+  align-self  : center;
+  text-align  : center;
   margin-right: 2rem;
 }
 
@@ -342,4 +342,46 @@
     width         : 100%;
     flex-direction: column;
   }
+}
+
+.navBar {
+  display        : flex;
+  flex-direction : row;
+  justify-content: center;
+  align-items    : center;
+  width          : 100%;
+  height         : fit-content;
+  padding        : 0.5rem;
+  border-bottom  : 1px solid #eaeaea;
+  font-weight    : 700;
+  font-size      : large;
+  margin-bottom  : 1rem;
+}
+
+.navBarPhone {
+  display        : flex;
+  flex-direction : column;
+  justify-content: right;
+  align-items    : center;
+  width          : 100%;
+  height         : fit-content;
+  padding        : 0.5rem;
+  border-bottom  : 1px solid #eaeaea;
+  font-weight    : 700;
+  font-size      : large;
+  margin-bottom  : 0.5rem;
+}
+
+.navBar a {
+  margin-right: 1rem;
+  color       : #422273;
+}
+
+.navBarPhone a {
+  color: #422273;
+}
+
+.navBarPhoneIcon {
+  color     : #422273;
+  align-self: flex-end;
 }
