@@ -6,7 +6,6 @@
   flex-direction : column;
   justify-content: center;
   align-items    : center;
-  overflow-x: hidden;
 }
 
 .main {
@@ -18,6 +17,7 @@
   align-items    : center;
   justify-content: center;
   flex-wrap      : wrap;
+  overflow-x     : hidden;
 }
 
 .notFound {
