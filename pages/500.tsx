@@ -2,13 +2,14 @@ import Image from "next/image";
 import Layout from "../components/layout";
 import styles from '../styles/Home.module.css';
 import { ButtonLink } from '../components';
+import MuddleTheMixture from '../public/images/muddle-the-mixture.jpg';
 
 const Custom500 = () => (
   <Layout title="Server Error">
     <div className={styles.notFound}>
       <span className={styles.notFoundImage}>
         <Image
-          src="/images/muddle-the-mixture.jpg"
+          src={MuddleTheMixture}
           alt="Bad"
           layout="intrinsic"
           width={600}

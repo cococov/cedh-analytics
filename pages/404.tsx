@@ -2,13 +2,14 @@ import Image from "next/image";
 import Layout from "../components/layout";
 import styles from '../styles/Home.module.css';
 import { ButtonLink } from '../components';
+import Fblthp from '../public/images/fblthp.jpg';
 
 const Custom404 = () => (
   <Layout title="Page Not Found">
     <div className={styles.notFound}>
       <span className={styles.notFoundImage}>
         <Image
-          src="/images/fblthp.jpg"
+          src={Fblthp}
           alt="lost"
           layout="intrinsic"
           width={600}

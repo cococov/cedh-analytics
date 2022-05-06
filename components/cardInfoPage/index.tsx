@@ -16,11 +16,6 @@ type CardProps = {
 
 const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, cardImage }: CardProps) => (
   <span className={styles['card-info-container']}>
-    <span className={styles['home-button-container']}>
-      <ButtonLink variant="contained" color="primary" href="/">
-        Home
-      </ButtonLink>
-    </span>
     <h1 className={styles['card-name']}>{cardName || 'Card Name'}</h1>
     {isReservedList &&
       <h2 className={styles['card-reserved-list']}> Reserved List</h2>

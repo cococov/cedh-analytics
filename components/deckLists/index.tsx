@@ -11,7 +11,7 @@ const DeckLists = () => {
   return (
     <span className={styles['container']}>
       <span className={styles['title']}>
-        <h2>Deck Lists</h2>
+        <h3>Deck Lists</h3>
       </span>
       <span className={styles['content']}>
         {isLoading ? <Loading /> : (

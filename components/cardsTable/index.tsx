@@ -25,6 +25,7 @@ const IDENTITY_COLORS = {
 const CardsTable: React.FC = () => {
   const router = useRouter()
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
+  const isMediumScreen = useMediaQuery('(max-width: 1024px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -121,7 +122,7 @@ const CardsTable: React.FC = () => {
       },
       render: (rowData: any, type: any) => {
         const value = type === 'row' ? rowData.colorIdentity : rowData;
-        return type === 'row' ? <span>{value.split('').map((icon: 'B'|'G'|'R'|'U'|'W'|'C') => <Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} />)}</span> : value;
+        return type === 'row' ? <span>{value.split('').map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => <Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} />)}</span> : value;
       },
     },
     {
@@ -179,12 +180,15 @@ const CardsTable: React.FC = () => {
   }, [isLargeVerticalScreen]);
 
   const handleClickRow = useCallback((_e, rowData = {}) => {
-    if (isSmallScreen) {
+    console.log(window.matchMedia('(max-width: 857px) and (min-width: 601px)'))
+    console.log(window.screen.width)
+    console.log(isSmallScreen, isMediumScreen)
+    if (isSmallScreen || isMediumScreen) {
       router.push(`/cards/${rowData['cardName']}`);
     } else {
       handleChangeCard(rowData['cardName']);
     }
-  }, [isSmallScreen])
+  }, [isSmallScreen, isMediumScreen])
 
   return (
     <span className={styles['cards-table']}>

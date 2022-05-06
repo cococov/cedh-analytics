@@ -2,13 +2,14 @@ import Image from "next/image";
 import Layout from "../components/layout";
 import styles from '../styles/Home.module.css';
 import { ButtonLink } from '../components';
+import OathOfLiliana from '../public/images/Oath_of_Liliana.jpg';
 
 const Custom400 = () => (
   <Layout title="Bad Request">
     <div className={styles.notFound}>
       <span className={styles.notFoundImage}>
         <Image
-          src="/images/Oath_of_Liliana.jpg"
+          src={OathOfLiliana}
           alt="Bad"
           layout="intrinsic"
           width={600}

@@ -2,15 +2,15 @@
 
 .container {
   min-height     : 100vh;
-  padding        : 0 0.5rem;
   display        : flex;
   flex-direction : column;
   justify-content: center;
   align-items    : center;
+  overflow-x: hidden;
 }
 
 .main {
-  padding        : 1rem 0;
+  padding        : 1rem 0.5rem;
   width          : 100%;
   flex           : 1;
   display        : flex;
@@ -30,12 +30,11 @@
 }
 
 .notFoundImage {
-  display        : flex;
-  flex-direction : column;
-  flex           : 1;
-  justify-content: center;
-  align-items    : center;
-  margin         : 0 -0.5rem;
+  display       : flex;
+  flex-direction: column;
+  flex          : 1;
+  align-items   : center;
+  margin        : 2rem -0.5rem;
 }
 
 .notFoundText {
@@ -47,11 +46,15 @@
 
 @media (max-width: 767px) {
   .main {
-    display: block;
+    display: flex;
   }
 
   .container {
-    display: block;
+    display: flex;
+  }
+
+  .notFoundImage {
+    margin-top: 0;
   }
 
 }
@@ -243,12 +246,14 @@
 /* Base Layout */
 
 .footer {
-  width          : 100%;
-  height         : fit-content;
-  border-top     : 1px solid #eaeaea;
-  display        : flex;
-  justify-content: center;
-  align-items    : center;
+  width           : 100%;
+  height          : fit-content;
+  border-top      : 1px solid #eaeaea;
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  background-color: #ccc;
+  min-height      : 76px;
 }
 
 .footer a {
@@ -347,45 +352,46 @@
 /* Nav Bar */
 
 .navBar {
-  display        : flex;
-  flex-direction : row;
-  justify-content: center;
-  align-items    : center;
-  width          : 100%;
-  height         : fit-content;
-  padding        : 0.5rem;
-  border-bottom  : 1px solid #eaeaea;
-  font-weight    : 700;
-  font-size      : large;
-  margin-bottom  : 1rem;
+  display         : flex;
+  flex-direction  : row;
+  justify-content : center;
+  align-items     : center;
+  width           : 100%;
+  height          : fit-content;
+  padding         : 0.5rem;
+  background-color: #422273;
+  font-weight     : 400;
+  font-size       : large;
+  position        : sticky;
+  top             : 0;
+  z-index         : 1;
 }
 
 .navBarPhone {
-  display        : flex;
-  flex-direction : column;
-  justify-content: right;
-  align-items    : flex-start;
-  width          : 100%;
-  height         : fit-content;
-  padding        : 0.5rem;
-  border-bottom  : 1px solid #eaeaea;
-  font-weight    : 700;
-  font-size      : large;
-  margin-bottom  : 0.5rem;
+  display         : flex;
+  flex-direction  : column;
+  justify-content : right;
+  align-items     : flex-start;
+  width           : 100%;
+  height          : fit-content;
+  padding         : 0.5rem;
+  background-color: #422273;
+  font-weight     : 400;
+  font-size       : large;
 }
 
 .navBar a {
   margin-right: 1rem;
-  color       : #422273;
+  color       : #ececec;
 }
 
 .navBarPhone a {
-  color        : #422273;
+  color         : #ececec;
   padding-bottom: 0.5rem;
-  width        : 100%;
+  width         : 100%;
 }
 
 .navBarPhoneIcon {
-  color     : #422273;
+  color     : #ececec;
   align-self: flex-end;
 }
