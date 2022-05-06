@@ -23,6 +23,7 @@ const IDENTITY_COLORS = {
 
 
 const CardsTable: React.FC = () => {
+  const [isLoaded, setLoaded] = useState(false);
   const router = useRouter()
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
   const isMediumScreen = useMediaQuery('(max-width: 1024px) and (min-width: 601px)');
@@ -179,13 +180,19 @@ const CardsTable: React.FC = () => {
     setRenderKey(`render-${Math.random()}`);
   }, [isLargeVerticalScreen]);
 
+  useEffect(() => {
+    if (!isLoaded) setLoaded(true);
+  }, [isLoaded]);
+
   const handleClickRow = useCallback((_e, rowData = {}) => {
     if (isSmallScreen || isMediumScreen) {
       router.push(`/cards/${rowData['cardName']}`);
     } else {
       handleChangeCard(rowData['cardName']);
     }
-  }, [isSmallScreen, isMediumScreen])
+  }, [isSmallScreen, isMediumScreen]);
+
+  if (!isLoaded) return null;
 
   return (
     <span className={styles['cards-table']}>

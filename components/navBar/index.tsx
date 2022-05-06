@@ -5,15 +5,15 @@ import Icon from '@material-ui/core/Icon';
 import styles from '../../styles/Home.module.css';
 
 const NavBar: React.FC = () => {
-  const [loaded, setLoaded] = useState(false);
+  const [isLoaded, setLoaded] = useState(false);
   const [isOpen, toggle] = useReducer((state: boolean) => !state, false);
   const isSmallScreen: boolean = useMediaQuery('(max-width: 600px)');
 
   useEffect(() => {
-    if (!loaded) setLoaded(true);
-  }, [loaded]);
+    if (!isLoaded) setLoaded(true);
+  }, [isLoaded]);
 
-  if (!loaded) return null;
+  if (!isLoaded) return null;
 
   return (
     <>
