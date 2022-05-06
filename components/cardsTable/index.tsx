@@ -180,9 +180,6 @@ const CardsTable: React.FC = () => {
   }, [isLargeVerticalScreen]);
 
   const handleClickRow = useCallback((_e, rowData = {}) => {
-    console.log(window.matchMedia('(max-width: 857px) and (min-width: 601px)'))
-    console.log(window.screen.width)
-    console.log(isSmallScreen, isMediumScreen)
     if (isSmallScreen || isMediumScreen) {
       router.push(`/cards/${rowData['cardName']}`);
     } else {

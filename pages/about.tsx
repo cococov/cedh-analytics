@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Layout from "../components/layout";
 import styles from '../styles/About.module.css';
+import utilsStyles from '../styles/Utils.module.css';
+import { ArrowRightAlt } from '@material-ui/icons';
 import { ButtonLink } from '../components';
 import B from '../public/images/B.png';
 import G from '../public/images/G.png';
 import R from '../public/images/R.png';
 import U from '../public/images/U.png';
 import W from '../public/images/W.png';
-import C from '../public/images/C.png';
 
 const About = () => (
   <Layout title="About">
@@ -149,7 +150,10 @@ const About = () => (
           </p>
         </section>
         <ButtonLink variant="contained" color="primary" href="/">
-          ⬅ Home
+          <span className={utilsStyles.leftArrow}>
+            <ArrowRightAlt fontSize="small" />
+          </span>
+          Home
         </ButtonLink>
       </span>
     </div>
