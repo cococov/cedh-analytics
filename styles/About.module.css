@@ -32,7 +32,27 @@
   align-items   : center;
 }
 
+.aboutTeam {
+  display       : flex;
+  flex-direction: column;
+  margin-bottom : 2rem;
+  align-items   : flex-start;
+  align-items   : center;
+}
+
 .aboutSources p {
+  margin   : 0.2rem;
+  display  : flex;
+  width    : 100%;
+  max-width: 18rem;
+  padding  : 0;
+}
+
+.aboutTeam ul {
+  padding-left: 0;
+}
+
+.aboutTeam p {
   margin   : 0.2rem;
   display  : flex;
   width    : 100%;
