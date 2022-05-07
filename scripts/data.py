@@ -29,14 +29,14 @@ VALID_DECKS = len(all_competitive_deck_hashes)
 print('Procesing hashes \033[92mDone!\033[0m')
 print('Getting decklists data...')
 
-decklists_data_getted = 0
+decklists_data_getted_number = 0
 def get_decklists_data(hash):
-  global decklists_data_getted
-  decklists_data_getted += 1
+  global decklists_data_getted_number
   raw_data = requests.get(f"https://api.moxfield.com/v2/decks/all/{hash}")
   data = json.loads(raw_data.text)
   data['url'] = f"https://www.moxfield.com/decks/{hash}"
-  print(f"Getting decklists data [{decklists_data_getted}/{VALID_DECKS}]")
+  decklists_data_getted_number += 1
+  print(f"Getting decklists data [{decklists_data_getted_number}/{VALID_DECKS}]")
   return data
 
 decklists_data = list(map(get_decklists_data, all_competitive_deck_hashes))
