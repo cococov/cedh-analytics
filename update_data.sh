@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 scripts/data.py
+python3.9 scripts/data.py

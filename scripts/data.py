@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-import requests
 import json
+import requests
 from functools import reduce
 
 DB_JSON_URL = 'https://raw.githubusercontent.com/AverageDragon/cEDH-Decklist-Database/master/_data/database.json'
@@ -42,5 +42,62 @@ def get_decklists_data(hash):
 decklists_data = list(map(get_decklists_data, all_competitive_deck_hashes))
 
 print('Getting decklists data \033[92mDone!\033[0m')
+print('Processing decklists data...')
 
-print(decklists_data)
+def map_decklists_data(decklist_data):
+  result = {}
+  result['deck'] = {'name': decklist_data['name'], 'url': decklist_data['url']}
+  cards = decklist_data['mainboard'] | decklist_data['companions'] | decklist_data['commanders']
+  result['cards'] = list(cards.values())
+  return result
+
+mapped_decklists_data = list(map(map_decklists_data, decklists_data))
+
+def getType(type):
+    if type == '1':
+      return 'Planeswalker'
+    if type == '2':
+      return 'Creature'
+    if type == '3':
+      return 'Sorcery'
+    if type == '4':
+      return 'Instant'
+    if type == '5':
+      return 'Artifact'
+    if type == '6':
+      return 'Enchantment'
+    if type == '7':
+      return 'Land'
+    return 'Unknown'
+
+def reduce_deck(accumulated, current):
+  hash = {
+    'occurrences': 1,
+    'cardName': current['card']['name'],
+    'colorIdentity': ''.join(current['card']['color_identity']),
+    'deckLinks': [current['deck_url']],
+    'deckNames': [current['deck_name']],
+    'manaCost': current['card']['mana_cost'],
+    'prices': current['card']['prices'],
+    'reserved': current['card']['reserved'],
+    'scrapName': current['card']['name'],
+    'type': getType(current['card']['type']),
+    'typeLine': current['card']['type_line'],
+  }
+
+  saved_card = list(filter(lambda x: x['cardName'] == current['card']['name'], accumulated))
+
+  if saved_card != []:
+    hash['occurrences'] = saved_card[0]['occurrences'] + 1
+    hash['deckLinks'] = saved_card[0]['deckLinks'] + [current['deck_url']]
+    hash['deckNames'] = saved_card[0]['deckNames'] + [current['deck_name']]
+
+  return [*accumulated, hash]
+
+def reduce_all_decks(accumulated, current):
+  return reduce(reduce_deck, list(map(lambda x: {**x, 'deck_url': current['deck']['url'], 'deck_name': current['deck']['name']}, current['cards'])), accumulated)
+
+reduced_data = reduce(reduce_all_decks, mapped_decklists_data, [])
+
+with open('competitiveCards.json', 'w') as f:
+    json.dump(reduced_data, f)
