@@ -23,7 +23,7 @@ def reduce_competitive_lists_hashes(accumulated, current):
   hashes_without_blanks = list(filter(lambda h: h != '', hashes))
   return accumulated + hashes_without_blanks
 
-all_competitive_deck_hashes = reduce(reduce_competitive_lists_hashes, lists, [])[:3]
+all_competitive_deck_hashes = reduce(reduce_competitive_lists_hashes, lists, [])
 
 VALID_DECKS = len(all_competitive_deck_hashes)
 
