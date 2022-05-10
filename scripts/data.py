@@ -23,7 +23,7 @@ def reduce_competitive_lists_hashes(accumulated, current):
   hashes_without_blanks = list(filter(lambda h: h != '', hashes))
   return accumulated + hashes_without_blanks
 
-all_competitive_deck_hashes = reduce(reduce_competitive_lists_hashes, lists, [])
+all_competitive_deck_hashes = reduce(reduce_competitive_lists_hashes, lists, [])[:3]
 
 VALID_DECKS = len(all_competitive_deck_hashes)
 
@@ -86,12 +86,14 @@ def reduce_deck(accumulated, current):
     'typeLine': current['card']['type_line'],
   }
 
-  saved_card = list(filter(lambda x: x['cardName'] == current['card']['name'], accumulated))
+  saved_card_index = next((index for (index, d) in enumerate(accumulated) if d['cardName'] == current['card']['name']), -1)
+  #saved_card = list(filter(lambda x: x['cardName'] == current['card']['name'], accumulated))
 
-  if saved_card != []:
-    hash['occurrences'] = saved_card[0]['occurrences'] + 1
-    hash['deckLinks'] = saved_card[0]['deckLinks'] + [current['deck_url']]
-    hash['deckNames'] = saved_card[0]['deckNames'] + [current['deck_name']]
+  if saved_card_index > -1:
+    hash['occurrences'] = accumulated[saved_card_index]['occurrences'] + 1
+    hash['deckLinks'] = accumulated[saved_card_index]['deckLinks'] + [current['deck_url']]
+    hash['deckNames'] = accumulated[saved_card_index]['deckNames'] + [current['deck_name']]
+    del accumulated[saved_card_index]
 
   return [*accumulated, hash]
 
@@ -110,7 +112,7 @@ os.rename(os.path.join(dirname, r'public/data/competitiveCards.json'), os.path.j
 print('Backup saved \033[92mDone!\033[0m')
 print('Saving new file...')
 
-with open(os.path.join(dirname, r'public/data/competitiveCards.json'), 'w') as f:
-    json.dump(reduced_data, f)
+with open(os.path.join(dirname, r'public/data/competitiveCards.json'), 'w', encoding='utf8') as f:
+    json.dump(reduced_data, f, ensure_ascii=False)
 
 print('\033[92mDB Updated!\033[0m')
