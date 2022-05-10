@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 import json
 import requests
 from functools import reduce
@@ -71,13 +72,14 @@ def getType(type):
     return 'Unknown'
 
 def reduce_deck(accumulated, current):
+  print(current['card'])
   hash = {
     'occurrences': 1,
     'cardName': current['card']['name'],
     'colorIdentity': ''.join(current['card']['color_identity']),
     'deckLinks': [current['deck_url']],
     'deckNames': [current['deck_name']],
-    'manaCost': current['card']['mana_cost'],
+    'cmc': current['card']['cmc'],
     'prices': current['card']['prices'],
     'reserved': current['card']['reserved'],
     'scrapName': current['card']['name'],
@@ -99,5 +101,17 @@ def reduce_all_decks(accumulated, current):
 
 reduced_data = reduce(reduce_all_decks, mapped_decklists_data, [])
 
-with open('competitiveCards.json', 'w') as f:
+print('Processing decklists data \033[92mDone!\033[0m')
+print('Saving backup...')
+
+dirname = os.path.realpath('.')
+versions_number = len(os.listdir(os.path.join(dirname, r'public/data')))
+os.rename(os.path.join(dirname, r'public/data/competitiveCards.json'), os.path.join(dirname, r'public/data/competitiveCards_' + f"{versions_number}.json"))
+
+print('Backup saved \033[92mDone!\033[0m')
+print('Saving new file...')
+
+with open(os.path.join(dirname, r'public/data/competitiveCards.json'), 'w') as f:
     json.dump(reduced_data, f)
+
+print('\033[92mDB Updated!\033[0m')

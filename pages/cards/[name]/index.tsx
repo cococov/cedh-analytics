@@ -79,7 +79,6 @@ export const getServerSideProps = async ({ params, res }: Params) => {
     return {
       props: {
         cardType: print['type_line'],
-        manaCost: print['mana_cost'],
         cmc: print['cmc'],
         colorIdentity: print['color_identity'],
         rarity: print['rarity'],
@@ -96,7 +95,6 @@ export const getServerSideProps = async ({ params, res }: Params) => {
       notFound: true,
       props: {
         cardType: '',
-        manaCost: '',
         cmc: 0,
         colorIdentity: [],
         rarity: '',
