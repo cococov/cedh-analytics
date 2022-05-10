@@ -72,7 +72,6 @@ def getType(type):
     return 'Unknown'
 
 def reduce_deck(accumulated, current):
-  print(current['card'])
   hash = {
     'occurrences': 1,
     'cardName': current['card']['name'],
