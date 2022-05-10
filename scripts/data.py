@@ -87,7 +87,6 @@ def reduce_deck(accumulated, current):
   }
 
   saved_card_index = next((index for (index, d) in enumerate(accumulated) if d['cardName'] == current['card']['name']), -1)
-  #saved_card = list(filter(lambda x: x['cardName'] == current['card']['name'], accumulated))
 
   if saved_card_index > -1:
     hash['occurrences'] = accumulated[saved_card_index]['occurrences'] + 1
