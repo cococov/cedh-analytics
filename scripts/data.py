@@ -105,13 +105,13 @@ print('Processing decklists data \033[92mDone!\033[0m')
 print('Saving backup...')
 
 dirname = os.path.realpath('.')
-versions_number = len(os.listdir(os.path.join(dirname, r'public/data')))
-os.rename(os.path.join(dirname, r'public/data/competitiveCards.json'), os.path.join(dirname, r'public/data/competitiveCards_' + f"{versions_number}.json"))
+versions_number = len(os.listdir(os.path.join(dirname, r'public/data/cards')))
+os.rename(os.path.join(dirname, r'public/data/cards/competitiveCards.json'), os.path.join(dirname, r'public/data/cards/competitiveCards_' + f"{versions_number}.json"))
 
 print('Backup saved \033[92mDone!\033[0m')
 print('Saving new file...')
 
-with open(os.path.join(dirname, r'public/data/competitiveCards.json'), 'w', encoding='utf8') as f:
+with open(os.path.join(dirname, r'public/data/cards/competitiveCards.json'), 'w', encoding='utf8') as f:
     json.dump(reduced_data, f, ensure_ascii=False)
 
 print('\033[92mDB Updated!\033[0m')
