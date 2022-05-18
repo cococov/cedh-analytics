@@ -27,12 +27,12 @@ const About = () => (
         <section>
         cEDH Analytics is a website that analyzes and cross-references several EDH community’s resources to give insights on the competitive metagame. Using the DDB, Moxfield, Metagame information from the community and other resources to compile the “cEDH card pool” as well as several statistics regarding card choices, preferred commanders, strategies, and color combinations. As we grow in content, we hope to be another resource in the cEDH player toolkit to brew and develop new cEDH decks.
         </section>
-        <h1>About Us</h1>
+        <h2>About Us</h2>
         <section>
           We are Carrot Compost! a small group of cEDH enthusiasts from La Serena, Chile. We’ve been playing cEDH since 2019 aiming to craft the most competitive lists possible using our ideas and resources like the good old tappedOut.com. As we watched the online community grow as well as other sites such as the competitive EDH deck list database and moxfield, we started taking the meta changes and new cards into account. This site reflects our endeavors to craft the best competitive decks by compiling and analyzing the community’s data.
         </section>
         <section className={styles.aboutTeam}>
-          <h2>Team</h2>
+          <h2>The Team</h2>
           <ul>
             <li>
               <Image src={G} alt={'green'} width={16} height={16} />
@@ -129,6 +129,17 @@ const About = () => (
               className={styles.aboutLinkSource}
             >
               Scryfall
+            </a>
+          </p>
+          <p>
+            <b>Metagame Data: </b>
+            <a
+              href="https://docs.google.com/spreadsheets/d/12PAVZLEDabYJj58IVsIZozyM2FS_tAtA/edit#gid=563469835"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.aboutLinkSource}
+            >
+              Community Metagame Information
             </a>
           </p>
         </section>
