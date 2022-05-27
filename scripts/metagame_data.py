@@ -20,4 +20,4 @@ print('Saving new file...')
 
 data.to_json(os.path.join(dirname, r'public/data/metagame/metagame.json'), orient='records')
 
-print('\033[92mDB Updated!\033[0m')
+print('\033[92mMetagame Updated!\033[0m')
