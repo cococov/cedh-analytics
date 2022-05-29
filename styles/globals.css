@@ -33,6 +33,10 @@ ul {
   background-color: #422273 !important;
 }
 
+.MuiCheckbox-colorSecondary.Mui-checked {
+  color: #422273 !important;
+}
+
 /* Scroll */
 
 html {
