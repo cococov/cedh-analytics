@@ -65,4 +65,11 @@ update_date['metagame'] = datetime.today().strftime('%d-%m-%Y')
 with open(update_date_path, 'w', encoding='utf8') as f:
     json.dump(update_date, f, ensure_ascii=False)
 
+print('Date updated \033[92mDone!\033[0m')
+print('Uploading changes...', end='\r')
+
+os.system('git add .')
+os.system('git commit -m "chore: update metagame"')
+os.system('git push')
+
 print('\033[92mMetagame Updated!\033[0m')
