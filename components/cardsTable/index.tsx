@@ -31,7 +31,7 @@ const CardsTable: React.FC = () => {
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { handleChangeCard } = useContext(CardContext);
-  const [renderKey, setRenderKey] = useState(`render-${Math.random()}`)
+  const [renderKey, setRenderKey] = useState(`render-${Math.random()}`);
   const [columns, setColumns] = useState([
     {
       title: 'Name',
@@ -205,6 +205,7 @@ const CardsTable: React.FC = () => {
         isDraggable={false}
         canExportAllData={true}
         canFilter={true}
+        canSearch={true}
         withGrouping={false}
         rowHeight="5rem"
         title="Cards Played"

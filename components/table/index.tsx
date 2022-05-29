@@ -16,6 +16,7 @@ interface ITable {
   rowHeight?: string;
   canExportAllData?: boolean;
   canFilter?: boolean;
+  canSearch?: boolean;
   isDraggable?: boolean;
   withGrouping?: boolean;
   actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
@@ -35,6 +36,7 @@ const Table: React.FC<ITable> = ({
   rowHeight,
   canExportAllData,
   canFilter,
+  canSearch,
   isDraggable,
   withGrouping,
   actions,
@@ -62,6 +64,7 @@ const Table: React.FC<ITable> = ({
         grouping: withGrouping,
         exportAllData: canExportAllData,
         filtering: canFilter,
+        search: canSearch,
         emptyRowsWhenPaging: false,
         rowStyle: {
           height: rowHeight,
