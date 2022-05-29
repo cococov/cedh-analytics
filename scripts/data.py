@@ -4,6 +4,7 @@ import json
 import requests
 from functools import reduce
 from datetime import datetime
+from subprocess import DEVNULL, STDOUT, check_call
 
 DIRNAME = os.path.realpath('.')
 FOLDER_PATH = r'public/data/cards'
@@ -116,7 +117,7 @@ print('Backup saved \033[92mDone!\033[0m')
 print('Saving new file...', end='\r')
 
 with open(os.path.join(DIRNAME, FILE_PATH), 'w+', encoding='utf8') as f:
-    json.dump(reduced_data, f, ensure_ascii=False)
+  json.dump(reduced_data, f, ensure_ascii=False)
 
 print('New file saved \033[92mDone!\033[0m')
 print('Updating "update date"...', end='\r')
@@ -129,6 +130,13 @@ with open(update_date_path, 'r+') as f:
 update_date['database'] = datetime.today().strftime('%d-%m-%Y')
 
 with open(update_date_path, 'w', encoding='utf8') as f:
-    json.dump(update_date, f, ensure_ascii=False)
+  json.dump(update_date, f, ensure_ascii=False)
+
+print('Date updated \033[92mDone!\033[0m')
+print('Uploading changes...', end='\r')
+
+check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['git', 'commit', '-m', '"chore: update metagame"'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
 
 print('\033[92mDB Updated!\033[0m')

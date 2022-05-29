@@ -64,7 +64,7 @@ with open(update_date_path, 'r+') as f:
 update_date['metagame'] = datetime.today().strftime('%d-%m-%Y')
 
 with open(update_date_path, 'w', encoding='utf8') as f:
-    json.dump(update_date, f, ensure_ascii=False)
+  json.dump(update_date, f, ensure_ascii=False)
 
 print('Date updated \033[92mDone!\033[0m')
 print('Uploading changes...', end='\r')
