@@ -74,7 +74,7 @@ const CardsTable: React.FC = () => {
         'Planeswalker': 'Planeswalker',
       },
       cellStyle: {
-        minWidth: '5rem'
+        minWidth: '8rem'
       },
     },
     {
@@ -136,6 +136,9 @@ const CardsTable: React.FC = () => {
       hidden: false,
       searchable: false,
       hideFilterIcon: true,
+      cellStyle: {
+        minWidth: '12rem'
+      },
     },
     {
       title: 'Multiple Printings',
