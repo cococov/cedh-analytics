@@ -19,6 +19,7 @@
 .categories {
   display: flex;
   flex: 2;
+  place-content: center;
 }
 
 @media (max-width: 1170px) {

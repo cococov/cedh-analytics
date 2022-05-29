@@ -117,7 +117,8 @@ const MetagameCategoriesTable: React.FC<MetagameTableProps> = ({ data }) => {
     if (isSmallScreen) {
       setColumns((previous: any) => {
         return previous.map((current: any) => {
-          if (current.field === 'Category') return { ...current, cellStyle: { minWidth: '5rem' } };
+          if (current.field === 'Category') return { ...current, cellStyle: { minWidth: '11.5rem' } };
+          if (current.field === 'App.') return { ...current, title: 'App' };
           if (current.field !== 'Category' && current.field !== 'App.' && current.field !== 'Win Rate') {
             return { ...current, hidden: true };
           }
@@ -127,6 +128,8 @@ const MetagameCategoriesTable: React.FC<MetagameTableProps> = ({ data }) => {
     } else {
       setColumns((previous: any) => {
         return previous.map((current: any) => {
+          if (current.field === 'Category') return { ...current, cellStyle: { minWidth: '10rem' } };
+          if (current.field === 'App.') return { ...current, title: 'Appearances' };
           return { ...current, hidden: false };
         });
       });
