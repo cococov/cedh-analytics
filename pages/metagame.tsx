@@ -1,4 +1,5 @@
 import { NextPage } from 'next';
+import { server } from '../config';
 import Layout from "../components/layout";
 import styles from '../styles/Metagame.module.css';
 import { MetagameOverviewTable, MetagameCategoriesTable } from '../components';
@@ -44,7 +45,7 @@ const Metagame: NextPage<MetagameProps> = ({ data }) => {
 };
 
 Metagame.getInitialProps = async () => {
-  const rawResult = await fetch('/data/metagame/metagame.json');
+  const rawResult = await fetch(`${server}/data/metagame/metagame.json`);
   const result = await rawResult.json();
   return { data: result }
 }

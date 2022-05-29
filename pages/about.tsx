@@ -1,4 +1,5 @@
 import { NextPage } from 'next';
+import { server } from '../config';
 import Image from "next/image";
 import Layout from "../components/layout";
 import styles from '../styles/About.module.css';
@@ -200,7 +201,7 @@ const About: NextPage<MetagameProps> = ({ update_dates }) => (
 );
 
 About.getInitialProps = async () => {
-  const rawResult = await fetch('/data/update_date.json');
+  const rawResult = await fetch(`${server}/data/update_date.json`);
   const result = await rawResult.json();
   return { update_dates: result }
 };
