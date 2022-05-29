@@ -2,6 +2,7 @@ import os
 import json
 import pandas as pd
 from datetime import datetime
+from subprocess import DEVNULL, STDOUT, check_call
 
 DIRNAME = os.path.realpath('.')
 FOLDER_PATH = r'public/data/metagame'
@@ -68,8 +69,8 @@ with open(update_date_path, 'w', encoding='utf8') as f:
 print('Date updated \033[92mDone!\033[0m')
 print('Uploading changes...', end='\r')
 
-os.system('git add .')
-os.system('git commit -m "chore: update metagame"')
-os.system('git push')
+check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['git', 'commit', '-m', '"chore: update metagame"'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
 
 print('\033[92mMetagame Updated!\033[0m')
