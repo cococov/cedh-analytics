@@ -120,7 +120,7 @@ with open(os.path.join(DIRNAME, FILE_PATH), 'w+', encoding='utf8') as f:
   json.dump(reduced_data, f, ensure_ascii=False)
 
 print('New file saved \033[92mDone!\033[0m')
-print('Updating "update date"...', end='\r')
+print('Updating date...', end='\r')
 
 update_date = {}
 update_date_path = os.path.join(DIRNAME, r'public/data/update_date.json')
