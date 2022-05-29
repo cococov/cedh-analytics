@@ -136,7 +136,7 @@ print('Date updated \033[92mDone!\033[0m')
 print('Uploading changes...', end='\r')
 
 check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
-check_call(['git', 'commit', '-m', '"chore: update metagame"'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['git', 'commit', '-m', '"chore: update DB"'], stdout=DEVNULL, stderr=STDOUT)
 check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
 
 print('\033[92mDB Updated!\033[0m')
