@@ -1,19 +1,23 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os
 import json
 import requests
 from functools import reduce
+from datetime import datetime
 
+DIRNAME = os.path.realpath('.')
+FOLDER_PATH = r'public/data/cards'
+FILE_PATH = FOLDER_PATH + r'/competitiveCards.json'
 DB_JSON_URL = 'https://raw.githubusercontent.com/AverageDragon/cEDH-Decklist-Database/master/_data/database.json'
 
 print('Beginning')
-print('Getting decklists...')
+print('Getting decklists...', end='\r')
 
 raw_lists = requests.get(DB_JSON_URL)
 lists = json.loads(raw_lists.text)
 
 print('Getting decklists \033[92mDone!\033[0m')
-print('Procesing hashes...')
+print('Procesing hashes...', end='\r')
 
 def reduce_competitive_lists_hashes(accumulated, current):
   if current['section'] != 'COMPETITIVE': return accumulated
@@ -28,7 +32,7 @@ all_competitive_deck_hashes = reduce(reduce_competitive_lists_hashes, lists, [])
 VALID_DECKS = len(all_competitive_deck_hashes)
 
 print('Procesing hashes \033[92mDone!\033[0m')
-print('Getting decklists data...')
+print('Getting decklists data...', end='\r')
 
 decklists_data_getted_number = 0
 def get_decklists_data(hash):
@@ -43,7 +47,7 @@ def get_decklists_data(hash):
 decklists_data = list(map(get_decklists_data, all_competitive_deck_hashes))
 
 print('Getting decklists data \033[92mDone!\033[0m')
-print('Processing decklists data...')
+print('Processing decklists data...', end='\r')
 
 def map_decklists_data(decklist_data):
   result = {}
@@ -102,16 +106,29 @@ def reduce_all_decks(accumulated, current):
 reduced_data = reduce(reduce_all_decks, mapped_decklists_data, [])
 
 print('Processing decklists data \033[92mDone!\033[0m')
-print('Saving backup...')
+print('Saving backup...', end='\r')
 
-dirname = os.path.realpath('.')
-versions_number = len(os.listdir(os.path.join(dirname, r'public/data/cards')))
-os.rename(os.path.join(dirname, r'public/data/cards/competitiveCards.json'), os.path.join(dirname, r'public/data/cards/competitiveCards_' + f"{versions_number}.json"))
+if os.path.exists(FILE_PATH):
+  versions_number = len(os.listdir(os.path.join(DIRNAME, FOLDER_PATH)))
+  os.rename(os.path.join(DIRNAME, FILE_PATH), os.path.join(DIRNAME, FOLDER_PATH + r'/competitiveCards_' + f"{versions_number}.json"))
 
 print('Backup saved \033[92mDone!\033[0m')
-print('Saving new file...')
+print('Saving new file...', end='\r')
 
-with open(os.path.join(dirname, r'public/data/cards/competitiveCards.json'), 'w', encoding='utf8') as f:
+with open(os.path.join(DIRNAME, FILE_PATH), 'w+', encoding='utf8') as f:
     json.dump(reduced_data, f, ensure_ascii=False)
+
+print('New file saved \033[92mDone!\033[0m')
+print('Updating "update date"...', end='\r')
+
+update_date = {}
+update_date_path = os.path.join(DIRNAME, FOLDER_PATH + r'public/data/update_date.json')
+with open(update_date_path, 'r+') as f:
+  update_date = json.load(f) if os.stat(update_date_path).st_size > 0 else {}
+
+update_date['database'] = datetime.today().strftime('%d-%m-%Y')
+
+with open(update_date_path, 'w', encoding='utf8') as f:
+    json.dump(update_date, f, ensure_ascii=False)
 
 print('\033[92mDB Updated!\033[0m')

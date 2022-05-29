@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python3.9 scripts/data.py
+python3 scripts/data.py
 
 git add .
 git commit -m "chore: update DB"
