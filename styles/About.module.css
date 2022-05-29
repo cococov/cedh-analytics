@@ -1,11 +1,12 @@
 .about {
-  display        : flex;
-  flex-direction : column;
-  flex           : 1;
-  justify-content: center;
-  align-items    : center;
-  margin-bottom  : 3.5rem;
-  overflow-x     : hidden;
+  display         : flex;
+  flex-direction  : column;
+  flex            : 1;
+  justify-content : center;
+  align-items     : center;
+  padding-bottom  : 3.5rem;
+  overflow-x      : hidden;
+  background-color: white;
 }
 
 .aboutImage {
