@@ -107,7 +107,7 @@ const MetagameCategoriesTable: React.FC<MetagameTableProps> = ({ data }) => {
         minWidth: '8rem'
       },
       render: (rowData: any, type: any) => {
-        const value = type === 'row' ? rowData['Win Rate'] : rowData;
+        const value = type === 'row' ? rowData['App. Rate'] : rowData;
         return type === 'row' ? <span>{`${value}%`}</span> : value;
       },
     },
