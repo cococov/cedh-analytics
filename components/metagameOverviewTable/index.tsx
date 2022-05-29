@@ -12,11 +12,10 @@ type Row = {
 type Data = Row[];
 
 type MetagameTableProps = {
-  isLoading: boolean,
   data: Data,
 }
 
-const MetagameOverviewTable: React.FC<MetagameTableProps> = ({ isLoading, data }) => {
+const MetagameOverviewTable: React.FC<MetagameTableProps> = ({ data }) => {
   const [isLoaded, setLoaded] = useState(false);
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
@@ -116,7 +115,7 @@ const MetagameOverviewTable: React.FC<MetagameTableProps> = ({ isLoading, data }
         columns={columns}
         data={data as any}
         defaultNumberOfRows={(isLargeVerticalScreen || isSmallScreen) ? 10 : 5}
-        isLoading={isLoading}
+        isLoading={false}
         isDraggable={false}
         canExportAllData={true}
         canFilter={false}

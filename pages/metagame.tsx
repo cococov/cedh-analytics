@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { NextPage } from 'next';
 import Layout from "../components/layout";
 import styles from '../styles/Metagame.module.css';
 import { MetagameOverviewTable, MetagameCategoriesTable } from '../components';
@@ -24,33 +24,29 @@ type Data = {
   categories: CategoriesRow[],
 };
 
-const About = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<Data>({ overview: [], categories: [] });
+type MetagameProps = {
+  data: Data,
+}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const rawResult = await fetch('/data/metagame/metagame.json');
-      const result = await rawResult.json();
-      setData(result);
-      setIsLoading(false);
-    }
-
-    fetchData();
-  }, []);
-
+const Metagame: NextPage<MetagameProps> = ({ data }) => {
   return (
     <Layout title="Metagame">
       <div className={styles.metagame}>
         <section className={styles.overview}>
-          <MetagameOverviewTable isLoading={isLoading} data={data['overview']} />
+          <MetagameOverviewTable data={data['overview']} />
         </section>
         <section className={styles.categories}>
-          <MetagameCategoriesTable isLoading={isLoading} data={data['categories']} />
+          <MetagameCategoriesTable data={data['categories']} />
         </section>
       </div>
     </Layout>
   );
 };
 
-export default About;
+Metagame.getInitialProps = async () => {
+  const rawResult = await fetch('/data/metagame/metagame.json');
+  const result = await rawResult.json();
+  return { data: result }
+}
+
+export default Metagame;
