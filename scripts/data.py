@@ -123,7 +123,7 @@ print('New file saved \033[92mDone!\033[0m')
 print('Updating "update date"...', end='\r')
 
 update_date = {}
-update_date_path = os.path.join(DIRNAME, FOLDER_PATH + r'public/data/update_date.json')
+update_date_path = os.path.join(DIRNAME, r'public/data/update_date.json')
 with open(update_date_path, 'r+') as f:
   update_date = json.load(f) if os.stat(update_date_path).st_size > 0 else {}
 
