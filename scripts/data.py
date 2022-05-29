@@ -87,7 +87,8 @@ def reduce_deck(accumulated, current):
     'prices': current['card']['prices'],
     'reserved': current['card']['reserved'],
     'multiplePrintings': current['card']['has_multiple_editions'],
-    'uniquePrint': current['card']['set_name'] ,
+    'uniquePrint': current['card']['set_name'],
+    'multiverse_ids': current['card']['multiverse_ids'] if 'multiverse_ids' in current['card'] else [0],
     'scrapName': current['card']['name'],
     'type': getType(current['card']['type']),
     'typeLine': current['card']['type_line'],
@@ -99,6 +100,8 @@ def reduce_deck(accumulated, current):
     hash['occurrences'] = accumulated[saved_card_index]['occurrences'] + 1
     hash['deckLinks'] = accumulated[saved_card_index]['deckLinks'] + [current['deck_url']]
     hash['deckNames'] = accumulated[saved_card_index]['deckNames'] + [current['deck_name']]
+    if 'multiverse_ids' in current['card'] and current['card']['multiverse_ids'][0] < accumulated[saved_card_index]['multiverse_ids'][0]:
+      hash['uniquePrint'] = accumulated[saved_card_index]['uniquePrint']
     del accumulated[saved_card_index]
 
   return [*accumulated, hash]
