@@ -72,6 +72,7 @@ const Table: React.FC<ITable> = ({
         headerStyle: {
           fontWeight: 700,
         },
+        columnsButton: true,
       }}
       onRowClick={onRowClick}
     />

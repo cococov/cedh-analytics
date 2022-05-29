@@ -1,7 +1,7 @@
 html,
 body {
   padding: 0;
-  margin : 0;
+  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Droid Sans, sans-serif;
   background-color: #ececec;
 }
@@ -11,7 +11,7 @@ body {
 }
 
 a {
-  color          : inherit;
+  color: inherit;
   text-decoration: none;
 }
 
@@ -37,13 +37,13 @@ ul {
 
 html {
   --scrollbarBG1: #ececec;
-  --thumbBG1    : #999;
+  --thumbBG1: #999;
   --scrollbarBG2: #fff;
-  --thumbBG2    : #ececec;
+  --thumbBG2: #ececec;
 }
 
 body::-webkit-scrollbar {
-  width  : 8px;
+  width: 8px;
 }
 
 body {
@@ -57,5 +57,5 @@ body::-webkit-scrollbar-track {
 
 body::-webkit-scrollbar-thumb {
   background-color: var(--thumbBG1);
-  border          : 0px solid var(--scrollbarBG1);
+  border: 0px solid var(--scrollbarBG1);
 }

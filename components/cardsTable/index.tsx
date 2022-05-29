@@ -74,7 +74,7 @@ const CardsTable: React.FC = () => {
         'Planeswalker': 'Planeswalker',
       },
       cellStyle: {
-        minWidth: '9rem'
+        minWidth: '5rem'
       },
     },
     {
@@ -119,11 +119,36 @@ const CardsTable: React.FC = () => {
         'BGRUW': 'BGRUW',
       },
       cellStyle: {
-        minWidth: '8rem'
+        minWidth: '5rem'
       },
       render: (rowData: any, type: any) => {
         const value = type === 'row' ? rowData.colorIdentity : rowData;
         return type === 'row' ? <span>{value.split('').map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => <Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} />)}</span> : value;
+      },
+    },
+    {
+      title: 'Print',
+      field: 'uniquePrint',
+      align: 'center',
+      grouping: false,
+      filtering: true,
+      editable: 'never',
+      hidden: false,
+      searchable: false,
+      hideFilterIcon: true,
+    },
+    {
+      title: 'Multiple Printings',
+      field: 'multiplePrintings',
+      align: 'center',
+      grouping: false,
+      filtering: true,
+      editable: 'never',
+      hidden: true,
+      searchable: false,
+      lookup: {
+        'true': 'Yes',
+        'false': 'No',
       },
     },
     {
@@ -133,7 +158,7 @@ const CardsTable: React.FC = () => {
       grouping: false,
       filtering: true,
       editable: 'never',
-      hidden: false,
+      hidden: true,
       searchable: false,
       lookup: {
         'true': 'Yes',
@@ -155,7 +180,16 @@ const CardsTable: React.FC = () => {
     } else {
       setColumns((previous: any) => {
         return previous.map((current: any) => {
-          return { ...current, hidden: false };
+          if (
+            current.field === 'cardName' ||
+            current.field === 'occurrences' ||
+            current.field === 'type' ||
+            current.field === 'colorIdentity' ||
+            current.field === 'uniquePrint'
+          ) {
+            return { ...current, hidden: false };
+          }
+          return { ...current, hidden: true };
         });
       });
     }
