@@ -29,7 +29,7 @@ const MetagameOverviewTable: React.FC<MetagameTableProps> = ({ data }) => {
       editable: 'never',
       hidden: false,
       cellStyle: {
-        minWidth: '18rem'
+        minWidth: '21rem'
       },
     },
     {
