@@ -86,6 +86,7 @@ def reduce_deck(accumulated, current):
     'cmc': current['card']['cmc'],
     'prices': current['card']['prices'],
     'reserved': current['card']['reserved'],
+    'uniquePrint': 'Multiple' if current['card']['has_multiple_editions'] else current['card']['set_name'] ,
     'scrapName': current['card']['name'],
     'type': getType(current['card']['type']),
     'typeLine': current['card']['type_line'],
