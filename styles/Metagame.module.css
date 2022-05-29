@@ -1,0 +1,38 @@
+.metagame {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 3.5rem;
+  overflow-x: hidden;
+}
+
+.overview {
+  display: flex;
+  flex: 2;
+  place-content: center;
+}
+
+.categories {
+  display: flex;
+  flex: 2;
+}
+
+@media (max-width: 1170px) {
+  .metagame {
+    flex-direction: column;
+  }
+
+  .overview {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+
+  .categories {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+}

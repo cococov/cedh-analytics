@@ -2,6 +2,8 @@ export { default as Header } from './header';
 export { default as Footer } from './footer';
 export { default as Table } from './table';
 export { default as CardsTable } from './cardsTable';
+export { default as MetagameCategoriesTable } from './metagameCategoriesTable';
+export { default as MetagameOverviewTable } from './metagameOverviewTable';
 export { default as CardInfo } from './cardInfo';
 export { default as DeckLists } from './deckLists';
 export { default as Layout } from './layout';
