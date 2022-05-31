@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Script from 'next/script'
 
 const Header: React.FC<{
   title: string | string[] | undefined,
@@ -40,19 +39,6 @@ const Header: React.FC<{
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300&display=swap" rel="stylesheet" />
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-DQ9YFFQRG1"
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-DQ9YFFQRG1');
-        `}
-      </Script>
     </Head>
   )
 }
