@@ -137,7 +137,7 @@ const CardsTable: React.FC = () => {
       searchable: false,
       hideFilterIcon: true,
       cellStyle: {
-        minWidth: '12rem'
+        minWidth: '13rem'
       },
     },
     {
