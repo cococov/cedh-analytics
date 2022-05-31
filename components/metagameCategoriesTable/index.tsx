@@ -20,7 +20,7 @@ type MetagameTableProps = {
 const MetagameCategoriesTable: React.FC<MetagameTableProps> = ({ data }) => {
   const [isLoaded, setLoaded] = useState(false);
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
-  const isSmallScreen = useMediaQuery('(max-width: 600px)');
+  const isSmallScreen = useMediaQuery('(max-width: 760px)');
   const [renderKey, setRenderKey] = useState(`render-${Math.random()}`);
   const [columns, setColumns] = useState([
     {

@@ -22,7 +22,7 @@
   place-content: center;
 }
 
-@media (max-width: 1170px) {
+@media (max-width: 1500px) {
   .metagame {
     flex-direction: column;
   }
