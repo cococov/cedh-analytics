@@ -13,16 +13,18 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Script
+        strategy="lazyOnload"
         src="https://www.googletagmanager.com/gtag/js?id=G-DQ9YFFQRG1"
-        strategy="afterInteractive"
       />
-      <Script id="google-analytics" strategy="afterInteractive">
+      <Script strategy="lazyOnload">
         {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){window.dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            gtag('config', 'G-DQ9YFFQRG1');
+            gtag('config', 'G-DQ9YFFQRG1', {
+              page_path: window.location.pathname,
+            });
           `}
       </Script>
       <Component {...pageProps} />
