@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import styles from '../../../styles/Home.module.css';
+import styles from '../../../styles/CardsList.module.css';
 import { CardInfoPage, Layout } from '../../../components';
 import { includes } from 'ramda';
 

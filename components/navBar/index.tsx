@@ -29,6 +29,9 @@ const NavBar: React.FC = () => {
                   <Link href="/" passHref>
                     Home
                   </Link>
+                  <Link href="/cards" passHref>
+                    Card List
+                  </Link>
                   <Link href="/cards_analysis" passHref>
                     Cards Analysis
                   </Link>
@@ -49,6 +52,9 @@ const NavBar: React.FC = () => {
           <div className={styles.navBar} >
             <Link href="/" passHref>
               Home
+            </Link>
+            <Link href="/cards" passHref>
+              Card List
             </Link>
             <Link href="/cards_analysis" passHref>
               Cards Analysis

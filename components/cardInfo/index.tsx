@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import Image from 'next/image';
-import styles from '../../styles/Home.module.css';
+import styles from '../../styles/CardsList.module.css';
 import Tooltip from '@material-ui/core/Tooltip';
 import { CardContext } from '../../contexts';
 import Loading from '../loading';
