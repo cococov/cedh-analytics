@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import json
+import time
 import requests
 from functools import reduce
 from datetime import datetime
@@ -16,6 +17,7 @@ print('Getting decklists...', end='\r')
 
 raw_lists = requests.get(DB_JSON_URL)
 lists = json.loads(raw_lists.text)
+home_overview = {}
 
 print('Getting decklists \033[92mDone!\033[0m')
 print('Procesing hashes...', end='\r')
@@ -31,6 +33,7 @@ def reduce_competitive_lists_hashes(accumulated, current):
 all_competitive_deck_hashes = reduce(reduce_competitive_lists_hashes, lists, [])
 
 VALID_DECKS = len(all_competitive_deck_hashes)
+home_overview['decks'] = VALID_DECKS
 
 print('Procesing hashes \033[92mDone!\033[0m')
 print('Getting decklists data...', end='\r')
@@ -110,6 +113,8 @@ def reduce_all_decks(accumulated, current):
   return reduce(reduce_deck, list(map(lambda x: {**x, 'deck_url': current['deck']['url'], 'deck_name': current['deck']['name']}, current['cards'])), accumulated)
 
 reduced_data = reduce(reduce_all_decks, mapped_decklists_data, [])
+home_overview['cards'] = len(reduced_data)
+home_overview['staples'] = len(list(filter(lambda d: d['occurrences'] > 10, reduced_data)))
 
 print('Processing decklists data \033[92mDone!\033[0m')
 print('Saving backup...', end='\r')
@@ -124,7 +129,14 @@ print('Saving new file...', end='\r')
 with open(os.path.join(DIRNAME, FILE_PATH), 'w+', encoding='utf8') as f:
   json.dump(reduced_data, f, ensure_ascii=False)
 
+
 print('New file saved \033[92mDone!\033[0m')
+print('Updating home overview...', end='\r')
+
+with open(os.path.join(DIRNAME, r'public/data/home_overview.json'), 'w+', encoding='utf8') as f:
+  json.dump(home_overview, f, ensure_ascii=False)
+
+print('Home overview saved \033[92mDone!\033[0m')
 print('Updating date...', end='\r')
 
 update_date = {}
@@ -138,10 +150,12 @@ with open(update_date_path, 'w', encoding='utf8') as f:
   json.dump(update_date, f, ensure_ascii=False)
 
 print('Date updated \033[92mDone!\033[0m')
+time.sleep(1)
 print('Uploading changes...', end='\r')
 
-check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
-check_call(['git', 'commit', '-m', '"chore: update DB"'], stdout=DEVNULL, stderr=STDOUT)
-check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
+#check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
+#check_call(['git', 'commit', '-m', '"chore: update DB"'], stdout=DEVNULL, stderr=STDOUT)
+#check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
 
+time.sleep(1)
 print('\033[92mDB Updated!\033[0m')
