@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import styles from '../../styles/Home.module.css';
+import styles from '../../styles/Loading.module.css';
 
 const Loading: React.FC = () => {
   const [colors, setColors] = useState({

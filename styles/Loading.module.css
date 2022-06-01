@@ -1,0 +1,73 @@
+.mtg-loading-container {
+  display        : flex;
+  flex-grow      : 1;
+  align-self     : center;
+  justify-content: center;
+}
+
+.mtg-loading {
+  display              : grid;
+  grid-template-columns: 45px 45px 45px;
+  grid-template-rows   : 45px 45px 45px;
+  justify-content      : center;
+  justify-items        : center;
+  margin               : 2em 2em;
+  position             : relative;
+}
+
+.mtg-loading .mtg-loading-first {
+  width        : 13px;
+  height       : 12.5px;
+  border-radius: 100%;
+  grid-column  : 2;
+  grid-row     : 1;
+  position     : relative;
+  z-index      : 2;
+  align-self   : end;
+}
+
+.mtg-loading .mtg-loading-second {
+  width        : 13px;
+  height       : 12.5px;
+  border-radius: 100%;
+  grid-column  : 3;
+  grid-row     : 2;
+  position     : relative;
+  z-index      : 2;
+  justify-self : baseline;
+  align-self   : center;
+}
+
+.mtg-loading .mtg-loading-third {
+  width        : 13px;
+  height       : 12.5px;
+  border-radius: 100%;
+  grid-column  : 2;
+  grid-row     : 3;
+  position     : relative;
+  z-index      : 2;
+  justify-self : end;
+}
+
+.mtg-loading .mtg-loading-fourth {
+  width        : 13px;
+  height       : 12.5px;
+  border-radius: 100%;
+  grid-column  : 2;
+  grid-row     : 3;
+  position     : relative;
+  z-index      : 2;
+  justify-self : baseline;
+}
+
+.mtg-loading .mtg-loading-fifth {
+  width        : 13px;
+  height       : 12.5px;
+  border-radius: 100%;
+  grid-column  : 1;
+  grid-row     : 2;
+  position     : relative;
+  z-index      : 2;
+  justify-self : end;
+  align-self   : center;
+}
