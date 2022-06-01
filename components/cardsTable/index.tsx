@@ -26,7 +26,7 @@ const CardsTable: React.FC = () => {
   const [isLoaded, setLoaded] = useState(false);
   const router = useRouter()
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
-  const isMediumScreen = useMediaQuery('(max-width: 1024px) and (min-width: 601px)');
+  const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
