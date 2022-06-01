@@ -12,7 +12,7 @@ const Header: React.FC<{
       <meta property="og:site_name" content="cEDH Analytics" />
       <meta property="og:title" content={`Carrot Compost ${!!title && `| ${title}`}`} />
       <meta property="og:url" content="https://cedh-analytics.com/" />
-      <meta property="og:description" content={description} />
+      <meta property="og:description" content={description || "cEDH Analytics."} />
       <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
       <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
       <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
