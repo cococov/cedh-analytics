@@ -34,6 +34,10 @@
   flex-grow      : 1;
 }
 
+.logo {
+  margin-left: 0.5rem;
+}
+
 /* Nav Bar */
 
 .navBar {
