@@ -20,31 +20,6 @@
   overflow-x     : hidden;
 }
 
-.notFound {
-  display        : flex;
-  flex-direction : column;
-  flex           : 1;
-  justify-content: center;
-  align-items    : center;
-  margin-bottom  : 3.5rem;
-  overflow-x     : hidden;
-}
-
-.notFoundImage {
-  display       : flex;
-  flex-direction: column;
-  flex          : 1;
-  align-items   : center;
-  margin        : 2rem -0.5rem;
-}
-
-.notFoundText {
-  display       : flex;
-  flex-direction: column;
-  flex-grow     : 1;
-  text-align    : center;
-}
-
 @media (max-width: 767px) {
   .main {
     display: flex;
