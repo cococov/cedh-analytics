@@ -38,6 +38,7 @@ const Home: NextPage<HomeProps> = ({ data }) => (
         </span>
         <span className={styles['homeStatHiden']}>
           <h2>Total Staples</h2>
+          <span className={styles['homeStatDisclaimer']}>(More than 10 occurrences)</span>
           <p>{data.staples}</p>
         </span>
       </section>
@@ -221,6 +222,7 @@ const Home: NextPage<HomeProps> = ({ data }) => (
         </span>
         <span className={styles['homeStat']}>
           <h2>Total Staples</h2>
+          <span className={styles['homeStatDisclaimer']}>(More than 10 occurrences)</span>
           <p>{data.staples}</p>
         </span>
       </section>
