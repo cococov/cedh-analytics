@@ -37,6 +37,10 @@ ul {
   color: #422273 !important;
 }
 
+.MTableToolbar-title-8 {
+  overflow: visible !important;
+}
+
 /* Scroll */
 
 html {
