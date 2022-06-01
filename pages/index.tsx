@@ -23,8 +23,10 @@ const Home: NextPage<HomeProps> = ({ data }) => (
           src={SylvanLibrary}
           alt="SylvanLibrary"
           layout="intrinsic"
+          placeholder="blur"
           width={600}
           height={447}
+          priority
         />
       </span>
       <section className={styles['homeStatsHidenSection']}>
@@ -48,7 +50,9 @@ const Home: NextPage<HomeProps> = ({ data }) => (
             src={SylvanLibrary}
             alt="SylvanLibrary"
             layout='responsive'
+            placeholder="blur"
             objectFit='contain'
+            priority
           />
         </span>
         <h1>cEDH Analytics</h1>
