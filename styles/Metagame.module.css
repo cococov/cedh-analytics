@@ -37,3 +37,21 @@
     margin-bottom: 1rem;
   }
 }
+
+@media (min-width: 1930px) {
+  .metagame {
+    max-width: 80%;
+  }
+}
+
+@media (min-width: 2500px) {
+  .metagame {
+    max-width: 70%;
+  }
+}
+
+@media (min-width: 3000px) {
+  .metagame {
+    max-width: 60%;
+  }
+}
