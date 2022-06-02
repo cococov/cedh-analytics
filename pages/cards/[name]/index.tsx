@@ -1,8 +1,8 @@
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import styles from '../../../styles/CardsList.module.css';
 import { CardInfoPage, Layout } from '../../../components';
 import { includes } from 'ramda';
-
+import DATA from '../../../public/data/cards/competitiveCards.json';
 
 type CardsProps = {
   cardType: string,
@@ -11,9 +11,10 @@ type CardsProps = {
   averagePrice: number,
   isReservedList: boolean,
   cardImage: string,
+  deckLists: Array<{ cardListName: string, cardListUrl: string }> | any[],
 }
 
-const Cards = ({ cardType, cardText, gathererId, averagePrice, isReservedList, cardImage }: CardsProps) => {
+const Cards = ({ cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, deckLists }: CardsProps) => {
   const router = useRouter()
   const { name } = router.query
 
@@ -28,11 +29,12 @@ const Cards = ({ cardType, cardText, gathererId, averagePrice, isReservedList, c
           averagePrice={averagePrice}
           isReservedList={isReservedList}
           cardImage={cardImage}
+          deckLists={deckLists}
         />
       </main>
     </Layout>
   )
-}
+};
 
 type Params = {
   params: {
@@ -42,6 +44,10 @@ type Params = {
     setHeader: (name: string, value: string) => void
   }
 }
+
+const capitalizeFirstLetter = (str: string): string => str.charAt(0).toUpperCase() + str.slice(1);
+const capitalizeEveryWord = (str: string): string => str.split(' ').map(capitalizeFirstLetter).join(' ');
+const capitalizeURI = (uri: string): string => capitalizeEveryWord(decodeURI(uri));
 
 export const getServerSideProps = async ({ params, res }: Params) => {
   res.setHeader(
@@ -76,6 +82,13 @@ export const getServerSideProps = async ({ params, res }: Params) => {
       throw new Error("Card Not found");
     }
 
+    const card = DATA.find((current: any) => current['cardName'] === capitalizeURI(params.name as string));
+    const deckLists: Array<{ cardListName: string, cardListUrl: string }> | any[] = card
+      ?.deckLinks
+      ?.map((current: string, index: number) => (
+        { cardListName: card?.deckNames[index], cardListUrl: current }
+      )) || [];
+
     return {
       props: {
         cardType: print['type_line'],
@@ -88,6 +101,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
         isReservedList: print['reserved'],
         cardImage: print['image_uris']['large'],
         cardFaces: print['card_faces'] || null,
+        deckLists: deckLists,
       }
     };
   } catch (err) {
@@ -104,9 +118,10 @@ export const getServerSideProps = async ({ params, res }: Params) => {
         isReservedList: false,
         cardImage: '',
         cardFaces: null,
+        deckLists: [],
       }
     };
   }
-}
+};
 
 export default Cards;

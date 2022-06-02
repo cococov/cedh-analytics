@@ -3,7 +3,11 @@ import { CardContext } from '../../contexts';
 import Loading from '../loading';
 import styles from '../../styles/DeckLists.module.css';
 
-const DeckLists = () => {
+type DeckListsProps = {
+  deckLists?: Array<{ cardListName: string, cardListUrl: string }> | any[],
+}
+
+const DeckLists: React.FC<DeckListsProps> = ({ deckLists }) => {
   const {
     cardLists,
     isLoading
@@ -15,10 +19,10 @@ const DeckLists = () => {
       </span>
       <span className={styles['content']}>
         {isLoading ? <Loading /> : (
-          (!!cardLists && cardLists.length > 0) ? (
-            <ul className={styles['card-lists']}>
+          ((!!cardLists && cardLists.length > 0) || (!!deckLists && deckLists?.length > 0)) ? (
+            <ul className={(!!deckLists && deckLists?.length > 0) ? styles['card-lists-page'] : styles['card-lists']}>
               {
-                cardLists.map(({ cardListName, cardListUrl }) => (
+                ((!!deckLists && deckLists?.length > 0) ? deckLists : cardLists).map(({ cardListName, cardListUrl }) => (
                   <a
                     key={`card-list-${cardListUrl}`}
                     rel="author noopener noreferrer"
