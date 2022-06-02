@@ -169,7 +169,7 @@ type cardDataHash = {
   [key: string]: CardData,
 }
 
-type Data = CardData[];
+type Data = CardData[] | { error: string };
 
 const getType = (type: string): string => {
   switch (type) {
@@ -196,6 +196,7 @@ const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) => {
+  res.status(410).json({ error: 'Deprecated' });
   try {
     const rawLists = await fetch('https://raw.githubusercontent.com/AverageDragon/cEDH-Decklist-Database/master/_data/database.json');
     const lists: DbEntry[] = await rawLists.json();
