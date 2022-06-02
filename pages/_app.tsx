@@ -7,7 +7,7 @@ import '../styles/globals.css';
 const MyApp = ({ Component, pageProps }: AppProps) => {
 
   useEffect(() => {
-    hotjar.initialize(2715865, 6);
+    hotjar.initialize(2999875, 6);
   }, []);
 
   return (
