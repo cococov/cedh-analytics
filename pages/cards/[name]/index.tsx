@@ -45,10 +45,6 @@ type Params = {
   }
 }
 
-const capitalizeFirstLetter = (str: string): string => str.charAt(0).toUpperCase() + str.slice(1);
-const capitalizeEveryWord = (str: string): string => str.split(' ').map(capitalizeFirstLetter).join(' ');
-const capitalizeURI = (uri: string): string => capitalizeEveryWord(decodeURI(uri));
-
 export const getServerSideProps = async ({ params, res }: Params) => {
   res.setHeader(
     'Cache-Control',
@@ -82,7 +78,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
       throw new Error("Card Not found");
     }
 
-    const card = DATA.find((current: any) => current['cardName'] === capitalizeURI(params.name as string));
+    const card = DATA.find((current: any) => current['cardName'].toLowerCase() === (params.name as string).toLowerCase());
     const deckLists: Array<{ cardListName: string, cardListUrl: string }> | any[] = card
       ?.deckLinks
       ?.map((current: string, index: number) => (
