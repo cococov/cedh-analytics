@@ -123,7 +123,15 @@ const CardsTable: React.FC = () => {
       },
       render: (rowData: any, type: any) => {
         const value = type === 'row' ? rowData.colorIdentity : rowData;
-        return type === 'row' ? <span>{value.split('').map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => <Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} />)}</span> : value;
+        return type === 'row' ? (
+          <span>
+            {
+              value
+                .split('')
+                .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} placeholder="blur" priority />))
+            }
+          </span>
+        ) : value;
       },
     },
     {

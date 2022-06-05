@@ -18,6 +18,8 @@ const Error: NextPage<Props> = ({ statusCode }) => (
           layout="intrinsic"
           width={600}
           height={447}
+          placeholder="blur"
+          priority
         />
       </span>
       <span className={styles.notFoundText}>

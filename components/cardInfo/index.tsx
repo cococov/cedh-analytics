@@ -23,7 +23,7 @@ const CardInfo: React.FC = () => {
     <span className={styles['card-info-container']}>
       <span className={styles['card-info']}>
         <span className={styles['card-image']}>
-          <Image src={cardImage || CardBack} alt={`${selectedCard} image`} width={256} height={366} />
+          <Image src={cardImage || CardBack} alt={`${selectedCard} image`} width={256} height={366} priority />
         </span>
         {
           isLoading ? <Loading /> : (

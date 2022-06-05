@@ -16,6 +16,8 @@ const Custom500 = () => (
           layout="intrinsic"
           width={600}
           height={447}
+          placeholder="blur"
+          priority
         />
       </span>
       <span className={styles.errorText}>

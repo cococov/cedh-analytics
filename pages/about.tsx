@@ -6,6 +6,7 @@ import styles from '../styles/About.module.css';
 import utilsStyles from '../styles/Utils.module.css';
 import Icon from '@material-ui/core/Icon';
 import { ButtonLink } from '../components';
+import CarefulStudy from '../public/images/careful-study.jpeg';
 import B from '../public/images/B.png';
 import G from '../public/images/G.png';
 import R from '../public/images/R.png';
@@ -22,15 +23,17 @@ type MetagameProps = {
 }
 
 const About: NextPage<MetagameProps> = ({ update_dates }) => (
-  <Layout title="About"  description="About cEDH Analytics and us.">
+  <Layout title="About" description="About cEDH Analytics and us.">
     <div className={styles.about}>
       <span className={styles.aboutImage}>
         <Image
-          src="/images/careful-study.jpeg"
+          src={CarefulStudy}
           alt="Careful Study"
           layout="intrinsic"
           width={600}
           height={447}
+          placeholder="blur"
+          priority
         />
       </span>
       <span className={styles.aboutText}>
