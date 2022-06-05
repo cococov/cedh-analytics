@@ -131,7 +131,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ toggleLoading }) => {
             {
               value
                 .split('')
-                .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} placeholder="blur" priority />))
+                .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
             }
           </span>
         ) : value;
