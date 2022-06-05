@@ -39,7 +39,7 @@ const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathe
         <p>
           <b>Average Price: </b>${averagePrice || 'NO_DATA'}
         </p>
-        <ButtonLink variant="contained" color="primary" href={`https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=${gathererId}`}>
+        <ButtonLink variant="contained" color="primary" href={`https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=${gathererId}`} disabled={!!!gathererId}>
           Gatherer
         </ButtonLink>
       </section>

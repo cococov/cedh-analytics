@@ -41,6 +41,10 @@ ul {
   overflow: visible !important;
 }
 
+.MuiButton-contained.Mui-disabled {
+  background-color: #ccc !important;
+}
+
 /* Scroll */
 
 html {

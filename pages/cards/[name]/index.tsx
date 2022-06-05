@@ -53,6 +53,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
 
   try {
     const rawResult = await fetch(`https://api.scryfall.com/cards/named?exact=${params.name}`);
+    if (rawResult.status === 404) throw new Error("Card Not found");
     const result = await rawResult.json();
     const rawAllPrints = await fetch(result['prints_search_uri']);
     const allPrints = await rawAllPrints.json();
@@ -74,10 +75,6 @@ export const getServerSideProps = async ({ params, res }: Params) => {
       result
     );
 
-    if (!print['multiverse_ids'][0] || print['multiverse_ids'][0] === 0) {
-      throw new Error("Card Not found");
-    }
-
     const card = DATA.find((current: any) => current['cardName'].toLowerCase() === (params.name as string).toLowerCase());
     const deckLists: Array<{ cardListName: string, cardListUrl: string }> | any[] = card
       ?.deckLinks
@@ -92,7 +89,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
         colorIdentity: print['color_identity'],
         rarity: print['rarity'],
         cardText: print['oracle_text'],
-        gathererId: print['multiverse_ids'][0],
+        gathererId: print['multiverse_ids'][0] || null,
         averagePrice: !!print['prices']['usd'] ? print['prices']['usd'] : print['prices']['usd_foil'],
         isReservedList: print['reserved'],
         cardImage: print['image_uris']['large'],
