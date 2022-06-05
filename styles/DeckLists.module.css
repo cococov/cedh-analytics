@@ -1,36 +1,37 @@
 .container {
-  display       : flex;
-  flex          : 1;
+  display: flex;
+  flex: 1;
   flex-direction: column;
-  height        : 80vh;
-  padding-top   : 5vh;
+  height: 80vh;
+  padding-top: 5vh;
   padding-bottom: 5vh;
+  width: 100%;
 }
 
 .title {
-  display         : flex;
-  border          : solid;
-  border-width    : 1px 1px 0px 1px;
-  border-radius   : 8px 8px 0 0;
-  border-color    : #ccc;
-  padding-left    : 2rem;
+  display: flex;
+  border: solid;
+  border-width: 1px 1px 0px 1px;
+  border-radius: 8px 8px 0 0;
+  border-color: #ccc;
+  padding-left: 2rem;
   background-color: #422273;
-  color           : #ececec;
-  letter-spacing  : 0.1rem;
+  color: #ececec;
+  letter-spacing: 0.1rem;
 }
 
 .content {
-  margin-top      : 0;
-  display         : flex;
-  flex-direction  : column;
-  border          : solid;
-  border-width    : 1px;
-  flex-grow       : 1;
-  border-color    : #ccc;
-  max-height      : 100%;
-  overflow-y      : scroll;
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  border: solid;
+  border-width: 1px;
+  flex-grow: 1;
+  border-color: #ccc;
+  max-height: 100%;
+  overflow-y: scroll;
   background-color: #fff;
-  border-radius   : 0 0 4px 4px;
+  border-radius: 0 0 4px 4px;
 }
 
 .content::-webkit-scrollbar {
@@ -48,39 +49,39 @@
 
 .content::-webkit-scrollbar-thumb {
   background-color: var(--thumbBG2);
-  border          : 0px solid var(--scrollbarBG2);
+  border: 0px solid var(--scrollbarBG2);
 }
 
 .no-card-selected {
-  flex-grow  : 1;
-  align-self : center;
+  flex-grow: 1;
+  align-self: center;
   margin-left: 1rem;
-  opacity    : 30%;
-  text-align : center;
-  font-size  : 1.3rem;
+  opacity: 30%;
+  text-align: center;
+  font-size: 1.3rem;
 }
 
 .card-lists {
   padding-inline-start: 0px;
-  margin-top          : 0px;
-  margin-bottom       : 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .card-lists-page {
   padding-inline-start: 0px;
-  margin-top          : 0px;
-  margin-bottom       : 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
   max-height: 40vh;
 }
 
 .card-list {
-  display      : flex;
-  align-items  : center;
+  display: flex;
+  align-items: center;
   border-bottom: solid;
-  border-width : 1px;
-  border-color : #ccc;
-  height       : 2.5rem;
-  padding-left : 1rem;
+  border-width: 1px;
+  border-color: #ccc;
+  height: 2.5rem;
+  padding-left: 1rem;
 }
 
 .card-list:hover {
