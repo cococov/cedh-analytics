@@ -21,8 +21,11 @@ const IDENTITY_COLORS = {
   C: C
 }
 
+type CardsTableProps = {
+  toggleLoading: (state: boolean) => void,
+};
 
-const CardsTable: React.FC = () => {
+const CardsTable: React.FC<CardsTableProps> = ({ toggleLoading }) => {
   const [isLoaded, setLoaded] = useState(false);
   const router = useRouter()
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
@@ -231,6 +234,7 @@ const CardsTable: React.FC = () => {
 
   const handleClickRow = useCallback((_e, rowData = {}) => {
     if (isSmallScreen || isMediumScreen) {
+      toggleLoading(true);
       router.push(`/cards/${rowData['cardName']}`);
     } else {
       handleChangeCard(rowData['cardName']);
