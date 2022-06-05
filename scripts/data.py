@@ -153,9 +153,9 @@ print('Date updated \033[92mDone!\033[0m')
 time.sleep(1)
 print('Uploading changes...', end='\r')
 
-#check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
-#check_call(['git', 'commit', '-m', '"chore: update DB"'], stdout=DEVNULL, stderr=STDOUT)
-#check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['git', 'commit', '-m', '"chore: update DB"'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
 
 time.sleep(1)
 print('\033[92mDB Updated!\033[0m')
