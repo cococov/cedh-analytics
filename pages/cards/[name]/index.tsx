@@ -61,16 +61,16 @@ export const getServerSideProps = async ({ params, res }: Params) => {
 
     const print = allPrints['data'].reduce(
       (accumulator: any, current: any) => {
-        if (current['digital']) return accumulator;
-        if (current['oversized']) return accumulator;
-        if (current['border_color'] === 'gold') return accumulator;
-        if (includes(current['set_name'], GARBAGE_EDITIONS)) return accumulator;
-        if (!current['prices']['usd'] && !current['prices']['usd_foil']) return accumulator;
+        const multiverse_ids = current['multiverse_ids'].length === 0 ? accumulator['multiverse_ids'] : current['multiverse_ids'];
+        if (current['digital']) return accumulator; // Ignore digital cards
+        if (current['oversized']) return accumulator; // Ignore oversized cards
+        if (current['border_color'] === 'gold') return accumulator; // Ignore gold border cards
+        if (includes(current['set_name'], GARBAGE_EDITIONS)) return accumulator; // Ignore garbage editions
+        if (!current['prices']['usd'] && !current['prices']['usd_foil']) return accumulator; // Ignore cards without price
         const currentPrice = !!current['prices']['usd'] ? parseFloat(current['prices']['usd']) : parseFloat(current['prices']['usd_foil']);
         const accumulatedPrice = !!accumulator['prices']['usd'] ? parseFloat(accumulator['prices']['usd']) : parseFloat(accumulator['prices']['usd_foil']);
-        if (currentPrice >= accumulatedPrice) return accumulator;
-        if (current['multiverse_ids'].length === 0) return { ...current, multiverse_ids: accumulator['multiverse_ids'] }
-        return current;
+        if (currentPrice >= accumulatedPrice) return { ...accumulator, multiverse_ids: multiverse_ids };
+        return { ...current, multiverse_ids: multiverse_ids }
       },
       result
     );
