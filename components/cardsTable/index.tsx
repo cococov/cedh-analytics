@@ -184,7 +184,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ toggleLoading }) => {
       field: 'percentageOfUse',
       align: 'center',
       grouping: false,
-      filtering: true,
+      filtering: false,
       editable: 'never',
       hidden: true,
       searchable: false,
