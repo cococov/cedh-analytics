@@ -179,6 +179,20 @@ const CardsTable: React.FC<CardsTableProps> = ({ toggleLoading }) => {
         'false': 'No',
       },
     },
+    {
+      title: '% of Use',
+      field: 'percentageOfUse',
+      align: 'center',
+      grouping: false,
+      filtering: true,
+      editable: 'never',
+      hidden: true,
+      searchable: false,
+      render: (rowData: any, type: any) => {
+        const value = type === 'row' ? rowData.percentageOfUse : rowData;
+        return type === 'row' ? (<span>{value}%</span>) : value;
+      },
+    },
   ]);
 
   useEffect(() => {

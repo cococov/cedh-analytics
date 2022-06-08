@@ -41,6 +41,7 @@ print('Getting decklists data...', end='\r')
 decklists_data_getted_number = 0
 def get_decklists_data(hash):
   global decklists_data_getted_number
+  time.sleep(1)
   raw_data = requests.get(f"https://api.moxfield.com/v2/decks/all/{hash}")
   data = json.loads(raw_data.text)
   data['url'] = f"https://www.moxfield.com/decks/{hash}"
@@ -112,7 +113,10 @@ def reduce_deck(accumulated, current):
 def reduce_all_decks(accumulated, current):
   return reduce(reduce_deck, list(map(lambda x: {**x, 'deck_url': current['deck']['url'], 'deck_name': current['deck']['name']}, current['cards'])), accumulated)
 
-reduced_data = reduce(reduce_all_decks, mapped_decklists_data, [])
+def map_cards(card):
+  return {**card, 'percentageOfUse': round(card['occurrences'] / VALID_DECKS * 100, 2)}
+
+reduced_data = list(map(map_cards, reduce(reduce_all_decks, mapped_decklists_data, [])))
 home_overview['cards'] = len(reduced_data)
 home_overview['staples'] = len(list(filter(lambda d: d['occurrences'] > 10, reduced_data)))
 
