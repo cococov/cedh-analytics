@@ -204,6 +204,8 @@
 .homeStat p {
   font-size: 3rem;
   margin-top: 1rem;
+  color: #422273;
+  font-weight: 600;
 }
 
 .homeStatDisclaimer {
@@ -247,6 +249,8 @@
 .homeStatHiden p {
   font-size: 2rem;
   margin-top: 1rem;
+  color: #422273;
+  font-weight: 600;
 }
 
 @media (max-width: 1259px) {
