@@ -1,28 +1,29 @@
-import { useContext } from 'react';
-import { CardContext } from '../../contexts';
 import Loading from '../loading';
 import styles from '../../styles/DeckLists.module.css';
 
+type DeckList = { cardListName: string, cardListUrl: string };
 type DeckListsProps = {
-  deckLists?: Array<{ cardListName: string, cardListUrl: string }> | any[],
-}
+  isLoading?: boolean,
+  deckLists: DeckList[],
+};
 
-const DeckLists: React.FC<DeckListsProps> = ({ deckLists }) => {
-  const {
-    cardLists,
-    isLoading
-  } = useContext(CardContext);
+const DeckLists: React.FC<DeckListsProps> = ({ isLoading = false, deckLists }) => {
   return (
     <span className={styles['container']}>
       <span className={styles['title']}>
         <h3>Deck Lists</h3>
+        <span className={styles['use']}>
+          <span>503 Decks</span>
+          <span>~</span>
+          <span>100%</span>
+        </span>
       </span>
       <span className={styles['content']}>
         {isLoading ? <Loading /> : (
-          ((!!cardLists && cardLists.length > 0) || (!!deckLists && deckLists?.length > 0)) ? (
+          (!!deckLists && deckLists?.length > 0) ? (
             <ul className={(!!deckLists && deckLists?.length > 0) ? styles['card-lists-page'] : styles['card-lists']}>
               {
-                ((!!deckLists && deckLists?.length > 0) ? deckLists : cardLists).map(({ cardListName, cardListUrl }) => (
+                deckLists.map(({ cardListName, cardListUrl }) => (
                   <a
                     key={`card-list-${cardListUrl}`}
                     rel="author noopener noreferrer"

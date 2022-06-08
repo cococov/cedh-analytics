@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Image from 'next/image';
 import styles from '../../styles/CardsList.module.css';
 import Table from '../table';
-import { CardContext } from '../../contexts';
+import { Loading } from '../../components';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import B from '../../public/images/B.png';
 import G from '../../public/images/G.png';
@@ -12,28 +12,22 @@ import U from '../../public/images/U.png';
 import W from '../../public/images/W.png';
 import C from '../../public/images/C.png';
 
-const IDENTITY_COLORS = {
-  B: B,
-  G: G,
-  R: R,
-  U: U,
-  W: W,
-  C: C
-}
+const IDENTITY_COLORS = { B: B, G: G, R: R, U: U, W: W, C: C };
+
+type CardProps = any; // TODO: define type
 
 type CardsTableProps = {
+  cards: CardProps[],
   toggleLoading: (state: boolean) => void,
+  handleChangeCard: (cardName: string | undefined) => void,
 };
 
-const CardsTable: React.FC<CardsTableProps> = ({ toggleLoading }) => {
+const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleChangeCard }) => {
   const [isLoaded, setLoaded] = useState(false);
   const router = useRouter()
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
-  const [cards, setCards] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const { handleChangeCard } = useContext(CardContext);
   const [renderKey, setRenderKey] = useState(`render-${Math.random()}`);
   const [columns, setColumns] = useState([
     {
@@ -225,20 +219,6 @@ const CardsTable: React.FC<CardsTableProps> = ({ toggleLoading }) => {
   }, [isSmallScreen]);
 
   useEffect(() => {
-    const fetchCards = async () => {
-      const rawResult = await fetch('/data/cards/competitiveCards.json');
-      const result = await rawResult.json();
-      setCards(result.map((data: any) => {
-        const newColorIdentity = data['colorIdentity'];
-        return { ...data, colorIdentity: newColorIdentity === '' ? 'C' : newColorIdentity }
-      }));
-      setIsLoading(false);
-    }
-
-    fetchCards();
-  }, []);
-
-  useEffect(() => {
     setRenderKey(`render-${Math.random()}`);
   }, [isLargeVerticalScreen]);
 
@@ -255,7 +235,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ toggleLoading }) => {
     }
   }, [isSmallScreen, isMediumScreen]);
 
-  if (!isLoaded) return null;
+  if (!isLoaded) return <Loading />;
 
   return (
     <span className={styles['cards-table']}>
@@ -264,7 +244,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ toggleLoading }) => {
         columns={columns}
         data={cards}
         defaultNumberOfRows={(isLargeVerticalScreen || isSmallScreen) ? 10 : 5}
-        isLoading={isLoading}
+        isLoading={false}
         isDraggable={false}
         canExportAllData={true}
         canFilter={true}

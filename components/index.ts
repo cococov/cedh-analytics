@@ -9,4 +9,5 @@ export { default as DeckLists } from './deckLists';
 export { default as Layout } from './layout';
 export { default as SnackBarLoading } from './snackBarLoading';
 export { default as CardInfoPage } from './cardInfoPage';
+export { default as Loading } from './loading';
 export { default as ButtonLink } from './buttonLink';

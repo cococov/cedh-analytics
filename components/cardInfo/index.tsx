@@ -1,24 +1,38 @@
-import { useContext } from 'react';
 import Image from 'next/image';
 import styles from '../../styles/CardsList.module.css';
 import Tooltip from '@material-ui/core/Tooltip';
-import { CardContext } from '../../contexts';
 import Loading from '../loading';
 import { split } from 'ramda';
 import CardBack from '../../public/images/mtg-back.jpg';
 
 
-const CardInfo: React.FC = () => {
-  const {
-    selectedCard,
+type CardData = {
+  cardImage: string,
+  cardType: string,
+  cardText: string,
+  averagePrice: number,
+  gathererId: number,
+  isReservedList: boolean,
+};
+
+type CardInfoProps = {
+  selectedCard: string,
+  isLoading: boolean,
+  cardData: CardData,
+};
+
+const CardInfo: React.FC<CardInfoProps> = ({
+  selectedCard,
+  isLoading,
+  cardData: {
     cardImage,
     cardType,
     cardText,
     averagePrice,
     gathererId,
     isReservedList,
-    isLoading
-  } = useContext(CardContext);
+  }
+}) => {
   return (
     <span className={styles['card-info-container']}>
       <span className={styles['card-info']}>

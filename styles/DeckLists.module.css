@@ -20,6 +20,19 @@
   letter-spacing: 0.1rem;
 }
 
+.use {
+  flex-grow: 1;
+  justify-content: flex-end;
+  flex-direction: row;
+  display: flex;
+  margin-right: 0.5rem;
+  align-items: center;
+}
+
+.use span {
+  margin-right: 0.2rem;
+}
+
 .content {
   margin-top: 0;
   display: flex;

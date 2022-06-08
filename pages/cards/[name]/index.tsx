@@ -4,7 +4,7 @@ import { CardInfoPage, Layout } from '../../../components';
 import { includes } from 'ramda';
 import DATA from '../../../public/data/cards/competitiveCards.json';
 
-type CardsProps = {
+type CardProps = {
   cardType: string,
   cardText: string,
   gathererId: number,
@@ -14,7 +14,7 @@ type CardsProps = {
   deckLists: Array<{ cardListName: string, cardListUrl: string }> | any[],
 }
 
-const Cards = ({ cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, deckLists }: CardsProps) => {
+const Card: React.FC<CardProps> = ({ cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, deckLists }) => {
   const router = useRouter()
   const { name } = router.query
 
@@ -117,4 +117,4 @@ export const getServerSideProps = async ({ params, res }: Params) => {
   }
 };
 
-export default Cards;
+export default Card;
