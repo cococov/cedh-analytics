@@ -4,7 +4,7 @@ import { split } from 'ramda';
 import ButtonLink from '../buttonLink';
 import DeckLists from '../deckLists';
 
-
+type occurrencesForCard = { occurrences: number, persentaje: number };
 type CardProps = {
   cardName: string,
   cardType: string,
@@ -13,10 +13,11 @@ type CardProps = {
   averagePrice: number,
   isReservedList: boolean,
   cardImage: string,
+  occurrencesForCard: occurrencesForCard,
   deckLists: Array<{ cardListName: string, cardListUrl: string }> | any[],
 }
 
-const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, deckLists }: CardProps) => (
+const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, deckLists }: CardProps) => (
   <span className={styles['card-info-container']}>
     <h1 className={styles['card-name']}>{cardName || 'Card Name'}</h1>
     {isReservedList &&
@@ -43,7 +44,7 @@ const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathe
           Gatherer
         </ButtonLink>
       </section>
-      <DeckLists deckLists={deckLists} />
+      <DeckLists occurrencesForCard={occurrencesForCard} deckLists={deckLists} />
     </span>
   </span >
 );

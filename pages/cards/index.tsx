@@ -10,6 +10,7 @@ type CardProps = any; // TODO: define type
 type CardsProps = { cards: CardProps[] };
 type DeckList = { cardListName: string, cardListUrl: string };
 type DeckLists = DeckList[];
+type occurrencesForCard = { occurrences: number, persentaje: number };
 
 type CardData = {
   cardImage: string,
@@ -24,6 +25,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [selectedCard, setSelectedCard] = useState<string>('');
+  const [occurrencesForCard, setOccurrencesForCard] = useState<occurrencesForCard>({ occurrences: 0, persentaje: 0 });
   const [cardLists, setCardLists] = useState<DeckLists>([]);
   const [cardData, setCardData] = useState<CardData>({
     cardImage: '',
@@ -43,6 +45,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
       ?.map((current: string, index: number) => (
         { cardListName: card?.deckNames[index], cardListUrl: current }
       )) || [];
+    setOccurrencesForCard({ occurrences: card?.occurrences, persentaje: card?.percentageOfUse });
     setCardLists(cardLists);
   };
 
@@ -95,6 +98,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
       <main className={styles.main}>
         <span className={styles['left-span']}>
           <DeckLists
+            occurrencesForCard={occurrencesForCard}
             isLoading={isLoading}
             deckLists={cardLists}
           />

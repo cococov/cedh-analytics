@@ -1,22 +1,26 @@
 import Loading from '../loading';
 import styles from '../../styles/DeckLists.module.css';
 
+type occurrencesForCard = { occurrences: number, persentaje: number };
 type DeckList = { cardListName: string, cardListUrl: string };
 type DeckListsProps = {
+  occurrencesForCard: occurrencesForCard,
   isLoading?: boolean,
   deckLists: DeckList[],
 };
 
-const DeckLists: React.FC<DeckListsProps> = ({ isLoading = false, deckLists }) => {
+const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = false, deckLists }) => {
   return (
     <span className={styles['container']}>
       <span className={styles['title']}>
         <h3>Deck Lists</h3>
-        <span className={styles['use']}>
-          <span>503 Decks</span>
-          <span>~</span>
-          <span>100%</span>
-        </span>
+        {occurrencesForCard.occurrences > 0 && (
+          <span className={styles['use']}>
+            <span>{occurrencesForCard.occurrences} {occurrencesForCard.occurrences === 1 ? 'Deck' : 'Decks'}</span>
+            <span>~</span>
+            <span>{occurrencesForCard.persentaje} %</span>
+          </span>
+        )}
       </span>
       <span className={styles['content']}>
         {isLoading ? <Loading /> : (

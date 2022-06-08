@@ -4,6 +4,7 @@ import { CardInfoPage, Layout } from '../../../components';
 import { includes } from 'ramda';
 import DATA from '../../../public/data/cards/competitiveCards.json';
 
+type occurrencesForCard = { occurrences: number, persentaje: number };
 type CardProps = {
   cardType: string,
   cardText: string,
@@ -11,10 +12,11 @@ type CardProps = {
   averagePrice: number,
   isReservedList: boolean,
   cardImage: string,
+  occurrencesForCard: occurrencesForCard,
   deckLists: Array<{ cardListName: string, cardListUrl: string }> | any[],
 }
 
-const Card: React.FC<CardProps> = ({ cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, deckLists }) => {
+const Card: React.FC<CardProps> = ({ cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, deckLists }) => {
   const router = useRouter()
   const { name } = router.query
 
@@ -29,6 +31,7 @@ const Card: React.FC<CardProps> = ({ cardType, cardText, gathererId, averagePric
           averagePrice={averagePrice}
           isReservedList={isReservedList}
           cardImage={cardImage}
+          occurrencesForCard={occurrencesForCard}
           deckLists={deckLists}
         />
       </main>
@@ -82,6 +85,8 @@ export const getServerSideProps = async ({ params, res }: Params) => {
         { cardListName: card?.deckNames[index], cardListUrl: current }
       )) || [];
 
+    const occurrencesForCard = { occurrences: card?.occurrences, persentaje: card?.percentageOfUse }
+
     return {
       props: {
         cardType: print['type_line'],
@@ -94,6 +99,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
         isReservedList: print['reserved'],
         cardImage: print['image_uris']['large'],
         cardFaces: print['card_faces'] || null,
+        occurrencesForCard: occurrencesForCard,
         deckLists: deckLists,
       }
     };
@@ -111,6 +117,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
         isReservedList: false,
         cardImage: '',
         cardFaces: null,
+        occurrencesForCard: { occurrences: 0, persentaje: 0 },
         deckLists: [],
       }
     };
