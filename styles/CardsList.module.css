@@ -1,15 +1,15 @@
 /* Base */
 
 .main {
-  padding        : 1rem 0.5rem;
-  width          : 100%;
-  flex           : 1;
-  display        : flex;
-  flex-direction : row;
-  align-items    : center;
+  padding: 1rem 0.5rem;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   justify-content: center;
-  flex-wrap      : wrap;
-  overflow-x     : hidden;
+  flex-wrap: wrap;
+  overflow-x: hidden;
 }
 
 @media (max-width: 767px) {
@@ -26,7 +26,7 @@
 
 @media (max-width: 1500px) {
   .left-span {
-    flex   : none;
+    flex: none;
     display: none;
   }
 }
@@ -37,7 +37,7 @@
 
 @media (min-width: 857px) {
   .cards-table {
-    padding-left : 5rem;
+    padding-left: 5rem;
     padding-right: 5rem;
   }
 }
@@ -45,32 +45,32 @@
 /* Card Info */
 
 .card-info-container {
-  display       : flex;
-  flex          : 3;
+  display: flex;
+  flex: 3;
   flex-direction: column;
-  margin-right  : 1rem;
+  margin-right: 1rem;
 }
 
 @media (max-width: 1170px) {
   .card-info-container {
-    flex      : none;
+    flex: none;
     visibility: hidden;
-    display   : none;
+    display: none;
   }
 }
 
 .card-info {
-  display   : flex;
+  display: flex;
   align-self: flex-start;
 }
 
 .card-info .no-card-selected {
-  flex-grow  : 1;
-  align-self : center;
+  flex-grow: 1;
+  align-self: center;
   margin-left: 1rem;
-  opacity    : 30%;
-  text-align : center;
-  font-size  : 1.3rem;
+  opacity: 30%;
+  text-align: center;
+  font-size: 1.3rem;
 }
 
 .card-info .card-reserved-list {
@@ -79,7 +79,7 @@
 
 .card-info .card-reserved-list-container {
   cursor: default;
-  float : right;
+  float: right;
 }
 
 .card-info .card-text-container {
@@ -95,21 +95,33 @@
 }
 
 .card-info .card-text {
-  text-align  : justify;
+  text-align: justify;
   text-justify: inter-word;
 }
 
 .card-info .card-image {
-  flex-shrink : 0;
-  flex-grow   : 1;
-  align-self  : center;
-  text-align  : center;
+  flex-shrink: 0;
+  flex-grow: 1;
+  align-self: center;
+  text-align: center;
   margin-right: 2rem;
 }
 
 .card-info .card-gatherer {
-  color      : #422273;
+  color: #422273;
   font-weight: 700;
+}
+
+.card-info .card-gatherer-disabled {
+  color: #bcbcbc;
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 @media (max-width: 1860px) {

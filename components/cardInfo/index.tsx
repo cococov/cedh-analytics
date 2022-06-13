@@ -56,14 +56,19 @@ const CardInfo: React.FC<CardInfoProps> = ({
                 <p>
                   <b>Average Price: </b>${averagePrice || 'NO_DATA'}
                 </p>
-                <a
-                  className={styles['card-gatherer']}
-                  rel="author noopener noreferrer"
-                  target="_blank"
-                  href={`https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=${gathererId}`}
-                >
-                  Gatherer
-                </a>
+                {!!gathererId ? (
+                  <a
+                    className={styles['card-gatherer']}
+                    rel="author noopener noreferrer"
+                    target="_blank"
+                    href={`https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=${gathererId}`}
+                  >
+                    Gatherer
+                  </a>) : (
+                  <span className={styles['card-gatherer-disabled']} title="Has no gatherer.">
+                    Gatherer
+                  </span>
+                )}
                 <span className={styles['card-reserved-list-container']}>
                   {isReservedList &&
                     <Tooltip
