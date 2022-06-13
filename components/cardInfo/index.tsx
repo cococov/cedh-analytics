@@ -37,7 +37,11 @@ const CardInfo: React.FC<CardInfoProps> = ({
     <span className={styles['card-info-container']}>
       <span className={styles['card-info']}>
         <span className={styles['card-image']}>
-          <Image src={cardImage || CardBack} alt={`${selectedCard} image`} width={256} height={366} priority />
+          {(!!!selectedCard || isLoading) ? (
+            <Image src={CardBack} alt={`${selectedCard} image`} width={256} height={366} placeholder="blur" priority />
+          ) : (
+            <Image src={cardImage || CardBack} alt={`${selectedCard} image`} width={256} height={366} placeholder="blur" blurDataURL="/images/mtg-back.jpg" priority />
+          )}
         </span>
         {
           isLoading ? <Loading /> : (
