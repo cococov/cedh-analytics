@@ -234,10 +234,10 @@ const Home: NextPage<HomeProps> = ({ data }) => (
   </Layout >
 );
 
-Home.getInitialProps = async () => {
+export const getStaticProps = async () => {
   const rawResult = await fetch(`${server}/data/home_overview.json`);
   const result = await rawResult.json();
-  return { data: result }
+  return { props: { data: result } };
 }
 
 export default Home;

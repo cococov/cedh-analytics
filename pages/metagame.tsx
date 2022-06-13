@@ -31,7 +31,7 @@ type MetagameProps = {
 
 const Metagame: NextPage<MetagameProps> = ({ data }) => {
   return (
-    <Layout title="Metagame"  description="cEDH metagame analisis.">
+    <Layout title="Metagame" description="cEDH metagame analisis.">
       <div className={styles.metagame}>
         <section className={styles.overview}>
           <MetagameOverviewTable data={data['overview']} />
@@ -44,10 +44,10 @@ const Metagame: NextPage<MetagameProps> = ({ data }) => {
   );
 };
 
-Metagame.getInitialProps = async () => {
+export const getStaticProps = async () => {
   const rawResult = await fetch(`${server}/data/metagame/metagame.json`);
   const result = await rawResult.json();
-  return { data: result }
-}
+  return { props: { data: result } };
+};
 
 export default Metagame;

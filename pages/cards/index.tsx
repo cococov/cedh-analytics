@@ -118,37 +118,17 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
   );
 };
 
-type Params = {
-  res: {
-    setHeader: (name: string, value: string) => void
-  }
-}
+export const getStaticProps = async () => {
+  const cards = DATA.map((data: CardProps) => {
+    const newColorIdentity = data['colorIdentity'];
+    return { ...data, colorIdentity: newColorIdentity === '' ? 'C' : newColorIdentity }
+  });
 
-export const getServerSideProps = async ({ res }: Params) => {
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=1000, stale-while-revalidate=59'
-  )
-
-  try {
-    const cards = DATA.map((data: CardProps) => {
-      const newColorIdentity = data['colorIdentity'];
-      return { ...data, colorIdentity: newColorIdentity === '' ? 'C' : newColorIdentity }
-    });
-
-    return {
-      props: {
-        cards,
-      },
-    }
-  } catch (err) {
-    return {
-      notFound: true,
-      props: {
-        data: [],
-      }
-    };
-  }
+  return {
+    props: {
+      cards,
+    },
+  };
 };
 
 export default Cards;

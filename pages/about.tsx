@@ -203,10 +203,10 @@ const About: NextPage<MetagameProps> = ({ update_dates }) => (
   </Layout>
 );
 
-About.getInitialProps = async () => {
+export const getStaticProps = async () => {
   const rawResult = await fetch(`${server}/data/update_date.json`);
   const result = await rawResult.json();
-  return { update_dates: result }
+  return { props: { update_dates: result } };
 };
 
 export default About;
