@@ -63,13 +63,13 @@
   align-items: flex-start;
   width: 100%;
   height: fit-content;
-  padding: 0.5rem;
   background-color: #422273;
   font-weight: 400;
   font-size: large;
   position: sticky;
   top: 0;
   z-index: 1;
+  padding-bottom: 0.25rem;
 }
 
 .navBar a {
@@ -79,14 +79,16 @@
 
 .navBarPhone a {
   color: #ececec;
-  padding-bottom: 0.25rem;
+  padding-bottom: 0.5rem;
   padding-top: 0.25rem;
   width: 100%;
+  padding-left: 0.5rem;
 }
 
 .navBarPhoneIcon {
   color: #ececec;
   align-self: flex-end;
+  padding-top: 0.5rem;
 }
 
 /* Home */
