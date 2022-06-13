@@ -16,7 +16,7 @@ type HomeProps = {
 }
 
 const Home: NextPage<HomeProps> = ({ data }) => (
-  <Layout title="cEDH Card List" description="All cEDH cards.">
+  <Layout title="Home">
     <main className={styles['homeMain']} >
       <span className={styles['homeImageHiden']}>
         <Image

@@ -23,7 +23,7 @@ type MetagameProps = {
 }
 
 const About: NextPage<MetagameProps> = ({ update_dates }) => (
-  <Layout title="About" description="About cEDH Analytics and us.">
+  <Layout title="About" description="About cEDH Analytics and us">
     <div className={styles.about}>
       <span className={styles.aboutImage}>
         <Image

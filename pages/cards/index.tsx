@@ -93,7 +93,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
   }, [selectedCard]);
 
   return (
-    <Layout title="cEDH Card List" description="All cEDH cards.">
+    <Layout title="cEDH Card List" description="List of all cEDH cards">
       <SnackBarLoading isOpen={isLoading && (isMediumScreen || isSmallScreen)} />
       <main className={styles.main}>
         <span className={styles['left-span']}>

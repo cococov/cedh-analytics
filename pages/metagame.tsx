@@ -31,7 +31,7 @@ type MetagameProps = {
 
 const Metagame: NextPage<MetagameProps> = ({ data }) => {
   return (
-    <Layout title="Metagame" description="cEDH metagame analisis.">
+    <Layout title="Metagame" description="cEDH metagame analysis">
       <div className={styles.metagame}>
         <section className={styles.overview}>
           <MetagameOverviewTable data={data['overview']} />

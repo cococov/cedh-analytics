@@ -21,7 +21,7 @@ const Card: React.FC<CardProps> = ({ cardType, cardText, gathererId, averagePric
   const { name } = router.query
 
   return (
-    <Layout title={name} description={`${name} info.`}>
+    <Layout title={name} description={`${name} info`}>
       <main className={styles.main}>
         <CardInfoPage
           cardName={typeof (name) === "string" ? name : ''}
