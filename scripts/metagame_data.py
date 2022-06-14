@@ -14,23 +14,23 @@ overview_url = f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=o
 categories_url = f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={CATEGORIES_SHEET_NAME}'
 
 print('Beginning')
-print('Getting overview data...', end='\r')
+print('Getting overview data...', end='\r\033[K')
 
 overview_data = pd.read_csv(overview_url)
 
 print('Getting overview data \033[92mDone!\033[0m')
-print('Processing metagame data...', end='\r')
+print('Processing metagame data...', end='\r\033[K')
 
 overview_data = overview_data.dropna(axis=1)
 overview_data['Win Rate'] = overview_data['Win Rate'].str.replace('%', '').astype(float)
 
 print('Processing overview data \033[92mDone!\033[0m')
-print('Getting categories data...', end='\r')
+print('Getting categories data...', end='\r\033[K')
 
 categories_data = pd.read_csv(categories_url)
 
 print('Getting categories data \033[92mDone!\033[0m')
-print('Processing categories data...', end='\r')
+print('Processing categories data...', end='\r\033[K')
 
 categories_data = categories_data.dropna(axis=1)
 categories_data = categories_data.drop(['Total Seats'], axis=1)
@@ -38,14 +38,14 @@ categories_data['Win Rate'] = categories_data['Win Rate'].str.replace('%', '').a
 categories_data['App. Rate'] = categories_data['App. Rate'].str.replace('%', '').astype(float)
 
 print('Processing categories data \033[92mDone!\033[0m')
-print('Saving backup...', end='\r')
+print('Saving backup...', end='\r\033[K')
 
 if os.path.exists(FILE_PATH):
   version_number = len(os.listdir(os.path.join(DIRNAME, FOLDER_PATH)))
   os.rename(os.path.join(DIRNAME, FILE_PATH), os.path.join(DIRNAME, FOLDER_PATH + r'/metagame_' + f"{version_number}.json"))
 
 print('Backup saved \033[92mDone!\033[0m')
-print('Saving new file...', end='\r')
+print('Saving new file...', end='\r\033[K')
 
 overview = [{k: v for k, v in x.items() if pd.notnull(v)} for x in overview_data.to_dict('records')]
 categories = [{k: v for k, v in x.items() if pd.notnull(v)} for x in categories_data.to_dict('records')]
@@ -54,7 +54,7 @@ with open(FILE_PATH, 'w+') as file:
     json.dump({ "overview": overview, "categories": categories}, file)
 
 print('New file saved \033[92mDone!\033[0m')
-print('Updating date...', end='\r')
+print('Updating date...', end='\r\033[K')
 
 update_date = {}
 update_date_path = os.path.join(DIRNAME, r'public/data/update_date.json')
@@ -67,7 +67,7 @@ with open(update_date_path, 'w', encoding='utf8') as f:
   json.dump(update_date, f, ensure_ascii=False)
 
 print('Date updated \033[92mDone!\033[0m')
-print('Uploading changes...', end='\r')
+print('Uploading changes...', end='\r\033[K')
 
 check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
 check_call(['git', 'commit', '-m', '"chore: update metagame"'], stdout=DEVNULL, stderr=STDOUT)

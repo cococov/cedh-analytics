@@ -132,8 +132,8 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleCha
       },
     },
     {
-      title: 'Print',
-      field: 'uniquePrint',
+      title: 'Last Print',
+      field: 'lastPrint',
       align: 'center',
       grouping: false,
       filtering: true,
@@ -207,7 +207,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleCha
             current.field === 'occurrences' ||
             current.field === 'type' ||
             current.field === 'colorIdentity' ||
-            current.field === 'uniquePrint'
+            current.field === 'lastPrint'
           ) {
             return { ...current, hidden: false };
           }
