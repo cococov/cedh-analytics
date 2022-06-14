@@ -62,6 +62,7 @@
 .card-info {
   display: flex;
   align-self: flex-start;
+  flex-wrap: wrap;
 }
 
 .card-info .no-card-selected {
@@ -84,6 +85,7 @@
 
 .card-info .card-text-container {
   margin-left: 0rem;
+  min-width: 40%;
 }
 
 .card-info .card-name {
@@ -104,7 +106,6 @@
   flex-grow: 1;
   align-self: center;
   text-align: center;
-  margin-right: 2rem;
 }
 
 .card-info .card-gatherer {
@@ -124,16 +125,12 @@
   user-select: none;
 }
 
-@media (max-width: 1860px) {
-  @media (min-width: 1500px) {
-    .card-info {
-      flex-wrap: wrap;
-    }
+@media (min-width: 1921px) {
+  .card-info {
+    flex-wrap: nowrap;
   }
 
-  @media (max-width: 1385px) {
-    .card-info {
-      flex-wrap: wrap;
-    }
+  .card-info .card-image {
+    margin-right: 2rem;
   }
 }
