@@ -14,6 +14,9 @@ DIRNAME = os.path.realpath('.')
 FOLDER_PATH = r'public/data/cards'
 FILE_PATH = FOLDER_PATH + r'/competitiveCards.json'
 DB_JSON_URL = 'https://raw.githubusercontent.com/AverageDragon/cEDH-Decklist-Database/master/_data/database.json'
+ALL_PRINTS_URL = 'https://mtgjson.com/api/v5/AllPrintingsCSVFiles.zip'
+VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
+INVALID_SETS = ['MB1']
 
 print('Beginning')
 print('Deleting csv directory content...', end='\r')
@@ -25,8 +28,7 @@ for f in files:
 print('\033[Kcsv directory content deleted \033[92mDone!\033[0m')
 print('Geting all printing...', end='\r')
 
-url='https://mtgjson.com/api/v5/AllPrintingsCSVFiles.zip'
-check_call(['wget', url, '-P', './csv'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['wget', ALL_PRINTS_URL, '-P', './csv'], stdout=DEVNULL, stderr=STDOUT)
 
 print('\033[KGeting all printing \033[92mDone!\033[0m')
 print('Unzip all printing...', end='\r')
@@ -38,9 +40,7 @@ print('\033[KUnzip all printing \033[92mDone!\033[0m')
 print('Processing all printing...', end='\r')
 
 cards_csv = pd.read_csv('./csv/cards.csv', dtype='unicode').dropna(axis=1)
-valid_type_sets = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
-invalid_sets = ['MB1']
-sets_csv = pd.read_csv('./csv/sets.csv', dtype='unicode').dropna(axis=1).sort_values(by='releaseDate',ascending=False).query("type in @valid_type_sets").query("keyruneCode not in @invalid_sets")
+sets_csv = pd.read_csv('./csv/sets.csv', dtype='unicode').dropna(axis=1).sort_values(by='releaseDate',ascending=False).query("type in @VALID_TYPE_SETS").query("keyruneCode not in @INVALID_SETS").query("isOnlineOnly != 1")
 sets_csv['releaseDate'] = pd.to_datetime(sets_csv['releaseDate'])
 
 def get_last_set_for_card(card_name):
@@ -90,7 +90,7 @@ def get_decklists_data(hash):
   data = json.loads(raw_data.text)
   data['url'] = f"https://www.moxfield.com/decks/{hash}"
   decklists_data_getted_number += 1
-  print(f"Getting decklists data [{decklists_data_getted_number}/{VALID_DECKS}]")
+  print(f"\033[KGetting decklists data [{decklists_data_getted_number}/{VALID_DECKS}]", end='\r')
   return data
 
 decklists_data = list(map(get_decklists_data, all_competitive_deck_hashes))
