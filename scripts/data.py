@@ -56,6 +56,18 @@ def get_last_set_for_card(card_name):
     print("Error getting card set: " + card_name)
     return 'Unknown'
 
+def has_multiple_printings(card_name):
+  try:
+    if card_name in ['Glenn, the Voice of Calm', 'Rick, Steadfast Leader', 'Daryl, Hunter of Walkers']:
+      return 'Secret Lair Drop'
+    if card_name in ['Rot Hulk']:
+      return 'Game Night'
+    card_printing_codes = cards_csv.loc[cards_csv['name'] == card_name].iloc[0]['printings'].split(',')
+    card_printing_names = sets_csv.loc[sets_csv['keyruneCode'].isin(card_printing_codes)]['name']
+    return card_printing_names.count() > 1
+  except:
+    return False
+
 print('\033[KProcessing all printing \033[92mDone!\033[0m')
 print('Getting decklists...', end='\r')
 
@@ -135,7 +147,7 @@ def reduce_deck(accumulated, current):
     'cmc': current['card']['cmc'],
     'prices': current['card']['prices'],
     'reserved': current['card']['reserved'],
-    'multiplePrintings': current['card']['has_multiple_editions'],
+    'multiplePrintings': bool(has_multiple_printings(current['card']['name'])),
     'lastPrint': get_last_set_for_card(current['card']['name']),
     'multiverse_ids': current['card']['multiverse_ids'] if 'multiverse_ids' in current['card'] else [0],
     'scrapName': current['card']['name'],
