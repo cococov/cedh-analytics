@@ -40,7 +40,7 @@ print('\033[KUnzip all printing \033[92mDone!\033[0m')
 print('Processing all printing...', end='\r')
 
 cards_csv = pd.read_csv('./csv/cards.csv', dtype='unicode').dropna(axis=1)
-sets_csv = pd.read_csv('./csv/sets.csv', dtype='unicode').dropna(axis=1).sort_values(by='releaseDate',ascending=False).query("type in @VALID_TYPE_SETS").query("keyruneCode not in @INVALID_SETS").query("isOnlineOnly != 1")
+sets_csv = pd.read_csv('./csv/sets.csv', dtype='unicode').dropna(axis=1).sort_values(by='releaseDate',ascending=False).query("type in @VALID_TYPE_SETS").query("keyruneCode not in @INVALID_SETS").query("isOnlineOnly == '0'")
 sets_csv['releaseDate'] = pd.to_datetime(sets_csv['releaseDate'])
 
 def get_last_set_for_card(card_name):
