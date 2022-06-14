@@ -8,7 +8,7 @@ import zipfile
 import pandas as pd
 from functools import reduce
 from datetime import datetime
-from subprocess import DEVNULL, STDOUT, PIPE, check_call, Popen
+from subprocess import DEVNULL, STDOUT, check_call
 
 DIRNAME = os.path.realpath('.')
 FOLDER_PATH = r'public/data/cards'
@@ -16,44 +16,55 @@ FILE_PATH = FOLDER_PATH + r'/competitiveCards.json'
 DB_JSON_URL = 'https://raw.githubusercontent.com/AverageDragon/cEDH-Decklist-Database/master/_data/database.json'
 
 print('Beginning')
-print('Getting assets...', end='\r\033[K')
+print('Deleting csv directory content...', end='\r')
 
 files = glob.glob('./csv/*')
 for f in files:
   os.remove(f)
 
+print('\033[Kcsv directory content deleted \033[92mDone!\033[0m')
+print('Geting all printing...', end='\r')
+
 url='https://mtgjson.com/api/v5/AllPrintingsCSVFiles.zip'
-wget_proc = Popen(['wget', url, '-P', './csv'], stdout=PIPE, stderr=STDOUT)
-while True:
-  line = wget_proc.stdout.readline()
-  if not line:
-    break
-  print(line.rstrip(), end='\r\033[K')
+check_call(['wget', url, '-P', './csv'], stdout=DEVNULL, stderr=STDOUT)
+
+print('\033[KGeting all printing \033[92mDone!\033[0m')
+print('Unzip all printing...', end='\r')
 
 with zipfile.ZipFile('./csv/AllPrintingsCSVFiles.zip', 'r') as zip_ref:
   zip_ref.extractall('./csv')
 
+print('\033[KUnzip all printing \033[92mDone!\033[0m')
+print('Processing all printing...', end='\r')
+
 cards_csv = pd.read_csv('./csv/cards.csv', dtype='unicode').dropna(axis=1)
-valid_type_sets = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter']
+valid_type_sets = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 invalid_sets = ['MB1']
 sets_csv = pd.read_csv('./csv/sets.csv', dtype='unicode').dropna(axis=1).sort_values(by='releaseDate',ascending=False).query("type in @valid_type_sets").query("keyruneCode not in @invalid_sets")
 sets_csv['releaseDate'] = pd.to_datetime(sets_csv['releaseDate'])
 
 def get_last_set_for_card(card_name):
-  card_printing_codes = cards_csv.loc[cards_csv['name'] == card_name].iloc[0]['printings'].split(',')
-  card_printing_names = sets_csv.loc[sets_csv['keyruneCode'].isin(card_printing_codes)]['name']
-  return card_printing_names.iloc[0]
+  try:
+    if card_name in ['Glenn, the Voice of Calm', 'Rick, Steadfast Leader', 'Daryl, Hunter of Walkers']:
+      return 'Secret Lair Drop'
+    if card_name in ['Rot Hulk']:
+      return 'Game Night'
+    card_printing_codes = cards_csv.loc[cards_csv['name'] == card_name].iloc[0]['printings'].split(',')
+    card_printing_names = sets_csv.loc[sets_csv['keyruneCode'].isin(card_printing_codes)]['name']
+    return card_printing_names.iloc[0]
+  except:
+    print("Error getting card set: " + card_name)
+    return 'Unknown'
 
-print('Getting assets \033[92mDone!\033[0m')
-
-print('Getting decklists...', end='\r\033[K')
+print('\033[KProcessing all printing \033[92mDone!\033[0m')
+print('Getting decklists...', end='\r')
 
 raw_lists = requests.get(DB_JSON_URL)
 lists = json.loads(raw_lists.text)
 home_overview = {}
 
-print('Getting decklists \033[92mDone!\033[0m')
-print('Procesing hashes...', end='\r\033[K')
+print('\033[KGetting decklists \033[92mDone!\033[0m')
+print('Processing hashes...', end='\r')
 
 def reduce_competitive_lists_hashes(accumulated, current):
   if current['section'] != 'COMPETITIVE': return accumulated
@@ -68,8 +79,8 @@ all_competitive_deck_hashes = reduce(reduce_competitive_lists_hashes, lists, [])
 VALID_DECKS = len(all_competitive_deck_hashes)
 home_overview['decks'] = VALID_DECKS
 
-print('Procesing hashes \033[92mDone!\033[0m')
-print('Getting decklists data...', end='\r\033[K')
+print('\033[KProcesing hashes \033[92mDone!\033[0m')
+print('Getting decklists data...', end='\r')
 
 decklists_data_getted_number = 0
 def get_decklists_data(hash):
@@ -84,8 +95,9 @@ def get_decklists_data(hash):
 
 decklists_data = list(map(get_decklists_data, all_competitive_deck_hashes))
 
-print('Getting decklists data \033[92mDone!\033[0m')
-print('Processing decklists data...', end='\r\033[K')
+print('\033[KGetting decklists data \033[92mDone!\033[0m')
+#print('Processing decklists data...', end='\r')
+print('Processing decklists data...')
 
 def map_decklists_data(decklist_data):
   result = {}
@@ -151,28 +163,29 @@ reduced_data = list(map(map_cards, reduce(reduce_all_decks, mapped_decklists_dat
 home_overview['cards'] = len(reduced_data)
 home_overview['staples'] = len(list(filter(lambda d: d['occurrences'] > 10, reduced_data)))
 
+#print('\033[KProcessing decklists data \033[92mDone!\033[0m')
 print('Processing decklists data \033[92mDone!\033[0m')
-print('Saving backup...', end='\r\033[K')
+print('Saving backup...', end='\r')
 
 if os.path.exists(FILE_PATH):
   versions_number = len(os.listdir(os.path.join(DIRNAME, FOLDER_PATH)))
   os.rename(os.path.join(DIRNAME, FILE_PATH), os.path.join(DIRNAME, FOLDER_PATH + r'/competitiveCards_' + f"{versions_number}.json"))
 
-print('Backup saved \033[92mDone!\033[0m')
-print('Saving new file...', end='\r\033[K')
+print('\033[KBackup saved \033[92mDone!\033[0m')
+print('Saving new file...', end='\r')
 
 with open(os.path.join(DIRNAME, FILE_PATH), 'w+', encoding='utf8') as f:
   json.dump(reduced_data, f, ensure_ascii=False)
 
 
-print('New file saved \033[92mDone!\033[0m')
-print('Updating home overview...', end='\r\033[K')
+print('\033[KNew file saved \033[92mDone!\033[0m')
+print('Updating home overview...', end='\r')
 
 with open(os.path.join(DIRNAME, r'public/data/home_overview.json'), 'w+', encoding='utf8') as f:
   json.dump(home_overview, f, ensure_ascii=False)
 
-print('Home overview saved \033[92mDone!\033[0m')
-print('Updating date...', end='\r\033[K')
+print('\033[KHome overview saved \033[92mDone!\033[0m')
+print('Updating date...', end='\r')
 
 update_date = {}
 update_date_path = os.path.join(DIRNAME, r'public/data/update_date.json')
@@ -184,13 +197,20 @@ update_date['database'] = datetime.today().strftime('%d-%m-%Y')
 with open(update_date_path, 'w', encoding='utf8') as f:
   json.dump(update_date, f, ensure_ascii=False)
 
-print('Date updated \033[92mDone!\033[0m')
+print('\033[KDate updated \033[92mDone!\033[0m')
+print('Cleaning...', end='\r')
+
+files = glob.glob('./csv/*')
+for f in files:
+  os.remove(f)
+
+print('\033[KCleaning \033[92mDone!\033[0m')
 time.sleep(1)
-print('Uploading changes...', end='\r\033[K')
+print('Uploading changes...', end='\r')
 
 check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
 check_call(['git', 'commit', '-m', '"chore: update DB"'], stdout=DEVNULL, stderr=STDOUT)
 check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
 
 time.sleep(1)
-print('\033[92mDB Updated!\033[0m')
+print('\033[K\033[92mDB Updated!\033[0m')
