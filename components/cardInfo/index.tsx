@@ -44,9 +44,9 @@ const CardInfo: React.FC<CardInfoProps> = ({
           )}
         </span>
         {
-          isLoading ? <Loading /> : (
+          isLoading ? (<span className={styles['card-text-container-loading']}><Loading /></span>) : (
             !!selectedCard ? (
-              < span className={styles['card-text-container']}>
+              <span className={styles['card-text-container']}>
                 <h2 className={styles['card-name']}>{selectedCard || 'Card Name'}</h2>
                 <h3 className={styles['card-type']}>{cardType || 'Type'}</h3>
                 <p className={styles['card-text']} >
@@ -84,7 +84,7 @@ const CardInfo: React.FC<CardInfoProps> = ({
                   }
                 </span>
               </span>
-            ) : <h2 className={styles['no-card-selected']} >NO CARD SELECTED</h2>
+            ) : (<span className={styles['card-text-container-no-card-selected']}><h2 className={styles['no-card-selected']} >NO CARD SELECTED</h2></span>)
           )
         }
       </span>
