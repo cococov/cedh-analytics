@@ -89,7 +89,7 @@ def reduce_competitive_lists_hashes(accumulated, current):
   hashes_without_blanks = list(filter(lambda h: h != '', hashes))
   return accumulated + hashes_without_blanks
 
-all_competitive_deck_hashes = reduce(reduce_competitive_lists_hashes, lists, [])[0:20]
+all_competitive_deck_hashes = reduce(reduce_competitive_lists_hashes, lists, [])
 
 VALID_DECKS = len(all_competitive_deck_hashes)
 home_overview['decks'] = VALID_DECKS
@@ -177,7 +177,7 @@ reduced_data = list(map(map_cards, reduce(reduce_all_decks, mapped_decklists_dat
 home_overview['cards'] = len(reduced_data)
 home_overview['staples'] = len(list(filter(lambda d: d['occurrences'] > 10, reduced_data)))
 home_overview['last_set'] = LAST_SET
-home_overview['last_set_top_10'] = list(filter(lambda d: (not d['multiplePrintings']) and (d['lastPrint'] == LAST_SET), reduced_data))
+home_overview['last_set_top_10'] = list(sorted(map(lambda x: {'occurrences': x['occurrences'], 'cardName': x['cardName']}, filter(lambda d: (not d['multiplePrintings']) and (d['lastPrint'] == LAST_SET), reduced_data)), key=lambda d: d['occurrences'], reverse=True))[0:10]
 
 print('\033[KProcessing decklists data \033[92mDone!\033[0m')
 print('Saving backup...', end='\r')
