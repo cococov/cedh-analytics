@@ -6,8 +6,8 @@ import requests
 import glob
 import zipfile
 import pandas as pd
-from functools import reduce
 from datetime import datetime
+from functools import reduce, lru_cache
 from subprocess import DEVNULL, STDOUT, check_call
 
 DIRNAME = os.path.realpath('.')
@@ -17,6 +17,7 @@ DB_JSON_URL = 'https://raw.githubusercontent.com/AverageDragon/cEDH-Decklist-Dat
 ALL_PRINTS_URL = 'https://mtgjson.com/api/v5/AllPrintingsCSVFiles.zip'
 VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 INVALID_SETS = ['MB1']
+LAST_SET = "Commander Legends: Battle for Baldur's Gate"
 
 print('Beginning')
 print('Deleting csv directory content...', end='\r')
@@ -43,6 +44,7 @@ cards_csv = pd.read_csv('./csv/cards.csv', dtype='unicode').dropna(axis=1)
 sets_csv = pd.read_csv('./csv/sets.csv', dtype='unicode').dropna(axis=1).sort_values(by='releaseDate',ascending=False).query("type in @VALID_TYPE_SETS").query("keyruneCode not in @INVALID_SETS").query("isOnlineOnly == '0'")
 sets_csv['releaseDate'] = pd.to_datetime(sets_csv['releaseDate'])
 
+@lru_cache(maxsize=None)
 def get_last_set_for_card(card_name):
   try:
     if card_name in ['Glenn, the Voice of Calm', 'Rick, Steadfast Leader', 'Daryl, Hunter of Walkers']:
@@ -56,6 +58,7 @@ def get_last_set_for_card(card_name):
     print("Error getting card set: " + card_name)
     return 'Unknown'
 
+@lru_cache(maxsize=None)
 def has_multiple_printings(card_name):
   try:
     if card_name in ['Glenn, the Voice of Calm', 'Rick, Steadfast Leader', 'Daryl, Hunter of Walkers']:
@@ -86,7 +89,7 @@ def reduce_competitive_lists_hashes(accumulated, current):
   hashes_without_blanks = list(filter(lambda h: h != '', hashes))
   return accumulated + hashes_without_blanks
 
-all_competitive_deck_hashes = reduce(reduce_competitive_lists_hashes, lists, [])
+all_competitive_deck_hashes = reduce(reduce_competitive_lists_hashes, lists, [])[0:20]
 
 VALID_DECKS = len(all_competitive_deck_hashes)
 home_overview['decks'] = VALID_DECKS
@@ -108,8 +111,7 @@ def get_decklists_data(hash):
 decklists_data = list(map(get_decklists_data, all_competitive_deck_hashes))
 
 print('\033[KGetting decklists data \033[92mDone!\033[0m')
-#print('Processing decklists data...', end='\r')
-print('Processing decklists data...')
+print('Processing decklists data...', end='\r')
 
 def map_decklists_data(decklist_data):
   result = {}
@@ -174,9 +176,10 @@ def map_cards(card):
 reduced_data = list(map(map_cards, reduce(reduce_all_decks, mapped_decklists_data, [])))
 home_overview['cards'] = len(reduced_data)
 home_overview['staples'] = len(list(filter(lambda d: d['occurrences'] > 10, reduced_data)))
+home_overview['last_set'] = LAST_SET
+home_overview['last_set_top_10'] = list(filter(lambda d: (not d['multiplePrintings']) and (d['lastPrint'] == LAST_SET), reduced_data))
 
-#print('\033[KProcessing decklists data \033[92mDone!\033[0m')
-print('Processing decklists data \033[92mDone!\033[0m')
+print('\033[KProcessing decklists data \033[92mDone!\033[0m')
 print('Saving backup...', end='\r')
 
 if os.path.exists(FILE_PATH):
