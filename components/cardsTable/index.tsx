@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
-import { useRouter } from 'next/router'
+import React, { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import styles from '../../styles/CardsList.module.css';
 import Table from '../table';
@@ -24,7 +24,7 @@ type CardsTableProps = {
 
 const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleChangeCard }) => {
   const [isLoaded, setLoaded] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
