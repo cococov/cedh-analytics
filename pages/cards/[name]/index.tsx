@@ -13,10 +13,10 @@ type CardProps = {
   isReservedList: boolean,
   cardImage: string,
   occurrencesForCard: occurrencesForCard,
-  deckLists: Array<{ cardListName: string, cardListUrl: string }> | any[],
+  decklists: Array<{ name: string, url: string }> | any[],
 }
 
-const Card: React.FC<CardProps> = ({ cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, deckLists }) => {
+const Card: React.FC<CardProps> = ({ cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, decklists }) => {
   const router = useRouter()
   const { name } = router.query
 
@@ -32,7 +32,7 @@ const Card: React.FC<CardProps> = ({ cardType, cardText, gathererId, averagePric
           isReservedList={isReservedList}
           cardImage={cardImage}
           occurrencesForCard={occurrencesForCard}
-          deckLists={deckLists}
+          decklists={decklists}
         />
       </main>
     </Layout>
@@ -79,12 +79,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
     );
 
     const card = DATA.find((current: any) => current['cardName'].toLowerCase() === (params.name as string).toLowerCase());
-    const deckLists: Array<{ cardListName: string, cardListUrl: string }> | any[] = card
-      ?.deckLinks
-      ?.map((current: string, index: number) => (
-        { cardListName: card?.deckNames[index], cardListUrl: current }
-      )) || [];
-
+    const decklists: Array<{ name: string, url: string }> | any[] = card?.decklists || [];
     const occurrencesForCard = { occurrences: card?.occurrences, persentaje: card?.percentageOfUse }
 
     return {
@@ -100,7 +95,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
         cardImage: print['image_uris']['large'],
         cardFaces: print['card_faces'] || null,
         occurrencesForCard: occurrencesForCard,
-        deckLists: deckLists,
+        decklists: decklists,
       }
     };
   } catch (err) {
@@ -118,7 +113,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
         cardImage: '',
         cardFaces: null,
         occurrencesForCard: { occurrences: 0, persentaje: 0 },
-        deckLists: [],
+        decklists: [],
       }
     };
   }

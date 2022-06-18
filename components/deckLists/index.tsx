@@ -2,14 +2,14 @@ import Loading from '../loading';
 import styles from '../../styles/DeckLists.module.css';
 
 type occurrencesForCard = { occurrences: number, persentaje: number };
-type DeckList = { cardListName: string, cardListUrl: string };
+type DeckList = { name: string, url: string };
 type DeckListsProps = {
   occurrencesForCard: occurrencesForCard,
   isLoading?: boolean,
-  deckLists: DeckList[],
+  decklists: DeckList[],
 };
 
-const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = false, deckLists }) => {
+const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = false, decklists }) => {
   return (
     <span className={styles['container']}>
       <span className={styles['title']}>
@@ -24,21 +24,21 @@ const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = f
       </span>
       <span className={styles['content']}>
         {isLoading ? <Loading /> : (
-          (!!deckLists && deckLists?.length > 0) ? (
-            <ul className={(!!deckLists && deckLists?.length > 0) ? styles['card-lists-page'] : styles['card-lists']}>
+          (!!decklists && decklists?.length > 0) ? (
+            <ul className={(!!decklists && decklists?.length > 0) ? styles['card-lists-page'] : styles['card-lists']}>
               {
-                deckLists.map(({ cardListName, cardListUrl }) => (
+                decklists.map(({ name, url }) => (
                   <a
-                    key={`card-list-${cardListUrl}`}
+                    key={`card-list-${url}`}
                     rel="author noopener noreferrer"
                     target="_blank"
-                    href={cardListUrl}
+                    href={url}
                   >
                     <li
-                      key={`li-card-list-${cardListUrl}`}
+                      key={`li-card-list-${url}`}
                       className={styles['card-list']}
                     >
-                      {cardListName}
+                      {name}
                     </li>
                   </a>
                 ))

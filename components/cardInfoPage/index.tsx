@@ -14,10 +14,10 @@ type CardProps = {
   isReservedList: boolean,
   cardImage: string,
   occurrencesForCard: occurrencesForCard,
-  deckLists: Array<{ cardListName: string, cardListUrl: string }> | any[],
+  decklists: Array<{ name: string, url: string }> | any[],
 }
 
-const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, deckLists }: CardProps) => (
+const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, decklists }: CardProps) => (
   <span className={styles['card-info-container']}>
     <h1 className={styles['card-name']}>{cardName || 'Card Name'}</h1>
     {isReservedList &&
@@ -44,7 +44,7 @@ const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathe
           Gatherer
         </ButtonLink>
       </section>
-      <DeckLists occurrencesForCard={occurrencesForCard} deckLists={deckLists} />
+      <DeckLists occurrencesForCard={occurrencesForCard} decklists={decklists} />
     </span>
   </span >
 );

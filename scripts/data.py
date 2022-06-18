@@ -144,8 +144,7 @@ def reduce_deck(accumulated, current):
     'occurrences': 1,
     'cardName': current['card']['name'],
     'colorIdentity': ''.join(current['card']['color_identity']),
-    'deckLinks': [current['deck_url']],
-    'deckNames': [current['deck_name']],
+    'decklists': [{ 'url': current['deck_url'], 'name': current['deck_name']}],
     'cmc': current['card']['cmc'],
     'prices': current['card']['prices'],
     'reserved': current['card']['reserved'],
@@ -161,8 +160,7 @@ def reduce_deck(accumulated, current):
 
   if saved_card_index > -1:
     hash['occurrences'] = accumulated[saved_card_index]['occurrences'] + 1
-    hash['deckLinks'] = accumulated[saved_card_index]['deckLinks'] + [current['deck_url']]
-    hash['deckNames'] = accumulated[saved_card_index]['deckNames'] + [current['deck_name']]
+    hash['decklists'] = accumulated[saved_card_index]['decklists'] + [{ 'url': current['deck_url'], 'name': current['deck_name'] }]
     del accumulated[saved_card_index]
 
   return [*accumulated, hash]
@@ -223,9 +221,9 @@ print('\033[KCleaning \033[92mDone!\033[0m')
 time.sleep(1)
 print('Uploading changes...', end='\r')
 
-check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
-check_call(['git', 'commit', '-m', '"chore: update DB"'], stdout=DEVNULL, stderr=STDOUT)
-check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
+#check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
+#check_call(['git', 'commit', '-m', '"chore: update DB"'], stdout=DEVNULL, stderr=STDOUT)
+#check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
 
 time.sleep(1)
 print('\033[K\033[92mDB Updated!\033[0m')

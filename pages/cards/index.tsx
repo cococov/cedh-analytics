@@ -8,7 +8,7 @@ import DATA from '../../public/data/cards/competitiveCards.json';
 
 type CardProps = any; // TODO: define type
 type CardsProps = { cards: CardProps[] };
-type DeckList = { cardListName: string, cardListUrl: string };
+type DeckList = { name: string, url: string };
 type DeckLists = DeckList[];
 type occurrencesForCard = { occurrences: number, persentaje: number };
 
@@ -26,7 +26,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [selectedCard, setSelectedCard] = useState<string>('');
   const [occurrencesForCard, setOccurrencesForCard] = useState<occurrencesForCard>({ occurrences: 0, persentaje: 0 });
-  const [cardLists, setCardLists] = useState<DeckLists>([]);
+  const [decklists, setDecklists] = useState<DeckLists>([]);
   const [cardData, setCardData] = useState<CardData>({
     cardImage: '',
     cardType: '',
@@ -40,13 +40,9 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
   const handleChangeCard = async (cardName: string | undefined) => {
     setSelectedCard(cardName || '');
     const card = cards.find((current: any) => current['cardName'] === cardName);
-    const cardLists: Array<{ cardListName: string, cardListUrl: string }> | any[] = card
-      ?.deckLinks
-      ?.map((current: string, index: number) => (
-        { cardListName: card?.deckNames[index], cardListUrl: current }
-      )) || [];
+    const decklists: Array<{ name: string, url: string }> | any[] = card?.decklists || [];
     setOccurrencesForCard({ occurrences: card?.occurrences, persentaje: card?.percentageOfUse });
-    setCardLists(cardLists);
+    setDecklists(decklists);
   };
 
   useEffect(() => {
@@ -100,7 +96,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
           <DeckLists
             occurrencesForCard={occurrencesForCard}
             isLoading={isLoading}
-            deckLists={cardLists}
+            decklists={decklists}
           />
         </span>
         <CardsTable

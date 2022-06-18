@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import DATA from '../../public/data/cards/competitiveCards.json';
 
 type Data = {
-  deckLists: Array<{ cardListName: string, cardListUrl: string }> | any[],
+  decklists: Array<{ name: string, url: string }> | any[],
 }
 
 const capitalizeFirstLetter = (str: string): string => str.charAt(0).toUpperCase() + str.slice(1);
@@ -14,14 +14,10 @@ const handler = async (
   res: NextApiResponse<Data>
 ) => {
   const card = DATA.find((current: any) => current['cardName'] === capitalizeURI(req.query.name as string));
-  const deckLists: Array<{ cardListName: string, cardListUrl: string }> | any[] = card
-    ?.deckLinks
-    ?.map((current: string, index: number) => (
-      { cardListName: card?.deckNames[index], cardListUrl: current }
-    )) || [];
+  const decklists: Array<{ name: string, url: string }> | any[] = card?.decklists || [];
 
   res.status(200).json({
-    deckLists,
+    decklists,
   });
 }
 
