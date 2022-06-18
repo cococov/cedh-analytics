@@ -115,7 +115,7 @@ print('Processing decklists data...', end='\r')
 
 def map_decklists_data(decklist_data):
   result = {}
-  result['deck'] = {'name': decklist_data['name'], 'url': decklist_data['url']}
+  result['deck'] = { 'name': decklist_data['name'], 'url': decklist_data['url'], 'commanders': list(map(lambda x : { 'name': x['card']['name'], 'color_identity': x['card']['color_identity'] }, decklist_data['commanders'].values()))}
   cards = decklist_data['mainboard'] | decklist_data['companions'] | decklist_data['commanders']
   result['cards'] = list(cards.values())
   return result
@@ -144,7 +144,7 @@ def reduce_deck(accumulated, current):
     'occurrences': 1,
     'cardName': current['card']['name'],
     'colorIdentity': ''.join(current['card']['color_identity']),
-    'decklists': [{ 'url': current['deck_url'], 'name': current['deck_name']}],
+    'decklists': [current['deck']],
     'cmc': current['card']['cmc'],
     'prices': current['card']['prices'],
     'reserved': current['card']['reserved'],
@@ -160,13 +160,13 @@ def reduce_deck(accumulated, current):
 
   if saved_card_index > -1:
     hash['occurrences'] = accumulated[saved_card_index]['occurrences'] + 1
-    hash['decklists'] = accumulated[saved_card_index]['decklists'] + [{ 'url': current['deck_url'], 'name': current['deck_name'] }]
+    hash['decklists'] = accumulated[saved_card_index]['decklists'] + [current['deck']]
     del accumulated[saved_card_index]
 
   return [*accumulated, hash]
 
 def reduce_all_decks(accumulated, current):
-  return reduce(reduce_deck, list(map(lambda x: {**x, 'deck_url': current['deck']['url'], 'deck_name': current['deck']['name']}, current['cards'])), accumulated)
+  return reduce(reduce_deck, list(map(lambda x: {**x, 'deck': current['deck']}, current['cards'])), accumulated)
 
 def map_cards(card):
   return {**card, 'percentageOfUse': round(card['occurrences'] / VALID_DECKS * 100, 2)}
@@ -221,9 +221,9 @@ print('\033[KCleaning \033[92mDone!\033[0m')
 time.sleep(1)
 print('Uploading changes...', end='\r')
 
-#check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
-#check_call(['git', 'commit', '-m', '"chore: update DB"'], stdout=DEVNULL, stderr=STDOUT)
-#check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['git', 'commit', '-m', '"chore: update DB"'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
 
 time.sleep(1)
 print('\033[K\033[92mDB Updated!\033[0m')
