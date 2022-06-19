@@ -5,6 +5,8 @@ import { includes } from 'ramda';
 import DATA from '../../../public/data/cards/competitiveCards.json';
 
 type occurrencesForCard = { occurrences: number, persentaje: number };
+type Commander = { name: string, color_identity: ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[] };
+type DeckList = { name: string, url: string, commanders: Commander[] };
 type CardProps = {
   cardType: string,
   cardText: string,
@@ -13,7 +15,7 @@ type CardProps = {
   isReservedList: boolean,
   cardImage: string,
   occurrencesForCard: occurrencesForCard,
-  decklists: Array<{ name: string, url: string }> | any[],
+  decklists: DeckList[],
 }
 
 const Card: React.FC<CardProps> = ({ cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, decklists }) => {
@@ -78,8 +80,8 @@ export const getServerSideProps = async ({ params, res }: Params) => {
       result
     );
 
-    const card = DATA.find((current: any) => current['cardName'].toLowerCase() === (params.name as string).toLowerCase());
-    const decklists: Array<{ name: string, url: string }> | any[] = card?.decklists || [];
+    const card = (DATA as any[]).find((current: any) => current['cardName'].toLowerCase() === (params.name as string).toLowerCase());
+    const decklists: DeckList[] = card?.decklists || [];
     const occurrencesForCard = { occurrences: card?.occurrences, persentaje: card?.percentageOfUse }
 
     return {

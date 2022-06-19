@@ -8,7 +8,8 @@ import DATA from '../../public/data/cards/competitiveCards.json';
 
 type CardProps = any; // TODO: define type
 type CardsProps = { cards: CardProps[] };
-type DeckList = { name: string, url: string };
+type Commander = { name: string, color_identity: ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[] };
+type DeckList = { name: string, url: string, commanders: Commander[] };
 type DeckLists = DeckList[];
 type occurrencesForCard = { occurrences: number, persentaje: number };
 
@@ -40,7 +41,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
   const handleChangeCard = async (cardName: string | undefined) => {
     setSelectedCard(cardName || '');
     const card = cards.find((current: any) => current['cardName'] === cardName);
-    const decklists: Array<{ name: string, url: string }> | any[] = card?.decklists || [];
+    const decklists: DeckLists = card?.decklists || [];
     setOccurrencesForCard({ occurrences: card?.occurrences, persentaje: card?.percentageOfUse });
     setDecklists(decklists);
   };
@@ -97,6 +98,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
             occurrencesForCard={occurrencesForCard}
             isLoading={isLoading}
             decklists={decklists}
+            size="medium"
           />
         </span>
         <CardsTable
@@ -115,7 +117,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
 };
 
 export const getStaticProps = async () => {
-  const cards = DATA.map((data: CardProps) => {
+  const cards = (DATA as any[]).map((data: CardProps) => {
     const newColorIdentity = data['colorIdentity'];
     return { ...data, colorIdentity: newColorIdentity === '' ? 'C' : newColorIdentity }
   });

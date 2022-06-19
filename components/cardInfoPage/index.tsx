@@ -5,6 +5,8 @@ import ButtonLink from '../buttonLink';
 import DeckLists from '../deckLists';
 
 type occurrencesForCard = { occurrences: number, persentaje: number };
+type Commander = { name: string, color_identity: ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[] };
+type DeckList = { name: string, url: string, commanders: Commander[] };
 type CardProps = {
   cardName: string,
   cardType: string,
@@ -14,7 +16,7 @@ type CardProps = {
   isReservedList: boolean,
   cardImage: string,
   occurrencesForCard: occurrencesForCard,
-  decklists: Array<{ name: string, url: string }> | any[],
+  decklists: DeckList[],
 }
 
 const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, decklists }: CardProps) => (
@@ -44,7 +46,7 @@ const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathe
           Gatherer
         </ButtonLink>
       </section>
-      <DeckLists occurrencesForCard={occurrencesForCard} decklists={decklists} />
+      <DeckLists occurrencesForCard={occurrencesForCard} decklists={decklists} size="small" />
     </span>
   </span >
 );

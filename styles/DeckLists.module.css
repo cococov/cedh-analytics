@@ -56,6 +56,10 @@
   scrollbar-color: var(--thumbBG2) var(--scrollbarBG2);
 }
 
+.content-small {
+  max-height: 40vh;
+}
+
 .content::-webkit-scrollbar-track {
   background: var(--scrollbarBG2);
 }
@@ -80,13 +84,6 @@
   margin-bottom: 0px;
 }
 
-.card-lists-page {
-  padding-inline-start: 0px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  max-height: 40vh;
-}
-
 .card-list {
   display: flex;
   align-items: center;
@@ -94,9 +91,36 @@
   border-width: 1px;
   border-color: #ccc;
   height: 2.5rem;
-  padding-left: 1rem;
+  padding-left: 2rem;
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 .card-list:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.commander {
+  display: inline;
+  border-bottom: solid;
+  border-width: 1px;
+  border-color: #ccc;
+  width: 100%;
+  padding-left: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.commander:hover {
   background-color: rgba(0, 0, 0, 0.04);
+}
+
+.identityGroup {
+  margin-right: 1rem;
 }
