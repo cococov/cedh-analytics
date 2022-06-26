@@ -143,7 +143,7 @@ def reduce_deck(accumulated, current):
   hash = {
     'occurrences': 1,
     'cardName': current['card']['name'],
-    'colorIdentity': ''.join(current['card']['color_identity']),
+    'colorIdentity': 'C' if len(current['card']['color_identity']) == 0 else ''.join(current['card']['color_identity']),
     'decklists': [current['deck']],
     'cmc': current['card']['cmc'],
     'prices': current['card']['prices'],
@@ -168,8 +168,32 @@ def reduce_deck(accumulated, current):
 def reduce_all_decks(accumulated, current):
   return reduce(reduce_deck, list(map(lambda x: {**x, 'deck': current['deck']}, current['cards'])), accumulated)
 
+def sort_identity(identity):
+  if len(identity) == 0:
+    return ['C']
+  identities = { 'W': 0, 'U': 1, 'B': 2, 'R': 3, 'G': 4 }
+  sorted_identities = sorted(identity, key=lambda x: identities[x])
+  return sorted_identities
+
+def sort_and_group_decks(decks):
+  sorted_decks = sorted(decks, key=lambda x: x['name'])
+  grouped_decks = {}
+  for deck in sorted_decks:
+    splitted_commanders = map(lambda y: y['name'].split(',')[0], deck['commanders'])
+    joined_commanders = ' | '.join(sorted(splitted_commanders))
+    grouped_decks.setdefault(joined_commanders, []).append(deck)
+  unsorted_decks_by_commanders = []
+  for key, value in grouped_decks.items():
+    color_identity = list(reduce(lambda y, z: set(y + z), map(lambda x: x['color_identity'], value[0]['commanders'])))
+    sorted_identity = sort_identity(color_identity)
+    unsorted_decks_by_commanders.append({ 'commanders': key, 'decks': value, 'colorIdentity': sorted_identity })
+  sorted_decks_by_commanders = sorted(unsorted_decks_by_commanders, key=lambda x: ''.join(x['colorIdentity']) + x['commanders'])
+  sorted_by_identity_size_decks_by_commanders = sorted(sorted_decks_by_commanders, key=lambda x: len(x['colorIdentity']))
+  return sorted_by_identity_size_decks_by_commanders
+
 def map_cards(card):
-  return {**card, 'percentageOfUse': round(card['occurrences'] / VALID_DECKS * 100, 2)}
+  decklists = sort_and_group_decks(card['decklists'])
+  return {**card, 'decklists': decklists, 'percentageOfUse': round(card['occurrences'] / VALID_DECKS * 100, 2)}
 
 reduced_data = list(map(map_cards, reduce(reduce_all_decks, mapped_decklists_data, [])))
 home_overview['cards'] = len(reduced_data)
