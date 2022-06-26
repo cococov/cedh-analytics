@@ -37,9 +37,13 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
     gathererId: 0,
     isReservedList: false,
   });
-  const [isLoading, toggle] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
+  const [isLoading, toggleLoading] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
+  const [isLoadingDeckLists, toggleLoadingDecklists] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
 
   const handleChangeCard = async (cardName: string | undefined) => {
+    toggleLoadingDecklists(true);
+    setTimeout(() => { toggleLoadingDecklists(false) }, 300);
+    toggleLoading(true);
     setSelectedCard(cardName || '');
     const card = cards.find((current: any) => current['cardName'] === cardName);
     const decklists: DeckListsByCommander[] = card?.decklists || [];
@@ -49,8 +53,6 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
 
   useEffect(() => {
     const requestData = async () => {
-      toggle(true);
-
       const cardName = replace(/\s/g, '%20', selectedCard);
       const result = await fetchCards(cardName);
 
@@ -84,7 +86,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
       newCardData['gathererId'] = result['gathererId'];
       newCardData['isReservedList'] = result['isReservedList'];
       setCardData(newCardData);
-      toggle(false);
+      toggleLoading(false);
     };
 
     !!selectedCard && requestData();
@@ -97,14 +99,14 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
         <span className={styles['left-span']}>
           <DeckLists
             occurrencesForCard={occurrencesForCard}
-            isLoading={isLoading}
+            isLoading={isLoadingDeckLists}
             decklists={decklists}
             size="medium"
           />
         </span>
         <CardsTable
           cards={cards}
-          toggleLoading={toggle}
+          toggleLoading={toggleLoading}
           handleChangeCard={handleChangeCard}
         />
         <CardInfo
