@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { groupBy, join, map, sort, sortBy, reduce, union, prop, equals, split } from 'ramda';
 import Loading from '../loading';
 import styles from '../../styles/DeckLists.module.css';
 import B from '../../public/images/B.png';
@@ -16,36 +14,15 @@ type occurrencesForCard = { occurrences: number, persentaje: number };
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
 type Commander = { name: string, color_identity: ColorIdentity };
 type DeckList = { name: string, url: string, commanders: Commander[] };
-type DeckListsByCommanderArrItem = { commanders: string, decks: DeckList[], colorIdentity: ColorIdentity };
-type DeckListsByCommanderArr = DeckListsByCommanderArrItem[];
+type DeckListsByCommander = { commanders: string, decks: DeckList[], colorIdentity: ColorIdentity };
 type DeckListsProps = {
   occurrencesForCard: occurrencesForCard,
   isLoading?: boolean,
-  decklists: DeckList[],
+  decklists: DeckListsByCommander[],
   size: 'small' | 'medium' | 'large',
 };
 
 const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = false, decklists, size }) => {
-  const [deckListsByCommander, setDeckListsByCommander] = useState<DeckListsByCommanderArr>([]);
-
-  useEffect(() => {
-    const groupedDecklists = groupBy(decklist => join(' | ', map(c => split(',', c.name)[0], decklist.commanders)), decklists);
-    const groupeddeckListsByCommander = map(o => {
-      const decks = groupedDecklists[o];
-      const colorIdentity = reduce<ColorIdentity, ColorIdentity>(union, [], map((c: Commander) => c.color_identity, decks[0].commanders));
-      return { commanders: o, decks, colorIdentity }
-    }, Object.keys(groupedDecklists));
-    const alfabeticalSorted = sortBy(prop('commanders'), groupeddeckListsByCommander);
-    const sortedByIdentity = sort((a: DeckListsByCommanderArrItem, b: DeckListsByCommanderArrItem) => {
-      if (equals(a.colorIdentity, b.colorIdentity)) {
-        return 0;
-      }
-      return a.colorIdentity.length > b.colorIdentity.length ? 1 : -1;
-    }, alfabeticalSorted);
-
-    setDeckListsByCommander(sortedByIdentity);
-  }, [decklists]);
-
   const getIdentityImages = (colorIdentity: ColorIdentity) => {
     return (
       <span className={styles['identityGroup']}>
@@ -73,7 +50,7 @@ const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = f
       <span className={`${styles['content']} ${styles[`content-${size}`]}`}>
         {isLoading ? <Loading /> : (
           (!!decklists && decklists?.length > 0) ? (
-            deckListsByCommander.map(({ commanders, decks, colorIdentity }) => (
+            decklists.map(({ commanders, decks, colorIdentity }) => (
               <details>
                 <summary className={styles['commander']}>
                   {getIdentityImages(colorIdentity)}

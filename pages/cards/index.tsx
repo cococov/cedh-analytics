@@ -8,9 +8,10 @@ import DATA from '../../public/data/cards/competitiveCards.json';
 
 type CardProps = any; // TODO: define type
 type CardsProps = { cards: CardProps[] };
-type Commander = { name: string, color_identity: ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[] };
+type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
+type Commander = { name: string, color_identity: ColorIdentity };
 type DeckList = { name: string, url: string, commanders: Commander[] };
-type DeckLists = DeckList[];
+type DeckListsByCommander = { commanders: string, decks: DeckList[], colorIdentity: ColorIdentity };
 type occurrencesForCard = { occurrences: number, persentaje: number };
 
 type CardData = {
@@ -27,7 +28,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [selectedCard, setSelectedCard] = useState<string>('');
   const [occurrencesForCard, setOccurrencesForCard] = useState<occurrencesForCard>({ occurrences: 0, persentaje: 0 });
-  const [decklists, setDecklists] = useState<DeckLists>([]);
+  const [decklists, setDecklists] = useState<DeckListsByCommander[]>([]);
   const [cardData, setCardData] = useState<CardData>({
     cardImage: '',
     cardType: '',
@@ -41,7 +42,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
   const handleChangeCard = async (cardName: string | undefined) => {
     setSelectedCard(cardName || '');
     const card = cards.find((current: any) => current['cardName'] === cardName);
-    const decklists: DeckLists = card?.decklists || [];
+    const decklists: DeckListsByCommander[] = card?.decklists || [];
     setOccurrencesForCard({ occurrences: card?.occurrences, persentaje: card?.percentageOfUse });
     setDecklists(decklists);
   };
@@ -117,14 +118,9 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
 };
 
 export const getStaticProps = async () => {
-  const cards = (DATA as any[]).map((data: CardProps) => {
-    const newColorIdentity = data['colorIdentity'];
-    return { ...data, colorIdentity: newColorIdentity === '' ? 'C' : newColorIdentity }
-  });
-
   return {
     props: {
-      cards,
+      cards: DATA,
     },
   };
 };

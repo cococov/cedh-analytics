@@ -5,8 +5,10 @@ import ButtonLink from '../buttonLink';
 import DeckLists from '../deckLists';
 
 type occurrencesForCard = { occurrences: number, persentaje: number };
-type Commander = { name: string, color_identity: ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[] };
+type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
+type Commander = { name: string, color_identity: ColorIdentity };
 type DeckList = { name: string, url: string, commanders: Commander[] };
+type DeckListsByCommander = { commanders: string, decks: DeckList[], colorIdentity: ColorIdentity };
 type CardProps = {
   cardName: string,
   cardType: string,
@@ -16,7 +18,7 @@ type CardProps = {
   isReservedList: boolean,
   cardImage: string,
   occurrencesForCard: occurrencesForCard,
-  decklists: DeckList[],
+  decklists: DeckListsByCommander[],
 }
 
 const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, decklists }: CardProps) => (
