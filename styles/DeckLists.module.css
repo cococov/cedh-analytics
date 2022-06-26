@@ -117,6 +117,15 @@
   user-select: none;
 }
 
+details[close] .commander {
+  background-color: #fff;
+}
+
+details[open] .commander {
+  background-color: #555;
+  color: #fff;
+}
+
 .commander:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
