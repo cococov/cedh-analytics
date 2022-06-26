@@ -104,6 +104,15 @@ const Home: NextPage<HomeProps> = ({ data }) => {
               >
                 Scryfall
               </a>
+              {', '}
+              <a
+                href="https://mtgjson.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles['homeLink']}
+              >
+                MTGJSON
+              </a>
               {' and '}
               <a
                 href="https://drive.google.com/drive/folders/1jU-slPNt9XNzl2grGUarZTXh5afTsNvy"
@@ -171,6 +180,17 @@ const Home: NextPage<HomeProps> = ({ data }) => {
                 className={styles['homeLink']}
               >
                 Scryfall
+              </a>
+              {' '}
+              and
+              {' '}
+              <a
+                href="https://mtgjson.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles['homeLink']}
+              >
+                MTGJSON
               </a>
               .
 

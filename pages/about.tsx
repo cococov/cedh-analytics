@@ -156,6 +156,17 @@ const About: NextPage<MetagameProps> = ({ update_dates }) => (
               Metagame Project
             </a>
           </p>
+          <p>
+            <b>Sets Data: </b>
+            <a
+              href="https://mtgjson.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.aboutLinkSource}
+            >
+              MTGJSON
+            </a>
+          </p>
         </section>
         <section className={styles.aboutLegal}>
           <p className={styles.aboutLegalText}>
