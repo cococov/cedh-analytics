@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import styles from '../../../styles/CardsList.module.css';
 import { CardInfoPage, Layout } from '../../../components';
-import { includes } from 'ramda';
+import fetchCards from '../../../utils/fetch/cardData';
 import DATA from '../../../public/data/cards/competitiveCards.json';
 
 type occurrencesForCard = { occurrences: number, persentaje: number };
@@ -9,6 +9,19 @@ type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
 type Commander = { name: string, color_identity: ColorIdentity };
 type DeckList = { name: string, url: string, commanders: Commander[] };
 type DeckListsByCommander = { commanders: string, decks: DeckList[], colorIdentity: ColorIdentity };
+type CardFace = {
+  object: string,
+  name: string,
+  mana_cost: string,
+  type_line: string,
+  oracle_text: string,
+  colors: string[],
+  artist: string,
+  artist_id: string,
+  illustration_id: string,
+  image_uris: { medium: string, large: string }
+};
+
 type CardProps = {
   cardType: string,
   cardText: string,
@@ -16,11 +29,12 @@ type CardProps = {
   averagePrice: number,
   isReservedList: boolean,
   cardImage: string,
+  cardFaces: CardFace[],
   occurrencesForCard: occurrencesForCard,
   decklists: DeckListsByCommander[],
-}
+};
 
-const Card: React.FC<CardProps> = ({ cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, decklists }) => {
+const Card: React.FC<CardProps> = ({ cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, decklists, cardFaces }) => {
   const router = useRouter()
   const { name } = router.query
 
@@ -30,11 +44,15 @@ const Card: React.FC<CardProps> = ({ cardType, cardText, gathererId, averagePric
         <CardInfoPage
           cardName={typeof (name) === "string" ? name : ''}
           cardType={cardType}
-          cardText={cardText}
+          cardText={cardText || `\
+          ${cardFaces[0]['oracle_text']}
+          --DIVIDE--
+          ${cardFaces[1]['oracle_text']}
+          `}
           gathererId={gathererId}
           averagePrice={averagePrice}
           isReservedList={isReservedList}
-          cardImage={cardImage}
+          cardImage={cardImage || cardFaces[0].image_uris.large}
           occurrencesForCard={occurrencesForCard}
           decklists={decklists}
         />
@@ -59,45 +77,26 @@ export const getServerSideProps = async ({ params, res }: Params) => {
   )
 
   try {
-    const rawResult = await fetch(`https://api.scryfall.com/cards/named?exact=${params.name}`);
-    if (rawResult.status === 404) throw new Error("Card Not found");
-    const result = await rawResult.json();
-    const rawAllPrints = await fetch(result['prints_search_uri']);
-    const allPrints = await rawAllPrints.json();
-    const GARBAGE_EDITIONS = ['Intl. Collectors’ Edition', 'Collectors’ Edition', 'Legacy Championship', 'Summer Magic / Edgar'];
+    const result = await fetchCards(params.name);
 
-    const print = allPrints['data'].reduce(
-      (accumulator: any, current: any) => {
-        const multiverse_ids = current['multiverse_ids'].length === 0 ? accumulator['multiverse_ids'] : current['multiverse_ids'];
-        if (current['digital']) return accumulator; // Ignore digital cards
-        if (current['oversized']) return accumulator; // Ignore oversized cards
-        if (current['border_color'] === 'gold') return accumulator; // Ignore gold border cards
-        if (includes(current['set_name'], GARBAGE_EDITIONS)) return accumulator; // Ignore garbage editions
-        if (!current['prices']['usd'] && !current['prices']['usd_foil']) return accumulator; // Ignore cards without price
-        const currentPrice = !!current['prices']['usd'] ? parseFloat(current['prices']['usd']) : parseFloat(current['prices']['usd_foil']);
-        const accumulatedPrice = !!accumulator['prices']['usd'] ? parseFloat(accumulator['prices']['usd']) : parseFloat(accumulator['prices']['usd_foil']);
-        if (currentPrice >= accumulatedPrice) return { ...accumulator, multiverse_ids: multiverse_ids };
-        return { ...current, multiverse_ids: multiverse_ids }
-      },
-      result
-    );
+    if (result.error) throw new Error('Fetch Error');
 
     const card = (DATA as any[]).find((current: any) => current['cardName'].toLowerCase() === (params.name as string).toLowerCase());
     const decklists: DeckListsByCommander[] = card?.decklists || [];
-    const occurrencesForCard = { occurrences: card?.occurrences, persentaje: card?.percentageOfUse }
+    const occurrencesForCard = { occurrences: card?.occurrences || 0, persentaje: card?.percentageOfUse || 0 };
 
     return {
       props: {
-        cardType: print['type_line'],
-        cmc: print['cmc'],
-        colorIdentity: print['color_identity'],
-        rarity: print['rarity'],
-        cardText: print['oracle_text'],
-        gathererId: print['multiverse_ids'][0] || null,
-        averagePrice: !!print['prices']['usd'] ? print['prices']['usd'] : print['prices']['usd_foil'],
-        isReservedList: print['reserved'],
-        cardImage: print['image_uris']['large'],
-        cardFaces: print['card_faces'] || null,
+        cardType: result['cardType'],
+        cmc: result['cmc'],
+        colorIdentity: result['colorIdentity'],
+        rarity: result['rarity'],
+        cardText: result['cardText'],
+        gathererId: result['gathererId'],
+        averagePrice: result['averagePrice'],
+        isReservedList: result['isReservedList'],
+        cardImage: result['cardImage'],
+        cardFaces: result['cardFaces'],
         occurrencesForCard: occurrencesForCard,
         decklists: decklists,
       }

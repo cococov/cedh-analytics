@@ -65,22 +65,26 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
         isReservedList: false,
       };
 
-      if (!!result['card_faces'] && !!result['card_faces'][0]['image_uris']) {
-        newCardData['cardImage'] = result['card_faces'][0]['image_uris']['large'];
-        newCardData['cardType'] = result['card_faces'][0]['type_line'];
-        newCardData['cardText'] = result['card_faces'][0]['oracle_text'];
-      } else if (!!result['card_faces'] && !result['card_faces'][0]['image_uris']) {
-        newCardData['cardImage'] = result['image_uris']['large'];
-        newCardData['cardType'] = result['card_faces'][0]['type_line'];
+      if (!!result['cardFaces'] && !!result['cardFaces'][0]['image_uris']) {
+        newCardData['cardImage'] = result['cardFaces'][0]['image_uris']['large'];
+        newCardData['cardType'] = result['cardFaces'][0]['type_line'];
         newCardData['cardText'] = `\
-        ${result['card_faces'][0]['oracle_text']}
+        ${result['cardFaces'][0]['oracle_text']}
         --DIVIDE--
-        ${result['card_faces'][1]['oracle_text']}
+        ${result['cardFaces'][1]['oracle_text']}
+        `;
+      } else if (!!result['cardFaces'] && !!!result['cardFaces'][0]['image_uris']) {
+        newCardData['cardImage'] = result['cardImage'];
+        newCardData['cardType'] = result['cardFaces'][0]['type_line'];
+        newCardData['cardText'] = `\
+        ${result['cardFaces'][0]['oracle_text']}
+        --DIVIDE--
+        ${result['cardFaces'][1]['oracle_text']}
         `;
       } else {
-        newCardData['cardImage'] = result['image_uris']['large']
-        newCardData['cardType'] = result['type'];
-        newCardData['cardText'] = result['text'];
+        newCardData['cardImage'] = result['cardImage'];
+        newCardData['cardType'] = result['cardType'];
+        newCardData['cardText'] = result['cardText'];
       }
       newCardData['averagePrice'] = parseFloat(result['averagePrice']);
       newCardData['gathererId'] = result['gathererId'];

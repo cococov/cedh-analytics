@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
+import { replace } from 'ramda';
 import Image from 'next/image';
 import styles from '../../styles/CardsList.module.css';
 import Table from '../table';
@@ -229,7 +230,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleCha
   const handleClickRow = useCallback((_e, rowData = {}) => {
     if (isSmallScreen || isMediumScreen) {
       toggleLoading(true);
-      router.push(`/cards/${rowData['cardName']}`);
+      router.push(`/cards/${replace(/\//g, '%2F', rowData['cardName'])}`);
     } else {
       handleChangeCard(rowData['cardName']);
     }
