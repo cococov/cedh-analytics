@@ -27,6 +27,7 @@ const fetchData = async (cardName: string) => {
 
     return {
       error: false,
+      cardName: print['name'],
       cardType: print['type_line'],
       cmc: print['cmc'],
       colorIdentity: print['color_identity'],
@@ -41,6 +42,7 @@ const fetchData = async (cardName: string) => {
   } catch (err) {
     return {
       error: true,
+      cardName: '',
       cardType: '',
       cmc: 0,
       colorIdentity: [],

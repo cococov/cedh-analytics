@@ -19,10 +19,11 @@ type CardFace = {
   artist: string,
   artist_id: string,
   illustration_id: string,
-  image_uris: { medium: string, large: string }
+  image_uris: { normal: string, large: string }
 };
 
 type CardProps = {
+  cardName: string,
   cardType: string,
   cardText: string,
   gathererId: number,
@@ -34,7 +35,7 @@ type CardProps = {
   decklists: DeckListsByCommander[],
 };
 
-const Card: React.FC<CardProps> = ({ cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, decklists, cardFaces }) => {
+const Card: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, decklists, cardFaces }) => {
   const router = useRouter()
   const { name } = router.query
 
@@ -42,7 +43,7 @@ const Card: React.FC<CardProps> = ({ cardType, cardText, gathererId, averagePric
     <Layout title={name} description={`${name} info`}>
       <main className={styles.main}>
         <CardInfoPage
-          cardName={typeof (name) === "string" ? name : ''}
+          cardName={cardName}
           cardType={cardType}
           cardText={cardText || `\
           ${cardFaces[0]['oracle_text']}
@@ -87,6 +88,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
 
     return {
       props: {
+        cardName: result['cardName'],
         cardType: result['cardType'],
         cmc: result['cmc'],
         colorIdentity: result['colorIdentity'],
