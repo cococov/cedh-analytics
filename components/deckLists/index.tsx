@@ -28,7 +28,7 @@ const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = f
       <span className={styles['identityGroup']}>
         {
           colorIdentity.map(color => (
-            <Image src={IDENTITY_COLORS[color]} alt={color} width={18} height={18} priority />
+            <Image src={IDENTITY_COLORS[color]} alt={color} width={18} height={18} priority key={color} />
           ))
         }
       </span>
@@ -51,12 +51,12 @@ const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = f
         {isLoading ? <Loading /> : (
           (!!decklists && decklists?.length > 0) ? (
             decklists.map(({ commanders, decks, colorIdentity }) => (
-              <details>
-                <summary className={styles['commander']}>
+              <details key={`${commanders}-details`}>
+                <summary className={styles['commander']} key={`${commanders}-summary`}>
                   {getIdentityImages(colorIdentity)}
-                  <span>{commanders}</span>
-                  </summary>
-                <ul className={styles['card-lists']}>
+                  <span key={`${commanders}-name`}>{commanders}</span>
+                </summary>
+                <ul className={styles['card-lists']} key={`${commanders}-decklists`}>
                   {
                     decks.map(({ name, url }) => (
                       <a
