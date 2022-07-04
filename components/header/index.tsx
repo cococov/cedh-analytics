@@ -47,7 +47,7 @@ const Header: React.FC<{
       <meta name="msapplication-TileColor" content="#ffffff" />
       <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
       <meta name="theme-color" content="#ffffff" />
-      <meta name="keywords" content="cedh, cEDH, Magic, Gathering, MagicTheGathering, magicthegathering, magic, guide, stats" />
+      <meta name="keywords" content="cedh, cEDH, Magic, Gathering, MagicTheGathering, magicthegathering, magic, guide, stats, mtg, edh, commander, magic, tier, list, tierlist, decks, decklists, database, competitive, cedhguide, cedhanalytics" />
       <meta name="author" content="CoCoCov"></meta>
       <link
         rel="stylesheet"
