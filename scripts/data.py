@@ -17,7 +17,7 @@ DB_JSON_URL = 'https://raw.githubusercontent.com/AverageDragon/cEDH-Decklist-Dat
 ALL_PRINTS_URL = 'https://mtgjson.com/api/v5/AllPrintingsCSVFiles.zip'
 VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 INVALID_SETS = ['MB1']
-LAST_SET = "Commander Legends: Battle for Baldur's Gate"
+LAST_SET = ["Dominaria United", "Dominaria United Commander"] # [base set, commander decks]
 
 print('Beginning')
 print('Deleting csv directory content...', end='\r')
@@ -123,21 +123,21 @@ def map_decklists_data(decklist_data):
 mapped_decklists_data = list(map(map_decklists_data, decklists_data))
 
 def getType(type):
-    if type == '1':
-      return 'Planeswalker'
-    if type == '2':
-      return 'Creature'
-    if type == '3':
-      return 'Sorcery'
-    if type == '4':
-      return 'Instant'
-    if type == '5':
-      return 'Artifact'
-    if type == '6':
-      return 'Enchantment'
-    if type == '7':
-      return 'Land'
-    return 'Unknown'
+  if type == '1':
+    return 'Planeswalker'
+  if type == '2':
+    return 'Creature'
+  if type == '3':
+    return 'Sorcery'
+  if type == '4':
+    return 'Instant'
+  if type == '5':
+    return 'Artifact'
+  if type == '6':
+    return 'Enchantment'
+  if type == '7':
+    return 'Land'
+  return 'Unknown'
 
 def reduce_deck(accumulated, current):
   hash = {
@@ -198,8 +198,8 @@ def map_cards(card):
 reduced_data = list(map(map_cards, reduce(reduce_all_decks, mapped_decklists_data, [])))
 home_overview['cards'] = len(reduced_data)
 home_overview['staples'] = len(list(filter(lambda d: d['occurrences'] > 10, reduced_data)))
-home_overview['last_set'] = LAST_SET
-home_overview['last_set_top_10'] = list(sorted(map(lambda x: {'occurrences': x['occurrences'], 'cardName': x['cardName']}, filter(lambda d: (not d['multiplePrintings']) and (d['lastPrint'] == LAST_SET), reduced_data)), key=lambda d: d['occurrences'], reverse=True))[0:10]
+home_overview['last_set'] = LAST_SET[0]
+home_overview['last_set_top_10'] = list(sorted(map(lambda x: {'occurrences': x['occurrences'], 'cardName': x['cardName']}, filter(lambda d: (not d['multiplePrintings']) and ((d['lastPrint'] == LAST_SET[0]) or (d['lastPrint'] == LAST_SET[1])), reduced_data)), key=lambda d: d['occurrences'], reverse=True))[0:10]
 
 print('\033[KProcessing decklists data \033[92mDone!\033[0m')
 print('Saving backup...', end='\r')
