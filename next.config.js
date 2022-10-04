@@ -8,7 +8,7 @@ module.exports = withPWA({
   swcMinify: true,
   images: {
     minimumCacheTTL: 60 * 60 * 24, // 1 day
-    domains: ['c1.scryfall.com'],
+    domains: ['c1.scryfall.com', 'cards.scryfall.io'],
   },
   pwa: {
     dest: 'public',
