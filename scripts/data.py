@@ -17,7 +17,7 @@ DB_JSON_URL = 'https://raw.githubusercontent.com/AverageDragon/cEDH-Decklist-Dat
 ALL_PRINTS_URL = 'https://mtgjson.com/api/v5/AllPrintingsCSVFiles.zip'
 VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 INVALID_SETS = ['MB1']
-LAST_SET = ["Unfinity", "NoSet"] # [base set, commander decks]
+LAST_SET = ["The Brothers' War", "The Brothers' War Commander"] # [base set, commander decks]
 
 print('Beginning')
 print('Deleting csv directory content...', end='\r')
