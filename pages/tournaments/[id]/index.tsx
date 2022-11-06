@@ -122,7 +122,7 @@ const Tournament: React.FC<CardsProps> = ({ cards, tournamentInfo, tounamentResu
           <Image
             className={styles.tournamentImage}
             src={`/data/tournaments/${tournamentInfo.id}/${tournamentInfo.imageName}`}
-            alt="Careful Study"
+            alt={`${tournamentInfo.id} Image`}
             layout="fill"
             width={400 / (722 / 1280)}
             height={400}

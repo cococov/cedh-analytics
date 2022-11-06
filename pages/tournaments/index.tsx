@@ -25,8 +25,9 @@ const Tournaments: React.FC<TournamentsProps> = ({ tournaments }) => (
                 <Image
                   className={styles.listElementImage}
                   src={`/data/tournaments/${tournament.id}/${tournament.imageName}`}
-                  alt="Careful Study"
+                  alt={`${tournament.id} Image`}
                   layout="fill"
+                  priority
                 />
                 <h2>
                   {tournament.name}
