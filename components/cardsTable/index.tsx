@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { replace } from 'ramda';
+import { replace, isNil } from 'ramda';
 import Image from 'next/image';
 import styles from '../../styles/CardsList.module.css';
 import Table from '../table';
@@ -21,9 +21,10 @@ type CardsTableProps = {
   cards: CardProps[],
   toggleLoading: (state: boolean) => void,
   handleChangeCard: (cardName: string | undefined) => void,
+  tournamentId?: string,
 };
 
-const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleChangeCard }) => {
+const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleChangeCard, tournamentId }) => {
   const [isLoaded, setLoaded] = useState(false);
   const router = useRouter();
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
@@ -230,7 +231,11 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleCha
   const handleClickRow = useCallback((_e, rowData = {}) => {
     if (isSmallScreen || isMediumScreen) {
       toggleLoading(true);
-      router.push(`/cards/${replace(/\//g, '%2F', rowData['cardName'])}`);
+      router.push(
+        isNil(tournamentId)
+          ? `/cards/${replace(/\//g, '%2F', rowData['cardName'])}`
+          : `/tournaments/${tournamentId}/${replace(/\//g, '%2F', rowData['cardName'])}`
+      );
     } else {
       handleChangeCard(rowData['cardName']);
     }

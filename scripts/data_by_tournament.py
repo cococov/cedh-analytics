@@ -192,6 +192,7 @@ def map_cards(card):
 reduced_data = list(map(map_cards, reduce(reduce_all_decks, mapped_decklists_data, [])))
 home_overview['cards'] = len(reduced_data)
 home_overview['staples'] = len(list(filter(lambda d: d['occurrences'] > 10, reduced_data)))
+home_overview['pet'] = len(list(filter(lambda d: d['occurrences'] == 1, reduced_data)))
 home_overview['last_set'] = LAST_SET[0]
 home_overview['last_set_top_10'] = list(sorted(map(lambda x: {'occurrences': x['occurrences'], 'cardName': x['cardName']}, filter(lambda d: (not d['multiplePrintings']) and ((d['lastPrint'] == LAST_SET[0]) or (d['lastPrint'] == LAST_SET[1])), reduced_data)), key=lambda d: d['occurrences'], reverse=True))[0:10]
 
@@ -206,7 +207,7 @@ with open(os.path.join(DIRNAME, FILE_PATH), 'w+', encoding='utf8') as f:
 print('\033[KNew file saved \033[92mDone!\033[0m')
 print('Updating home overview...', end='\r')
 
-with open(os.path.join(DIRNAME, rf'public/data/tournament/{TOURNAMENT_ID}/home_overview.json'), 'w+', encoding='utf8') as f:
+with open(os.path.join(DIRNAME, rf'public/data/tournaments/{TOURNAMENT_ID}/home_overview.json'), 'w+', encoding='utf8') as f:
   json.dump(home_overview, f, ensure_ascii=False)
 
 print('\033[KHome overview saved \033[92mDone!\033[0m')

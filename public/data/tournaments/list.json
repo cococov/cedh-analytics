@@ -1,9 +1,18 @@
 [
   {
-    "name": "cEDH Melipilla - 4th Tournament - 100% Proxy friendly",
+    "name": "cEDH Melipilla - 4th Tournament",
     "id": "melipilla_4",
     "bookmark": "kyMg1",
+    "imageName": "melipilla_4.jpeg",
     "serie": "Melipilla",
     "number": 4
+  },
+  {
+    "name": "cEDH Melipilla - 3th Tournament",
+    "id": "melipilla_3",
+    "bookmark": "kyMg1",
+    "imageName": "melipilla_3.png",
+    "serie": "Melipilla",
+    "number": 3
   }
 ]
