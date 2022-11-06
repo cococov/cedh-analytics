@@ -11,6 +11,7 @@ type Data = {
   decks: number,
   cards: number,
   staples: number,
+  pet: number,
   last_set: string,
   last_set_top_10: { occurrences: number, cardName: string }[],
 };
@@ -262,6 +263,11 @@ const Home: NextPage<HomeProps> = ({ data }) => {
             <h2>Total Staples</h2>
             <span className={styles['homeStatDisclaimer']}>(More than 10 occurrences)</span>
             <p>{data.staples}</p>
+          </span>
+          <span className={styles['homeStat']}>
+            <h2>Total Pet Cards</h2>
+            <span className={styles['homeStatDisclaimer']}>(1 occurrence)</span>
+            <p>{data.pet}</p>
           </span>
           <span className={styles['homeStatTable']}>
             <section className={styles['homeStatTableTitle']}>

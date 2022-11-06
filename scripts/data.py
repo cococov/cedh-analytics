@@ -198,6 +198,7 @@ def map_cards(card):
 reduced_data = list(map(map_cards, reduce(reduce_all_decks, mapped_decklists_data, [])))
 home_overview['cards'] = len(reduced_data)
 home_overview['staples'] = len(list(filter(lambda d: d['occurrences'] > 10, reduced_data)))
+home_overview['pet'] = len(list(filter(lambda d: d['occurrences'] == 1, reduced_data)))
 home_overview['last_set'] = LAST_SET[0]
 home_overview['last_set_top_10'] = list(sorted(map(lambda x: {'occurrences': x['occurrences'], 'cardName': x['cardName']}, filter(lambda d: (not d['multiplePrintings']) and ((d['lastPrint'] == LAST_SET[0]) or (d['lastPrint'] == LAST_SET[1])), reduced_data)), key=lambda d: d['occurrences'], reverse=True))[0:10]
 
