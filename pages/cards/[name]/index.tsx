@@ -36,8 +36,8 @@ type CardProps = {
 };
 
 const Card: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, decklists, cardFaces }) => {
-  const router = useRouter()
-  const { name } = router.query
+  const router = useRouter();
+  const { name } = router.query;
 
   return (
     <Layout title={name} description={`${name} info`}>
