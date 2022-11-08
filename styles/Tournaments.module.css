@@ -36,6 +36,22 @@
   overflow: hidden;
 }
 
+@media screen and (min-width: 768px) {
+  .listElement {
+    max-width: 46rem;
+    min-width: 46rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .listElement {
+    max-width: 98%;
+    min-width: 98%;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
 .listElement:hover h2 {
   font-size: 2.01rem;
 }

@@ -11,6 +11,7 @@ import Image from 'next/image';
 type CardProps = any; // TODO: define type
 type TournamentInfo = {
   name: string,
+  showName: boolean,
   id: string,
   bookmark: string,
   imageName?: string | null,
@@ -21,6 +22,7 @@ type TounamentResume = {
   decks: number,
   cards: number,
   staples: number,
+  staples_small: number,
   pet: number,
   last_set: string,
   last_set_top_10: { occurrences: number, cardName: string }[],
@@ -121,14 +123,13 @@ const Tournament: React.FC<CardsProps> = ({ cards, tournamentInfo, tounamentResu
         <section className={styles.tournamentImageContainer}>
           <Image
             className={styles.tournamentImage}
-            src={`/data/tournaments/${tournamentInfo.id}/${tournamentInfo.imageName}`}
+            src={`/data/tournaments/${!!tournamentInfo.imageName ? `${tournamentInfo.id}/${tournamentInfo.imageName}` : 'default.jpg'}`}
             alt={`${tournamentInfo.id} Image`}
             layout="fill"
-            width={400 / (722 / 1280)}
-            height={400}
+            quality={100}
             priority
           />
-          <h1>{tournamentInfo.name}</h1>
+          {tournamentInfo.showName && <h1>{tournamentInfo.name}</h1>}
         </section>
         <section className={styles.homeStatsSection}>
           <span className={styles.homeStat}>
@@ -139,10 +140,19 @@ const Tournament: React.FC<CardsProps> = ({ cards, tournamentInfo, tounamentResu
             <h2>Total Cards</h2>
             <p>{tounamentResume?.cards}</p>
           </span>
-          <span className={styles.homeStat}>
-            <h2>{'>'} 10 occurrences</h2>
-            <p>{tounamentResume?.staples}</p>
-          </span>
+          {
+            tounamentResume?.decks < 15 ? (
+              <span className={styles.homeStat}>
+                <h2>{'>'} 5 occurrences</h2>
+                <p>{tounamentResume?.staples_small}</p>
+              </span>
+            ) : (
+              <span className={styles.homeStat}>
+                <h2>{'>'} 10 occurrences</h2>
+                <p>{tounamentResume?.staples}</p>
+              </span>
+            )
+          }
           <span className={styles.homeStat}>
             <h2>1 occurrence</h2>
             <p>{tounamentResume?.pet}</p>

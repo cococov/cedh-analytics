@@ -10,8 +10,8 @@ import pandas as pd
 from functools import reduce, lru_cache
 from subprocess import DEVNULL, STDOUT, check_call
 
-TOURNAMENT_DECKLISTS_BOOKMARK_ID = 'kyMg1'
-TOURNAMENT_ID = 'melipilla_4'
+TOURNAMENT_DECKLISTS_BOOKMARK_ID = 'k9JaR'
+TOURNAMENT_ID = 'concepcion_1'
 
 MOXFIELD_BOOKMARK_URL = f"https://api2.moxfield.com/v1/bookmarks/{TOURNAMENT_DECKLISTS_BOOKMARK_ID}/decks?pageNumber=1&pageSize=1000"
 DIRNAME = os.path.realpath('.')
@@ -192,6 +192,7 @@ def map_cards(card):
 reduced_data = list(map(map_cards, reduce(reduce_all_decks, mapped_decklists_data, [])))
 home_overview['cards'] = len(reduced_data)
 home_overview['staples'] = len(list(filter(lambda d: d['occurrences'] > 10, reduced_data)))
+home_overview['staples_small'] = len(list(filter(lambda d: d['occurrences'] > 5, reduced_data)))
 home_overview['pet'] = len(list(filter(lambda d: d['occurrences'] == 1, reduced_data)))
 home_overview['last_set'] = LAST_SET[0]
 home_overview['last_set_top_10'] = list(sorted(map(lambda x: {'occurrences': x['occurrences'], 'cardName': x['cardName']}, filter(lambda d: (not d['multiplePrintings']) and ((d['lastPrint'] == LAST_SET[0]) or (d['lastPrint'] == LAST_SET[1])), reduced_data)), key=lambda d: d['occurrences'], reverse=True))[0:10]
@@ -220,7 +221,6 @@ for f in files:
 print('\033[KCleaning \033[92mDone!\033[0m')
 time.sleep(1)
 print('Uploading changes...', end='\r')
-
 check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
 check_call(['git', 'commit', '-m', '"chore: update DB"'], stdout=DEVNULL, stderr=STDOUT)
 check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)

@@ -8,6 +8,7 @@ import Image from "next/image";
 
 type Tournament = {
   name: string,
+  showName: boolean,
   id: string,
   bookmark: string,
   imageName?: string | null,
@@ -36,14 +37,13 @@ const Tournaments: React.FC<TournamentsProps> = ({ tournaments }) => {
                 <li key={tournament.id} className={styles.listElement} >
                   <Image
                     className={styles.listElementImage}
-                    src={`/data/tournaments/${tournament.id}/${tournament.imageName}`}
+                    src={`/data/tournaments/${!!tournament.imageName ? `${tournament.id}/${tournament.imageName}` : 'default.jpg'}`}
                     alt={`${tournament.id} Image`}
                     layout="fill"
+                    quality={100}
                     priority
                   />
-                  <h2>
-                    {tournament.name}
-                  </h2>
+                  {tournament.showName && <h2>{tournament.name}</h2>}
                 </li>
               </Link>
             ))
