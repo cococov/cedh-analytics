@@ -19,7 +19,7 @@ type TournamentsProps = { tournaments: Tournament[] };
 
 const Tournaments: React.FC<TournamentsProps> = ({ tournaments }) => {
   const router = useRouter();
-  const [isLoading, toggleLoading] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
+  const [isLoading, toggleLoading] = useReducer((_state: boolean, route: string) => route !== '/tournaments', false);
 
   useEffect(() => {
     // Set loading when detects a route change (Link clicked)
