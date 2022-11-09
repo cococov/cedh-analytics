@@ -10,8 +10,8 @@ import pandas as pd
 from functools import reduce, lru_cache
 from subprocess import DEVNULL, STDOUT, check_call
 
-TOURNAMENT_DECKLISTS_BOOKMARK_ID = 'k9JaR'
-TOURNAMENT_ID = 'concepcion_1'
+TOURNAMENT_DECKLISTS_BOOKMARK_ID = 'YdDnv'
+TOURNAMENT_ID = 'oasis_1'
 
 MOXFIELD_BOOKMARK_URL = f"https://api2.moxfield.com/v1/bookmarks/{TOURNAMENT_DECKLISTS_BOOKMARK_ID}/decks?pageNumber=1&pageSize=1000"
 DIRNAME = os.path.realpath('.')
