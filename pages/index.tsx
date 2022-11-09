@@ -24,7 +24,8 @@ const Home: NextPage<HomeProps> = ({ data }) => {
   const router = useRouter();
   const [isLoading, toggle] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
 
-  const handleClickTopRow = useCallback((event) => {
+  // TODO: Add type to event.
+  const handleClickTopRow = useCallback((event: any) => {
     toggle(true);
     router.push(`/cards/${event.target.childNodes[0].data}`);
   }, []);
