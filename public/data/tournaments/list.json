@@ -9,7 +9,7 @@
     "number": 4
   },
   {
-    "name": "cEDH Melipilla - 3th Tournament",
+    "name": "cEDH Melipilla - 3rd Tournament",
     "showName": true,
     "id": "melipilla_3",
     "bookmark": "EQvBA",
@@ -18,7 +18,7 @@
     "number": 3
   },
   {
-    "name": "cEDH Melipilla - 2th Tournament",
+    "name": "cEDH Melipilla - 2nd Tournament",
     "showName": true,
     "id": "melipilla_2",
     "bookmark": "LDZDM",
@@ -27,21 +27,21 @@
     "number": 2
   },
   {
-    "name": "TOP 8 - CEDH Concepcion 25-06-2022",
+    "name": "TOP 8 - CEDH Concepción Junio 2022",
     "showName": true,
     "id": "concepcion_1",
     "bookmark": "k9JaR",
     "imageName": null,
     "serie": "cocepcion",
-    "number": 2
+    "number": 1
   },
   {
-    "name": "Open CEDH Oasis 28-5-2022",
+    "name": "Open CEDH Oasis Mayp 2022",
     "showName": false,
     "id": "oasis_1",
     "bookmark": "LDZDM",
     "imageName": "oasis.jpg",
     "serie": "oasis",
-    "number": 2
+    "number": 1
   }
 ]

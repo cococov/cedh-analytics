@@ -38,8 +38,8 @@
 
 @media screen and (min-width: 768px) {
   .listElement {
-    max-width: 46rem;
-    min-width: 46rem;
+    max-width: 46.5rem;
+    min-width: 46.5rem;
   }
 }
 
