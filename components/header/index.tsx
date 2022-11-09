@@ -1,32 +1,35 @@
 import Head from 'next/head';
 
 const Header: React.FC<{
-  title: string | string[] | undefined,
+  title: string | undefined,
   description: string | undefined
 }> = ({ title, description }) => {
+  const fullTitle = `${!!title ? `${title} | ` : ''} cEDH Analytics`;
+  const fullDescription = `${!!description ? `${description} | ` : ''} cEDH Analytics is a website that analyzes and cross-references several EDH community's resources to give insights on the competitive metagame.`;
+
   return (
     <Head>
-      <title>{!!title ? `${title} | ` : ''} cEDH Analytics</title>
-      <meta name="description" content={`${!!description ? `${description} | ` : ''} cEDH Analytics is a website that analyzes and cross-references several EDH community's resources to give insights on the competitive metagame.`} />
+      <title>{fullTitle}</title>
+      <meta name="description" content={fullDescription} />
       <meta property="og:image" content="https://www.cedh-analytics.com/images/carrot_compost_white.png" />
       <meta property="og:image:secure_url" content="https://www.cedh-analytics.com/images/carrot_compost_white.png" />
       <meta property="og:site_name" content="cEDH Analytics" />
-      <meta property="og:title" content={`${!!title ? `${title} | ` : ''} cEDH Analytics`} />
+      <meta property="og:title" content={fullTitle} />
       <meta property="og:url" content="https://cedh-analytics.com/" />
-      <meta property="og:description" content={`${!!description ? `${description} | ` : ''} cEDH Analytics is a website that analyzes and cross-references several EDH community's resources to give insights on the competitive metagame.`} />
+      <meta property="og:description" content={fullDescription} />
       <meta property="og:type" content="website" />
       <meta property="og:image:width" content="788" />
       <meta property="og:image:height" content="788" />
       <meta property="og:updated_time" content="2022-06-13" />
-      <meta itemProp="name" content={`${!!title ? `${title} | ` : ''} cEDH Analytics`} />
+      <meta itemProp="name" content={fullTitle} />
       <meta itemProp="url" content="https://cedh-analytics.com/" />
-      <meta itemProp="description" content={`${!!description ? `${description} | ` : ''} cEDH Analytics is a website that analyzes and cross-references several EDH community's resources to give insights on the competitive metagame.`} />
+      <meta itemProp="description" content={fullDescription} />
       <meta itemProp="image" content="https://www.cedh-analytics.com/images/carrot_compost_white.png" />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:site" content="@CoCoCov" />
       <meta name="twitter:creator" content="@CoCoCov" />
-      <meta name="twitter:title" content={`${!!title ? `${title} | ` : ''} cEDH Analytics`} />
-      <meta name="twitter:description" content={`${!!description ? `${description} | ` : ''} cEDH Analytics is a website that analyzes and cross-references several EDH community's resources to give insights on the competitive metagame.`} />
+      <meta name="twitter:title" content={fullTitle} />
+      <meta name="twitter:description" content={fullDescription} />
       <meta name="twitter:image" content="https://www.cedh-analytics.com/images/carrot_compost_white.png" />
       <meta name="twitter:image:alt" content="Carrot Compost Logo" />
       <meta name="twitter:url" content="https://cedh-analytics.com/" />

@@ -5,7 +5,7 @@ import fetchCards from '../../../../utils/fetch/cardData';
 import { server } from '../../../../config';
 
 type occurrencesForCard = { occurrences: number, persentaje: number };
-type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
+type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[];
 type Commander = { name: string, color_identity: ColorIdentity };
 type DeckList = { name: string, url: string, commanders: Commander[] };
 type DeckListsByCommander = { commanders: string, decks: DeckList[], colorIdentity: ColorIdentity };
@@ -40,7 +40,7 @@ const Card: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, a
   const { name } = router.query
 
   return (
-    <Layout title={name} description={`${name} info`}>
+    <Layout title={`${name}`} description={`${name} info`}>
       <main className={styles.main}>
         <CardInfoPage
           cardName={cardName}
