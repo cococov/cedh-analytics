@@ -5,8 +5,7 @@ import { AppProvider } from '../../contexts';
 import styles from '../../styles/Home.module.css';
 
 const Layout: React.FC<{
-  children: React.ReactNode,
-  title: string | undefined,
+  title: string | string[] | undefined,
   description?: string | undefined
 }> = ({ children, title, description }) => {
   return (

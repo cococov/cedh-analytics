@@ -24,8 +24,6 @@ type CardsTableProps = {
   tournamentId?: string,
 };
 
-type handleClickRowType = (event?: React.MouseEvent<Element, MouseEvent>, rowData?: { cardName?: string }) => void;
-
 const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleChangeCard, tournamentId }) => {
   const [isLoaded, setLoaded] = useState(false);
   const router = useRouter();
@@ -230,16 +228,16 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleCha
     if (!isLoaded) setLoaded(true);
   }, [isLoaded]);
 
-  const handleClickRow = useCallback<handleClickRowType>((_e, rowData = { cardName: '' }) => {
+  const handleClickRow = useCallback((_e, rowData = {}) => {
     if (isSmallScreen || isMediumScreen) {
       toggleLoading(true);
       router.push(
         isNil(tournamentId)
-          ? `/cards/${replace(/\//g, '%2F', `${rowData?.cardName}`)}`
-          : `/tournaments/${tournamentId}/${replace(/\//g, '%2F', `${rowData?.cardName}`)}`
+          ? `/cards/${replace(/\//g, '%2F', rowData['cardName'])}`
+          : `/tournaments/${tournamentId}/${replace(/\//g, '%2F', rowData['cardName'])}`
       );
     } else {
-      handleChangeCard(rowData?.cardName);
+      handleChangeCard(rowData['cardName']);
     }
   }, [isSmallScreen, isMediumScreen]);
 

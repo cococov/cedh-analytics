@@ -44,7 +44,6 @@ const Table: React.FC<ITable> = ({
   onRowClick,
 }) => {
 
-  // TODO: Fix options type.
   return (
     <MaterialTable
       columns={columns}
@@ -55,10 +54,10 @@ const Table: React.FC<ITable> = ({
       options={{
         exportMenu: [{
           label: 'Export PDF',
-          exportFunc: (cols: any, datas: any) => ExportPdf(cols, datas, title)
+          exportFunc: (cols, datas) => ExportPdf(cols, datas, title)
         }, {
           label: 'Export CSV',
-          exportFunc: (cols: any, datas: any) => ExportCsv(cols, datas, title)
+          exportFunc: (cols, datas) => ExportCsv(cols, datas, title)
         }],
         pageSize: defaultNumberOfRows,
         draggable: isDraggable,
@@ -74,7 +73,7 @@ const Table: React.FC<ITable> = ({
           fontWeight: 700,
         },
         columnsButton: true,
-      } as any}
+      }}
       onRowClick={onRowClick}
     />
   );
