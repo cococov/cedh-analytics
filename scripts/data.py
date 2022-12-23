@@ -230,7 +230,7 @@ update_date_path = os.path.join(DIRNAME, r'public/data/update_date.json')
 with open(update_date_path, 'r+') as f:
   update_date = json.load(f) if os.stat(update_date_path).st_size > 0 else {}
 
-update_date['database'] = datetime.today().strftime('%d-%m-%Y')
+update_date['database'] = datetime.today().strftime('%B %d %Y')
 
 with open(update_date_path, 'w', encoding='utf8') as f:
   json.dump(update_date, f, ensure_ascii=False)
