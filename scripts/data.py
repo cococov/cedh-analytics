@@ -109,7 +109,7 @@ def get_decklists_data(hash):
   print(f"\033[KGetting decklists data [{decklists_data_getted_number}/{VALID_DECKS}]", end='\r')
   return data
 
-decklists_data = list(map(get_decklists_data, all_competitive_deck_hashes))
+decklists_data = list(filter(lambda x: 'name' in x.keys(), list(map(get_decklists_data, all_competitive_deck_hashes)))) # filter out decks without name (without name means that the url returns a 404)
 
 print('\033[KGetting decklists data \033[92mDone!\033[0m')
 print('Processing decklists data...', end='\r')
