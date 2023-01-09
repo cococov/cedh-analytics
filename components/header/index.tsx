@@ -17,7 +17,7 @@ const Header: React.FC<{
       <meta property="og:type" content="website" />
       <meta property="og:image:width" content="788" />
       <meta property="og:image:height" content="788" />
-      <meta property="og:updated_time" content="2022-06-13" />
+      <meta property="og:updated_time" content="2023-01-08" />
       <meta itemProp="name" content={`${!!title ? `${title} | ` : ''} cEDH Analytics`} />
       <meta itemProp="url" content="https://cedh-analytics.com/" />
       <meta itemProp="description" content={`${!!description ? `${description} | ` : ''} cEDH Analytics is a website that analyzes and cross-references several EDH community's resources to give insights on the competitive metagame.`} />

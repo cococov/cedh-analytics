@@ -170,7 +170,7 @@ const About: NextPage<MetagameProps> = ({ update_dates }) => (
         </section>
         <section className={styles.aboutLegal}>
           <p className={styles.aboutLegalText}>
-            Wizards of the Coast, Magic: The Gathering, and their logos are trademarks of Wizards of the Coast LLC in the United States and other countries. © 1993-2022 Wizards. All Rights Reserved.
+            Wizards of the Coast, Magic: The Gathering, and their logos are trademarks of Wizards of the Coast LLC in the United States and other countries. © 1993-2023 Wizards. All Rights Reserved.
           </p>
           <p className={styles.aboutLegalText}>
             Carrot Compost is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC. Carrot Compost may use the trademarks and other intellectual property of Wizards of the Coast LLC, which is permitted under Wizards' Fan Site Policy. MAGIC: THE GATHERING® is a trademark of Wizards of the Coast. For more Datarmation about Wizards of the Coast or any of Wizards' trademarks or other intellectual property, please visit their website at {' '}
@@ -200,7 +200,7 @@ const About: NextPage<MetagameProps> = ({ update_dates }) => (
         </section>
         <section className={styles.aboutCopyright}>
           <p>
-            © 2022 Carrot Compost
+            © 2023 Carrot Compost
           </p>
         </section>
         <ButtonLink variant="contained" color="primary" href="/">
