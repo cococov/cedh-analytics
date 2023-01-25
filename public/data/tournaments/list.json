@@ -1,5 +1,14 @@
 [
   {
+    "name": "Liga del Norte - Sep 2022",
+    "showName": true,
+    "id": "liga_del_norte_sep_2022",
+    "bookmark": "YvB3Z",
+    "imageName": null,
+    "serie": "Liga del Norte",
+    "number": 1
+  },
+  {
     "name": "cEDH Melipilla - 5th Tournament",
     "showName": true,
     "id": "melipilla_5",
