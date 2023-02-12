@@ -10,37 +10,37 @@ import Image from 'next/image';
 
 type CardProps = any; // TODO: define type
 type TournamentInfo = {
-  name: string,
-  showName: boolean,
-  id: string,
-  bookmark: string,
-  imageName?: string | null,
-  serie: string,
-  number: number,
-}
-type TounamentResume = {
-  decks: number,
-  cards: number,
-  staples: number,
-  staples_small: number,
-  pet: number,
-  last_set: string,
-  last_set_top_10: { occurrences: number, cardName: string }[],
+  name: string;
+  showName: boolean;
+  id: string;
+  bookmark: string;
+  imageName?: string | null;
+  serie: string;
+  number: number;
 };
-type CardsProps = { cards: CardProps[], tournamentInfo: TournamentInfo, tounamentResume: TounamentResume };
+type TounamentResume = {
+  decks: number;
+  cards: number;
+  staples: number;
+  staples_small: number;
+  pet: number;
+  last_set: string;
+  last_set_top_10: { occurrences: number; cardName: string }[];
+};
+type CardsProps = { cards: CardProps[]; tournamentInfo: TournamentInfo; tounamentResume: TounamentResume };
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
-type Commander = { name: string, color_identity: ColorIdentity };
-type DeckList = { name: string, url: string, commanders: Commander[] };
-type DeckListsByCommander = { commanders: string, decks: DeckList[], colorIdentity: ColorIdentity };
-type occurrencesForCard = { occurrences: number, persentaje: number };
+type Commander = { name: string; color_identity: ColorIdentity };
+type DeckList = { name: string; url: string; commanders: Commander[] };
+type DeckListsByCommander = { commanders: string; decks: DeckList[]; colorIdentity: ColorIdentity };
+type occurrencesForCard = { occurrences: number; persentaje: number };
 
 type CardData = {
-  cardImage: string,
-  cardType: string,
-  cardText: string,
-  averagePrice: number,
-  gathererId: number,
-  isReservedList: boolean,
+  cardImage: string;
+  cardType: string;
+  cardText: string;
+  averagePrice: number;
+  gathererId: number;
+  isReservedList: boolean;
 };
 
 const Tournament: React.FC<CardsProps> = ({ cards, tournamentInfo, tounamentResume }) => {
@@ -184,15 +184,10 @@ const Tournament: React.FC<CardsProps> = ({ cards, tournamentInfo, tounamentResu
   );
 };
 
-
 type Params = {
-  params: {
-    id: string
-  },
-  res: {
-    setHeader: (name: string, value: string) => void
-  }
-}
+  params: { id: string; };
+  res: { setHeader: (name: string, value: string) => void; };
+};
 
 export const getServerSideProps = async ({ params, res }: Params) => {
   res.setHeader(
@@ -200,20 +195,26 @@ export const getServerSideProps = async ({ params, res }: Params) => {
     'public, s-maxage=1000, stale-while-revalidate=59'
   )
 
-  const rawData = await fetch(`${server}/data/tournaments/${params.id}/cards/competitiveCards.json`);
-  const data = await rawData.json();
+  try {
+    const rawData = await fetch(`${server}/data/tournaments/${params.id}/cards/competitiveCards.json`);
+    const data = await rawData.json();
 
-  const tournamentInfo = find(propEq('id', params.id), TOURNAMENTS_LIST);
-  const rawTounamentResume = await fetch(`${server}/data/tournaments/${params.id}/home_overview.json`);
-  const tounamentResume = await rawTounamentResume.json();
+    const tournamentInfo = find(propEq('id', params.id), TOURNAMENTS_LIST);
+    const rawTounamentResume = await fetch(`${server}/data/tournaments/${params.id}/home_overview.json`);
+    const tounamentResume = await rawTounamentResume.json();
 
-  return {
-    props: {
-      cards: data,
-      tournamentInfo,
-      tounamentResume
-    },
-  };
+    return {
+      props: {
+        cards: data,
+        tournamentInfo,
+        tounamentResume
+      },
+    };
+  } catch (err) {
+    return {
+      notFound: true,
+    };
+  }
 };
 
 export default Tournament;

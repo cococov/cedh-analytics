@@ -1,10 +1,13 @@
 import { useReducer, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Layout, SnackBarLoading } from '../../components';
-import styles from '../../styles/Tournaments.module.css';
-import DATA from '../../public/data/tournaments/list.json';
+import { reject } from 'ramda';
 import Link from 'next/link';
 import Image from "next/image";
+
+import { Layout, SnackBarLoading } from '../../components';
+import styles from '../../styles/Tournaments.module.css';
+
+import DATA from '../../public/data/tournaments/list.json';
 
 type Tournament = {
   name: string,
@@ -57,7 +60,7 @@ const Tournaments: React.FC<TournamentsProps> = ({ tournaments }) => {
 export const getStaticProps = async () => {
   return {
     props: {
-      tournaments: DATA,
+      tournaments: reject(x => x.hidden, DATA),
     },
   };
 };

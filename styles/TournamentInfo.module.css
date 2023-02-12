@@ -1,0 +1,144 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 3.5rem;
+  overflow-x: hidden;
+  background-color: white;
+}
+
+.main ul {
+  padding-left: 0;
+}
+
+@media (max-width: 767px) {
+  .main {
+    display: flex;
+  }
+}
+
+.tournamentImageContainer {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  max-height: 400px;
+  min-height: 200px;
+  min-width: 100%;
+}
+
+.tournamentImageContainer .tournamentImage {
+  position: relative;
+  object-fit: cover;
+  max-width: calc(400px / (722px / 1280px));;
+  max-height: 400px;
+  z-index: 0;
+  opacity: 1;
+}
+
+.tournamentImageContainer h1 {
+  position: relative;
+  z-index: 0;
+  font-size: 3rem;
+  letter-spacing: 0.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: -3px 0 #555555, 0 3px #555555, 3px 0 #555555, 0 -3px #555555;
+  opacity: 1;
+}
+
+.tournamentImageContainer .whatsappIcon {
+  position: absolute;
+  z-index: 0;
+  font-size: 3rem;
+  letter-spacing: 0.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: -3px 0 #555555, 0 3px #555555, 3px 0 #555555, 0 -3px #555555;
+  opacity: 1;
+}
+
+.dateSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 50rem;
+}
+
+.costSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 50rem;
+}
+
+.costSection p {
+  margin: 0;
+  font-size: small;
+  text-align: center;
+}
+
+.pricesSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 50rem;
+}
+
+.quorumSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 50rem;
+}
+
+.quorumSection p {
+  text-align: justify;
+}
+
+.modeSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 50rem;
+}
+
+.rulesSection {
+  display: flex;
+  flex-direction: column;
+  max-width: 50rem;
+}
+
+.rulesSection h2 {
+  text-align: center;
+}
+
+.rulesSection p {
+  text-align: justify;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.mapSection {
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.mapContainer {
+  height: 50vh;
+  width: 50%;
+}
