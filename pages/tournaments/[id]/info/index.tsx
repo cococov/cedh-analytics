@@ -4,6 +4,9 @@ import { mergeAll, find, propEq } from 'ramda';
 import Image from 'next/image';
 import Link from 'next/link';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import EmailIcon from '@mui/icons-material/Email';
+import { green } from '@mui/material/colors';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Layout, Loading } from '../../../../components';
 import { server } from '../../../../config';
@@ -31,6 +34,8 @@ type TournamentInfo = {
   quorum: string;
   rules: string[];
   mode: string[] | string[][];
+  disclaimer: string | null;
+  contact: { kind: string; value: string; }[];
 };
 
 type InfoProps = { tournamentInfo: TournamentInfo };
@@ -54,83 +59,123 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
           />
           {tournamentInfo.showName && <h1>{tournamentInfo.name}</h1>}
         </section>
-        <section className={styles.dateSection}>
-          <h2>Fecha</h2>
-          <p>{tournamentInfo.date}</p>
-        </section>
-        <section className={styles.costSection}>
-          <h2>Precio</h2>
-          <ul>
-            {tournamentInfo.cost.map(c => (
-              <li key={c}><b>{c.split(':')[0]}: </b>{c.split(':')[1]}</li>
+        <span className={styles.content}>
+          <section className={styles.dateSection}>
+            <h2>Fecha</h2>
+            <p>{tournamentInfo.date}</p>
+          </section>
+          <section className={styles.costSection}>
+            <h2>Entrada</h2>
+            <ul>
+              {tournamentInfo.cost.map(c => (
+                <li key={c}><b>{c.split(':')[0]}: </b>{c.split(':')[1]}</li>
+              ))}
+            </ul>
+            {tournamentInfo?.costDisclaimer && <p>{tournamentInfo.costDisclaimer}</p>}
+          </section>
+          <section className={styles.pricesSection}>
+            <h2>Premios</h2>
+            <ul>
+              {tournamentInfo.prices.map(c => (
+                <li key={c}><b>{c.split(':')[0]}: </b>{c.split(':')[1]}</li>
+              ))}
+            </ul>
+          </section>
+          <section className={styles.quorumSection}>
+            <h2>Aforo</h2>
+            <p>{tournamentInfo.quorum}</p>
+          </section>
+          <section className={styles.rulesSection}>
+            <h2>Reglas</h2>
+            {tournamentInfo.rules.map(c => (
+              <p key={c}>{c}</p>
             ))}
-          </ul>
-          {tournamentInfo?.costDisclaimer && <p>{tournamentInfo.costDisclaimer}</p>}
-        </section>
-        <section className={styles.pricesSection}>
-          <h2>Premios</h2>
-          <ul>
-            {tournamentInfo.prices.map(c => (
-              <li key={c}><b>{c.split(':')[0]}: </b>{c.split(':')[1]}</li>
-            ))}
-          </ul>
-        </section>
-        <section className={styles.quorumSection}>
-          <h2>Aforo</h2>
-          <p>{tournamentInfo.quorum}</p>
-        </section>
-        <section className={styles.rulesSection}>
-          <h2>Reglas</h2>
-          {tournamentInfo.rules.map(c => (
-            <p key={c}>{c}</p>
-          ))}
-        </section>
-        <section className={styles.modeSection}>
-          <h2>Modalidad</h2>
-          <ul>
-            {tournamentInfo.mode.map(c => (
-              (typeof(c) === 'string')
-                ? (<li key={`${c}`}>● {c}</li>)
-                : (
-                  <li key={`${c}`}>
-                    ● {c[0]}:
-                    <ul>
-                      {
-                        (c as string[]).slice(1).map((d: string) => (
-                          <li key={d} style={{paddingLeft: '2rem'}}>◦ {d}</li>
-                        ))
-                      }
-                    </ul>
-                  </li>
-                )
-            ))}
-          </ul>
-        </section>
-        <section className={styles.mapSection}>
-          <h2>Dirección</h2>
-          <p>{tournamentInfo.placeDirection}</p>
-          {isLoaded ? (
-            <GoogleMap zoom={12} center={tournamentInfo.placeCoords} mapContainerClassName={styles.mapContainer}>
-              <Marker key="marker_pointer" position={tournamentInfo.placeCoords} visible={true} />
-              <OverlayView
-                key='marker_overview'
-                position={tournamentInfo.placeCoords}
-                mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}>
-                <div
-                  style={{
-                    background: `#203254`,
-                    padding: `7px 12px`,
-                    fontSize: '11px',
-                    color: `white`,
-                    borderRadius: '4px',
-                  }}
-                >
-                  {tournamentInfo.placeName}
-                </div>
-              </OverlayView>
-            </GoogleMap>
-          ) : <Loading />}
-        </section>
+          </section>
+          <section className={styles.modeSection}>
+            <h2>Modalidad</h2>
+            <ul>
+              {tournamentInfo.mode.map(c => (
+                (typeof (c) === 'string')
+                  ? (<li key={`${c}`}>● {c}</li>)
+                  : (
+                    <li key={`${c}`}>
+                      ● {c[0]}:
+                      <ul>
+                        {
+                          (c as string[]).slice(1).map((d: string) => (
+                            <li key={d} style={{ paddingLeft: '2rem' }}>◦ {d}</li>
+                          ))
+                        }
+                      </ul>
+                    </li>
+                  )
+              ))}
+            </ul>
+          </section>
+          <section className={styles.contactSection}>
+            <h2>Contacto</h2>
+            <span className={styles.contactIcons}>
+              {tournamentInfo.contact.map(c => (
+                c.kind === 'whatsapp' ? (
+                  <Link href={`https://wa.me/${c.value}?text=Hola, me gustaría participar en el torneo ${tournamentInfo.name}`}>
+                    <a target="_blank" rel="noreferrer">
+                      <WhatsAppIcon sx={{ color: green[400], fontSize: 60 }} />
+                    </a>
+                  </Link>
+                ) : c.kind == 'discord' ? (
+                  <Link href={c.value}>
+                    <a target="_blank" rel="noreferrer">
+                      <FontAwesomeIcon icon={['fab', 'discord']} size="3x" color="#5865F2" />
+                    </a>
+                  </Link>
+                ) : c.kind == 'instagram' ? (
+                  <Link href={c.value}>
+                    <a target="_blank" rel="noreferrer">
+                      <FontAwesomeIcon icon={['fab', 'instagram']} size="3x" color="#E1306C" />
+                    </a>
+                  </Link>
+                ) : c.kind == 'facebook' ? (
+                  <Link href={c.value}>
+                    <a target="_blank" rel="noreferrer">
+                      <FontAwesomeIcon icon={['fab', 'facebook']} size="3x" color="#1877F2" />
+                    </a>
+                  </Link>
+                ) : c.kind == 'email' ? (
+                  <Link href={`mailto:${c.value}`}>
+                    <a target="_blank" rel="noreferrer">
+                      <EmailIcon sx={{ fontSize: 60 }} />
+                    </a>
+                  </Link>
+                ) : null
+              ))}
+            </span>
+          </section>
+          <section className={styles.mapSection}>
+            <h2>Dirección</h2>
+            <p>{tournamentInfo.placeDirection}</p>
+            {isLoaded ? (
+              <GoogleMap zoom={12} center={tournamentInfo.placeCoords} mapContainerClassName={styles.mapContainer}>
+                <Marker key="marker_pointer" position={tournamentInfo.placeCoords} visible={true} />
+                <OverlayView
+                  key='marker_overview'
+                  position={tournamentInfo.placeCoords}
+                  mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}>
+                  <div
+                    style={{
+                      background: `#203254`,
+                      padding: `7px 12px`,
+                      fontSize: '11px',
+                      color: `white`,
+                      borderRadius: '4px',
+                    }}
+                  >
+                    {tournamentInfo.placeName}
+                  </div>
+                </OverlayView>
+              </GoogleMap>
+            ) : <Loading />}
+          </section>
+        </span>
       </main>
     </Layout >
   )
@@ -147,15 +192,21 @@ export const getServerSideProps = async ({ params, res }: Params) => {
     'public, s-maxage=1000, stale-while-revalidate=59'
   );
 
-  const tournamentData = find(propEq('id', params.id), TOURNAMENTS_LIST);
-  const rawTournamentInfo = await fetch(`${server}/data/tournaments/${params.id}/info.json`);
-  const tournamentInfo = await rawTournamentInfo.json();
+  try {
+    const tournamentData = find(propEq('id', params.id), TOURNAMENTS_LIST);
+    const rawTournamentInfo = await fetch(`${server}/data/tournaments/${params.id}/info.json`);
+    const tournamentInfo = await rawTournamentInfo.json();
 
-  return {
-    props: {
-      tournamentInfo: mergeAll([tournamentData, tournamentInfo]),
-    },
-  };
+    return {
+      props: {
+        tournamentInfo: mergeAll([tournamentData, tournamentInfo]),
+      },
+    };
+  } catch (e) {
+    return {
+      notFound: true,
+    };
+  }
 };
 
 export default Info;

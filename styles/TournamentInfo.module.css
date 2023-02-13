@@ -13,9 +13,18 @@
   padding-left: 0;
 }
 
+.content {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 @media (max-width: 767px) {
   .main {
     display: flex;
+  }
+  .content {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }
 
@@ -27,8 +36,8 @@
   padding: 2rem;
   position: relative;
   overflow: hidden;
-  max-height: 400px;
-  min-height: 200px;
+  max-height: 600px;
+  min-height: 400px;
   min-width: 100%;
 }
 
@@ -129,6 +138,26 @@
   margin-bottom: 0.2rem;
 }
 
+.contactSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 50rem;
+}
+
+.contactIcons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.contactIcons a {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 .mapSection {
   height: 50vh;
   width: 100%;
@@ -140,5 +169,11 @@
 
 .mapContainer {
   height: 50vh;
-  width: 50%;
+  width: 80%;
+}
+
+@media (max-width: 767px) {
+  .mapContainer {
+    width: 100%;
+  }
 }
