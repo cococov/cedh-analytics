@@ -7,11 +7,12 @@ import styles from '../../styles/Home.module.css';
 const Layout: React.FC<{
   title: string | string[] | undefined,
   description?: string | undefined
-}> = ({ children, title, description }) => {
+  image?: string | undefined
+}> = ({ children, title, description, image }) => {
   return (
     <AppProvider>
       <div className={styles.container}>
-        <Header title={title} description={description} />
+        <Header title={title} description={description} image={image} />
         <NavBar />
         {children}
         <Footer />

@@ -46,7 +46,7 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
   const { id } = router.query;
 
   return (
-    <Layout title={id} description={`${id} info`}>
+    <Layout title={id} description={`${id} info`} image={`/data/tournaments/${!!tournamentInfo.imageName ? `${tournamentInfo.id}/${tournamentInfo.imageName}` : 'default.jpg'}`}>
       <main className={styles.main}>
         <section className={styles.tournamentImageContainer}>
           <Image

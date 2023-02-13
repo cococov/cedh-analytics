@@ -117,7 +117,7 @@ const Tournament: React.FC<CardsProps> = ({ cards, tournamentInfo, tounamentResu
   }, [selectedCard]);
 
   return (
-    <Layout title={`${tournamentInfo.name}`} description={`Information and statistics of ${tournamentInfo}`}>
+    <Layout title={`${tournamentInfo.name}`} description={`Information and statistics of ${tournamentInfo.name}`} image={`/data/tournaments/${!!tournamentInfo.imageName ? `${tournamentInfo.id}/${tournamentInfo.imageName}` : 'default.jpg'}`}>
       <SnackBarLoading isOpen={isLoading && (isMediumScreen || isSmallScreen)} />
       <main className={styles.main}>
         <section className={styles.tournamentImageContainer}>
