@@ -4,7 +4,11 @@ import { useEffect } from 'react';
 import { hotjar } from 'react-hotjar';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { config } from '@fortawesome/fontawesome-svg-core';
 import '../styles/globals.css';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+
+config.autoAddCss = false;
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 
