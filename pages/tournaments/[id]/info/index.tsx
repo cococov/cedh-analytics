@@ -46,7 +46,7 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
   const { id } = router.query;
 
   return (
-    <Layout title={id} description={`${id} info`} image={`/data/tournaments/${!!tournamentInfo.imageName ? `${tournamentInfo.id}/${tournamentInfo.imageName}` : 'default.jpg'}`}>
+    <Layout title={tournamentInfo.name} description={`${tournamentInfo.name} info`} image={`/data/tournaments/${!!tournamentInfo.imageName ? `${tournamentInfo.id}/${tournamentInfo.imageName}` : 'default.jpg'}`}>
       <main className={styles.main}>
         <section className={styles.tournamentImageContainer}>
           <Image
@@ -96,14 +96,14 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
             <ul>
               {tournamentInfo.mode.map(c => (
                 (typeof (c) === 'string')
-                  ? (<li key={`${c}`}>● {c}</li>)
+                  ? (<li key={`${c}`}>{c}</li>)
                   : (
                     <li key={`${c}`}>
-                      ● {c[0]}:
+                      {c[0]}:
                       <ul>
                         {
                           (c as string[]).slice(1).map((d: string) => (
-                            <li key={d} style={{ paddingLeft: '2rem' }}>◦ {d}</li>
+                            <li key={d} style={{ paddingLeft: '2rem' }}>{d}</li>
                           ))
                         }
                       </ul>
@@ -117,31 +117,31 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
             <span className={styles.contactIcons}>
               {tournamentInfo.contact.map(c => (
                 c.kind === 'whatsapp' ? (
-                  <Link href={`https://wa.me/${c.value}?text=Hola, me gustaría participar en el torneo ${tournamentInfo.name}`}>
+                  <Link key={`key-${c.kind}`} href={`https://wa.me/${c.value}?text=Hola, me gustaría participar en el torneo ${tournamentInfo.name}`}>
                     <a target="_blank" rel="noreferrer">
                       <WhatsAppIcon sx={{ color: green[400], fontSize: 60 }} />
                     </a>
                   </Link>
                 ) : c.kind == 'discord' ? (
-                  <Link href={c.value}>
+                  <Link key={`key-${c.kind}`} href={c.value}>
                     <a target="_blank" rel="noreferrer">
                       <FontAwesomeIcon icon={['fab', 'discord']} size="3x" color="#5865F2" />
                     </a>
                   </Link>
                 ) : c.kind == 'instagram' ? (
-                  <Link href={c.value}>
+                  <Link key={`key-${c.kind}`} href={c.value}>
                     <a target="_blank" rel="noreferrer">
                       <FontAwesomeIcon icon={['fab', 'instagram']} size="3x" color="#E1306C" />
                     </a>
                   </Link>
                 ) : c.kind == 'facebook' ? (
-                  <Link href={c.value}>
+                  <Link key={`key-${c.kind}`} href={c.value}>
                     <a target="_blank" rel="noreferrer">
                       <FontAwesomeIcon icon={['fab', 'facebook']} size="3x" color="#1877F2" />
                     </a>
                   </Link>
                 ) : c.kind == 'email' ? (
-                  <Link href={`mailto:${c.value}`}>
+                  <Link key={`key-${c.kind}`} href={`mailto:${c.value}`}>
                     <a target="_blank" rel="noreferrer">
                       <EmailIcon sx={{ fontSize: 60 }} />
                     </a>

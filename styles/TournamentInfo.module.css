@@ -122,6 +122,14 @@
   max-width: 50rem;
 }
 
+.modeSection ul {
+  list-style: inside;
+}
+
+.modeSection li ul {
+  list-style: circle inside;
+}
+
 .rulesSection {
   display: flex;
   flex-direction: column;
