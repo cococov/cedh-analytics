@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { GoogleMap, useLoadScript, Marker, OverlayView } from '@react-google-maps/api';
 import { mergeAll, find, propEq } from 'ramda';
 import Image from 'next/image';
@@ -41,9 +40,7 @@ type TournamentInfo = {
 type InfoProps = { tournamentInfo: TournamentInfo };
 
 const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
-  const router = useRouter();
   const { isLoaded } = useLoadScript({ googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' });
-  const { id } = router.query;
 
   return (
     <Layout title={tournamentInfo.name} description={`${tournamentInfo.name} info`} image={`/data/tournaments/${!!tournamentInfo.imageName ? `${tournamentInfo.id}/${tournamentInfo.imageName}` : 'default.jpg'}`}>
@@ -57,7 +54,7 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
             quality={100}
             priority
           />
-          {tournamentInfo.showName && <h1>{tournamentInfo.name}</h1>}
+          {tournamentInfo.showName && (<span className={styles.title}><h1>{tournamentInfo.name.split(' - ')[0]}</h1><h2>{tournamentInfo.name.split(' - ')[1]}</h2></span>)}
         </section>
         <span className={styles.content}>
           <section className={styles.dateSection}>

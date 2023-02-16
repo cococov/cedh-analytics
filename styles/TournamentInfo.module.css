@@ -50,7 +50,15 @@
   opacity: 1;
 }
 
-.tournamentImageContainer h1 {
+.tournamentImageContainer .title{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tournamentImageContainer h1,
+.tournamentImageContainer h2 {
   position: relative;
   z-index: 0;
   font-size: 3rem;
@@ -59,6 +67,23 @@
   color: #ffffff;
   text-shadow: -3px 0 #555555, 0 3px #555555, 3px 0 #555555, 0 -3px #555555;
   opacity: 1;
+}
+
+.tournamentImageContainer h1 {
+  margin-bottom: 0.5rem;
+}
+
+.tournamentImageContainer h2 {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 767px) {
+  .tournamentImageContainer h1 {
+    font-size: 2.5rem;
+  }
+  .tournamentImageContainer h2 {
+    font-size: 2.5rem;
+  }
 }
 
 .tournamentImageContainer .whatsappIcon {
@@ -88,6 +113,10 @@
   max-width: 50rem;
 }
 
+.costSection ul {
+  text-align-last: justify;
+}
+
 .costSection p {
   margin: 0;
   font-size: small;
@@ -100,6 +129,14 @@
   justify-content: center;
   align-items: center;
   max-width: 50rem;
+}
+
+.pricesSection ul {
+  text-align-last: center;
+}
+
+.pricesSection .carousel {
+  width: 30rem;
 }
 
 .quorumSection {
@@ -128,6 +165,7 @@
 
 .modeSection li ul {
   list-style: circle inside;
+  text-align: left;
 }
 
 .rulesSection {
@@ -138,6 +176,7 @@
 
 .rulesSection h2 {
   text-align: center;
+  margin-bottom: 2.245rem;
 }
 
 .rulesSection p {
