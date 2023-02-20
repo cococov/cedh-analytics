@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { config } from '@fortawesome/fontawesome-svg-core';
+import { Analytics } from '@vercel/analytics/react';
 import '../styles/globals.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 
@@ -33,6 +34,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           `}
       </Script>
       <Component {...pageProps} />
+      <Analytics />
     </>
   );
 }
