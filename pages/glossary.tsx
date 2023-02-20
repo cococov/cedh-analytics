@@ -7,7 +7,7 @@ import CarefulStudy from '../public/images/frantic_search.jpg';
 
 const Glossary: NextPage = () => {
   return (
-    <Layout title="cEDH Glossary" description="List of the most used concepts in cEDH and their meaning.">
+    <Layout title="cEDH Glossary" description="List of the most used concepts in cEDH and their meaning." image="/images/frantic_search.jpg">
       <main className={styles.glossaryMain} >
         <span className={styles.glossaryImage}>
           <Image
