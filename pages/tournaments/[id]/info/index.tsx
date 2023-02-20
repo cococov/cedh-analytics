@@ -100,6 +100,8 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
             {tournamentInfo.rules.map(c => (
               <p key={c}>{c}</p>
             ))}
+            <br />
+            <p className={styles.rulesDisclaimer}>Para más información sobre conceptos mencionados en las reglas, ver nuestro <a href='/glossary' className={styles.infoLink}>Glosario de cEDH</a>.</p>
           </section>
           <section className={styles.modeSection}>
             <h2>Modalidad</h2>

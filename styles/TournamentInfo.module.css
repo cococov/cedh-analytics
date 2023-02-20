@@ -261,3 +261,12 @@
   border-radius: 2px;
   overflow: hidden;
 }
+
+.infoLink {
+  color: #422273;
+  font-weight: 700;
+}
+
+.rulesSection .rulesDisclaimer {
+  font-size: small;
+}

@@ -44,6 +44,9 @@ const NavBar: React.FC = () => {
                   <Link href="/tournaments" passHref>
                     Tournaments
                   </Link>
+                  <Link href="/glossary" passHref>
+                    Glossary
+                  </Link>
                   <Link href="/about" passHref>
                     About
                   </Link>
@@ -70,6 +73,9 @@ const NavBar: React.FC = () => {
             </Link>
             <Link href="/tournaments" passHref>
               Tournaments
+            </Link>
+            <Link href="/glossary" passHref>
+              Glossary
             </Link>
             <Link href="/about" passHref>
               About
