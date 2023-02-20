@@ -11,4 +11,5 @@ export { default as SnackBarLoading } from './snackBarLoading';
 export { default as CardInfoPage } from './cardInfoPage';
 export { default as Loading } from './loading';
 export { default as ButtonLink } from './buttonLink';
-export { default as Carousel } from './carousel';
+export { default as PriceByPlace } from './priceByPlace';
+export { default as ResponsiveImageDialog } from './responsiveImageDialog';

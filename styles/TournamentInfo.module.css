@@ -135,8 +135,11 @@
   text-align-last: center;
 }
 
-.pricesSection .carousel {
-  width: 30rem;
+.pricesWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .quorumSection {
@@ -206,7 +209,6 @@
 }
 
 .mapSection {
-  height: 50vh;
   width: 100%;
   display: flex;
   align-items: center;
@@ -223,4 +225,39 @@
   .mapContainer {
     width: 100%;
   }
+}
+
+.auspicesSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.auspicesWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.auspicesWrapper .auspice {
+  margin: 1rem;
+  max-height: 10rem;
+}
+
+.placePhotos {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: fit-content;
+  max-width: 50rem;
+}
+
+.placePhotos .placePhoto {
+  margin: 0.5rem;
+  cursor: pointer;
+  border-radius: 2px;
+  overflow: hidden;
 }
