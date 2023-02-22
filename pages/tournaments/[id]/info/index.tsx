@@ -56,7 +56,7 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
   const isPortrait = useMediaQuery('(min-width:600px)');
 
   return (
-    <Layout title={tournamentInfo.name} description={`${tournamentInfo.name} info`} image={`/data/tournaments/small_${!!tournamentInfo.imageName ? `${tournamentInfo.id}/${tournamentInfo.imageName}` : 'default.jpg'}`}>
+    <Layout title={tournamentInfo.name} description={`${tournamentInfo.name} info`} image={`/data/tournaments/${!!tournamentInfo.imageName ? `${tournamentInfo.id}/${`small_${tournamentInfo.imageName}`}` : 'default.jpg'}`}>
       <main className={styles.main}>
         <section className={styles.tournamentImageContainer}>
           <Image
