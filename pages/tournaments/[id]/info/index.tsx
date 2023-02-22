@@ -203,7 +203,7 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
             )}
           </section>
           <section className={styles.auspicesSection}>
-            <h2>Auspician</h2>
+            <h2>Nos Apoyan</h2>
             <span className={styles.auspicesWrapper}>
               {tournamentInfo.auspices.map((c, i) => (
                 <span className={styles.auspice}>
