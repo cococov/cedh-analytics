@@ -8,7 +8,7 @@ from subprocess import DEVNULL, STDOUT, check_call
 DIRNAME = os.path.realpath('.')
 FOLDER_PATH = r'public/data/metagame'
 FILE_PATH = FOLDER_PATH + r'/metagame.json'
-SHEET_ID = '1UwEYOkHRBfVpS3XT8U6apHA3KsDnJcup'
+SHEET_ID = '1oO0Ckz_PSMNQXqN8ubtaUl8mqBuswIV_'
 OVERVIEW_SHEET_NAME = 'Overview'
 CATEGORIES_SHEET_NAME = 'Deck%20Categories'
 overview_url = f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={OVERVIEW_SHEET_NAME}'
