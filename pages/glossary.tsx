@@ -47,7 +47,7 @@ const Glossary: NextPage = () => {
           <section id='Combo' className={styles.glossarySection}>
             <h2>Combo</h2>
             <p>
-              A sequence of cards that allows you to win the game.
+              A sequence of cards that allows you to win the game, directly or indirectly.
             </p>
           </section>
 
@@ -68,7 +68,7 @@ const Glossary: NextPage = () => {
           <section id='Mana Rock' className={styles.glossarySection}>
             <h2>Mana Rock</h2>
             <p>
-              A card that allows you to play more mana.
+              An artifact that have the ability to produce mana.
             </p>
           </section>
         </span>
