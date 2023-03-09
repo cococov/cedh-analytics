@@ -68,7 +68,7 @@ const Glossary: NextPage = () => {
           <section id='Mana Rock' className={styles.glossarySection}>
             <h2>Mana Rock</h2>
             <p>
-              An artifact that have the ability to produce mana.
+              An artifact that has the ability to produce mana.
             </p>
           </section>
         </span>
