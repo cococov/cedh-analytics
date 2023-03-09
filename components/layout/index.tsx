@@ -8,11 +8,12 @@ const Layout: React.FC<{
   title: string | string[] | undefined,
   description?: string | undefined
   image?: string | undefined
-}> = ({ children, title, description, image }) => {
+  externalImage?: boolean | undefined
+}> = ({ children, title, description, image, externalImage }) => {
   return (
     <AppProvider>
       <div className={styles.container}>
-        <Header title={title} description={description} image={image} />
+        <Header title={title} description={description} image={image} externalImage={externalImage} />
         <NavBar />
         {children}
         <Footer />

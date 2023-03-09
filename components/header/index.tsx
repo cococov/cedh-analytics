@@ -4,13 +4,14 @@ const Header: React.FC<{
   title: string | string[] | undefined,
   description: string | undefined,
   image: string | undefined,
-}> = ({ title, description, image }) => {
+  externalImage?: boolean | undefined,
+}> = ({ title, description, image, externalImage }) => {
   return (
     <Head>
       <title>{!!title ? `${title} | ` : ''} cEDH Analytics</title>
       <meta name="description" content={`${!!description ? `${description} | ` : ''} cEDH Analytics is a website that analyzes and cross-references several EDH community's resources to give insights on the competitive metagame.`} />
-      <meta property="og:image" content={`https://www.cedh-analytics.com${!!image ? image : '/images/carrot_compost_white.png'}`} />
-      <meta property="og:image:secure_url" content={`https://www.cedh-analytics.com${!!image ? image : '/images/carrot_compost_white.png'}`} />
+      <meta property="og:image" content={externalImage ? image : `https://www.cedh-analytics.com${!!image ? image : '/images/carrot_compost_white.png'}`} />
+      <meta property="og:image:secure_url" content={externalImage ? image : `https://www.cedh-analytics.com${!!image ? image : '/images/carrot_compost_white.png'}`} />
       <meta property="og:site_name" content="cEDH Analytics" />
       <meta property="og:title" content={`${!!title ? `${title} | ` : ''} cEDH Analytics`} />
       <meta property="og:url" content="https://cedh-analytics.com/" />
@@ -22,13 +23,13 @@ const Header: React.FC<{
       <meta itemProp="name" content={`${!!title ? `${title} | ` : ''} cEDH Analytics`} />
       <meta itemProp="url" content="https://cedh-analytics.com/" />
       <meta itemProp="description" content={`${!!description ? `${description} | ` : ''} cEDH Analytics is a website that analyzes and cross-references several EDH community's resources to give insights on the competitive metagame.`} />
-      <meta itemProp="image" content={`https://www.cedh-analytics.com${!!image ? image : '/images/carrot_compost_white.png'}`} />
+      <meta itemProp="image" content={externalImage ? image : `https://www.cedh-analytics.com${!!image ? image : '/images/carrot_compost_white.png'}`} />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:site" content="@CoCoCov" />
       <meta name="twitter:creator" content="@CoCoCov" />
       <meta name="twitter:title" content={`${!!title ? `${title} | ` : ''} cEDH Analytics`} />
       <meta name="twitter:description" content={`${!!description ? `${description} | ` : ''} cEDH Analytics is a website that analyzes and cross-references several EDH community's resources to give insights on the competitive metagame.`} />
-      <meta name="twitter:image" content={`https://www.cedh-analytics.com${!!image ? image : '/images/carrot_compost_white.png'}`} />
+      <meta name="twitter:image" content={externalImage ? image : `https://www.cedh-analytics.com${!!image ? image : '/images/carrot_compost_white.png'}`} />
       <meta name="twitter:image:alt" content="Carrot Compost Logo" />
       <meta name="twitter:url" content="https://cedh-analytics.com/" />
       <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />

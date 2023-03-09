@@ -40,7 +40,7 @@ const Card: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, a
   const { name } = router.query;
 
   return (
-    <Layout title={name} description={`${name} info`}>
+    <Layout title={name} description={`${name} info`} image={cardImage || cardFaces[0].image_uris.large} externalImage>
       <main className={styles.main}>
         <CardInfoPage
           cardName={cardName}
