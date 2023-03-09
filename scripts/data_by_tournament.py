@@ -133,11 +133,17 @@ def getType(type):
     return 'Land'
   return 'Unknown'
 
+number_of_decks_by_identities = {}
+
 def reduce_deck(accumulated, current):
+  identity = 'C' if len(current['card']['color_identity']) == 0 else ''.join(current['card']['color_identity'])
+
+  number_of_decks_by_identities[identity] = number_of_decks_by_identities[identity] + 1 if identity in number_of_decks_by_identities else 1
+
   hash = {
     'occurrences': 1,
     'cardName': current['card']['name'],
-    'colorIdentity': 'C' if len(current['card']['color_identity']) == 0 else ''.join(current['card']['color_identity']),
+    'colorIdentity': identity,
     'decklists': [current['deck']],
     'cmc': current['card']['cmc'],
     'prices': current['card']['prices'],
@@ -185,9 +191,14 @@ def sort_and_group_decks(decks):
   sorted_by_identity_size_decks_by_commanders = sorted(sorted_decks_by_commanders, key=lambda x: len(x['colorIdentity']))
   return sorted_by_identity_size_decks_by_commanders
 
+def percentage_of_use_by_identity(occurrences, identity):
+  if identity == 'C':
+    return round(occurrences / VALID_DECKS * 100, 2)
+  return round(occurrences / number_of_decks_by_identities[identity] * 100, 2)
+
 def map_cards(card):
   decklists = sort_and_group_decks(card['decklists'])
-  return {**card, 'decklists': decklists, 'percentageOfUse': round(card['occurrences'] / VALID_DECKS * 100, 2)}
+  return {**card, 'decklists': decklists, 'percentageOfUse': round(card['occurrences'] / VALID_DECKS * 100, 2), 'percentageOfUseByIdentity': percentage_of_use_by_identity(card['occurrences'], card['colorIdentity'])}
 
 reduced_data = list(map(map_cards, reduce(reduce_all_decks, mapped_decklists_data, [])))
 home_overview['cards'] = len(reduced_data)
