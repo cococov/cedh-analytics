@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { replace, isNil } from 'ramda';
+import ReadMoreIcon from '@mui/icons-material/ReadMore';
 import Image from 'next/image';
 import styles from '../../styles/CardsList.module.css';
 import Table from '../table';
@@ -18,13 +19,14 @@ const IDENTITY_COLORS = { B: B, G: G, R: R, U: U, W: W, C: C };
 type CardProps = any; // TODO: define type
 
 type CardsTableProps = {
-  cards: CardProps[],
-  toggleLoading: (state: boolean) => void,
-  handleChangeCard: (cardName: string | undefined) => void,
-  tournamentId?: string,
+  cards: CardProps[];
+  toggleLoading: (state: boolean) => void;
+  handleChangeCard: (cardName: string | undefined) => void;
+  forceSnackBarLoading: (state: boolean) => void;
+  tournamentId?: string;
 };
 
-const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleChangeCard, tournamentId }) => {
+const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleChangeCard, tournamentId, forceSnackBarLoading }) => {
   const [isLoaded, setLoaded] = useState(false);
   const router = useRouter();
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
@@ -273,6 +275,20 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleCha
         rowHeight="5rem"
         title="Cards Played"
         onRowClick={handleClickRow}
+        actions={(isSmallScreen || isMediumScreen) ? [] : [
+          {
+            icon: () => <ReadMoreIcon />,
+            tooltip: 'Go to Card Page',
+            onClick: (_event, rowData: any = {}) => {
+              forceSnackBarLoading(true);
+              router.push(
+                isNil(tournamentId)
+                  ? `/cards/${replace(/\//g, '%2F', rowData['cardName'])}`
+                  : `/tournaments/${tournamentId}/${replace(/\//g, '%2F', rowData['cardName'])}`
+              );
+            }
+          }
+        ]}
       />
     </span>
   )

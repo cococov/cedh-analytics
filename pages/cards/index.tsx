@@ -38,6 +38,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
     isReservedList: false,
   });
   const [isLoading, toggleLoading] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
+  const [isForcedSnackBarLoading, forceSnackBarLoading] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
   const [isLoadingDeckLists, toggleLoadingDecklists] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
 
   const handleChangeCard = async (cardName: string | undefined) => {
@@ -98,7 +99,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
 
   return (
     <Layout title="Card List" description="List of all cEDH cards">
-      <SnackBarLoading isOpen={isLoading && (isMediumScreen || isSmallScreen)} />
+      <SnackBarLoading isOpen={(isLoading && (isMediumScreen || isSmallScreen)) || isForcedSnackBarLoading} />
       <main className={styles.main}>
         <span className={styles['left-span']}>
           <DeckLists
@@ -112,6 +113,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
           cards={cards}
           toggleLoading={toggleLoading}
           handleChangeCard={handleChangeCard}
+          forceSnackBarLoading={forceSnackBarLoading}
         />
         <CardInfo
           selectedCard={selectedCard}

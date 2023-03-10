@@ -65,6 +65,7 @@ const Table: React.FC<ITable> = ({
         exportAllData: canExportAllData,
         filtering: canFilter,
         search: canSearch,
+        actionsColumnIndex: -1,
         emptyRowsWhenPaging: false,
         rowStyle: {
           height: rowHeight,
