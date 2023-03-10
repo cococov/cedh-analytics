@@ -222,7 +222,7 @@ def percentage_of_use_by_identity(occurrences, identity):
 
 def map_cards(card):
   decklists = sort_and_group_decks(card['decklists'])
-  return {**card, 'decklists': decklists, 'percentageOfUse': round(card['occurrences'] / VALID_DECKS * 100, 2)}
+  return {**card, 'decklists': decklists, 'percentageOfUse': round(card['occurrences'] / VALID_DECKS * 100, 2), 'percentageOfUseByIdentity': percentage_of_use_by_identity(card['occurrences'], card['colorIdentity'])}
 
 reduced_data = list(map(map_cards, reduce(reduce_all_decks, mapped_decklists_data, [])))
 home_overview['cards'] = len(reduced_data)
