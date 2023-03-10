@@ -57,6 +57,7 @@ const Tournament: React.FC<CardsProps> = ({ cards, tournamentInfo, tounamentResu
     gathererId: 0,
     isReservedList: false,
   });
+  const [isForcedSnackBarLoading, forceSnackBarLoading] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
   const [isLoading, toggleLoading] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
   const [isLoadingDeckLists, toggleLoadingDecklists] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
 
@@ -118,7 +119,7 @@ const Tournament: React.FC<CardsProps> = ({ cards, tournamentInfo, tounamentResu
 
   return (
     <Layout title={`${tournamentInfo.name}`} description={`Information and statistics of ${tournamentInfo.name}`} image={`/data/tournaments/${!!tournamentInfo.imageName ? `${tournamentInfo.id}/${tournamentInfo.imageName}` : 'default.jpg'}`}>
-      <SnackBarLoading isOpen={isLoading && (isMediumScreen || isSmallScreen)} />
+      <SnackBarLoading isOpen={(isLoading && (isMediumScreen || isSmallScreen)) || isForcedSnackBarLoading} />
       <main className={styles.main}>
         <section className={styles.tournamentImageContainer}>
           <Image
@@ -172,6 +173,7 @@ const Tournament: React.FC<CardsProps> = ({ cards, tournamentInfo, tounamentResu
             toggleLoading={toggleLoading}
             handleChangeCard={handleChangeCard}
             tournamentId={tournamentInfo?.id}
+            forceSnackBarLoading={forceSnackBarLoading}
           />
           <CardInfo
             selectedCard={selectedCard}
