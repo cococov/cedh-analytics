@@ -114,9 +114,25 @@ decklists_data = list(filter(lambda x: 'name' in x.keys(), list(map(get_decklist
 print('\033[KGetting decklists data \033[92mDone!\033[0m')
 print('Processing decklists data...', end='\r')
 
+def sort_identity(identity):
+  if len(identity) == 0:
+    return ['C']
+  identities = { 'W': 0, 'U': 1, 'B': 2, 'R': 3, 'G': 4 }
+  sorted_identities = sorted(identity, key=lambda x: identities[x])
+  return sorted_identities
+
+number_of_decks_by_identities = {}
+
 def map_decklists_data(decklist_data):
   result = {}
   result['deck'] = { 'name': decklist_data['name'], 'url': decklist_data['url'], 'commanders': list(map(lambda x : { 'name': x['card']['name'], 'color_identity': x['card']['color_identity'] }, decklist_data['commanders'].values()))}
+  color_identity = list(reduce(lambda y, z: set(y + z), map(lambda x: x['color_identity'], result['deck']['commanders'])))
+  sorted_identity = sort_identity(color_identity)
+  joined_identity = ''.join(sorted_identity)
+  if joined_identity in number_of_decks_by_identities:
+    number_of_decks_by_identities.update({joined_identity: number_of_decks_by_identities[joined_identity] + 1})
+  else:
+    number_of_decks_by_identities[joined_identity] = 1
   cards = decklist_data['mainboard'] | decklist_data['companions'] | decklist_data['commanders']
   result['cards'] = list(cards.values())
   return result
@@ -140,17 +156,11 @@ def getType(type):
     return 'Land'
   return 'Unknown'
 
-number_of_decks_by_identities = {}
-
 def reduce_deck(accumulated, current):
-  identity = 'C' if len(current['card']['color_identity']) == 0 else ''.join(current['card']['color_identity'])
-
-  number_of_decks_by_identities[identity] = number_of_decks_by_identities[identity] + 1 if identity in number_of_decks_by_identities else 1
-
   hash = {
     'occurrences': 1,
     'cardName': current['card']['name'],
-    'colorIdentity': identity,
+    'colorIdentity': 'C' if len(current['card']['color_identity']) == 0 else ''.join(current['card']['color_identity']),
     'decklists': [current['deck']],
     'cmc': current['card']['cmc'],
     'prices': current['card']['prices'],
@@ -175,13 +185,6 @@ def reduce_deck(accumulated, current):
 def reduce_all_decks(accumulated, current):
   return reduce(reduce_deck, list(map(lambda x: {**x, 'deck': current['deck']}, current['cards'])), accumulated)
 
-def sort_identity(identity):
-  if len(identity) == 0:
-    return ['C']
-  identities = { 'W': 0, 'U': 1, 'B': 2, 'R': 3, 'G': 4 }
-  sorted_identities = sorted(identity, key=lambda x: identities[x])
-  return sorted_identities
-
 def sort_and_group_decks(decks):
   sorted_decks = sorted(decks, key=lambda x: x['name'])
   grouped_decks = {}
@@ -198,14 +201,28 @@ def sort_and_group_decks(decks):
   sorted_by_identity_size_decks_by_commanders = sorted(sorted_decks_by_commanders, key=lambda x: len(x['colorIdentity']))
   return sorted_by_identity_size_decks_by_commanders
 
-def percentage_of_use_by_identity(occurrences, identity):
+def identity_in_identity(identity, identity_to_check):
+  identity_to_check_list = list(identity_to_check)
+  for sub_identity in identity:
+    if sub_identity not in identity_to_check_list:
+      return False
+  return True
+
+def possible_number_of_decks_by_identity(identity):
   if identity == 'C':
-    return round(occurrences / VALID_DECKS * 100, 2)
-  return round(occurrences / number_of_decks_by_identities[identity] * 100, 2)
+    return VALID_DECKS
+  total = 0
+  for key in number_of_decks_by_identities:
+    if identity_in_identity(identity, key):
+      total = total + number_of_decks_by_identities[key]
+  return total
+
+def percentage_of_use_by_identity(occurrences, identity):
+  return round(occurrences / possible_number_of_decks_by_identity(identity) * 100, 2)
 
 def map_cards(card):
   decklists = sort_and_group_decks(card['decklists'])
-  return {**card, 'decklists': decklists, 'percentageOfUse': round(card['occurrences'] / VALID_DECKS * 100, 2), 'percentageOfUseByIdentity': percentage_of_use_by_identity(card['occurrences'], card['colorIdentity'])}
+  return {**card, 'decklists': decklists, 'percentageOfUse': round(card['occurrences'] / VALID_DECKS * 100, 2)}
 
 reduced_data = list(map(map_cards, reduce(reduce_all_decks, mapped_decklists_data, [])))
 home_overview['cards'] = len(reduced_data)
@@ -258,9 +275,9 @@ print('\033[KCleaning \033[92mDone!\033[0m')
 time.sleep(1)
 print('Uploading changes...', end='\r')
 
-# check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
-# check_call(['git', 'commit', '-m', '"chore: update DB"'], stdout=DEVNULL, stderr=STDOUT)
-# check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['git', 'commit', '-m', '"chore: update DB"'], stdout=DEVNULL, stderr=STDOUT)
+check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
 
 time.sleep(1)
 print('\033[K\033[92mDB Updated!\033[0m')
