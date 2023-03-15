@@ -65,6 +65,7 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
             alt={`${tournamentInfo.id} Image`}
             layout="fill"
             quality={100}
+            onContextMenu={(e) => e.preventDefault()}
             priority
           />
           {tournamentInfo.showName && (<span className={styles.title}><h1>{tournamentInfo.name.split(' - ')[0]}</h1><h2>{tournamentInfo.name.split(' - ')[1]}</h2></span>)}
@@ -206,7 +207,7 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
             <h2>Nos Apoyan</h2>
             <span className={styles.auspicesWrapper}>
               {tournamentInfo.auspices.map((c, i) => (
-                <span className={styles.auspice}>
+                <span className={styles.auspice} key={`key-span-${c.name}`}>
                   <Link key={`key-${c.name}`} href={c.link || "#"}>
                     <a target="_blank" rel="noreferrer">
                       <Image
