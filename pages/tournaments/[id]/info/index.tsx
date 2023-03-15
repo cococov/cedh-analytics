@@ -218,9 +218,7 @@ export const getServerSideProps = async ({ params, res }: ServerSideParams): Pro
       },
     };
   } catch (e) {
-    return {
-      notFound: true,
-    };
+    return { notFound: true };
   }
 };
 
