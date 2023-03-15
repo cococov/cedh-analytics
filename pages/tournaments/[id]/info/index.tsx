@@ -190,9 +190,9 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
             {!!tournamentInfo.placePhotos && (
               <span className={styles.placePhotos}>
                 {tournamentInfo.placePhotos.map(({ image, label }, i) => (
-                  <span className={styles.placePhoto} onClick={() => toggleImageDialog({ image: `/data/tournaments/${tournamentInfo.id}/place/${image}`, label: label })} >
+                  <span key={`span-place-photos-${i}`} className={styles.placePhoto} onClick={() => toggleImageDialog({ image: `/data/tournaments/${tournamentInfo.id}/place/${image}`, label: label })} >
                     <Image
-                      key={i}
+                      key={`image-place-photos-${i}`}
                       src={`/data/tournaments/${tournamentInfo.id}/place/${image}`}
                       alt={`place-photo-${i}`}
                       height={isSmallScreen ? (isPortrait ? 140.6 : 224) : 112}

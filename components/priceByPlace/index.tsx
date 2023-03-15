@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
 type Props = {
-  key?: number;
   image: string;
   place: string;
   name: string;
@@ -14,9 +13,9 @@ type Props = {
   className?: string;
 };
 
-const PriceByPlace: React.FC<Props> = ({ key, image, place, name, info, className }) => {
+const PriceByPlace: React.FC<Props> = ({ image, place, name, info, className }) => {
   return (
-    <Card key={key} sx={{ maxWidth: 345, margin: '1rem', boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 15%), 0px 1px 1px 0px rgb(0 0 0 / 10.5%), 0px 1px 3px 0px rgb(0 0 0 / 9%)' }}>
+    <Card sx={{ maxWidth: 345, margin: '1rem', boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 15%), 0px 1px 1px 0px rgb(0 0 0 / 10.5%), 0px 1px 3px 0px rgb(0 0 0 / 9%)' }}>
       <CardActionArea href={`/cards/${name}`}>
         <CardMedia
           component="img"
@@ -35,7 +34,7 @@ const PriceByPlace: React.FC<Props> = ({ key, image, place, name, info, classNam
             {info}
           </Typography>
         </CardContent>
-        </CardActionArea>
+      </CardActionArea>
     </Card>
   );
 };
