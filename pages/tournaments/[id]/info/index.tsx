@@ -16,43 +16,16 @@ import styles from '../../../../styles/TournamentInfo.module.css';
 
 import TOURNAMENTS_LIST from '../../../../public/data/tournaments/list.json';
 
-type placeCoords = { lat: number; lng: number };
-
-type ImageDialogState = { isOpen: boolean; image?: string, label?: string };
-type ImageDialogPayload = { isOpen?: boolean; image?: string, label?: string };
-
-type TournamentInfo = {
-  name: string;
-  showName: boolean;
-  id: string;
-  bookmark: string;
-  imageName?: string | null;
-  serie: string;
-  number: number;
-  hidden: boolean;
-  date: string;
-  cost: string[];
-  costDisclaimer: string | null;
-  placeCoords: placeCoords;
-  placeName: string;
-  placeDirection: string;
-  placePhotos?: { label: string; image: string }[];
-  prices: { place: string; name: string; info: string; image: string; }[];
-  quorum: string;
-  rules: string[];
-  mode: string[] | string[][];
-  disclaimer: string | null;
-  contact: { kind: string; value: string; }[];
-  auspices: { name: string, image: string, link?: string, rectangle?: boolean }[];
-};
-
-type InfoProps = { tournamentInfo: TournamentInfo };
+import type { InfoProps, ImageDialogState, ImageDialogPayload, EventInfo, EventData, ServerSideParams, ServerSideAnswer } from './TournamentInfo';
 
 const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
-  const theme = useTheme();
-  const [imageDialogPayload, toggleImageDialog] = useReducer((state: ImageDialogState, { label, image }: ImageDialogPayload) => ({ image, label, isOpen: !state.isOpen }), { isOpen: false, image: '', label: '' });
+  const { breakpoints } = useTheme();
+  const [imageDialogPayload, toggleImageDialog] = useReducer<React.Reducer<ImageDialogState, ImageDialogPayload>>(
+    (state, action) => ({ image: action.image ?? '', label: action.label ?? '', isOpen: !state.isOpen }),
+    { isOpen: false, image: '', label: '' }
+  );
   const { isLoaded } = useLoadScript({ googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' });
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isSmallScreen = useMediaQuery(breakpoints.down('md'));
   const isPortrait = useMediaQuery('(min-width:600px)');
 
   return (
@@ -231,25 +204,17 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
   )
 };
 
-type Params = {
-  params: { id: string; name: string; };
-  res: { setHeader: (name: string, value: string) => void; };
-};
-
-export const getServerSideProps = async ({ params, res }: Params) => {
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=1000, stale-while-revalidate=59'
-  );
+export const getServerSideProps = async ({ params, res }: ServerSideParams): Promise<ServerSideAnswer> => {
+  res.setHeader('Cache-Control', 'public, s-maxage=1000, stale-while-revalidate=59');
 
   try {
     const tournamentData = find(propEq('id', params.id), TOURNAMENTS_LIST);
     const rawTournamentInfo = await fetch(`${server}/data/tournaments/${params.id}/info.json`);
-    const tournamentInfo = await rawTournamentInfo.json();
+    const tournamentInfo: EventInfo = await rawTournamentInfo.json();
 
     return {
       props: {
-        tournamentInfo: mergeAll([tournamentData, tournamentInfo]),
+        tournamentInfo: mergeAll([tournamentData as EventData, tournamentInfo]),
       },
     };
   } catch (e) {
