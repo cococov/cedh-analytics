@@ -2,229 +2,72 @@
 import os
 import json
 import time
-import requests
 import glob
-import zipfile
-import pandas as pd
 from datetime import datetime
-from utils import custom_strftime
-from functools import reduce, lru_cache
+from utils.date import custom_strftime
+from utils.files import clear_csv_directory, download_file, unzip_file
+from data.mtg_json import get_cards_csv, get_sets_csv, build_get_last_set_for_card, build_has_multiple_printings
+from data.cedh_db import get_decklists_from_db, get_hashes
+from data.moxfield import get_decklists_data_from_hashes, VALID_DECKS
+from data.processing import get_decklists_data, reduce_decks_to_cards, process_cards
 from subprocess import DEVNULL, STDOUT, check_call
 
 DIRNAME = os.path.realpath('.')
 FOLDER_PATH = r'public/data/cards'
 FILE_PATH = FOLDER_PATH + r'/competitiveCards.json'
-DB_JSON_URL = 'https://raw.githubusercontent.com/AverageDragon/cEDH-Decklist-Database/master/_data/database.json'
 ALL_PRINTS_URL = 'https://mtgjson.com/api/v5/AllPrintingsCSVFiles.zip'
 VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 INVALID_SETS = ['MB1']
 LAST_SET = ["Phyrexia: All Will Be One", "Phyrexia: All Will Be One Commander"] # [base set, commander decks]
 
+home_overview = {}
+
 print('Beginning')
 print('Deleting csv directory content...', end='\r')
 
-files = glob.glob('./csv/*')
-for f in files:
-  os.remove(f)
+clear_csv_directory()
 
 print('\033[Kcsv directory content deleted \033[92mDone!\033[0m')
 print('Geting all printing...', end='\r')
 
-check_call(['wget', ALL_PRINTS_URL, '-P', './csv'], stdout=DEVNULL, stderr=STDOUT)
+download_file(ALL_PRINTS_URL, './csv')
 
 print('\033[KGeting all printing \033[92mDone!\033[0m')
 print('Unzip all printing...', end='\r')
 
-with zipfile.ZipFile('./csv/AllPrintingsCSVFiles.zip', 'r') as zip_ref:
-  zip_ref.extractall('./csv')
+unzip_file('./csv/AllPrintingsCSVFiles.zip', './csv')
 
 print('\033[KUnzip all printing \033[92mDone!\033[0m')
 print('Processing all printing...', end='\r')
 
-cards_csv = pd.read_csv('./csv/cards.csv', dtype='unicode').dropna(axis=1)
-sets_csv = pd.read_csv('./csv/sets.csv', dtype='unicode').dropna(axis=1).sort_values(by='releaseDate',ascending=False).query("type in @VALID_TYPE_SETS").query("keyruneCode not in @INVALID_SETS").query("isOnlineOnly == '0'")
-sets_csv['releaseDate'] = pd.to_datetime(sets_csv['releaseDate'])
-
-@lru_cache(maxsize=None)
-def get_last_set_for_card(card_name):
-  try:
-    if card_name in ['Glenn, the Voice of Calm', 'Rick, Steadfast Leader', 'Daryl, Hunter of Walkers']:
-      return 'Secret Lair Drop'
-    if card_name in ['Rot Hulk']:
-      return 'Game Night'
-    card_printing_codes = cards_csv.loc[cards_csv['name'] == card_name].iloc[0]['printings'].split(',')
-    card_printing_names = sets_csv.loc[sets_csv['keyruneCode'].isin(card_printing_codes)]['name']
-    return card_printing_names.iloc[0]
-  except:
-    print("Error getting card set: " + card_name)
-    return 'Unknown'
-
-@lru_cache(maxsize=None)
-def has_multiple_printings(card_name):
-  try:
-    if card_name in ['Glenn, the Voice of Calm', 'Rick, Steadfast Leader', 'Daryl, Hunter of Walkers']:
-      return 'Secret Lair Drop'
-    if card_name in ['Rot Hulk']:
-      return 'Game Night'
-    card_printing_codes = cards_csv.loc[cards_csv['name'] == card_name].iloc[0]['printings'].split(',')
-    card_printing_names = sets_csv.loc[sets_csv['keyruneCode'].isin(card_printing_codes)]['name']
-    return card_printing_names.count() > 1
-  except:
-    return False
+cards_csv = get_cards_csv()
+sets_csv = get_sets_csv()
+get_last_set_for_card = build_get_last_set_for_card(cards_csv, sets_csv)
+has_multiple_printings = build_has_multiple_printings(cards_csv, sets_csv)
 
 print('\033[KProcessing all printing \033[92mDone!\033[0m')
 print('Getting decklists...', end='\r')
 
-raw_lists = requests.get(DB_JSON_URL)
-lists = json.loads(raw_lists.text)
-home_overview = {}
+lists = get_decklists_from_db()
 
 print('\033[KGetting decklists \033[92mDone!\033[0m')
 print('Processing hashes...', end='\r')
 
-def reduce_competitive_lists_hashes(accumulated, current):
-  if current['section'] != 'COMPETITIVE': return accumulated
-  striped_lists = list(map(lambda dl: dl['link'].strip(), current['decklists']))
-  filtered_lists = list(filter(lambda l: l.find('moxfield') != -1, striped_lists))
-  hashes = list(map(lambda l: l.split('/')[-1], filtered_lists))
-  hashes_without_blanks = list(filter(lambda h: h != '', hashes))
-  return accumulated + hashes_without_blanks
-
-all_competitive_deck_hashes = reduce(reduce_competitive_lists_hashes, lists, [])
-
+all_competitive_deck_hashes = get_hashes(lists)
 VALID_DECKS = len(all_competitive_deck_hashes)
 home_overview['decks'] = VALID_DECKS
 
 print('\033[KProcesing hashes \033[92mDone!\033[0m')
 print('Getting decklists data...', end='\r')
 
-decklists_data_getted_number = 0
-def get_decklists_data(hash):
-  global decklists_data_getted_number
-  time.sleep(1)
-  raw_data = requests.get(f"https://api.moxfield.com/v2/decks/all/{hash}")
-  data = json.loads(raw_data.text)
-  data['url'] = f"https://www.moxfield.com/decks/{hash}"
-  decklists_data_getted_number += 1
-  print(f"\033[KGetting decklists data [{decklists_data_getted_number}/{VALID_DECKS}]", end='\r')
-  return data
-
-decklists_data = list(filter(lambda x: 'name' in x.keys(), list(map(get_decklists_data, all_competitive_deck_hashes)))) # filter out decks without name (without name means that the url returns a 404)
+decklists_data = get_decklists_data_from_hashes(all_competitive_deck_hashes)
 
 print('\033[KGetting decklists data \033[92mDone!\033[0m')
 print('Processing decklists data...', end='\r')
 
-def sort_identity(identity):
-  if len(identity) == 0:
-    return ['C']
-  identities = { 'W': 0, 'U': 1, 'B': 2, 'R': 3, 'G': 4 }
-  sorted_identities = sorted(identity, key=lambda x: identities[x])
-  return sorted_identities
+mapped_decklists_data = get_decklists_data(decklists_data)
 
-number_of_decks_by_identities = {}
-
-def map_decklists_data(decklist_data):
-  result = {}
-  result['deck'] = { 'name': decklist_data['name'], 'url': decklist_data['url'], 'commanders': list(map(lambda x : { 'name': x['card']['name'], 'color_identity': x['card']['color_identity'] }, decklist_data['commanders'].values()))}
-  color_identity = list(reduce(lambda y, z: set(y + z), map(lambda x: x['color_identity'], result['deck']['commanders'])))
-  sorted_identity = sort_identity(color_identity)
-  joined_identity = ''.join(sorted_identity)
-  if joined_identity in number_of_decks_by_identities:
-    number_of_decks_by_identities.update({joined_identity: number_of_decks_by_identities[joined_identity] + 1})
-  else:
-    number_of_decks_by_identities[joined_identity] = 1
-  cards = decklist_data['mainboard'] | decklist_data['companions'] | decklist_data['commanders']
-  result['cards'] = list(cards.values())
-  return result
-
-mapped_decklists_data = list(map(map_decklists_data, decklists_data))
-
-def getType(type):
-  if type == '1':
-    return 'Planeswalker'
-  if type == '2':
-    return 'Creature'
-  if type == '3':
-    return 'Sorcery'
-  if type == '4':
-    return 'Instant'
-  if type == '5':
-    return 'Artifact'
-  if type == '6':
-    return 'Enchantment'
-  if type == '7':
-    return 'Land'
-  return 'Unknown'
-
-def reduce_deck(accumulated, current):
-  hash = {
-    'occurrences': 1,
-    'cardName': current['card']['name'],
-    'colorIdentity': 'C' if len(current['card']['color_identity']) == 0 else ''.join(current['card']['color_identity']),
-    'decklists': [current['deck']],
-    'cmc': current['card']['cmc'],
-    'prices': current['card']['prices'],
-    'reserved': current['card']['reserved'],
-    'multiplePrintings': bool(has_multiple_printings(current['card']['name'])),
-    'lastPrint': get_last_set_for_card(current['card']['name']),
-    'multiverse_ids': current['card']['multiverse_ids'] if 'multiverse_ids' in current['card'] else [0],
-    'scrapName': current['card']['name'],
-    'type': getType(current['card']['type']),
-    'typeLine': current['card']['type_line'],
-  }
-
-  saved_card_index = next((index for (index, d) in enumerate(accumulated) if d['cardName'] == current['card']['name']), -1)
-
-  if saved_card_index > -1:
-    hash['occurrences'] = accumulated[saved_card_index]['occurrences'] + 1
-    hash['decklists'] = accumulated[saved_card_index]['decklists'] + [current['deck']]
-    del accumulated[saved_card_index]
-
-  return [*accumulated, hash]
-
-def reduce_all_decks(accumulated, current):
-  return reduce(reduce_deck, list(map(lambda x: {**x, 'deck': current['deck']}, current['cards'])), accumulated)
-
-def sort_and_group_decks(decks):
-  sorted_decks = sorted(decks, key=lambda x: x['name'])
-  grouped_decks = {}
-  for deck in sorted_decks:
-    splitted_commanders = map(lambda y: y['name'].split(',')[0], deck['commanders'])
-    joined_commanders = ' | '.join(sorted(splitted_commanders))
-    grouped_decks.setdefault(joined_commanders, []).append(deck)
-  unsorted_decks_by_commanders = []
-  for key, value in grouped_decks.items():
-    color_identity = list(reduce(lambda y, z: set(y + z), map(lambda x: x['color_identity'], value[0]['commanders'])))
-    sorted_identity = sort_identity(color_identity)
-    unsorted_decks_by_commanders.append({ 'commanders': key, 'decks': value, 'colorIdentity': sorted_identity })
-  sorted_decks_by_commanders = sorted(unsorted_decks_by_commanders, key=lambda x: ''.join(x['colorIdentity']) + x['commanders'])
-  sorted_by_identity_size_decks_by_commanders = sorted(sorted_decks_by_commanders, key=lambda x: len(x['colorIdentity']))
-  return sorted_by_identity_size_decks_by_commanders
-
-def identity_in_identity(identity, identity_to_check):
-  identity_to_check_list = list(identity_to_check)
-  for sub_identity in identity:
-    if sub_identity not in identity_to_check_list:
-      return False
-  return True
-
-def possible_number_of_decks_by_identity(identity):
-  if identity == 'C':
-    return VALID_DECKS
-  total = 0
-  for key in number_of_decks_by_identities:
-    if identity_in_identity(identity, key):
-      total = total + number_of_decks_by_identities[key]
-  return total
-
-def percentage_of_use_by_identity(occurrences, identity):
-  return round(occurrences / possible_number_of_decks_by_identity(identity) * 100, 2)
-
-def map_cards(card):
-  decklists = sort_and_group_decks(card['decklists'])
-  return {**card, 'decklists': decklists, 'percentageOfUse': round(card['occurrences'] / VALID_DECKS * 100, 2), 'percentageOfUseByIdentity': percentage_of_use_by_identity(card['occurrences'], card['colorIdentity'])}
-
-reduced_data = list(map(map_cards, reduce(reduce_all_decks, mapped_decklists_data, [])))
+reduced_data = process_cards(reduce_decks_to_cards(mapped_decklists_data, has_multiple_printings, get_last_set_for_card))
 home_overview['cards'] = len(reduced_data)
 home_overview['staples'] = len(list(filter(lambda d: d['occurrences'] > 10, reduced_data)))
 home_overview['pet'] = len(list(filter(lambda d: d['occurrences'] == 1, reduced_data)))
@@ -243,7 +86,6 @@ print('Saving new file...', end='\r')
 
 with open(os.path.join(DIRNAME, FILE_PATH), 'w+', encoding='utf8') as f:
   json.dump(reduced_data, f, ensure_ascii=False)
-
 
 print('\033[KNew file saved \033[92mDone!\033[0m')
 print('Updating home overview...', end='\r')

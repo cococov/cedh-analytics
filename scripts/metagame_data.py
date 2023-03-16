@@ -2,7 +2,7 @@ import os
 import json
 import pandas as pd
 from datetime import datetime
-from utils import custom_strftime
+from utils.date import custom_strftime
 from subprocess import DEVNULL, STDOUT, check_call
 
 DIRNAME = os.path.realpath('.')
