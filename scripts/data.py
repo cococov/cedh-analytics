@@ -3,13 +3,14 @@ import os
 import json
 import time
 import glob
+import data.moxfield
 from datetime import datetime
 from utils.date import custom_strftime
 from utils.files import clear_csv_directory, download_file, unzip_file
 from data.mtg_json import get_cards_csv, get_sets_csv, build_get_last_set_for_card, build_has_multiple_printings
 from data.cedh_db import get_decklists_from_db, get_hashes
-from data.moxfield import get_decklists_data_from_hashes, VALID_DECKS
-from data.processing import get_decklists_data, reduce_decks_to_cards, process_cards
+from data.moxfield import get_decklists_data_from_hashes
+from data.pre_processing import get_decklists_data, reduce_decks_to_cards, process_cards
 from subprocess import DEVNULL, STDOUT, check_call
 
 DIRNAME = os.path.realpath('.')
@@ -41,7 +42,7 @@ print('\033[KUnzip all printing \033[92mDone!\033[0m')
 print('Processing all printing...', end='\r')
 
 cards_csv = get_cards_csv()
-sets_csv = get_sets_csv()
+sets_csv = get_sets_csv(VALID_TYPE_SETS, INVALID_SETS)
 get_last_set_for_card = build_get_last_set_for_card(cards_csv, sets_csv)
 has_multiple_printings = build_has_multiple_printings(cards_csv, sets_csv)
 
@@ -54,8 +55,8 @@ print('\033[KGetting decklists \033[92mDone!\033[0m')
 print('Processing hashes...', end='\r')
 
 all_competitive_deck_hashes = get_hashes(lists)
-VALID_DECKS = len(all_competitive_deck_hashes)
-home_overview['decks'] = VALID_DECKS
+data.moxfield.VALID_DECKS = len(all_competitive_deck_hashes)
+home_overview['decks'] = data.moxfield.VALID_DECKS
 
 print('\033[KProcesing hashes \033[92mDone!\033[0m')
 print('Getting decklists data...', end='\r')

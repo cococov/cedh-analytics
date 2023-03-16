@@ -8,7 +8,7 @@ from pathlib import Path
 from utils.files import clear_csv_directory, download_file, unzip_file
 from data.mtg_json import get_cards_csv, get_sets_csv, build_get_last_set_for_card, build_has_multiple_printings
 from data.moxfield import get_decklists_from_bookmark, get_decklist_hashes_from_bookmark, get_decklists_data_from_hashes
-from data.processing import get_decklists_data, reduce_decks_to_cards, process_cards
+from data.pre_processing import get_decklists_data, reduce_decks_to_cards, process_cards
 from subprocess import DEVNULL, STDOUT, check_call
 
 TOURNAMENT_DECKLISTS_BOOKMARK_ID = 'YdDnv'
