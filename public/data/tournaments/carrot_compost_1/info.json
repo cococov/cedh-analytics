@@ -30,13 +30,41 @@
       "image": "savannah.jpeg",
       "place": "1°",
       "name": "Savannah",
-      "info": "Revised - ENG - HP"
+      "info": "Revised - ENG - HP",
+      "isCard": true,
+      "small": false
     },
     {
       "image": "drannith.png",
       "place": "2°, 3° y 4°",
       "name": "Drannith Magistrate",
-      "info": "Ikoria - NM - JPN - EXT"
+      "info": "Ikoria - NM - JPN - EXT",
+      "isCard": true,
+      "small": false
+    },
+    {
+      "image": "playmat.jpg",
+      "place": "1°",
+      "name": "Playmat",
+      "info": "Ultra Pro - 24\"x14.5\"",
+      "isCard": false,
+      "small": true
+    },
+    {
+      "image": "carpeta.jpg",
+      "place": "5°~8°",
+      "name": "Carpeta BCW Roja",
+      "info": "Se sorteará",
+      "isCard": false,
+      "small": true
+    },
+    {
+      "image": "protectores.jpg",
+      "place": "9°+",
+      "name": "Protectores Dragon Shield",
+      "info": "Se sorteará",
+      "isCard": false,
+      "small": true
     }
   ],
   "quorum": "Máximo 36 cupos, mínimo 16 para efectuarse el torneo.",

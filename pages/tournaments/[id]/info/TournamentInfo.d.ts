@@ -31,6 +31,8 @@ interface Price {
   name: string;
   info: string;
   image: string;
+  isCard: boolean;
+  small?: boolean;
 }
 
 interface placePhoto {

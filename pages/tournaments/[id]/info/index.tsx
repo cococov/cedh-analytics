@@ -61,7 +61,7 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
             <h2>Premios</h2>
             <span className={styles.pricesWrapper}>
               {tournamentInfo.prices.map((c, i) => (
-                <PriceByPlace key={i} image={`/data/tournaments/${tournamentInfo.id}/prices/${c.image}`} place={c.place} name={c.name} info={c.info} />
+                <PriceByPlace key={i} image={`/data/tournaments/${tournamentInfo.id}/prices/${c.image}`} place={c.place} name={c.name} info={c.info} isCard={c.isCard} small={c.small} isSmallScreen={isSmallScreen} />
               ))}
             </span>
           </section>

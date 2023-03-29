@@ -10,18 +10,20 @@ type Props = {
   place: string;
   name: string;
   info: string;
-  className?: string;
+  isCard?: boolean;
+  small?: boolean;
+  isSmallScreen?: boolean;
 };
 
-const PriceByPlace: React.FC<Props> = ({ image, place, name, info, className }) => {
+const PriceByPlace: React.FC<Props> = ({ image, place, name, info, isCard, small, isSmallScreen }) => {
   return (
     <Card sx={{ maxWidth: 345, margin: '1rem', boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 15%), 0px 1px 1px 0px rgb(0 0 0 / 10.5%), 0px 1px 3px 0px rgb(0 0 0 / 9%)' }}>
-      <CardActionArea href={`/cards/${name}`}>
+      <CardActionArea href={isCard ? `/cards/${name}` : ''} disabled={!isCard}>
         <CardMedia
           component="img"
           image={image}
           alt={name}
-          height="380"
+          height={(small && !isSmallScreen) ? '172' : '380'}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
