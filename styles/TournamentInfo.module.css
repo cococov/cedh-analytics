@@ -291,3 +291,13 @@
   font-weight: bold;
   margin-right: 1.5rem;
 }
+
+@media (max-width: 767px) {
+  .scheduleSection ul {
+    padding-left: 2rem;
+  }
+
+  .scheduleSectionTime {
+    margin-right: 0.5rem;
+  }
+}
