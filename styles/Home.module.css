@@ -112,7 +112,6 @@
   flex-grow: 1;
   text-align: left;
   background-color: white;
-  min-height: 85vh;
   margin: 0.5rem;
   border-radius: 4px;
   overflow-y: hidden;
