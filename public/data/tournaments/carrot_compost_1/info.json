@@ -4,7 +4,7 @@
     "Sin Playmat: $25.000",
     "Con Playmat: $44.000"
   ],
-  "costDisclaimer": "Ambos precios incluyen almuerzo.",
+  "costDisclaimer": "La entrada incluye almuerzo si paga antes del 15 de Abril. Posterior a esta fecha el precio se mantiene, pero sin almuerzo incluido.",
   "placeCoords": {
     "lat": -29.9360302,
     "lng": -71.180728
@@ -65,6 +65,14 @@
       "info": "Se sorteará",
       "isCard": false,
       "small": true
+    },
+    {
+      "image": "mtg-back.jpg",
+      "place": "Por participar",
+      "name": "Se entregará una carta promocional sorpresa por participar",
+      "info": "La entrega será aleatoria, por orden de llegada y hasta agotar stock",
+      "isCard": false,
+      "small": true
     }
   ],
   "quorum": "Máximo 36 cupos, mínimo 16 para efectuarse el torneo.",
@@ -76,16 +84,31 @@
   ],
   "mode": [
     "5 rondas suizas y una mesa final con los 4 mejores puntajes.",
-    "3 puntos por mesa ganada, 1 punto por empate de mesa.",
+    "3 puntos por mesa ganada.",
+    "1 punto por empate de mesa (para los jugadores que quedaron en ella al momento del empate).",
+    "En caso de que una mesa no logre tener 4 jugadores, los jugadores de esta quedarán bye con 3 puntos cada uno.",
     "75 min por ronda, mesa finalistas sin tiempo.",
+    "Al terminar el tiempo la partida se termina con un empate para los jugadores que queden en la mesa.",
+    "En el caso de que el tiempo termine y un jugador esté en mitad de un combo con el que gana, se le dará la opción de hacer un shortcut si lo explica. Este jugador ganará siempre y cuando ningún oponente pueda interactuar de alguna manera con el shortcut que explicó.",
     [
       "En el torneo se permitirán test cards/ proxys. Sin embargo, deben cumplir los siguientes requisitos",
-      "Todos los proxies deben ser a color, del tamaño y grosor correcto. (Deben ser indistinguibles a la hora de barajar y presentar el mazo).",
+      "Todos los proxies deben ser a color, del tamaño y grosor correcto. (Deben ser indistinguibles a la hora de barajar y presentar el deck).",
       "Todos los proxies deben tener arte oficial de MTG (se permite arte de MTGO).",
       "Se permiten cartas de edición de coleccionista y de borde dorado.",
       "Se permiten pruebas de artista.",
-      "Los protectores deben ser de color no traslúcido en caso de usar cartas de doble cara o proxies que no tengan el diseño oficial en la parte posterior."
+      "Los protectores deben ser de color no traslúcido en caso de usar cartas de doble cara o proxies que no tengan el diseño oficial en la parte posterior.",
+      "En el caso de usar una impresión de una carta, esta debe ir sobre una carta real y todo el deck debe estar con doble protector."
     ]
+  ],
+  "schedule": [
+    {"time": "10:00", "event": "Apertura de puertas + Inscripciones tardías"},
+    {"time": "10:30", "event": "Primera ronda"},
+    {"time": "11:45", "event": "Segunda Ronda"},
+    {"time": "13:00", "event": "Tercera Ronda"},
+    {"time": "14:15", "event": "Descanso almuerzo"},
+    {"time": "15:00", "event": "Cuarta Ronda"},
+    {"time": "16:15", "event": "Quinta Ronda"},
+    {"time": "17:30", "event": "Inicio top 4"}
   ],
   "disclaimer": "Este evento está concebido netamente con el deseo de pasarlo bien y hacer crecer la comunidad de Magic: the Gathering, las tiendas que nos apoyan valoran esta iniciativa y buscan generar este mismo espíritu en sus actividades.",
   "contact": [

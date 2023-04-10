@@ -40,6 +40,11 @@ interface placePhoto {
   image: string;
 }
 
+interface schedule {
+  time: string;
+  event: string;
+}
+
 interface EventInfo {
   date: string;
   cost: string[];
@@ -52,6 +57,7 @@ interface EventInfo {
   quorum: string;
   rules: string[];
   mode: (string | string[])[];
+  schedule: schedule[];
   disclaimer?: string | null;
   contact: Contact[];
   auspices: Auspices[];

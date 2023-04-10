@@ -270,3 +270,24 @@
 .rulesSection .rulesDisclaimer {
   font-size: small;
 }
+
+.scheduleSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 50rem;
+}
+
+.scheduleSection ul {
+  padding-left: 8rem;
+}
+
+.scheduleSection li {
+  padding-top: 0.2rem;
+}
+
+.scheduleSectionTime {
+  font-weight: bold;
+  margin-right: 1.5rem;
+}

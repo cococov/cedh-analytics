@@ -98,6 +98,17 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
               ))}
             </ul>
           </section>
+          <section className={styles.scheduleSection}>
+            <h2>Horario</h2>
+            <ul>
+              {tournamentInfo.schedule.map(c => (
+                <li key={c.time}>
+                  <span className={styles.scheduleSectionTime}>{c.time}:</span>
+                  <span className={styles.scheduleSectionEvent}>{c.event}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
           <section className={styles.contactSection}>
             <h2>Contacto</h2>
             <span className={styles.contactIcons}>
