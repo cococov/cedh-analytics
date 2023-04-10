@@ -216,6 +216,7 @@
   flex-grow: 1;
   text-align: center;
   min-width: 82%;
+  max-width: 82%;
   margin: 0.5rem;
   background-color: white;
   border-radius: 12px;
