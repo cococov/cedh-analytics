@@ -14,18 +14,20 @@ def sort_identity(identity):
 
 def getType(type):
   if type == '1':
-    return 'Planeswalker'
+    return 'Battle'
   if type == '2':
-    return 'Creature'
+    return 'Planeswalker'
   if type == '3':
-    return 'Sorcery'
+    return 'Creature'
   if type == '4':
-    return 'Instant'
+    return 'Sorcery'
   if type == '5':
-    return 'Artifact'
+    return 'Instant'
   if type == '6':
-    return 'Enchantment'
+    return 'Artifact'
   if type == '7':
+    return 'Enchantment'
+  if type == '8':
     return 'Land'
   return 'Unknown'
 
