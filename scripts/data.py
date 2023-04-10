@@ -17,7 +17,7 @@ FILE_PATH = FOLDER_PATH + r'/competitiveCards.json'
 ALL_PRINTS_URL = 'https://mtgjson.com/api/v5/AllPrintingsCSVFiles.zip'
 VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 INVALID_SETS = ['MB1']
-LAST_SET = ["Phyrexia: All Will Be One", "Phyrexia: All Will Be One Commander"] # [base set, commander decks]
+LAST_SET = ["March of the Machine", "March of the Machine Commander"] # [base set, commander decks]
 
 home_overview = {}
 
