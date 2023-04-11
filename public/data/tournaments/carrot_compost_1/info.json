@@ -83,6 +83,8 @@
     "Los jugadores pueden dialogar entre sí, preguntar que hacen algunas cartas o pedir que les expliquen un loop o una jugada."
   ],
   "mode": [
+    "El torneo es con lista abierta.",
+    "Cada jugador debe subir su lista a Moxfield y mandar el link a los organizadores.",
     "5 rondas suizas y una mesa final con los 4 mejores puntajes.",
     "3 puntos por mesa ganada.",
     "1 punto por empate de mesa (para los jugadores que quedaron en ella al momento del empate).",
