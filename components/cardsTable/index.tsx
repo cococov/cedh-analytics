@@ -73,6 +73,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleCha
         'Enchantment': 'Enchantment',
         'Creature': 'Creature',
         'Planeswalker': 'Planeswalker',
+        'Battle': 'Battle',
       },
       cellStyle: {
         minWidth: '8rem'
