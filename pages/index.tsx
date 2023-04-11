@@ -2,6 +2,7 @@ import { useCallback, useReducer } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Image from "next/image";
+import { replace } from 'ramda';
 import { server } from '../config';
 import styles from '../styles/Home.module.css';
 import { Layout, SnackBarLoading } from '../components';
@@ -26,7 +27,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
 
   const handleClickTopRow = useCallback((event) => {
     toggle(true);
-    router.push(`/cards/${event.target.childNodes[0].data}`);
+    router.push(`/cards/${replace(/\//g, '%2F', event.target.childNodes[0].data)}`);
   }, []);
 
   return (
