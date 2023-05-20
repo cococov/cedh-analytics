@@ -53,7 +53,7 @@ def process_cards(cards):
 def map_decklists_data(decklist_data):
   result = {}
   result['deck'] = { 'name': decklist_data['name'], 'url': decklist_data['url'], 'commanders': list(map(lambda x : { 'name': x['card']['name'], 'color_identity': x['card']['color_identity'] }, decklist_data['commanders'].values()))}
-  color_identity = list(reduce(lambda y, z: set(y + z), map(lambda x: x['color_identity'], result['deck']['commanders'])))
+  color_identity = list(reduce(lambda y, z: set(y + z), map(lambda x: x['color_identity'], result['deck']['commanders']))) # type: ignore
   sorted_identity = sort_identity(color_identity)
   joined_identity = ''.join(sorted_identity)
   if joined_identity in number_of_decks_by_identities:
@@ -109,7 +109,7 @@ def sort_and_group_decks(decks):
     grouped_decks.setdefault(joined_commanders, []).append(deck)
   unsorted_decks_by_commanders = []
   for key, value in grouped_decks.items():
-    color_identity = list(reduce(lambda y, z: set(y + z), map(lambda x: x['color_identity'], value[0]['commanders'])))
+    color_identity = list(reduce(lambda y, z: set(y + z), map(lambda x: x['color_identity'], value[0]['commanders']))) # type: ignore
     sorted_identity = sort_identity(color_identity)
     unsorted_decks_by_commanders.append({ 'commanders': key, 'decks': value, 'colorIdentity': sorted_identity })
   sorted_decks_by_commanders = sorted(unsorted_decks_by_commanders, key=lambda x: ''.join(x['colorIdentity']) + x['commanders'])

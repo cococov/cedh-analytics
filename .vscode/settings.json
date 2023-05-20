@@ -1,17 +1,28 @@
 {
   "cSpell.words": [
+    "cedh",
+    "cocepcion",
     "colorshifted",
+    "concepcion",
+    "decklist",
     "Decklist",
     "decklists",
     "delcklists",
     "Deletable",
+    "keyrune",
+    "LDZDM",
     "mainboard",
     "maybeboard",
+    "melipilla",
+    "metagame",
+    "moxfield",
     "Moxfield",
     "nonfoil",
+    "planechase",
     "Planeswalker",
     "prefetch",
-    "scryfall"
+    "scryfall",
+    "spellbook"
   ],
   "python.analysis.typeCheckingMode": "basic"
 }

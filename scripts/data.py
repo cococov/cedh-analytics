@@ -28,9 +28,9 @@ files.clear_csv_directory()
 logs.end_log_block('csv directory content deleted')
 
 # DOWNLOAD ALL PRINTS
-logs.begin_log_block('Geting all printing')
+logs.begin_log_block('Getting all printing')
 files.download_file(ALL_PRINTS_URL, './csv')
-logs.end_log_block('Geting all printing')
+logs.end_log_block('Getting all printing')
 
 # UNZIP ALL PRINTS
 logs.begin_log_block('Unzip all printing')
@@ -55,7 +55,7 @@ logs.begin_log_block('Processing hashes')
 all_competitive_deck_hashes = cedh_db.get_hashes(lists)
 moxfield.VALID_DECKS = len(all_competitive_deck_hashes)
 home_overview['decks'] = moxfield.VALID_DECKS
-logs.end_log_block('Procesing hashes')
+logs.end_log_block('Processing hashes')
 
 # GET DECKLISTS DATA
 logs.begin_log_block('Getting decklists data')

@@ -7,7 +7,8 @@
     "imageName": null,
     "serie": "Liga del Norte",
     "number": 1,
-    "hidden": false
+    "hidden": false,
+    "kind": "moxfield_bookmark"
   },
   {
     "name": "cEDH Melipilla - 5th Tournament",
@@ -17,7 +18,8 @@
     "imageName": "melipilla_5.jpeg",
     "serie": "Melipilla",
     "number": 5,
-    "hidden": false
+    "hidden": false,
+    "kind": "moxfield_bookmark"
   },
   {
     "name": "cEDH Melipilla - 4th Tournament",
@@ -27,7 +29,8 @@
     "imageName": "melipilla_4.jpeg",
     "serie": "Melipilla",
     "number": 4,
-    "hidden": false
+    "hidden": false,
+    "kind": "moxfield_bookmark"
   },
   {
     "name": "cEDH Melipilla - 3rd Tournament",
@@ -37,7 +40,8 @@
     "imageName": "melipilla_3.png",
     "serie": "Melipilla",
     "number": 3,
-    "hidden": false
+    "hidden": false,
+    "kind": "moxfield_bookmark"
   },
   {
     "name": "cEDH Melipilla - 2nd Tournament",
@@ -47,7 +51,8 @@
     "imageName": "melipilla_2.jpeg",
     "serie": "Melipilla",
     "number": 2,
-    "hidden": false
+    "hidden": false,
+    "kind": "moxfield_bookmark"
   },
   {
     "name": "TOP 8 - CEDH Concepción Junio 2022",
@@ -57,17 +62,19 @@
     "imageName": null,
     "serie": "cocepcion",
     "number": 1,
-    "hidden": false
+    "hidden": false,
+    "kind": "moxfield_bookmark"
   },
   {
-    "name": "Open CEDH Oasis Mayp 2022",
+    "name": "Open CEDH Oasis Mayo 2022",
     "showName": false,
     "id": "oasis_1",
     "bookmark": "YdDnv",
     "imageName": "oasis.jpg",
     "serie": "oasis",
     "number": 1,
-    "hidden": false
+    "hidden": false,
+    "kind": "moxfield_bookmark"
   },
   {
     "name": "cEDH La Serena - 1st Tournament",
@@ -77,6 +84,7 @@
     "imageName": "carrot_compost_1.jpeg",
     "serie": "carrot_compost",
     "number": 1,
-    "hidden": true
+    "hidden": true,
+    "kind": "eminence"
   }
 ]

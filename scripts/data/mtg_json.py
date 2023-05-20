@@ -1,4 +1,5 @@
 import pandas as pd
+import utils.logs as logs
 from functools import lru_cache
 
 def get_cards_csv():
@@ -21,7 +22,7 @@ def build_get_last_set_for_card(cards_csv, sets_csv):
       card_printing_names = sets_csv.loc[sets_csv['keyruneCode'].isin(card_printing_codes)]['name']
       return card_printing_names.iloc[0]
     except:
-      print("Error getting card set: " + card_name)
+      logs.warning_log("Error getting card set: " + card_name)
       return 'Unknown'
   return get_last_set_for_card
 

@@ -9,3 +9,9 @@ def end_log_block(message):
 
 def success_log(message):
   print('\033[K\033[92m', message, '\033[0m', sep='')
+
+def error_log(message):
+  print('\033[K\033[91m', message, '\033[0m', sep='')
+
+def warning_log(message):
+  print('\033[K\033[93m', message, '\033[0m', sep='')

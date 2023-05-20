@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import time
+import json
 import utils.files as files
 import utils.git as git
 import utils.logs as logs
@@ -9,8 +10,13 @@ import data.mtg_json as mtg_json
 import data.pre_processing as pre_processing
 import data.processing as processing
 
-TOURNAMENT_DECKLISTS_BOOKMARK_ID = 'YdDnv'
-TOURNAMENT_ID = 'oasis_1'
+TOURNAMENT_ID = 'carrot_compost_1'
+
+tournament_json_file = open('public/data/tournaments/list.json')
+TOURNAMENTS_INFO = next(filter(lambda x: x['id'] == TOURNAMENT_ID, json.load(tournament_json_file)))
+TOURNAMENT_DECKLISTS_BOOKMARK_ID = TOURNAMENTS_INFO['bookmark']
+KIND = TOURNAMENTS_INFO['kind']
+tournament_json_file.close()
 
 DIRNAME = os.path.realpath('.')
 FOLDER_PATH = rf'public/data/tournaments/{TOURNAMENT_ID}/cards'
@@ -30,9 +36,9 @@ files.clear_csv_directory()
 logs.end_log_block('csv directory content deleted')
 
 # DOWNLOAD ALL PRINTS
-logs.begin_log_block('Geting all printing')
+logs.begin_log_block('Getting all printing')
 files.download_file(ALL_PRINTS_URL, './csv')
-logs.end_log_block('Geting all printing')
+logs.end_log_block('Getting all printing')
 
 # UNZIP ALL PRINTS
 logs.begin_log_block('Unzip all printing')
@@ -49,7 +55,15 @@ logs.end_log_block('Processing all printing')
 
 # GET DECKLISTS
 logs.begin_log_block('Getting decklists')
-lists = moxfield.get_decklists_from_bookmark(TOURNAMENT_DECKLISTS_BOOKMARK_ID)
+lists = {}
+if KIND == 'bookmark':
+  lists |= moxfield.get_decklists_from_bookmark(TOURNAMENT_DECKLISTS_BOOKMARK_ID)
+elif KIND == 'eminence':
+  logs.error_log('KIND eminence not implemented yet')
+  logs.begin_log_block('Cleaning')
+  files.clear_csv_directory()
+  logs.end_log_block('Cleaning')
+  exit(1)
 logs.end_log_block('Getting decklists')
 
 # PROCESSING HASHES
@@ -57,7 +71,7 @@ logs.begin_log_block('Processing hashes')
 all_competitive_deck_hashes = moxfield.get_decklist_hashes_from_bookmark(lists)
 moxfield.VALID_DECKS = len(all_competitive_deck_hashes)
 home_overview['decks'] = moxfield.VALID_DECKS
-logs.end_log_block('Procesing hashes')
+logs.end_log_block('Processing hashes')
 
 # GET DECKLISTS DATA
 logs.begin_log_block('Getting decklists data')
