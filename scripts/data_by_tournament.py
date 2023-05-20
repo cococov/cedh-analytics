@@ -114,7 +114,7 @@ time.sleep(1)
 # GIT
 logs.begin_log_block('Uploading changes')
 git.add_all()
-git.commit(r'chore: update tournament {TOURNAMENT_ID}')
+git.commit(f'chore: update tournament {TOURNAMENT_ID}')
 git.push()
 time.sleep(1)
 
