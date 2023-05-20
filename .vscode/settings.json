@@ -12,5 +12,6 @@
     "Planeswalker",
     "prefetch",
     "scryfall"
-  ]
+  ],
+  "python.analysis.typeCheckingMode": "basic"
 }
