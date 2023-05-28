@@ -10,17 +10,24 @@ import data.mtg_json as mtg_json
 import data.pre_processing as pre_processing
 import data.processing as processing
 
-TOURNAMENT_ID = 'carrot_compost_1'
+TOURNAMENT_ID = 'oasis_1'
 
 tournament_json_file = open('public/data/tournaments/list.json')
-TOURNAMENTS_INFO = next(filter(lambda x: x['id'] == TOURNAMENT_ID, json.load(tournament_json_file)))
+TOURNAMENTS_INFO = next(filter(lambda x: x['id'] == TOURNAMENT_ID, json.load(tournament_json_file)), None)
+
+if TOURNAMENTS_INFO is None:
+  logs.error_log(f'Tournament with id {TOURNAMENT_ID} not found')
+  exit(1)
+
 TOURNAMENT_DECKLISTS_BOOKMARK_ID = TOURNAMENTS_INFO['bookmark']
 KIND = TOURNAMENTS_INFO['kind']
 tournament_json_file.close()
 
 DIRNAME = os.path.realpath('.')
-FOLDER_PATH = rf'public/data/tournaments/{TOURNAMENT_ID}/cards'
-FILE_PATH = FOLDER_PATH + r'/competitiveCards.json'
+PARENT_FOLDER_PATH = rf'public/data/tournaments/{TOURNAMENT_ID}'
+FOLDER_PATH = rf'{PARENT_FOLDER_PATH}/cards'
+FILE_NAME = r'/competitiveCards.json'
+OVERVIEW_PATH = rf'{PARENT_FOLDER_PATH}/home_overview.json'
 ALL_PRINTS_URL = 'https://mtgjson.com/api/v5/AllPrintingsCSVFiles.zip'
 VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 INVALID_SETS = ['MB1']
@@ -51,12 +58,14 @@ logs.end_log_block('Processing all printing')
 logs.begin_log_block('Getting decklists')
 lists = {}
 if KIND == 'bookmark':
-  lists |= moxfield.get_decklists_from_bookmark(TOURNAMENT_DECKLISTS_BOOKMARK_ID)
+  lists = moxfield.get_decklists_from_bookmark(TOURNAMENT_DECKLISTS_BOOKMARK_ID)
 elif KIND == 'eminence':
   logs.error_log('KIND eminence not implemented yet')
-  logs.begin_log_block('Cleaning')
   files.clear_csv_directory()
-  logs.end_log_block('Cleaning')
+  exit(1)
+else:
+  logs.error_log(f'KIND {KIND} not implemented')
+  files.clear_csv_directory()
   exit(1)
 logs.end_log_block('Getting decklists')
 
@@ -87,27 +96,13 @@ home_overview['last_set_top_10'] = processing.last_set_top_10(reduced_data, LAST
 logs.end_log_block('Processing decklists data')
 
 # SAVE NEW FILE
-logs.begin_log_block('Saving new file')
-files.create_dir(FOLDER_PATH)
-files.create_file(DIRNAME, FILE_PATH, reduced_data)
-logs.end_log_block('New file saved')
+files.create_new_file(DIRNAME, FOLDER_PATH, FILE_NAME, reduced_data)
 
 # UPDATE HOME OVERVIEW
-logs.begin_log_block('Updating home overview')
-files.create_file(DIRNAME, rf'public/data/tournaments/{TOURNAMENT_ID}/home_overview.json', home_overview)
-logs.end_log_block('Home overview saved')
+files.update_home_overview(DIRNAME, OVERVIEW_PATH, home_overview)
 
 # CLEANING
-logs.begin_log_block('Cleaning')
 files.clear_csv_directory()
-logs.end_log_block('Cleaning')
-time.sleep(1)
 
 # GIT
-logs.begin_log_block('Uploading changes')
-git.add_all()
-git.commit(f'chore: update tournament {TOURNAMENT_ID}')
-git.push()
-time.sleep(1)
-
-logs.success_log('DB Updated!')
+git.update(f'chore: update tournament {TOURNAMENT_ID}')

@@ -10,11 +10,11 @@ from subprocess import DEVNULL, STDOUT, check_call
 from utils.date import custom_strftime
 
 def clear_csv_directory():
-  logs.begin_log_block('Cleaning csv directory content')
+  logs.begin_log_block('Cleaning csv directory')
   files = glob.glob('./csv/*')
   for f in files:
     os.remove(f)
-  logs.end_log_block('Csv directory content cleaned')
+  logs.end_log_block('Csv directory cleaned')
   time.sleep(1)
 
 def download_file(url, folder):
@@ -47,11 +47,18 @@ def create_file_with_log(dirname, file_path, data, msg_begin, msg_end):
   create_file(dirname, file_path, data)
   logs.end_log_block(msg_end)
 
+def create_new_file(dirname, folder_path, file_name, data):
+  logs.begin_log_block('Saving new file')
+  file_path = folder_path + file_name
+  create_dir(folder_path)
+  create_file(dirname, file_path, data)
+  logs.end_log_block('New file saved')
+
 def create_data_file(dirname, file_path, data):
   create_file_with_log(dirname, file_path, data, 'Saving new file', 'New file saved')
 
 def update_home_overview(dirname, file_path, data):
-  create_file_with_log(dirname, file_path, data, 'Updating home overview', 'Home overview saved')
+  create_file_with_log(dirname, file_path, data, 'Updating overview', 'Overview saved')
 
 def update_date(DIRNAME, kind):
   update_date = {}
