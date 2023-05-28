@@ -1,10 +1,13 @@
 import json
 import requests
+import utils.logs as logs
 from functools import reduce
 
 def get_decklists_from_db():
+  logs.begin_log_block('Getting decklists')
   url = 'https://raw.githubusercontent.com/AverageDragon/cEDH-Decklist-Database/master/_data/database.json'
   raw_lists = requests.get(url)
+  logs.end_log_block('Getting decklists')
   return json.loads(raw_lists.text)
 
 def reduce_competitive_lists_hashes(accumulated, current):

@@ -31,19 +31,13 @@ home_overview = {}
 logs.simple_log('Beginning')
 
 # DELETE CSV DIRECTORY CONTENT
-logs.begin_log_block('Deleting csv directory content')
 files.clear_csv_directory()
-logs.end_log_block('csv directory content deleted')
 
 # DOWNLOAD ALL PRINTS
-logs.begin_log_block('Getting all printing')
 files.download_file(ALL_PRINTS_URL, './csv')
-logs.end_log_block('Getting all printing')
 
 # UNZIP ALL PRINTS
-logs.begin_log_block('Unzip all printing')
 files.unzip_file('./csv/AllPrintingsCSVFiles.zip', './csv')
-logs.end_log_block('Unzip all printing')
 
 # GET CARDS INFO AND SETS
 logs.begin_log_block('Processing all printing')
@@ -74,9 +68,7 @@ home_overview['decks'] = moxfield.VALID_DECKS
 logs.end_log_block('Processing hashes')
 
 # GET DECKLISTS DATA
-logs.begin_log_block('Getting decklists data')
 decklists_data = moxfield.get_decklists_data_from_hashes(all_competitive_deck_hashes)
-logs.end_log_block('Getting decklists data')
 
 # PRE-PROCESSING DECKLISTS DATA
 logs.begin_log_block('Pre-Processing decklists data')

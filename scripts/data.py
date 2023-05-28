@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import os
-import time
 import utils.files as files
 import utils.git as git
 import utils.logs as logs
@@ -13,6 +12,7 @@ import data.processing as processing
 DIRNAME = os.path.realpath('.')
 FOLDER_PATH = r'public/data/cards'
 FILE_PATH = FOLDER_PATH + r'/competitiveCards.json'
+HOME_OVERVIEW_PATH = r'public/data/home_overview.json'
 ALL_PRINTS_URL = 'https://mtgjson.com/api/v5/AllPrintingsCSVFiles.zip'
 VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 INVALID_SETS = ['MB1']
@@ -23,19 +23,13 @@ home_overview = {}
 logs.simple_log('Beginning')
 
 # DELETE CSV DIRECTORY CONTENT
-logs.begin_log_block('Deleting csv directory content')
 files.clear_csv_directory()
-logs.end_log_block('csv directory content deleted')
 
 # DOWNLOAD ALL PRINTS
-logs.begin_log_block('Getting all printing')
 files.download_file(ALL_PRINTS_URL, './csv')
-logs.end_log_block('Getting all printing')
 
 # UNZIP ALL PRINTS
-logs.begin_log_block('Unzip all printing')
 files.unzip_file('./csv/AllPrintingsCSVFiles.zip', './csv')
-logs.end_log_block('Unzip all printing')
 
 # GET CARDS INFO AND SETS
 logs.begin_log_block('Processing all printing')
@@ -46,9 +40,7 @@ has_multiple_printings = mtg_json.build_has_multiple_printings(cards_csv, sets_c
 logs.end_log_block('Processing all printing')
 
 # GET DECKLISTS
-logs.begin_log_block('Getting decklists')
 lists = cedh_db.get_decklists_from_db()
-logs.end_log_block('Getting decklists')
 
 # PROCESSING HASHES
 logs.begin_log_block('Processing hashes')
@@ -58,9 +50,7 @@ home_overview['decks'] = moxfield.VALID_DECKS
 logs.end_log_block('Processing hashes')
 
 # GET DECKLISTS DATA
-logs.begin_log_block('Getting decklists data')
 decklists_data = moxfield.get_decklists_data_from_hashes(all_competitive_deck_hashes)
-logs.end_log_block('Getting decklists data')
 
 # PRE-PROCESSING DECKLISTS DATA
 logs.begin_log_block('Pre-Processing decklists data')
@@ -78,36 +68,19 @@ home_overview['last_set_top_10'] = processing.last_set_top_10(reduced_data, LAST
 logs.end_log_block('Processing decklists data')
 
 # SAVE BACKUP
-logs.begin_log_block('Saving backup')
 files.backup_file(FILE_PATH, DIRNAME, FOLDER_PATH)
-logs.end_log_block('Backup saved')
 
 # SAVE NEW FILE
-logs.begin_log_block('Saving new file')
-files.create_file(DIRNAME, FILE_PATH, reduced_data)
-logs.end_log_block('New file saved')
+files.create_data_file(DIRNAME, FILE_PATH, reduced_data)
 
 # UPDATE HOME OVERVIEW
-logs.begin_log_block('Updating home overview')
-files.create_file(DIRNAME, r'public/data/home_overview.json', home_overview)
-logs.end_log_block('Home overview saved')
+files.update_home_overview(DIRNAME, HOME_OVERVIEW_PATH, home_overview)
 
 # UPDATE DB UPDATE DATE
-logs.begin_log_block('Updating date')
 files.update_db_date(DIRNAME)
-logs.end_log_block('Date updated')
 
 # CLEANING
-logs.begin_log_block('Cleaning')
 files.clear_csv_directory()
-logs.end_log_block('Cleaning')
-time.sleep(1)
 
 # GIT
-logs.begin_log_block('Uploading changes')
-git.add_all()
-git.commit('chore: update DB')
-git.push()
-time.sleep(1)
-
-logs.success_log('DB Updated!')
+git.update('chore: update DB')

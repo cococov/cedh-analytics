@@ -1,6 +1,7 @@
 import json
 import time
 import requests
+import utils.logs as logs
 from typing import Union
 
 VALID_DECKS = 0
@@ -25,4 +26,7 @@ def get_decklists_data(hash):
   return data
 
 def get_decklists_data_from_hashes(hashes):
-  return list(filter(lambda x: 'name' in x.keys(), list(map(get_decklists_data, hashes)))) # filter out decks without name (without name means that the url returns a 404)
+  logs.begin_log_block('Getting decklists data')
+  decklists_data = list(filter(lambda x: 'name' in x.keys(), list(map(get_decklists_data, hashes)))) # filter out decks without name (without name means that the url returns a 404)
+  logs.end_log_block('Getting decklists data')
+  return decklists_data
