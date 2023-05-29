@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 import os
-import time
 import json
 import utils.files as files
 import utils.git as git
 import utils.logs as logs
 import data.moxfield as moxfield
+import data.eminence as eminence
 import data.mtg_json as mtg_json
 import data.pre_processing as pre_processing
 import data.processing as processing
 
-TOURNAMENT_ID = 'oasis_1'
+TOURNAMENT_ID = 'carrot_compost_1'
 
 tournament_json_file = open('public/data/tournaments/list.json')
 TOURNAMENTS_INFO = next(filter(lambda x: x['id'] == TOURNAMENT_ID, json.load(tournament_json_file)), None)
@@ -19,7 +19,8 @@ if TOURNAMENTS_INFO is None:
   logs.error_log(f'Tournament with id {TOURNAMENT_ID} not found')
   exit(1)
 
-TOURNAMENT_DECKLISTS_BOOKMARK_ID = TOURNAMENTS_INFO['bookmark']
+TOURNAMENT_BOOKMARK_ID = TOURNAMENTS_INFO['bookmark']
+TOURNAMENT_NAME = TOURNAMENTS_INFO['name']
 KIND = TOURNAMENTS_INFO['kind']
 tournament_json_file.close()
 
@@ -58,8 +59,9 @@ logs.end_log_block('Processing all printing')
 logs.begin_log_block('Getting decklists')
 lists = {}
 if KIND == 'moxfield_bookmark':
-  lists = moxfield.get_decklists_from_bookmark(TOURNAMENT_DECKLISTS_BOOKMARK_ID)
+  lists = moxfield.get_decklists_from_bookmark(TOURNAMENT_BOOKMARK_ID)
 elif KIND == 'eminence':
+  lists = eminence.get_all_decklists(TOURNAMENT_NAME)
   logs.error_log('KIND eminence not implemented yet')
   files.clear_csv_directory()
   exit(1)
