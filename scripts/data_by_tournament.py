@@ -57,7 +57,7 @@ logs.end_log_block('Processing all printing')
 # GET DECKLISTS
 logs.begin_log_block('Getting decklists')
 lists = {}
-if KIND == 'bookmark':
+if KIND == 'moxfield_bookmark':
   lists = moxfield.get_decklists_from_bookmark(TOURNAMENT_DECKLISTS_BOOKMARK_ID)
 elif KIND == 'eminence':
   logs.error_log('KIND eminence not implemented yet')
