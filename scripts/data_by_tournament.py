@@ -55,25 +55,22 @@ get_last_set_for_card = mtg_json.build_get_last_set_for_card(cards_csv, sets_csv
 has_multiple_printings = mtg_json.build_has_multiple_printings(cards_csv, sets_csv)
 logs.end_log_block('Processing all printing')
 
-# GET DECKLISTS
+# GET DECKLISTS AND PROCESS HASHES
 logs.begin_log_block('Getting decklists')
 lists = {}
+all_competitive_deck_hashes = []
 if KIND == 'moxfield_bookmark':
   lists = moxfield.get_decklists_from_bookmark(TOURNAMENT_BOOKMARK_ID)
+  logs.end_log_block('Getting decklists')
+  logs.begin_log_block('Processing hashes')
+  all_competitive_deck_hashes = moxfield.get_decklist_hashes_from_bookmark(lists)
 elif KIND == 'eminence':
   lists = eminence.get_all_decklists(TOURNAMENT_NAME)
-  logs.error_log('KIND eminence not implemented yet')
-  files.clear_csv_directory()
-  exit(1)
+  logs.end_log_block('Getting decklists')
+  logs.begin_log_block('Processing hashes')
+  all_competitive_deck_hashes = eminence.get_decklist_hashes_from_tournament(lists)
 else:
-  logs.error_log(f'KIND {KIND} not implemented')
-  files.clear_csv_directory()
-  exit(1)
-logs.end_log_block('Getting decklists')
-
-# PROCESSING HASHES
-logs.begin_log_block('Processing hashes')
-all_competitive_deck_hashes = moxfield.get_decklist_hashes_from_bookmark(lists)
+  logs.error_and_close(f'KIND {KIND} not implemented')
 moxfield.VALID_DECKS = len(all_competitive_deck_hashes)
 home_overview['decks'] = moxfield.VALID_DECKS
 logs.end_log_block('Processing hashes')

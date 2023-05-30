@@ -84,7 +84,7 @@
     "imageName": "carrot_compost_1.jpeg",
     "serie": "carrot_compost",
     "number": 1,
-    "hidden": true,
+    "hidden": false,
     "kind": "eminence"
   }
 ]

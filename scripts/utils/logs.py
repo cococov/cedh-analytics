@@ -1,3 +1,6 @@
+import utils.files as files
+import utils.logs as logs
+
 def simple_log(message):
   print(message)
 
@@ -15,3 +18,8 @@ def error_log(message):
 
 def warning_log(message):
   print('\033[K\033[93m', message, '\033[0m', sep='')
+
+def error_and_close(message):
+  logs.error_log(message)
+  files.clear_csv_directory()
+  exit(1)
