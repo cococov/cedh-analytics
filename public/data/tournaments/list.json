@@ -1,14 +1,15 @@
 [
+
   {
-    "name": "Liga del Norte - Sep 2022",
+    "name": "Carrot Compost - cEDH La Serena",
     "showName": true,
-    "id": "liga_del_norte_sep_2022",
-    "bookmark": "YvB3Z",
-    "imageName": null,
-    "serie": "Liga del Norte",
+    "id": "carrot_compost_1",
+    "bookmark": "",
+    "imageName": "carrot_compost_1.jpeg",
+    "serie": "carrot_compost",
     "number": 1,
     "hidden": false,
-    "kind": "moxfield_bookmark"
+    "kind": "eminence"
   },
   {
     "name": "cEDH Melipilla - 5th Tournament",
@@ -55,6 +56,17 @@
     "kind": "moxfield_bookmark"
   },
   {
+    "name": "Liga del Norte - Sep 2022",
+    "showName": true,
+    "id": "liga_del_norte_sep_2022",
+    "bookmark": "YvB3Z",
+    "imageName": null,
+    "serie": "Liga del Norte",
+    "number": 1,
+    "hidden": false,
+    "kind": "moxfield_bookmark"
+  },
+  {
     "name": "TOP 8 - CEDH Concepción Junio 2022",
     "showName": true,
     "id": "concepcion_1",
@@ -75,16 +87,5 @@
     "number": 1,
     "hidden": false,
     "kind": "moxfield_bookmark"
-  },
-  {
-    "name": "Carrot Compost - cEDH La Serena",
-    "showName": true,
-    "id": "carrot_compost_1",
-    "bookmark": "",
-    "imageName": "carrot_compost_1.jpeg",
-    "serie": "carrot_compost",
-    "number": 1,
-    "hidden": false,
-    "kind": "eminence"
   }
 ]
