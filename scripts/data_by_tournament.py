@@ -4,6 +4,7 @@ import json
 import utils.files as files
 import utils.git as git
 import utils.logs as logs
+import utils.misc as misc
 import data.moxfield as moxfield
 import data.eminence as eminence
 import data.mtg_json as mtg_json
@@ -70,7 +71,7 @@ elif KIND == 'eminence':
   logs.begin_log_block('Processing hashes')
   all_competitive_deck_hashes = eminence.get_decklist_hashes_from_tournament(lists)
 else:
-  logs.error_and_close(f'KIND {KIND} not implemented')
+  misc.error_and_close(f'KIND {KIND} not implemented')
 moxfield.VALID_DECKS = len(all_competitive_deck_hashes)
 home_overview['decks'] = moxfield.VALID_DECKS
 logs.end_log_block('Processing hashes')
