@@ -102,7 +102,7 @@ def get_data_and_process():
   files.update_home_overview(DIRNAME, OVERVIEW_PATH, home_overview)
 
   # Commit tournament
-  git.add_and_commit_tournament(TOURNAMENT_ID)
+  if ALL_TOURNAMENTS: git.add_and_commit_tournament(TOURNAMENT_ID)
 
 # Do the thing
 if ALL_TOURNAMENTS:
@@ -119,7 +119,10 @@ else:
 files.clear_csv_directory()
 
 # GIT
-git.push_with_log()
+if ALL_TOURNAMENTS:
+  git.push_with_log()
+else:
+  git.update(f'chore: update tournament {TOURNAMENT_ID}')
 
 # Close file
 tournament_json_file.close()
