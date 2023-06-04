@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import json
+import time
 import utils.files as files
 import utils.git as git
 import utils.logs as logs
@@ -11,29 +12,29 @@ import data.mtg_json as mtg_json
 import data.pre_processing as pre_processing
 import data.processing as processing
 
-TOURNAMENT_ID = 'carrot_compost_1'
 ALL_TOURNAMENTS = False
 
 tournament_json_file = open('public/data/tournaments/list.json')
-TOURNAMENTS_INFO = next(filter(lambda x: x['id'] == TOURNAMENT_ID, json.load(tournament_json_file)), None)
-
-if TOURNAMENTS_INFO is None:
-  logs.error_log(f'Tournament with id {TOURNAMENT_ID} not found')
-  exit(1)
-
-TOURNAMENT_BOOKMARK_ID = TOURNAMENTS_INFO['bookmark']
-TOURNAMENT_NAME = TOURNAMENTS_INFO['name']
-KIND = TOURNAMENTS_INFO['kind']
-tournament_json_file.close()
-
 DIRNAME = os.path.realpath('.')
-PARENT_FOLDER_PATH = rf'public/data/tournaments/{TOURNAMENT_ID}'
-FOLDER_PATH = rf'{PARENT_FOLDER_PATH}/cards'
 FILE_NAME = r'/competitiveCards.json'
-OVERVIEW_PATH = rf'{PARENT_FOLDER_PATH}/home_overview.json'
 VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 INVALID_SETS = ['MB1']
 LAST_SET = ["The Brothers' War", "The Brothers' War Commander"] # [base set, commander decks]
+
+def run_setup(t_id):
+  global TOURNAMENT_ID, VALID_DECKS, TOURNAMENTS_INFO, PARENT_FOLDER_PATH, FOLDER_PATH, OVERVIEW_PATH
+  TOURNAMENT_ID = t_id
+  TOURNAMENTS_INFO = next(filter(lambda x: x['id'] == TOURNAMENT_ID, json.load(tournament_json_file)), {})
+
+  if TOURNAMENTS_INFO is None:
+    logs.error_log(f'Tournament with id {TOURNAMENT_ID} not found')
+    exit(1)
+
+  tournament_json_file.close()
+
+  PARENT_FOLDER_PATH = rf'public/data/tournaments/{TOURNAMENT_ID}'
+  FOLDER_PATH = rf'{PARENT_FOLDER_PATH}/cards'
+  OVERVIEW_PATH = rf'{PARENT_FOLDER_PATH}/home_overview.json'
 
 home_overview = {}
 
@@ -58,18 +59,18 @@ def get_data_and_process():
   logs.begin_log_block('Getting decklists')
   lists = {}
   all_competitive_deck_hashes = []
-  if KIND == 'moxfield_bookmark':
-    lists = moxfield.get_decklists_from_bookmark(TOURNAMENT_BOOKMARK_ID)
+  if TOURNAMENTS_INFO['kind'] == 'moxfield_bookmark':
+    lists = moxfield.get_decklists_from_bookmark(TOURNAMENTS_INFO['bookmark'])
     logs.end_log_block('Getting decklists')
     logs.begin_log_block('Processing hashes')
     all_competitive_deck_hashes = moxfield.get_decklist_hashes_from_bookmark(lists)
-  elif KIND == 'eminence':
-    lists = eminence.get_all_decklists(TOURNAMENT_NAME)
+  elif TOURNAMENTS_INFO['kind'] == 'eminence':
+    lists = eminence.get_all_decklists(TOURNAMENTS_INFO['name'])
     logs.end_log_block('Getting decklists')
     logs.begin_log_block('Processing hashes')
     all_competitive_deck_hashes = eminence.get_decklist_hashes_from_tournament(lists)
   else:
-    misc.error_and_close(f'KIND {KIND} not implemented')
+    misc.error_and_close(f"KIND {TOURNAMENTS_INFO['kind']} not implemented")
   moxfield.VALID_DECKS = len(all_competitive_deck_hashes)
   home_overview['decks'] = moxfield.VALID_DECKS
   logs.end_log_block('Processing hashes')
@@ -99,15 +100,20 @@ def get_data_and_process():
   # UPDATE HOME OVERVIEW
   files.update_home_overview(DIRNAME, OVERVIEW_PATH, home_overview)
 
+  # Commit tournament
+  git.add_and_commit_tournament(f'chore: update tournament {TOURNAMENT_ID}')
+
 # Do the thing
 if ALL_TOURNAMENTS:
-  # Iterar sobre todos los torneos
-  misc.error_and_close('Not implemented')
+  for t in json.load(tournament_json_file):
+    run_setup(t)
+    get_data_and_process()
 else:
+  run_setup('carrot_compost_1')
   get_data_and_process()
 
 # CLEANING
 files.clear_csv_directory()
 
 # GIT
-git.update(f'chore: update tournament {TOURNAMENT_ID}')
+git.push_with_log()
