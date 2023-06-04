@@ -72,7 +72,9 @@ def build_reduce_deck(has_multiple_printings, get_last_set_for_card):
     hash = {
       'occurrences': 1,
       'cardName': current['card']['name'],
+      'card_faces': [] if len(current['card']['card_faces']) == 0 else [current['card']['card_faces'][0]['name'], current['card']['card_faces'][1]['name']],
       'colorIdentity': 'C' if len(current['card']['color_identity']) == 0 else ''.join(current['card']['color_identity']),
+      'colors': 'C' if len(current['card']['colors']) == 0 else ''.join(current['card']['colors']),
       'decklists': [current['deck']],
       'cmc': current['card']['cmc'],
       'prices': current['card']['prices'],
