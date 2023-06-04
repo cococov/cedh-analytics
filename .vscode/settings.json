@@ -23,7 +23,8 @@
     "Planeswalker",
     "prefetch",
     "scryfall",
-    "spellbook"
+    "spellbook",
+    "Tadeas"
   ],
   "python.analysis.typeCheckingMode": "basic"
 }

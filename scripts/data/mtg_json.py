@@ -24,7 +24,7 @@ def build_get_last_set_for_card(cards_csv, sets_csv):
   @lru_cache(maxsize=None)
   def get_last_set_for_card(card_name):
     try:
-      if card_name in ['Glenn, the Voice of Calm', 'Rick, Steadfast Leader', 'Daryl, Hunter of Walkers']:
+      if card_name in ['Glenn, the Voice of Calm', 'Rick, Steadfast Leader', 'Daryl, Hunter of Walkers', 'Tadeas, Juniper Ascendant']:
         return 'Secret Lair Drop'
       if card_name in ['Rot Hulk']:
         return 'Game Night'
@@ -40,10 +40,10 @@ def build_has_multiple_printings(cards_csv, sets_csv):
   @lru_cache(maxsize=None)
   def has_multiple_printings(card_name):
     try:
-      if card_name in ['Glenn, the Voice of Calm', 'Rick, Steadfast Leader', 'Daryl, Hunter of Walkers']:
-        return 'Secret Lair Drop'
+      if card_name in ['Glenn, the Voice of Calm', 'Rick, Steadfast Leader', 'Daryl, Hunter of Walkers', 'Tadeas, Juniper Ascendant']:
+        return False
       if card_name in ['Rot Hulk']:
-        return 'Game Night'
+        return False
       card_printing_codes = cards_csv.loc[cards_csv['name'] == card_name].iloc[0]['printings'].split(', ')
       card_printing_names = sets_csv.loc[sets_csv['keyrune_code'].isin(card_printing_codes)]['name']
       return card_printing_names.count() > 1
