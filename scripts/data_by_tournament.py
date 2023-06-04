@@ -12,25 +12,25 @@ import data.mtg_json as mtg_json
 import data.pre_processing as pre_processing
 import data.processing as processing
 
-ALL_TOURNAMENTS = False
+ALL_TOURNAMENTS = True
 
-tournament_json_file = open('public/data/tournaments/list.json')
 DIRNAME = os.path.realpath('.')
+tournament_json_file = json.load(open('public/data/tournaments/list.json'))
 FILE_NAME = r'/competitiveCards.json'
 VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 INVALID_SETS = ['MB1']
 LAST_SET = ["The Brothers' War", "The Brothers' War Commander"] # [base set, commander decks]
 
 def run_setup(t_id):
-  global TOURNAMENT_ID, VALID_DECKS, TOURNAMENTS_INFO, PARENT_FOLDER_PATH, FOLDER_PATH, OVERVIEW_PATH
+  global TOURNAMENT_ID, VALID_DECKS, TOURNAMENTS_INFO, PARENT_FOLDER_PATH, FOLDER_PATH, OVERVIEW_PATH, tournament_json_file
   TOURNAMENT_ID = t_id
-  TOURNAMENTS_INFO = next(filter(lambda x: x['id'] == TOURNAMENT_ID, json.load(tournament_json_file)), {})
+  TOURNAMENTS_INFO = next(filter(lambda x: x['id'] == TOURNAMENT_ID, tournament_json_file), {})
 
-  if TOURNAMENTS_INFO is None:
+  if not bool(TOURNAMENTS_INFO):
     logs.error_log(f'Tournament with id {TOURNAMENT_ID} not found')
+    tournament_json_file.close()
     exit(1)
 
-  tournament_json_file.close()
 
   PARENT_FOLDER_PATH = rf'public/data/tournaments/{TOURNAMENT_ID}'
   FOLDER_PATH = rf'{PARENT_FOLDER_PATH}/cards'
@@ -101,12 +101,12 @@ def get_data_and_process():
   files.update_home_overview(DIRNAME, OVERVIEW_PATH, home_overview)
 
   # Commit tournament
-  git.add_and_commit_tournament(f'chore: update tournament {TOURNAMENT_ID}')
+  git.add_and_commit_tournament(TOURNAMENT_ID)
 
 # Do the thing
 if ALL_TOURNAMENTS:
-  for t in json.load(tournament_json_file):
-    run_setup(t)
+  for t in tournament_json_file:
+    run_setup(t['id'])
     get_data_and_process()
 else:
   run_setup('carrot_compost_1')
@@ -117,3 +117,6 @@ files.clear_csv_directory()
 
 # GIT
 git.push_with_log()
+
+# Close file
+tournament_json_file.close()
