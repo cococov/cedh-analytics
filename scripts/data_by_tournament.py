@@ -108,6 +108,7 @@ if ALL_TOURNAMENTS:
   for t in tournament_json_file:
     run_setup(t['id'])
     moxfield.VALID_DECKS = 0
+    moxfield.decklists_data_obtained_number = 0
     get_data_and_process()
 else:
   run_setup('carrot_compost_1')
