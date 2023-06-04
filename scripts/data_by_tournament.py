@@ -12,19 +12,20 @@ import data.mtg_json as mtg_json
 import data.pre_processing as pre_processing
 import data.processing as processing
 
-ALL_TOURNAMENTS = True
+ALL_TOURNAMENTS = False
 
 DIRNAME = os.path.realpath('.')
-tournament_json_file = json.load(open('public/data/tournaments/list.json'))
+tournament_json_file = open('public/data/tournaments/list.json')
+tournament_json = json.load(open('public/data/tournaments/list.json'))
 FILE_NAME = r'/competitiveCards.json'
 VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 INVALID_SETS = ['MB1']
 LAST_SET = ["The Brothers' War", "The Brothers' War Commander"] # [base set, commander decks]
 
 def run_setup(t_id):
-  global TOURNAMENT_ID, VALID_DECKS, TOURNAMENTS_INFO, PARENT_FOLDER_PATH, FOLDER_PATH, OVERVIEW_PATH, tournament_json_file
+  global TOURNAMENT_ID, VALID_DECKS, TOURNAMENTS_INFO, PARENT_FOLDER_PATH, FOLDER_PATH, OVERVIEW_PATH, tournament_json
   TOURNAMENT_ID = t_id
-  TOURNAMENTS_INFO = next(filter(lambda x: x['id'] == TOURNAMENT_ID, tournament_json_file), {})
+  TOURNAMENTS_INFO = next(filter(lambda x: x['id'] == TOURNAMENT_ID, tournament_json), {})
 
   if not bool(TOURNAMENTS_INFO):
     logs.error_log(f'Tournament with id {TOURNAMENT_ID} not found')
@@ -105,7 +106,7 @@ def get_data_and_process():
 
 # Do the thing
 if ALL_TOURNAMENTS:
-  for t in tournament_json_file:
+  for t in tournament_json:
     run_setup(t['id'])
     moxfield.VALID_DECKS = 0
     moxfield.decklists_data_obtained_number = 0
