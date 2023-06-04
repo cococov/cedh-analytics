@@ -13,7 +13,6 @@ DIRNAME = os.path.realpath('.')
 FOLDER_PATH = r'public/data/cards'
 FILE_PATH = FOLDER_PATH + r'/competitiveCards.json'
 HOME_OVERVIEW_PATH = r'public/data/home_overview.json'
-ALL_PRINTS_URL = 'https://mtgjson.com/api/v5/AllPrintingsCSVFiles.zip'
 VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 INVALID_SETS = ['MB1']
 LAST_SET = ["March of the Machine", "March of the Machine Commander"] # [base set, commander decks]
@@ -26,10 +25,7 @@ logs.simple_log('Beginning')
 files.clear_csv_directory()
 
 # DOWNLOAD ALL PRINTS
-files.download_file(ALL_PRINTS_URL, './csv')
-
-# UNZIP ALL PRINTS
-files.unzip_file('./csv/AllPrintingsCSVFiles.zip', './csv')
+mtg_json.download_csv_files()
 
 # GET CARDS INFO AND SETS
 logs.begin_log_block('Processing all printing')

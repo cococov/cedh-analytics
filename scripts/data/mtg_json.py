@@ -1,12 +1,22 @@
 import pandas as pd
 import utils.logs as logs
+import utils.files as files
 from functools import lru_cache
 
+MTGJSON_CSV_PATH = 'https://mtgjson.com/api/v5/csv'
+CSV_PATH = './csv'
+
+def download_csv_files():
+  logs.begin_log_block('Getting all printing')
+  files.download_file(f'{MTGJSON_CSV_PATH}/cards.csv', CSV_PATH)
+  files.download_file(f'{MTGJSON_CSV_PATH}/sets.csv', CSV_PATH)
+  logs.end_log_block('Getting all printing')
+
 def get_cards_csv():
-  return pd.read_csv('./csv/cards.csv', dtype='unicode').dropna(axis=1)
+  return pd.read_csv(f'{CSV_PATH}/cards.csv', dtype='unicode').dropna(axis=1)
 
 def get_sets_csv(VALID_TYPE_SETS, INVALID_SETS):
-  sets_csv = pd.read_csv('./csv/sets.csv', dtype='unicode').dropna(axis=1).sort_values(by='releaseDate',ascending=False).query("type in @VALID_TYPE_SETS").query("keyruneCode not in @INVALID_SETS").query("isOnlineOnly == '0'")
+  sets_csv = pd.read_csv(f'{CSV_PATH}/sets.csv', dtype='unicode').dropna(axis=1).sort_values(by='releaseDate',ascending=False).query("type in @VALID_TYPE_SETS").query("keyruneCode not in @INVALID_SETS").query("isOnlineOnly == '0'")
   sets_csv['releaseDate'] = pd.to_datetime(sets_csv['releaseDate'])
   return sets_csv
 

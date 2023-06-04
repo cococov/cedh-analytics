@@ -30,7 +30,6 @@ PARENT_FOLDER_PATH = rf'public/data/tournaments/{TOURNAMENT_ID}'
 FOLDER_PATH = rf'{PARENT_FOLDER_PATH}/cards'
 FILE_NAME = r'/competitiveCards.json'
 OVERVIEW_PATH = rf'{PARENT_FOLDER_PATH}/home_overview.json'
-ALL_PRINTS_URL = 'https://mtgjson.com/api/v5/AllPrintingsCSVFiles.zip'
 VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 INVALID_SETS = ['MB1']
 LAST_SET = ["The Brothers' War", "The Brothers' War Commander"] # [base set, commander decks]
@@ -43,10 +42,7 @@ logs.simple_log('Beginning')
 files.clear_csv_directory()
 
 # DOWNLOAD ALL PRINTS
-files.download_file(ALL_PRINTS_URL, './csv')
-
-# UNZIP ALL PRINTS
-files.unzip_file('./csv/AllPrintingsCSVFiles.zip', './csv')
+mtg_json.download_csv_files()
 
 # GET CARDS INFO AND SETS
 logs.begin_log_block('Processing all printing')

@@ -18,9 +18,7 @@ def clear_csv_directory():
   time.sleep(1)
 
 def download_file(url, folder):
-  logs.begin_log_block('Getting all printing')
   check_call(['wget', url, '-P', folder], stdout=DEVNULL, stderr=STDOUT)
-  logs.end_log_block('Getting all printing')
 
 def unzip_file(file, folder):
   logs.begin_log_block('Unzip all printing')
