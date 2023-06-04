@@ -12,6 +12,7 @@ import data.pre_processing as pre_processing
 import data.processing as processing
 
 TOURNAMENT_ID = 'carrot_compost_1'
+ALL_TOURNAMENTS = False
 
 tournament_json_file = open('public/data/tournaments/list.json')
 TOURNAMENTS_INFO = next(filter(lambda x: x['id'] == TOURNAMENT_ID, json.load(tournament_json_file)), None)
@@ -52,50 +53,58 @@ get_last_set_for_card = mtg_json.build_get_last_set_for_card(cards_csv, sets_csv
 has_multiple_printings = mtg_json.build_has_multiple_printings(cards_csv, sets_csv)
 logs.end_log_block('Processing all printing')
 
-# GET DECKLISTS AND PROCESS HASHES
-logs.begin_log_block('Getting decklists')
-lists = {}
-all_competitive_deck_hashes = []
-if KIND == 'moxfield_bookmark':
-  lists = moxfield.get_decklists_from_bookmark(TOURNAMENT_BOOKMARK_ID)
-  logs.end_log_block('Getting decklists')
-  logs.begin_log_block('Processing hashes')
-  all_competitive_deck_hashes = moxfield.get_decklist_hashes_from_bookmark(lists)
-elif KIND == 'eminence':
-  lists = eminence.get_all_decklists(TOURNAMENT_NAME)
-  logs.end_log_block('Getting decklists')
-  logs.begin_log_block('Processing hashes')
-  all_competitive_deck_hashes = eminence.get_decklist_hashes_from_tournament(lists)
+def get_data_and_process():
+  # GET DECKLISTS AND PROCESS HASHES
+  logs.begin_log_block('Getting decklists')
+  lists = {}
+  all_competitive_deck_hashes = []
+  if KIND == 'moxfield_bookmark':
+    lists = moxfield.get_decklists_from_bookmark(TOURNAMENT_BOOKMARK_ID)
+    logs.end_log_block('Getting decklists')
+    logs.begin_log_block('Processing hashes')
+    all_competitive_deck_hashes = moxfield.get_decklist_hashes_from_bookmark(lists)
+  elif KIND == 'eminence':
+    lists = eminence.get_all_decklists(TOURNAMENT_NAME)
+    logs.end_log_block('Getting decklists')
+    logs.begin_log_block('Processing hashes')
+    all_competitive_deck_hashes = eminence.get_decklist_hashes_from_tournament(lists)
+  else:
+    misc.error_and_close(f'KIND {KIND} not implemented')
+  moxfield.VALID_DECKS = len(all_competitive_deck_hashes)
+  home_overview['decks'] = moxfield.VALID_DECKS
+  logs.end_log_block('Processing hashes')
+
+  # GET DECKLISTS DATA
+  decklists_data = moxfield.get_decklists_data_from_hashes(all_competitive_deck_hashes)
+
+  # PRE-PROCESSING DECKLISTS DATA
+  logs.begin_log_block('Pre-Processing decklists data')
+  mapped_decklists_data = pre_processing.get_decklists_data(decklists_data)
+  reduced_data = pre_processing.process_cards(pre_processing.reduce_decks_to_cards(mapped_decklists_data, has_multiple_printings, get_last_set_for_card))
+  logs.end_log_block('Pre-Processing decklists data')
+
+  # PROCESSING DECKLISTS DATA
+  logs.begin_log_block('Processing decklists data')
+  home_overview['cards'] = processing.cards_number(reduced_data)
+  home_overview['staples'] = processing.staples_number(reduced_data, 10)
+  home_overview['staples_small'] = processing.staples_number(reduced_data, 5)
+  home_overview['pet'] = processing.pet_cards_number(reduced_data)
+  home_overview['last_set'] = LAST_SET[0]
+  home_overview['last_set_top_10'] = processing.last_set_top_10(reduced_data, LAST_SET)
+  logs.end_log_block('Processing decklists data')
+
+  # SAVE NEW FILE
+  files.create_new_file(DIRNAME, FOLDER_PATH, FILE_NAME, reduced_data)
+
+  # UPDATE HOME OVERVIEW
+  files.update_home_overview(DIRNAME, OVERVIEW_PATH, home_overview)
+
+# Do the thing
+if ALL_TOURNAMENTS:
+  # Iterar sobre todos los torneos
+  misc.error_and_close('Not implemented')
 else:
-  misc.error_and_close(f'KIND {KIND} not implemented')
-moxfield.VALID_DECKS = len(all_competitive_deck_hashes)
-home_overview['decks'] = moxfield.VALID_DECKS
-logs.end_log_block('Processing hashes')
-
-# GET DECKLISTS DATA
-decklists_data = moxfield.get_decklists_data_from_hashes(all_competitive_deck_hashes)
-
-# PRE-PROCESSING DECKLISTS DATA
-logs.begin_log_block('Pre-Processing decklists data')
-mapped_decklists_data = pre_processing.get_decklists_data(decklists_data)
-reduced_data = pre_processing.process_cards(pre_processing.reduce_decks_to_cards(mapped_decklists_data, has_multiple_printings, get_last_set_for_card))
-logs.end_log_block('Pre-Processing decklists data')
-
-# PROCESSING DECKLISTS DATA
-logs.begin_log_block('Processing decklists data')
-home_overview['cards'] = processing.cards_number(reduced_data)
-home_overview['staples'] = processing.staples_number(reduced_data, 10)
-home_overview['staples_small'] = processing.staples_number(reduced_data, 5)
-home_overview['pet'] = processing.pet_cards_number(reduced_data)
-home_overview['last_set'] = LAST_SET[0]
-home_overview['last_set_top_10'] = processing.last_set_top_10(reduced_data, LAST_SET)
-logs.end_log_block('Processing decklists data')
-
-# SAVE NEW FILE
-files.create_new_file(DIRNAME, FOLDER_PATH, FILE_NAME, reduced_data)
-
-# UPDATE HOME OVERVIEW
-files.update_home_overview(DIRNAME, OVERVIEW_PATH, home_overview)
+  get_data_and_process()
 
 # CLEANING
 files.clear_csv_directory()
