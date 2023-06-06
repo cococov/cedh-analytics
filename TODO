@@ -1,5 +1,4 @@
-* Agregar forma de iterar sobre torneos y correr script para todos
-- Agregar colors a tabla
+- No cargar data de carta si la que se le hizo click es la misma que está mostrada
 - Crear script para sacar tags de scryfall
 - Añadir tags a tabla de cartas
 - Agregar booleano de si es doble cara
