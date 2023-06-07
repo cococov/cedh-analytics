@@ -15,7 +15,7 @@ FILE_PATH = FOLDER_PATH + r'/competitiveCards.json'
 HOME_OVERVIEW_PATH = r'public/data/home_overview.json'
 VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 INVALID_SETS = ['MB1']
-LAST_SET = ["March of the Machine", "March of the Machine Commander"] # [base set, commander decks]
+LAST_SET = ["The Lord of the Rings: Tales of Middle-earth", "Tales of Middle-earth Commander"] # [base set, commander decks]
 
 home_overview = {}
 
