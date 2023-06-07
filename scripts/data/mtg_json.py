@@ -16,8 +16,8 @@ def get_cards_csv():
   return pd.read_csv(f'{CSV_PATH}/cards.csv', dtype='unicode').dropna(axis=1)
 
 def get_sets_csv(VALID_TYPE_SETS, INVALID_SETS):
-  sets_csv = pd.read_csv(f'{CSV_PATH}/sets.csv', dtype='unicode').dropna(axis=1).sort_values(by='release_date',ascending=False).query("type in @VALID_TYPE_SETS").query("keyrune_code not in @INVALID_SETS").query("is_online_only == '0'")
-  sets_csv['release_date'] = pd.to_datetime(sets_csv['release_date'])
+  sets_csv = pd.read_csv(f'{CSV_PATH}/sets.csv', dtype='unicode').dropna(axis=1).sort_values(by='releaseDate',ascending=False).query("type in @VALID_TYPE_SETS").query("keyruneCode not in @INVALID_SETS").query("isOnlineOnly == '0'")
+  sets_csv['releaseDate'] = pd.to_datetime(sets_csv['releaseDate'])
   return sets_csv
 
 def build_get_last_set_for_card(cards_csv, sets_csv):
@@ -29,7 +29,7 @@ def build_get_last_set_for_card(cards_csv, sets_csv):
       if card_name in ['Rot Hulk']:
         return 'Game Night'
       card_printing_codes = cards_csv.loc[cards_csv['name'] == card_name].iloc[0]['printings'].split(', ')
-      card_printing_names = sets_csv.loc[sets_csv['keyrune_code'].isin(card_printing_codes)]['name']
+      card_printing_names = sets_csv.loc[sets_csv['keyruneCode'].isin(card_printing_codes)]['name']
       return card_printing_names.iloc[0]
     except:
       logs.warning_log("Error getting card set: " + card_name)
@@ -45,7 +45,7 @@ def build_has_multiple_printings(cards_csv, sets_csv):
       if card_name in ['Rot Hulk']:
         return False
       card_printing_codes = cards_csv.loc[cards_csv['name'] == card_name].iloc[0]['printings'].split(', ')
-      card_printing_names = sets_csv.loc[sets_csv['keyrune_code'].isin(card_printing_codes)]['name']
+      card_printing_names = sets_csv.loc[sets_csv['keyruneCode'].isin(card_printing_codes)]['name']
       return card_printing_names.count() > 1
     except:
       return False
