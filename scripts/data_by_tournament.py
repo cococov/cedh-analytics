@@ -20,7 +20,6 @@ tournament_json = json.load(open('public/data/tournaments/list.json'))
 FILE_NAME = r'/competitiveCards.json'
 VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
 INVALID_SETS = ['MB1']
-LAST_SET = ["The Brothers' War", "The Brothers' War Commander"] # [base set, commander decks]
 
 def run_setup(t_id):
   global TOURNAMENT_ID, VALID_DECKS, TOURNAMENTS_INFO, PARENT_FOLDER_PATH, FOLDER_PATH, OVERVIEW_PATH, tournament_json
@@ -91,8 +90,6 @@ def get_data_and_process():
   home_overview['staples'] = processing.staples_number(reduced_data, 10)
   home_overview['staples_small'] = processing.staples_number(reduced_data, 5)
   home_overview['pet'] = processing.pet_cards_number(reduced_data)
-  home_overview['last_set'] = LAST_SET[0]
-  home_overview['last_set_top_10'] = processing.last_set_top_10(reduced_data, LAST_SET)
   logs.end_log_block('Processing decklists data')
 
   # SAVE NEW FILE
