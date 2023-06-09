@@ -1,4 +1,4 @@
-import { useReducer, useState, useEffect } from 'react';
+import { useReducer, useState, useEffect, useRef } from 'react';
 import { replace } from 'ramda';
 import { CardsTable, CardInfo, DeckLists, Layout, SnackBarLoading } from '../../components';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
@@ -27,6 +27,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [selectedCard, setSelectedCard] = useState<string>('');
+  const selectedCardRef = useRef<string>('');
   const [occurrencesForCard, setOccurrencesForCard] = useState<occurrencesForCard>({ occurrences: 0, persentaje: 0 });
   const [decklists, setDecklists] = useState<DeckListsByCommander[]>([]);
   const [cardData, setCardData] = useState<CardData>({
@@ -42,10 +43,12 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
   const [isLoadingDeckLists, toggleLoadingDecklists] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
 
   const handleChangeCard = async (cardName: string | undefined) => {
+    if (selectedCardRef.current === cardName) return;
     toggleLoadingDecklists(true);
     setTimeout(() => { toggleLoadingDecklists(false) }, 300);
     toggleLoading(true);
     setSelectedCard(cardName || '');
+    selectedCardRef.current = cardName || '';
     const card = cards.find((current: any) => current['cardName'] === cardName);
     const decklists: DeckListsByCommander[] = card?.decklists || [];
     setOccurrencesForCard({ occurrences: card?.occurrences, persentaje: card?.percentageOfUse });
