@@ -137,6 +137,63 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleCha
       },
     },
     {
+      title: 'Colors',
+      field: 'colors',
+      align: 'center',
+      grouping: false,
+      filtering: true,
+      editable: 'never',
+      hidden: true,
+      searchable: false,
+      lookup: {
+        'C': 'C',
+        'B': 'B',
+        'G': 'G',
+        'R': 'R',
+        'U': 'U',
+        'W': 'W',
+        'BG': 'BG',
+        'BR': 'BR',
+        'BU': 'BU',
+        'BW': 'BW',
+        'GR': 'GR',
+        'GU': 'GU',
+        'GW': 'GW',
+        'RU': 'RU',
+        'RW': 'RW',
+        'UW': 'UW',
+        'BGR': 'BGR',
+        'BGU': 'BGU',
+        'BGW': 'BGW',
+        'BRU': 'BRU',
+        'BRW': 'BRW',
+        'BUW': 'BUW',
+        'GRU': 'GRU',
+        'GRW': 'GRW',
+        'GUW': 'GUW',
+        'RUW': 'RUW',
+        'BGRU': 'BGRU',
+        'BRUW': 'BRUW',
+        'GRUW': 'GRUW',
+        'BGRUW': 'BGRUW',
+      },
+      cellStyle: {
+        minWidth: '5rem'
+      },
+      render: (rowData: any, type: any) => {
+        const value = type === 'row' ? rowData.colors : rowData;
+        return type === 'row' ? (
+          <span>
+            {
+              value
+                .split('')
+                .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
+            }
+          </span>
+        ) : value;
+      },
+    },
+    {
       title: 'Last Print',
       field: 'lastPrint',
       align: 'center',
