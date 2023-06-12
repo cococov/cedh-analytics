@@ -15,3 +15,6 @@ def error_log(message):
 
 def warning_log(message):
   print('\033[K\033[93m', message, '\033[0m', sep='')
+
+def loading_log(message, current, total):
+  print(f"\033[K{message} [{current}/{total}] {round((current/total)*100, 2)}%", end='\r')

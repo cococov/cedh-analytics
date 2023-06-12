@@ -1,10 +1,16 @@
 import json
 import requests
 
+""" Scryfall.
+Utility functions to get data from scryfall.
+"""
+
 API_URL = 'https://api.scryfall.com'
 TAGS_URL = 'https://tagger.scryfall.com/graphql'
 
-def get_tags_from_card(name: str):
+def get_tags_from_card(name: str) -> list[str]:
+  """Get tags from scryfall tagger for the given card name."""
+
   raw_card = json.loads(requests.get(f'{API_URL}/cards/named', params={'exact': name}).text)
 
   headers = {
