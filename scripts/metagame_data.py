@@ -5,6 +5,11 @@ from datetime import datetime
 from utils.date import custom_strftime
 from subprocess import DEVNULL, STDOUT, check_call
 
+""" Metagame data script.
+Get the metagame data from the google sheet and save it in a json file.
+The result is saved in the file `public/data/metagame/metagame.json`.
+"""
+
 DIRNAME = os.path.realpath('.')
 FOLDER_PATH = r'public/data/metagame'
 FILE_PATH = FOLDER_PATH + r'/metagame.json'

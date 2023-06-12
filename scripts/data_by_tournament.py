@@ -12,6 +12,11 @@ import data.mtg_json as mtg_json
 import data.pre_processing as pre_processing
 import data.processing as processing
 
+""" Tournaments data script.
+Get all the cards from the DB and process them to get the data for the website, using sources like Moxfield and Scryfall.
+The result is saved in the file `public/data/tournaments/{TOURNAMENT_ID}/cards/competitiveCards.json`.
+"""
+
 ALL_TOURNAMENTS = False
 
 DIRNAME = os.path.realpath('.')

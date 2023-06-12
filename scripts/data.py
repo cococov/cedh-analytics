@@ -10,6 +10,11 @@ import data.cedh_db as cedh_db
 import data.pre_processing as pre_processing
 import data.processing as processing
 
+""" DB data script.
+Get all the cards from the cEDH DB lists and process them to get the data for the website, using sources like Moxfield and Scryfall.
+The result is saved in the file `public/data/cards/competitiveCards.json`.
+"""
+
 DIRNAME = os.path.realpath('.')
 FOLDER_PATH = r'public/data/cards'
 FILE_PATH = FOLDER_PATH + r'/competitiveCards.json'
