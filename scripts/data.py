@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import subprocess
 import utils.files as files
 import utils.git as git
 import utils.logs as logs
@@ -77,6 +78,9 @@ files.update_db_date(DIRNAME)
 
 # CLEANING
 files.clear_csv_directory()
+
+# Update tags
+subprocess.Popen(['python3', 'scripts/update_tags.py']).wait()
 
 # GIT
 git.update('chore: update DB')

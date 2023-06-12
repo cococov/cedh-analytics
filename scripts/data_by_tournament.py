@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
 import json
-import time
+import subprocess
 import utils.files as files
 import utils.git as git
 import utils.logs as logs
@@ -114,6 +114,9 @@ else:
 
 # CLEANING
 files.clear_csv_directory()
+
+# Update tags
+subprocess.Popen(['python3', 'scripts/update_tags.py']).wait()
 
 # GIT
 if ALL_TOURNAMENTS:
