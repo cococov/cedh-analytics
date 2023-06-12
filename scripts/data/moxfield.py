@@ -22,7 +22,7 @@ def get_decklists_data(hash):
   data = json.loads(raw_data.text)
   data['url'] = f"https://www.moxfield.com/decks/{hash}"
   decklists_data_obtained_number += 1
-  print(f"\033[KGetting decklists data [{decklists_data_obtained_number}/{VALID_DECKS}]", end='\r')
+  logs.loading_log("Getting decklists data", decklists_data_obtained_number, VALID_DECKS)
   return data
 
 def get_decklists_data_from_hashes(hashes):
