@@ -6,9 +6,11 @@ import styles from '../../../styles/CardsListForTournament.module.css';
 import fetchCards from '../../../utils/fetch/cardData';
 import { server } from '../../../config';
 import TOURNAMENTS_LIST from '../../../public/data/tournaments/list.json';
+import TAGS_BY_CARD from '../../../public/data/cards/tags.json';
 import Image from 'next/image';
 
 type CardProps = any; // TODO: define type
+
 type TournamentInfo = {
   name: string;
   showName: boolean;
@@ -18,6 +20,7 @@ type TournamentInfo = {
   serie: string;
   number: number;
 };
+
 type TounamentResume = {
   decks: number;
   cards: number;
@@ -27,7 +30,14 @@ type TounamentResume = {
   last_set: string;
   last_set_top_10: { occurrences: number; cardName: string }[];
 };
-type CardsProps = { cards: CardProps[]; tournamentInfo: TournamentInfo; tounamentResume: TounamentResume };
+
+type CardsProps = {
+  cards: CardProps[];
+  tagsByCard: { [key: string]: string[] };
+  tournamentInfo: TournamentInfo;
+  tounamentResume: TounamentResume;
+};
+
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
 type Commander = { name: string; color_identity: ColorIdentity };
 type DeckList = { name: string; url: string; commanders: Commander[] };
@@ -43,7 +53,7 @@ type CardData = {
   isReservedList: boolean;
 };
 
-const Tournament: React.FC<CardsProps> = ({ cards, tournamentInfo, tounamentResume }) => {
+const Tournament: React.FC<CardsProps> = ({ cards, tagsByCard, tournamentInfo, tounamentResume }) => {
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [selectedCard, setSelectedCard] = useState<string>('');
@@ -170,6 +180,7 @@ const Tournament: React.FC<CardsProps> = ({ cards, tournamentInfo, tounamentResu
           </span>
           <CardsTable
             cards={cards}
+            tagsByCard={tagsByCard}
             toggleLoading={toggleLoading}
             handleChangeCard={handleChangeCard}
             tournamentId={tournamentInfo?.id}
@@ -208,6 +219,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
     return {
       props: {
         cards: data,
+        tagsByCard: TAGS_BY_CARD,
         tournamentInfo,
         tounamentResume
       },

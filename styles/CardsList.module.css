@@ -148,3 +148,14 @@
     margin-right: 2rem;
   }
 }
+
+.cardTagsWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.cardTag {
+  margin-top: 0.2rem;
+  margin-right: 0.5rem;
+}

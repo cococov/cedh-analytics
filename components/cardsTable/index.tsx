@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { replace, isNil } from 'ramda';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
+import Chip from '@mui/material/Chip';
 import Image from 'next/image';
 import styles from '../../styles/CardsList.module.css';
 import Table from '../table';
@@ -20,19 +21,21 @@ type CardProps = any; // TODO: define type
 
 type CardsTableProps = {
   cards: CardProps[];
+  tagsByCard: { [key: string]: string[] };
   toggleLoading: (state: boolean) => void;
   handleChangeCard: (cardName: string | undefined) => void;
   forceSnackBarLoading: (state: boolean) => void;
   tournamentId?: string;
 };
 
-const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleChangeCard, tournamentId, forceSnackBarLoading }) => {
+const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoading, handleChangeCard, tournamentId, forceSnackBarLoading }) => {
   const [isLoaded, setLoaded] = useState(false);
   const router = useRouter();
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [renderKey, setRenderKey] = useState(`render-${Math.random()}`);
+  const [cardsWithTags, setCardsWithTags] = useState<CardProps[]>([]);
   const [columns, setColumns] = useState([
     {
       title: 'Name',
@@ -263,7 +266,37 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleCha
         return type === 'row' ? (<span>{value}%</span>) : value;
       },
     },
+    {
+      title: 'Tags',
+      field: 'tags',
+      align: 'center',
+      grouping: false,
+      filtering: true,
+      editable: 'never',
+      hidden: true,
+      hideFilterIcon: true,
+      searchable: false,
+      cellStyle: {
+        minWidth: '13rem'
+      },
+      render: (rowData: any, type: any) => {
+        const value = type === 'row' ? rowData.tags : rowData;
+        return type === 'row' ? (
+          <span className={styles['cardTagsWrapper']}>
+            {
+              value.map((tag: string, index: number) => (<Chip key={tag} label={tag} size="small" className={styles['cardTag']}/>))
+            }
+          </span>
+        ) : value;
+      },
+    },
   ]);
+
+  useEffect(() => {
+    setCardsWithTags(cards.map((card: any) => {
+      return { ...card, tags: tagsByCard[card.cardName] || [] };
+    }));
+  }, []);
 
   useEffect(() => {
     if (isSmallScreen) {
@@ -322,7 +355,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, toggleLoading, handleCha
       <Table
         key={renderKey}
         columns={columns}
-        data={cards}
+        data={cardsWithTags}
         defaultNumberOfRows={(isLargeVerticalScreen || isSmallScreen) ? 10 : 5}
         isLoading={false}
         isDraggable={false}

@@ -5,9 +5,10 @@ import { useMediaQuery } from '../../hooks/useMediaQuery';
 import styles from '../../styles/CardsList.module.css';
 import fetchCards from '../../utils/fetch/cardData';
 import DATA from '../../public/data/cards/competitiveCards.json';
+import TAGS_BY_CARD from '../../public/data/cards/tags.json';
 
 type CardProps = any; // TODO: define type
-type CardsProps = { cards: CardProps[] };
+type CardsProps = { cards: CardProps[], tagsByCard: { [key: string]: string[] } };
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
 type Commander = { name: string, color_identity: ColorIdentity };
 type DeckList = { name: string, url: string, commanders: Commander[] };
@@ -23,7 +24,7 @@ type CardData = {
   isReservedList: boolean,
 };
 
-const Cards: React.FC<CardsProps> = ({ cards }) => {
+const Cards: React.FC<CardsProps> = ({ cards, tagsByCard }) => {
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [selectedCard, setSelectedCard] = useState<string>('');
@@ -114,6 +115,7 @@ const Cards: React.FC<CardsProps> = ({ cards }) => {
         </span>
         <CardsTable
           cards={cards}
+          tagsByCard={tagsByCard}
           toggleLoading={toggleLoading}
           handleChangeCard={handleChangeCard}
           forceSnackBarLoading={forceSnackBarLoading}
@@ -132,6 +134,7 @@ export const getStaticProps = async () => {
   return {
     props: {
       cards: DATA,
+      tagsByCard: TAGS_BY_CARD,
     },
   };
 };
