@@ -34,7 +34,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
     <Layout title="Home">
       <SnackBarLoading isOpen={isLoading} />
       <main className={styles['homeMain']} >
-        <span className={styles['homeImageHiden']}>
+        <span className={styles['homeImageHidden']}>
           <Image
             src={SylvanLibrary}
             alt="SylvanLibrary"
@@ -45,16 +45,16 @@ const Home: NextPage<HomeProps> = ({ data }) => {
             priority
           />
         </span>
-        <section className={styles['homeStatsHidenSection']}>
-          <span className={styles['homeStatHiden']}>
+        <section className={styles['homeStatsHiddenSection']}>
+          <span className={styles['homeStatHidden']}>
             <h2>Total Decks</h2>
             <p>{data.decks}</p>
           </span>
-          <span className={styles['homeStatHiden']}>
+          <span className={styles['homeStatHidden']}>
             <h2>Total Cards</h2>
             <p>{data.cards}</p>
           </span>
-          <span className={styles['homeStatHiden']}>
+          <span className={styles['homeStatHidden']}>
             <h2>Total Staples</h2>
             <span className={styles['homeStatDisclaimer']}>(More than 10 occurrences)</span>
             <p>{data.staples}</p>

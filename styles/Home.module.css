@@ -304,7 +304,7 @@
   padding-right: 0.5rem;
 }
 
-.homeImageHiden {
+.homeImageHidden {
   display: none;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -312,7 +312,7 @@
   margin-top: -10rem;
 }
 
-.homeStatsHidenSection {
+.homeStatsHiddenSection {
   display: none;
   flex-direction: row;
   flex-grow: 1;
@@ -322,7 +322,7 @@
   width: 100%;
 }
 
-.homeStatHiden {
+.homeStatHidden {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -335,7 +335,7 @@
   padding-top: 0.5rem;
 }
 
-.homeStatHiden p {
+.homeStatHidden p {
   font-size: 2rem;
   margin-top: 1rem;
   color: #422273;
@@ -351,7 +351,7 @@
     display: none;
   }
 
-  .homeStatsHidenSection {
+  .homeStatsHiddenSection {
     display: flex;
     ;
   }
@@ -362,11 +362,11 @@
     display: none;
   }
 
-  .homeImageHiden {
+  .homeImageHidden {
     display: flex;
   }
 
-  .homeStatHiden {
+  .homeStatHidden {
     margin: 0.25rem;
   }
 }
