@@ -286,7 +286,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
                 {data.last_set_top_10.map((d, i) => (
                   <tr key={`row-last_set_top_10-${i}`} className={styles[`homeStatTableBodyRow${i % 2}`]} onClick={handleClickTopRow}>
                     <td key={`name-last_set_top_10-${i}`} className={styles['homeStatTableBodyName']}>{d.cardName}</td>
-                    <td key={`occurrences-last_set_top_10-${i}`} className={styles['homeStatTableBodyOcurrences']}>{d.occurrences}</td>
+                    <td key={`occurrences-last_set_top_10-${i}`} className={styles['homeStatTableBodyOccurrences']}>{d.occurrences}</td>
                   </tr>
                 ))}
               </tbody>
