@@ -115,6 +115,15 @@ const Home: NextPage<HomeProps> = ({ data }) => {
               >
                 MTGJSON
               </a>
+              {', '}
+              <a
+                href="https://edhtop16.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles['homeLink']}
+              >
+                EDH Top 16
+              </a>
               {' and '}
               <a
                 href="https://drive.google.com/drive/folders/1jU-slPNt9XNzl2grGUarZTXh5afTsNvy"
@@ -239,7 +248,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
               Wizards of the Coast, Magic: The Gathering, and their logos are trademarks of Wizards of the Coast LLC in the United States and other countries. © 1993-2023 Wizards. All Rights Reserved.
             </p>
             <p className={styles.homeLegalText}>
-              Carrot Compost is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC. Carrot Compost may use the trademarks and other intellectual property of Wizards of the Coast LLC, which is permitted under Wizards' Fan Site Policy. MAGIC: THE GATHERING® is a trademark of Wizards of the Coast. For more Datarmation about Wizards of the Coast or any of Wizards' trademarks or other intellectual property, please visit their website at {' '}
+              Carrot Compost is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC. Carrot Compost may use the trademarks and other intellectual property of Wizards of the Coast LLC, which is permitted under Wizards' Fan Site Policy. MAGIC: THE GATHERING® is a trademark of Wizards of the Coast. For more information about Wizards of the Coast or any of Wizards' trademarks or other intellectual property, please visit their website at {' '}
               <a
                 href="https://company.wizards.com/"
                 target="_blank"
