@@ -115,7 +115,7 @@
   margin: 0.5rem;
   border-radius: 4px;
   overflow-y: hidden;
-  text-align: justify;
+  text-align: left;
 }
 
 .homeImage {
@@ -144,7 +144,7 @@
   flex: 1;
   text-align: end;
   color: #422273;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .homeArticle ul {
@@ -173,7 +173,7 @@
 
 .homeLegalText {
   max-width: 90%;
-  text-align: justify;
+  text-align: left;
   margin-bottom: 2rem;
 }
 

@@ -113,14 +113,14 @@ const About: NextPage<MetagameProps> = ({ update_dates }) => (
         <section className={styles.aboutSources}>
           <h2>Sources</h2>
           <p>
-            <b>Lists DB: </b>
+            <b>Sets Data: </b>
             <a
-              href="https://cedh-decklist-database.com/"
+              href="https://mtgjson.com/"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.aboutLinkSource}
             >
-              cEDH Decklist Database
+              MTGJSON
             </a>
           </p>
           <p>
@@ -135,28 +135,6 @@ const About: NextPage<MetagameProps> = ({ update_dates }) => (
             </a>
           </p>
           <p>
-            <b>Cards Images and Data: </b>
-            <a
-              href="https://scryfall.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.aboutLinkSource}
-            >
-              Scryfall
-            </a>
-          </p>
-          <p>
-            <b>Metagame Data: </b>
-            <a
-              href="https://drive.google.com/drive/folders/1jU-slPNt9XNzl2grGUarZTXh5afTsNvy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.aboutLinkSource}
-            >
-              Metagame Project
-            </a>
-          </p>
-          <p>
             <b>Tournaments Data: </b>
             <a
               href="https://edhtop16.com/"
@@ -168,14 +146,36 @@ const About: NextPage<MetagameProps> = ({ update_dates }) => (
             </a>
           </p>
           <p>
-            <b>Sets Data: </b>
+            <b>Cards Images and Data: </b>
             <a
-              href="https://mtgjson.com/"
+              href="https://scryfall.com/"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.aboutLinkSource}
             >
-              MTGJSON
+              Scryfall
+            </a>
+          </p>
+          <p>
+            <b>Lists DB: </b>
+            <a
+              href="https://cedh-decklist-database.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.aboutLinkSource}
+            >
+              cEDH Decklist Database
+            </a>
+          </p>
+          <p>
+            <b>Metagame Data: </b>
+            <a
+              href="https://drive.google.com/drive/folders/1jU-slPNt9XNzl2grGUarZTXh5afTsNvy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.aboutLinkSource}
+            >
+              Metagame Project
             </a>
           </p>
         </section>
@@ -195,20 +195,16 @@ const About: NextPage<MetagameProps> = ({ update_dates }) => (
             .
           </p>
         </section>
-        <section className={styles.aboutUpdateDates}>
-          <p>
-            <b>Last DB update: </b>
-            <span className={styles.aboutUpdateDate}>
-              {update_dates.database}
-            </span>
-          </p>
-          <p>
-            <b>Last metagame update: </b>
-            <span className={styles.aboutUpdateDate}>
-              {update_dates.metagame}
-            </span>
-          </p>
-        </section>
+        <table className={styles.aboutUpdateDates}>
+        <tr>
+          <th>Last DB update</th>
+          <th>Last metagame update</th>
+        </tr>
+        <tr>
+          <td>{update_dates.database}</td>
+          <td>{update_dates.metagame}</td>
+        </tr>
+      </table>
         <section className={styles.aboutCopyright}>
           <p>
             © 2023 Carrot Compost

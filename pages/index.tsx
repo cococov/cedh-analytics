@@ -253,8 +253,9 @@ const Home: NextPage<HomeProps> = ({ data }) => {
                 href="https://company.wizards.com/"
                 target="_blank"
                 rel="noopener noreferrer"
+                className={styles['homeLink']}
               >
-                https://company.wizards.com/
+                https://company.wizards.com
               </a>
               .
             </p>
