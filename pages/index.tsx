@@ -279,7 +279,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
               <thead className={styles[`homeStatTableHead`]}>
                 <tr>
                   <th className={styles['homeStatTableHeadName']}>Name</th>
-                  <th className={styles['homeStatTableHeadOcurrences']}>Occurrences</th>
+                  <th className={styles['homeStatTableHeadOccurrences']}>Occurrences</th>
                 </tr>
               </thead>
               <tbody>
