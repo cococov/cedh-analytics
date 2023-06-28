@@ -1,0 +1,95 @@
+.main {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-x: hidden;
+  background-color: white;
+}
+
+.statTableTable {
+  border-spacing: 0;
+}
+
+.statTable {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  flex-grow: 1;
+  text-align: center;
+  min-width: 100%;
+  max-width: 100%;
+  padding: 1rem;
+}
+
+.statTableTitle {
+  width: 90%;
+  text-align: -webkit-center;
+}
+
+.statTableTitle h1 {
+  font-size: xx-large;
+}
+
+.statTableTitle h2 {
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.statTableHead {
+  background-color: #422273;
+  color: #ececec;
+  letter-spacing: 0.05rem;
+}
+
+.statTableHead tr .StatTableHeadName {
+  padding: 0.3rem;
+  padding-bottom: 0.4rem;
+  padding-top: 0.4rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 4px 0 0 0;
+}
+
+.statTableHead tr .StatTableHeadOccurrences {
+  padding: 0.3rem;
+  padding-bottom: 0.4rem;
+  padding-top: 0.4rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 0 4px 0 0;
+}
+
+.statTableBodyName {
+  text-align: left;
+}
+
+.statTableHeadName {
+  text-align: left;
+  padding: 0.5rem;
+}
+
+.statTableHeadOccurrences {
+  padding: 0.5rem;
+}
+
+.statTableBodyRow0 td {
+  margin: 0;
+  padding: 0.3rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  background-color: #ececec;
+  cursor: pointer;
+}
+
+.statTableBodyRow1 td {
+  margin: 0;
+  padding: 0.3rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  background-color: #ccc;
+  cursor: pointer;
+}

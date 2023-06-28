@@ -2,10 +2,12 @@ import { useCallback, useReducer } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Image from "next/image";
+import Link from 'next/link';
 import { replace } from 'ramda';
 import { server } from '../config';
 import styles from '../styles/Home.module.css';
-import { Layout, SnackBarLoading } from '../components';
+import Icon from '@material-ui/core/Icon';
+import { Layout, SnackBarLoading, ButtonLink } from '../components';
 import SylvanLibrary from '../public/images/sylvan_library.jpg';
 
 type Data = {
@@ -46,19 +48,38 @@ const Home: NextPage<HomeProps> = ({ data }) => {
           />
         </span>
         <section className={styles['homeStatsHiddenSection']}>
-          <span className={styles['homeStatHidden']}>
-            <h2>Total Decks</h2>
-            <p>{data.decks}</p>
+          <span className={styles['homeStatsHiddenSectionTop']}>
+            <span className={styles['homeStatHidden']}>
+              <h3>Total Decks</h3>
+              <p>{data.decks}</p>
+            </span>
+            <span className={styles['homeStatHidden']}>
+              <h3>Total Cards</h3>
+              <p>{data.cards}</p>
+            </span>
+            <span className={styles['homeStatHidden']}>
+              <h3>Total Staples</h3>
+              <span className={styles['homeStatDisclaimer']}>(More than 10 occurrences)</span>
+              <p>{data.staples}</p>
+            </span>
+            <Link href="/top10LastSet">
+              <span className={styles['hiddenButtonTop10Tablet']}>
+                <span className={styles['hiddenButtonTop10TabletLeft']}>
+                  <h3>Top 10 cards</h3>
+                  <span>{data.last_set}</span>
+                </span>
+                <span className={styles['hiddenButtonTop10TabletRight']}>
+                  <Icon fontSize="large">arrow_right_alt</Icon>
+                </span>
+              </span>
+            </Link>
           </span>
-          <span className={styles['homeStatHidden']}>
-            <h2>Total Cards</h2>
-            <p>{data.cards}</p>
-          </span>
-          <span className={styles['homeStatHidden']}>
-            <h2>Total Staples</h2>
-            <span className={styles['homeStatDisclaimer']}>(More than 10 occurrences)</span>
-            <p>{data.staples}</p>
-          </span>
+          <Link href="/top10LastSet">
+            <span className={styles['hiddenButtonTop10']}>
+              <span>Top 10 cards of the last set</span>
+              <Icon fontSize="medium">arrow_right_alt</Icon>
+            </span>
+          </Link>
         </section>
         <section className={styles['homeTextSection']}>
           <span className={styles['homeImage']}>

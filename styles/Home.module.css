@@ -298,7 +298,7 @@
 }
 
 .homeStatDisclaimer {
-  font-size: 0.6rem;
+  font-size: 0.5rem;
   margin-top: -1rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -314,6 +314,17 @@
 
 .homeStatsHiddenSection {
   display: none;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.homeStatsHiddenSectionTop {
+  display: -webkit-inline-flex;
   flex-direction: row;
   flex-grow: 1;
   text-align: center;
@@ -326,18 +337,74 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   text-align: center;
   width: 31%;
-  margin: 0.5rem;
+  margin: 0.2rem;
   background-color: white;
   border-radius: 12px;
-  padding-top: 0.5rem;
+}
+
+.hiddenButtonTop10 {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  width: 96%;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.2rem;
+  border-radius: 8px;
+  padding: 0.5rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background-color: #422273;
+  color: #ececec;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.hiddenButtonTop10Tablet {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 31%;
+  margin: 0.2rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  background-color: white;
+  border-radius: 12px;
+  background-color: #422273;
+  color: #ececec;
+  justify-content: space-between;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.hiddenButtonTop10TabletLeft {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.hiddenButtonTop10TabletRight {
+  flex: 0;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0.3rem;
 }
 
 .homeStatHidden p {
   font-size: 2rem;
-  margin-top: 1rem;
+  margin-top: 0.51rem;
   color: #422273;
   font-weight: 600;
 }
@@ -353,7 +420,14 @@
 
   .homeStatsHiddenSection {
     display: flex;
-    ;
+  }
+
+  .hiddenButtonTop10 {
+    display: none;
+  }
+
+  .hiddenButtonTop10Tablet {
+    display: flex;
   }
 }
 
@@ -368,5 +442,13 @@
 
   .homeStatHidden {
     margin: 0.25rem;
+  }
+
+  .hiddenButtonTop10 {
+    display: flex;
+  }
+
+  .hiddenButtonTop10Tablet {
+    display: none;
   }
 }
