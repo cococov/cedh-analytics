@@ -451,4 +451,8 @@
   .hiddenButtonTop10Tablet {
     display: none;
   }
+
+  .homeArticle {
+    width: 90%;
+  }
 }
