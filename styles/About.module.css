@@ -48,16 +48,8 @@
   align-items: center;
 }
 
-.aboutSources p {
-  margin: 0.2rem;
-  display: flex;
-  width: 100%;
-  max-width: 18rem;
-  padding: 0;
-}
-
-.aboutSources b {
-  font-weight: 640;
+.aboutSources ul {
+  list-style-type: disc;
 }
 
 .aboutTeam ul {
@@ -175,4 +167,11 @@
   .aboutText {
     max-width: 80%;
   }
+}
+
+.aboutLink {
+  flex: 1;
+  text-align: end;
+  color: #422273;
+  font-weight: 600;
 }

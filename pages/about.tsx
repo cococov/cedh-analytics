@@ -112,72 +112,68 @@ const About: NextPage<MetagameProps> = ({ update_dates }) => (
         </section>
         <section className={styles.aboutSources}>
           <h2>Sources</h2>
-          <p>
-            <b>Sets Data: </b>
-            <a
-              href="https://mtgjson.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.aboutLinkSource}
-            >
-              MTGJSON
-            </a>
-          </p>
-          <p>
-            <b>Decklists Data: </b>
-            <a
-              href="https://www.moxfield.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.aboutLinkSource}
-            >
-              Moxfield
-            </a>
-          </p>
-          <p>
-            <b>Tournaments Data: </b>
-            <a
-              href="https://edhtop16.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.aboutLinkSource}
-            >
-              EDH Top 16
-            </a>
-          </p>
-          <p>
-            <b>Cards Images and Data: </b>
-            <a
-              href="https://scryfall.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.aboutLinkSource}
-            >
-              Scryfall
-            </a>
-          </p>
-          <p>
-            <b>Lists DB: </b>
-            <a
-              href="https://cedh-decklist-database.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.aboutLinkSource}
-            >
-              cEDH Decklist Database
-            </a>
-          </p>
-          <p>
-            <b>Metagame Data: </b>
-            <a
-              href="https://drive.google.com/drive/folders/1jU-slPNt9XNzl2grGUarZTXh5afTsNvy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.aboutLinkSource}
-            >
-              Metagame Project
-            </a>
-          </p>
+          <ul>
+            <li>
+              <a
+                href="https://mtgjson.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.aboutLinkSource}
+              >
+                MTGJSON
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.moxfield.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.aboutLinkSource}
+              >
+                Moxfield
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://edhtop16.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.aboutLinkSource}
+              >
+                EDH Top 16
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://scryfall.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.aboutLinkSource}
+              >
+                Scryfall
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://cedh-decklist-database.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.aboutLinkSource}
+              >
+                cEDH Decklist Database
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://drive.google.com/drive/folders/1jU-slPNt9XNzl2grGUarZTXh5afTsNvy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.aboutLinkSource}
+              >
+                Metagame Project
+              </a>
+            </li>
+          </ul>
         </section>
         <section className={styles.aboutLegal}>
           <p className={styles.aboutLegalText}>
@@ -189,6 +185,7 @@ const About: NextPage<MetagameProps> = ({ update_dates }) => (
               href="https://company.wizards.com/"
               target="_blank"
               rel="noopener noreferrer"
+              className={styles.aboutLink}
             >
               https://company.wizards.com/
             </a>
@@ -196,15 +193,15 @@ const About: NextPage<MetagameProps> = ({ update_dates }) => (
           </p>
         </section>
         <table className={styles.aboutUpdateDates}>
-        <tr>
-          <th>Last DB update</th>
-          <th>Last metagame update</th>
-        </tr>
-        <tr>
-          <td>{update_dates.database}</td>
-          <td>{update_dates.metagame}</td>
-        </tr>
-      </table>
+          <tr>
+            <th>Last DB Update</th>
+            <th>Last Metagame Update</th>
+          </tr>
+          <tr>
+            <td>{update_dates.database}</td>
+            <td>{update_dates.metagame}</td>
+          </tr>
+        </table>
         <section className={styles.aboutCopyright}>
           <p>
             © 2023 Carrot Compost
