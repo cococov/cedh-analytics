@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { replace, isNil } from 'ramda';
+import { Column } from "@material-table/core";
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
 import Chip from '@mui/material/Chip';
 import Image from 'next/image';
@@ -36,7 +37,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [renderKey, setRenderKey] = useState(`render-${Math.random()}`);
   const [cardsWithTags, setCardsWithTags] = useState<CardProps[]>([]);
-  const [columns, setColumns] = useState([
+  const [columns, setColumns] = useState<Column<CardProps[]>[]>([
     {
       title: 'Name',
       field: 'cardName',
@@ -126,17 +127,16 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
       cellStyle: {
         minWidth: '5rem'
       },
-      render: (rowData: any, type: any) => {
-        const value = type === 'row' ? rowData.colorIdentity : rowData;
-        return type === 'row' ? (
+      render: (rowData: any) => {
+        return (
           <span>
             {
-              value
+              rowData['colorIdentity']
                 .split('')
                 .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
             }
           </span>
-        ) : value;
+        );
       },
     },
     {
@@ -183,17 +183,16 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
       cellStyle: {
         minWidth: '5rem'
       },
-      render: (rowData: any, type: any) => {
-        const value = type === 'row' ? rowData.colors : rowData;
-        return type === 'row' ? (
+      render: (rowData: any) => {
+        return (
           <span>
             {
-              value
+              rowData['colors']
                 .split('')
                 .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
             }
           </span>
-        ) : value;
+        );
       },
     },
     {
@@ -247,9 +246,8 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
       editable: 'never',
       hidden: true,
       searchable: false,
-      render: (rowData: any, type: any) => {
-        const value = type === 'row' ? rowData.percentageOfUse : rowData;
-        return type === 'row' ? (<span>{value}%</span>) : value;
+      render: (rowData: any) => {
+        return (<span>{rowData['percentageOfUse']}%</span>);
       },
     },
     {
@@ -261,9 +259,8 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
       editable: 'never',
       hidden: true,
       searchable: false,
-      render: (rowData: any, type: any) => {
-        const value = type === 'row' ? rowData.percentageOfUseByIdentity : rowData;
-        return type === 'row' ? (<span>{value}%</span>) : value;
+      render: (rowData: any) => {
+        return (<span>{rowData['percentageOfUseByIdentity']}%</span>);
       },
     },
     {
@@ -279,15 +276,14 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
       cellStyle: {
         minWidth: '13rem'
       },
-      render: (rowData: any, type: any) => {
-        const value = type === 'row' ? rowData.tags : rowData;
-        return type === 'row' ? (
+      render: (rowData: any) => {
+        return (
           <span className={styles['cardTagsWrapper']}>
             {
-              value.map((tag: string, index: number) => (<Chip key={tag} label={tag} size="small" className={styles['cardTag']}/>))
+              rowData['tags'].map((tag: string, index: number) => (<Chip key={tag} label={tag} size="small" className={styles['cardTag']}/>))
             }
           </span>
-        ) : value;
+        );
       },
     },
   ]);
@@ -335,7 +331,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
     if (!isLoaded) setLoaded(true);
   }, [isLoaded]);
 
-  const handleClickRow = useCallback((_e, rowData = {}) => {
+  const handleClickRow = useCallback((_e: any, rowData = {}) => {
     if (isSmallScreen || isMediumScreen) {
       toggleLoading(true);
       router.push(

@@ -3,3 +3,13 @@
 - Añadir buscador a torneos
 - Fixear tabla en mobile
 - Filtrar tags para dejar solo los útiles
+
+# UPDATE
+
+- Fixear estilo de filtros de la tabla
+- Cambiar color de tickets en selector de columnas de la tabla
+- Fixear metagame
+- Fixear lista de torneos
+- Fixear torneos
+- Fixear warnings de imágenes
+- Fixear warnings de cosas deprecadas
