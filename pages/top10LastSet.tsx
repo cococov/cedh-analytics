@@ -21,7 +21,7 @@ const Top10LastSet: NextPage<Top10LastSetProps> = ({ data }) => {
 
   const handleClickTopRow = useCallback((event) => {
     toggle(true);
-    router.push(`/cards/${replace(/\//g, '%2F', event.target.childNodes[0].data)}`);
+    router.push(`/cards/${replace(/\//g, '%2F', event.target.parentNode.childNodes[0].childNodes[0].data)}`);
   }, []);
 
   return (

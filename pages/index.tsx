@@ -29,7 +29,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
 
   const handleClickTopRow = useCallback((event) => {
     toggle(true);
-    router.push(`/cards/${replace(/\//g, '%2F', event.target.childNodes[0].data)}`);
+    router.push(`/cards/${replace(/\//g, '%2F', event.target.parentNode.childNodes[0].childNodes[0].data)}`);
   }, []);
 
   return (
