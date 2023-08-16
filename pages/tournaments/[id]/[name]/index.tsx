@@ -28,6 +28,7 @@ type CardProps = {
   cardText: string,
   gathererId: number,
   averagePrice: number,
+  isDoubleFace: boolean,
   isReservedList: boolean,
   cardImage: string,
   cardFaces: CardFace[],
@@ -35,7 +36,7 @@ type CardProps = {
   decklists: DeckListsByCommander[],
 };
 
-const Card: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, decklists, cardFaces }) => {
+const Card: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, isDoubleFace, cardImage, occurrencesForCard, decklists, cardFaces }) => {
   const router = useRouter()
   const { name } = router.query
 
@@ -49,9 +50,11 @@ const Card: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, a
           gathererId={gathererId}
           averagePrice={averagePrice}
           isReservedList={isReservedList}
+          isDoubleFace={isDoubleFace}
           cardImage={cardImage}
           occurrencesForCard={occurrencesForCard}
           decklists={decklists}
+          cardFaces={cardFaces}
         />
       </main>
     </Layout>
@@ -97,6 +100,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
         gathererId: result['gathererId'],
         averagePrice: result['averagePrice'],
         isReservedList: result['isReservedList'],
+        isDoubleFace: result['isDoubleFace'],
         cardImage: result['cardImage'],
         cardFaces: result['cardFaces'],
         occurrencesForCard: occurrencesForCard,
@@ -115,6 +119,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
         gathererId: 0,
         averagePrice: 0,
         isReservedList: false,
+        isDoubleFace: false,
         cardImage: '',
         cardFaces: null,
         occurrencesForCard: { occurrences: 0, persentaje: 0 },

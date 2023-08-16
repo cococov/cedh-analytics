@@ -15,13 +15,15 @@ type CardProps = {
   cardText: string,
   gathererId: number,
   averagePrice: number,
+  cardFaces: { type_line: string }[],
   isReservedList: boolean,
+  isDoubleFace: boolean,
   cardImage: string,
   occurrencesForCard: occurrencesForCard,
   decklists: DeckListsByCommander[],
 }
 
-const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, decklists }: CardProps) => (
+const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, cardFaces, isReservedList, isDoubleFace, cardImage, occurrencesForCard, decklists }: CardProps) => (
   <span className={styles['card-info-container']}>
     <h1 className={styles['card-name']}>{cardName || 'Card Name'}</h1>
     {isReservedList &&
@@ -36,10 +38,13 @@ const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathe
         <p className={styles['card-text']} >
           {split('--DIVIDE--', cardText)[0] || 'Oracle text.'}
         </p>
-        {split('--DIVIDE--', cardText).length > 1 && (
-          <p className={styles['card-text']} >
-            {split('--DIVIDE--', cardText)[1] || 'Oracle text.'}
-          </p>
+        {isDoubleFace && (
+          <>
+            <h3 className={styles['card-type']}>{cardFaces[1]['type_line'] || 'Type'}</h3>
+            <p className={styles['card-text']} >
+              {split('--DIVIDE--', cardText)[1] || 'Oracle text.'}
+            </p>
+          </>
         )}
         <p>
           <b>Average Price: </b>${averagePrice || 'NO_DATA'}
