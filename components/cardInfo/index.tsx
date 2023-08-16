@@ -12,6 +12,8 @@ type CardData = {
   cardText: string,
   averagePrice: number,
   gathererId: number,
+  cardFaces: { type_line: string }[],
+  isDoubleFace: boolean,
   isReservedList: boolean,
 };
 
@@ -30,7 +32,9 @@ const CardInfo: React.FC<CardInfoProps> = ({
     cardText,
     averagePrice,
     gathererId,
+    cardFaces,
     isReservedList,
+    isDoubleFace,
   }
 }) => {
   return (
@@ -38,9 +42,9 @@ const CardInfo: React.FC<CardInfoProps> = ({
       <span className={styles['card-info']}>
         <span className={styles['card-image']}>
           {(!!!selectedCard || isLoading) ? (
-            <Image src={CardBack} alt={`${selectedCard} image`} width={256} height={366} placeholder="blur" priority />
+            <Image src={CardBack} alt="Card placeholder" width={256} height={366} placeholder="blur" priority />
           ) : (
-            <Image src={cardImage || CardBack} alt={`${selectedCard} image`} width={256} height={366} placeholder="blur" blurDataURL="/images/mtg-back.jpg" priority />
+            <Image src={cardImage} alt={`${selectedCard} image`} width={256} height={366} placeholder="blur" blurDataURL="/images/mtg-back.jpg" priority />
           )}
         </span>
         {
@@ -52,10 +56,13 @@ const CardInfo: React.FC<CardInfoProps> = ({
                 <p className={styles['card-text']} >
                   {split('--DIVIDE--', cardText)[0] || 'Oracle text.'}
                 </p>
-                {split('--DIVIDE--', cardText).length > 1 && (
-                  <p className={styles['card-text']} >
-                    {split('--DIVIDE--', cardText)[1] || 'Oracle text.'}
-                  </p>
+                {isDoubleFace && (
+                  <>
+                    <h3 className={styles['card-type']}>{cardFaces[1]['type_line'] || 'Type'}</h3>
+                    <p className={styles['card-text']} >
+                      {split('--DIVIDE--', cardText)[1] || 'Oracle text.'}
+                    </p>
+                  </>
                 )}
                 <p>
                   <b>Average Price: </b>${averagePrice || 'NO_DATA'}

@@ -50,7 +50,9 @@ type CardData = {
   cardText: string;
   averagePrice: number;
   gathererId: number;
+  cardFaces: { type_line: string }[];
   isReservedList: boolean;
+  isDoubleFace: boolean;
 };
 
 const Tournament: React.FC<CardsProps> = ({ cards, tagsByCard, tournamentInfo, tounamentResume }) => {
@@ -65,7 +67,9 @@ const Tournament: React.FC<CardsProps> = ({ cards, tagsByCard, tournamentInfo, t
     cardText: '',
     averagePrice: 0,
     gathererId: 0,
+    cardFaces: [],
     isReservedList: false,
+    isDoubleFace: false,
   });
   const [isForcedSnackBarLoading, forceSnackBarLoading] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
   const [isLoading, toggleLoading] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
@@ -86,41 +90,16 @@ const Tournament: React.FC<CardsProps> = ({ cards, tagsByCard, tournamentInfo, t
     const requestData = async () => {
       const cardName = replace(/\s/g, '%20', selectedCard);
       const result = await fetchCards(cardName);
-
-      const newCardData: CardData = {
-        cardImage: '',
-        cardType: '',
-        cardText: '',
-        averagePrice: 0,
-        gathererId: 0,
-        isReservedList: false,
-      };
-
-      if (!!result['cardFaces'] && !!result['cardFaces'][0]['image_uris']) {
-        newCardData['cardImage'] = result['cardFaces'][0]['image_uris']['large'];
-        newCardData['cardType'] = result['cardFaces'][0]['type_line'];
-        newCardData['cardText'] = `\
-        ${result['cardFaces'][0]['oracle_text']}
-        --DIVIDE--
-        ${result['cardFaces'][1]['oracle_text']}
-        `;
-      } else if (!!result['cardFaces'] && !!!result['cardFaces'][0]['image_uris']) {
-        newCardData['cardImage'] = result['cardImage'];
-        newCardData['cardType'] = result['cardFaces'][0]['type_line'];
-        newCardData['cardText'] = `\
-        ${result['cardFaces'][0]['oracle_text']}
-        --DIVIDE--
-        ${result['cardFaces'][1]['oracle_text']}
-        `;
-      } else {
-        newCardData['cardImage'] = result['cardImage'];
-        newCardData['cardType'] = result['cardType'];
-        newCardData['cardText'] = result['cardText'];
-      }
-      newCardData['averagePrice'] = parseFloat(result['averagePrice']);
-      newCardData['gathererId'] = result['gathererId'];
-      newCardData['isReservedList'] = result['isReservedList'];
-      setCardData(newCardData);
+      setCardData({
+        cardImage: result['cardImage'],
+        cardType: result['cardType'],
+        cardText: result['cardText'],
+        averagePrice: parseFloat(result['averagePrice']),
+        gathererId: result['gathererId'],
+        cardFaces: result['cardFaces'],
+        isReservedList: result['isReservedList'],
+        isDoubleFace: result['isDoubleFace'],
+      });
       toggleLoading(false);
     };
 

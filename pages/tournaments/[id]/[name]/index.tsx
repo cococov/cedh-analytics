@@ -45,15 +45,11 @@ const Card: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, a
         <CardInfoPage
           cardName={cardName}
           cardType={cardType}
-          cardText={cardText || `\
-          ${cardFaces[0]['oracle_text']}
-          --DIVIDE--
-          ${cardFaces[1]['oracle_text']}
-          `}
+          cardText={cardText}
           gathererId={gathererId}
           averagePrice={averagePrice}
           isReservedList={isReservedList}
-          cardImage={cardImage || cardFaces[0].image_uris.large}
+          cardImage={cardImage}
           occurrencesForCard={occurrencesForCard}
           decklists={decklists}
         />

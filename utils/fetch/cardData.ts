@@ -28,16 +28,17 @@ const fetchData = async (cardName: string) => {
     return {
       error: false,
       cardName: print['name'],
-      cardType: print['type_line'],
+      cardType: !!print['card_faces'] ? result['card_faces'][0]['type_line'] : print['type_line'],
       cmc: print['cmc'],
       colorIdentity: print['color_identity'],
       rarity: print['rarity'],
-      cardText: print['oracle_text'] || null,
+      cardText: print['oracle_text'] || `${print['card_faces'][0]['oracle_text']}--DIVIDE--${print['card_faces'][1]['oracle_text']}`,
       gathererId: print['multiverse_ids'][0] || null,
       averagePrice: !!print['prices']['usd'] ? print['prices']['usd'] : print['prices']['usd_foil'],
       isReservedList: print['reserved'],
-      cardImage: !!print['image_uris'] ? print['image_uris']['large'] : null,
-      cardFaces: print['card_faces'] || null,
+      cardImage: !!print['image_uris'] ? print['image_uris']['normal'] : print['card_faces'][0]['image_uris']['normal'],
+      cardFaces: print['card_faces'] || [],
+      isDoubleFace: !!print['card_faces'],
     };
   } catch (err) {
     return {
@@ -52,7 +53,8 @@ const fetchData = async (cardName: string) => {
       averagePrice: 0,
       isReservedList: false,
       cardImage: [],
-      cardFaces: null,
+      cardFaces: [],
+      isDoubleFace: false,
     }
   }
 };

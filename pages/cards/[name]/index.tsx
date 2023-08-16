@@ -35,25 +35,21 @@ type CardProps = {
   decklists: DeckListsByCommander[],
 };
 
-const Card: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, decklists, cardFaces }) => {
+const Card: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, isReservedList, cardImage, occurrencesForCard, decklists }) => {
   const router = useRouter();
   const { name } = router.query;
 
   return (
-    <Layout title={name} description={`${name} info`} image={cardImage || cardFaces[0].image_uris.large} externalImage>
+    <Layout title={name} description={`${name} info`} image={cardImage} externalImage>
       <main className={styles.main}>
         <CardInfoPage
           cardName={cardName}
           cardType={cardType}
-          cardText={cardText || `\
-          ${cardFaces[0]['oracle_text']}
-          --DIVIDE--
-          ${cardFaces[1]['oracle_text']}
-          `}
+          cardText={cardText}
           gathererId={gathererId}
           averagePrice={averagePrice}
           isReservedList={isReservedList}
-          cardImage={cardImage || cardFaces[0].image_uris.large}
+          cardImage={cardImage}
           occurrencesForCard={occurrencesForCard}
           decklists={decklists}
         />

@@ -1,4 +1,8 @@
-- Agregar booleano de si es doble cara
+- Mostrar imagen de atras de cartas doble cara
+- Optimizar imagenes para no depender de vercel en ello
+- Dejar de optimizar imagenes en info de carta desde vercel una vez sean optimas
+- Cargar torneos chilenos faltantes
+- Cambiar metagame project por edhtop16
 - Paginar torneos
 - Añadir buscador a torneos
 - Fixear tabla en mobile
