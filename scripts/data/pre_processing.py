@@ -85,6 +85,7 @@ def build_reduce_deck(has_multiple_printings, get_last_set_for_card):
       'scrapName': current['card']['name'],
       'type': getType(current['card']['type']),
       'typeLine': current['card']['type_line'] if 'type_line' in current['card'] else '',
+      'cmc': current['card']['cmc'],
     }
 
     saved_card_index = next((index for (index, d) in enumerate(accumulated) if d['cardName'] == current['card']['name']), -1)
