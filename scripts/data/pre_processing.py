@@ -86,6 +86,8 @@ def build_reduce_deck(has_multiple_printings, get_last_set_for_card):
       'type': getType(current['card']['type']),
       'typeLine': current['card']['type_line'] if 'type_line' in current['card'] else '',
       'cmc': current['card']['cmc'],
+      'power': current['card']['power'] if 'power' in current['card'] else '',
+      'toughness': current['card']['toughness'] if 'toughness' in current['card'] else '',
     }
 
     saved_card_index = next((index for (index, d) in enumerate(accumulated) if d['cardName'] == current['card']['name']), -1)
