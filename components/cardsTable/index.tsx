@@ -197,6 +197,17 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
       },
     },
     {
+      title: 'CMC',
+      field: 'cmc',
+      align: 'center',
+      grouping: false,
+      filtering: true,
+      editable: 'never',
+      hidden: true,
+      searchable: false,
+      hideFilterIcon: true,
+    },
+    {
       title: 'Last Print',
       field: 'lastPrint',
       align: 'center',
