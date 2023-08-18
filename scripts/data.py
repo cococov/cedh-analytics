@@ -46,7 +46,7 @@ lists = cedh_db.get_decklists_from_db()
 
 # PROCESSING HASHES
 logs.begin_log_block('Processing hashes')
-all_competitive_deck_hashes = cedh_db.get_hashes(lists)
+all_competitive_deck_hashes = cedh_db.get_hashes(lists)[:1]
 moxfield.VALID_DECKS = len(all_competitive_deck_hashes)
 home_overview['decks'] = moxfield.VALID_DECKS
 logs.end_log_block('Processing hashes')
