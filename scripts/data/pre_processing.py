@@ -67,6 +67,12 @@ def map_decklists_data(decklist_data):
 def get_decklists_data(decklists_data):
   return list(map(map_decklists_data, decklists_data))
 
+def isCommander(card, deck):
+  for commander in deck['commanders']:
+    if commander['name'] == card['name']:
+      return True
+  return False
+
 def build_reduce_deck(has_multiple_printings, get_last_set_for_card):
   def reduce_deck(accumulated, current):
     hash = {
@@ -87,6 +93,8 @@ def build_reduce_deck(has_multiple_printings, get_last_set_for_card):
       'typeLine': current['card']['type_line'] if 'type_line' in current['card'] else '',
       'power': current['card']['power'] if 'power' in current['card'] else '',
       'toughness': current['card']['toughness'] if 'toughness' in current['card'] else '',
+      "isCommander": isCommander(current['card'], current['deck']),
+      "isIn99": not isCommander(current['card'], current['deck']),
     }
 
     saved_card_index = next((index for (index, d) in enumerate(accumulated) if d['cardName'] == current['card']['name']), -1)
@@ -94,6 +102,9 @@ def build_reduce_deck(has_multiple_printings, get_last_set_for_card):
     if saved_card_index > -1:
       hash['occurrences'] = accumulated[saved_card_index]['occurrences'] + 1
       hash['decklists'] = accumulated[saved_card_index]['decklists'] + [current['deck']]
+      if saved_card_index > 0:
+        hash['isCommander'] = accumulated[saved_card_index]['isCommander'] or isCommander(current['card'], current['deck'])
+        hash['isIn99'] = accumulated[saved_card_index]['isIn99'] or not isCommander(current['card'], current['deck'])
       del accumulated[saved_card_index]
 
     return [*accumulated, hash]
