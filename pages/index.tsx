@@ -297,7 +297,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
             <p>{data.staples}</p>
           </span>
           <span className={styles['homeStat']}>
-            <h2>Total Pet Cards</h2>
+            <h2>Total Niche Cards</h2>
             <span className={styles['homeStatDisclaimer']}>(1 occurrence)</span>
             <p>{data.pet}</p>
           </span>
