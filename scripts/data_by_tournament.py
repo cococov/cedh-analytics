@@ -7,7 +7,7 @@ import utils.git as git
 import utils.logs as logs
 import utils.misc as misc
 import data.moxfield as moxfield
-import data.eminence as eminence
+import scripts.data.edhtop16 as edhtop16
 import data.mtg_json as mtg_json
 import data.pre_processing as pre_processing
 import data.processing as processing
@@ -70,10 +70,10 @@ def get_data_and_process():
     logs.begin_log_block('Processing hashes')
     all_competitive_deck_hashes = moxfield.get_decklist_hashes_from_bookmark(lists)
   elif TOURNAMENTS_INFO['kind'] == 'eminence':
-    lists = eminence.get_all_decklists(TOURNAMENTS_INFO['name'])
+    lists = edhtop16.get_all_decklists_by_tournament(TOURNAMENTS_INFO['name'])
     logs.end_log_block('Getting decklists')
     logs.begin_log_block('Processing hashes')
-    all_competitive_deck_hashes = eminence.get_decklist_hashes_from_tournament(lists)
+    all_competitive_deck_hashes = edhtop16.get_decklist_hashes_from_tournament(lists)
   else:
     misc.error_and_close(f"KIND {TOURNAMENTS_INFO['kind']} not implemented")
   moxfield.VALID_DECKS = len(all_competitive_deck_hashes)
