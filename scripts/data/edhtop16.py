@@ -65,6 +65,7 @@ def get_condensed_commanders_data(commanders: list[str], raw_lists: list[dict[st
     best_standing = functools.reduce(lambda x, y: x if x < y else y, map(lambda x: x['standing'], raw_data)) # type: ignore
     worst_standing = functools.reduce(lambda x, y: x if x > y else y, map(lambda x: x['standing'], raw_data)) # type: ignore
     data.append({
+      'identity': raw_data[0]['colorID'],
       'commander': commander,
       'appearances': appearances,
       'wins': wins,
@@ -73,3 +74,30 @@ def get_condensed_commanders_data(commanders: list[str], raw_lists: list[dict[st
       'worst_standing': worst_standing
     })
   return data
+
+def get_metagame_resume(raw_lists: list[dict[str, str]]):
+
+  return {}
+
+"""""""""
+  {
+    "name": "Sam Lyman",
+    "profile": "fnWofTAbwDfhtCNmEqTKsqWqvB53",
+    "decklist": "https://www.moxfield.com/decks/fRPipprNpkq2Em2-GIZjtw",
+    "wins": 1,
+    "winsSwiss": 1,
+    "winsBracket": 0,
+    "winRate": 0.2,
+    "winRateSwiss": 0.2,
+    "winRateBracket": null,
+    "draws": 3,
+    "losses": 1,
+    "lossesSwiss": 1,
+    "lossesBracket": 0,
+    "standing": 32,
+    "colorID": "WUR",
+    "commander": "Elsha of the Infinite",
+    "tournamentName": "Mox Masters August 23",
+    "dateCreated": 1691848800
+  }
+"""""""""
