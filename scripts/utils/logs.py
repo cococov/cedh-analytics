@@ -31,4 +31,5 @@ def loading_log(message: str, current: int, total: int):
   The message is followed by [current/total] and the percentage.\n
   The line is overwritten in each call. Also is overwritten calling `success_log`, `warning_log` or `error_log`.
   """
-  print(f"\033[K{message} [{current}/{total}] {round((current/total)*100, 2)}%", end='\r')
+  fixed_total = total if total > 0 else 1
+  print(f"\033[K{message} [{current}/{total}] {round((current/fixed_total)*100, 2)}%", end='\r')

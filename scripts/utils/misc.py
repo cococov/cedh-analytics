@@ -3,9 +3,9 @@
 import json
 import utils.files as files
 import utils.logs as logs
-from typing import Union
+from typing import Union, Any
 
-def pp_json(j: Union[dict, list]):
+def pp_json(j: Union[dict, list, Any]):
   """ Pretty print json. """
   print(json.dumps(j, indent=2))
 

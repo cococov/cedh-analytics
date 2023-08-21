@@ -45,7 +45,7 @@ const Metagame: NextPage<MetagameProps> = ({ data }) => {
 };
 
 export const getStaticProps = async () => {
-  const rawResult = await fetch(`${server}/data/metagame/metagame.json`);
+  const rawResult = await fetch(`${server}/data/metagame/metagame_deprecated.json`);
   const result = await rawResult.json();
   return { props: { data: result } };
 };
