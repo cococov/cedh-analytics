@@ -1,8 +1,8 @@
 import { NextPage } from 'next';
-import { server } from '../config';
 import Layout from "../components/layout";
 import styles from '../styles/Metagame.module.css';
 import { MetagameOverviewTable, MetagameCategoriesTable } from '../components';
+import DATA from '../public/data/metagame/metagame_deprecated.json';
 
 type OverviewRow = {
   "Deck": string,
@@ -45,9 +45,7 @@ const Metagame: NextPage<MetagameProps> = ({ data }) => {
 };
 
 export const getStaticProps = async () => {
-  const rawResult = await fetch(`${server}/data/metagame/metagame_deprecated.json`);
-  const result = await rawResult.json();
-  return { props: { data: result } };
+  return { props: { data: DATA } };
 };
 
 export default Metagame;
