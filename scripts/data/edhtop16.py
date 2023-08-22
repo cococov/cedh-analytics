@@ -131,7 +131,7 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
       process_decklist_data['companions'] = list(decklist['companions'].keys())
       process_decklist_data['stickers'] = list(decklist['stickers'].keys())
       process_decklist_data['hasStickers'] = decklist['stickersCount'] > 0
-      process_decklist_data['tokens'] = list(filter(lambda x: x['isToken'], decklist['tokens']))
+      process_decklist_data['tokens'] = list(set(map(lambda y: y['name'], filter(lambda x: x['isToken'], decklist['tokens']))))
 
       return process_decklist_data
     processed_decklists = map(process_decklists, decklists)

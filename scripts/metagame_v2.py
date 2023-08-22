@@ -30,6 +30,7 @@ logs.begin_log_block('Getting decklists from hashes...')
 decklists_by_commander: dict[str, list[moxfield_t.Decklist]] = {}
 total_lists = len(raw_lists)
 cant_hashes_requested = 0
+no_new_data = True
 for commander in commanders:
   decklists_by_commander[commander] = []
   for hash in decklist_hashes_by_commander[commander]:
@@ -44,11 +45,13 @@ for commander in commanders:
         continue
       decklists_by_commander[commander].append(decklist)
       decklists_by_hash[hash] = decklist
+      no_new_data = False
     cant_hashes_requested += 1
 logs.end_log_block('Decklists from hashes got!')
 
 # save decklists
-files.create_file_with_log(METAGAME_PATH, 'decklists.json', decklists_by_hash, 'Saving decklists', 'Decklists saved!')
+if not no_new_data:
+  files.create_file_with_log(METAGAME_PATH, 'decklists.json', decklists_by_hash, 'Saving decklists', 'Decklists saved!')
 
 commander_stats = edhtop16.get_commander_stats_by_commander(commanders, raw_lists, decklists_by_commander)
 
