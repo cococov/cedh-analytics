@@ -67,4 +67,5 @@ stats_by_commander = edhtop16.get_commander_stats_by_commander(commanders, raw_l
 metagame_resume = edhtop16.get_metagame_resume(commanders, raw_lists, decklists_by_commander, stats_by_commander)
 
 pp_json(stats_by_commander)
+pp_json(condensed_commanders_data)
 pp_json(metagame_resume)
