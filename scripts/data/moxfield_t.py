@@ -1,4 +1,5 @@
 import typing
+from enum import Enum
 
 # Common
 
@@ -63,6 +64,16 @@ class CardFace(typing.TypedDict):
   colors: list[str] # ["U", "W"]
   color_indicator:  list
   image_seq: int
+
+class CardType(Enum):
+  BATTLE = '1'
+  PLANESWALKER = '2'
+  CREATURE = '3'
+  SORCERY = '4'
+  INSTANT = '5'
+  ARTIFACT = '6'
+  ENCHANTMENT = '7'
+  LAND = '8'
 
 # Version 2
 
@@ -224,7 +235,7 @@ class CardV3(typing.TypedDict):
   has_multiple_editions: bool
   has_arena_legal: bool
   prices: Prices
-  card_faces: list[CardFace] # Cambiar
+  card_faces: list[CardFace]
   artist: str
   promo_types: list[str]
   cardHoarderUrl: str
@@ -267,7 +278,7 @@ class DeckItemV3(typing.TypedDict):
   excludedFromColor: bool
 
 class BoardV3(typing.TypedDict):
-  count: str
+  count: int
   cards: dict[str, DeckItemV3]
 
 class DecklistV3(typing.TypedDict):
@@ -287,11 +298,11 @@ class DecklistV3(typing.TypedDict):
   createdByUser: User
   authors: list[User]
   requestedAuthors: list[User]
-  main: dict[str, DeckItemV3] # Cambiar
-  boards: object # Cambiar
+  main: CardV3
+  boards: dict[str, BoardV3] # mainboard | sideboard | maybeboard | commanders | companions | signatureSpells | attractions | stickers | contraptions | planes
   version: int
   tokens: list[CardV2]
-  hubs: list
+  hubs: list[dict[str, str]]
   createdAtUtc: str
   lastUpdatedAtUtc: str
   exportId: str
@@ -311,3 +322,4 @@ class DecklistV3(typing.TypedDict):
   colorIdentity: list[str]
   colorIdentityPercentages: dict[str, float]
   media: list
+  url: str

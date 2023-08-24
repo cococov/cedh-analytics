@@ -6,42 +6,13 @@ import json
 import requests
 import calendar
 import functools
-import typing
 import data.moxfield_t as moxfield_t
+from data.edhtop16_t import EdhTop16DeckList, CondensedCommanderData, StatsByCommander, ProcessedDecklist
 from datetime import datetime, timedelta
 from utils.misc import pp_json
 
 URL = "https://edhtop16.com/api/req"
 HEADERS = {'Content-Type': 'application/json', 'Accept': 'application/json'}
-
-class EdhTop16DeckList(typing.TypedDict):
-  name: str
-  profile: str
-  decklist: str
-  wins: int
-  winsSwiss: int
-  winsBracket: int
-  winRate: float
-  winRateSwiss: float
-  winRateBracket: typing.Optional[float]
-  draws: int
-  losses: int
-  lossesSwiss: int
-  lossesBracket: int
-  standing: int
-  colorID: str
-  commander: str
-  tournamentName: str
-  dateCreated: int
-
-class CondensedCommanderData(typing.TypedDict):
-  identity: str
-  commander: str
-  appearances: int
-  wins: int
-  avg_win_rate: float
-  best_standing: int
-  worst_standing: int
 
 def get_all_decklists_by_tournament(name: str) -> list[EdhTop16DeckList]:
   data = {'tourney_filter': {'tournamentName': {'$regex': name}}}
@@ -95,7 +66,7 @@ def get_decklist_hashes_by_tournament(raw_lists: list[EdhTop16DeckList]) -> dict
   return tournaments
 
 def get_condensed_commanders_data(commanders: list[str], raw_lists: list[EdhTop16DeckList]) -> list[CondensedCommanderData]:
-  data = []
+  data: list[CondensedCommanderData] = []
   for commander in commanders:
     raw_data = list(filter(lambda x: x['commander'] == commander, raw_lists))
     appearances = len(raw_data)
@@ -108,37 +79,81 @@ def get_condensed_commanders_data(commanders: list[str], raw_lists: list[EdhTop1
       'commander': commander,
       'appearances': appearances,
       'wins': wins,
-      'avg_win_rate': avg_win_rate,
-      'best_standing': best_standing,
-      'worst_standing': worst_standing
+      'avgWinRate': avg_win_rate,
+      'bestStanding': best_standing,
+      'worstStanding': worst_standing
     })
   return data
 
-def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhTop16DeckList], decklists_by_commander: dict[str, list[moxfield_t.DecklistV3]]):
-  data = {}
+def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhTop16DeckList], decklists_by_commander: dict[str, list[moxfield_t.DecklistV3]]) -> StatsByCommander:
+  data: StatsByCommander = {} # type: ignore
   for commander in commanders:
     filtered_data = list(filter(lambda x: x['commander'] == commander, raw_lists))
     decklists = decklists_by_commander[commander]
     data[commander] = {}
     data[commander]['appearances'] = len(filtered_data)
+    data[commander]['colorID'] = filtered_data[0]['colorID']
     data[commander]['wins'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['wins'], filtered_data))
     data[commander]['avg_win_rate'] = round(functools.reduce(lambda x, y: float(x + y), map(lambda x: x['winRate'], filtered_data)) / data[commander]['appearances'], 3)
     data[commander]['best_standing'] = functools.reduce(lambda x, y: int(x) if x < y else int(y), map(lambda x: x['standing'], filtered_data))
     data[commander]['worst_standing'] = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['standing'], filtered_data))
-    def process_decklists(decklist: moxfield_t.DecklistV3):
-      process_decklist_data = {}
-      process_decklist_data['hasCompanion'] = decklist['companionsCount'] > 0
-      process_decklist_data['companions'] = list(decklist['companions'].keys())
-      process_decklist_data['stickers'] = list(decklist['stickers'].keys())
-      process_decklist_data['hasStickers'] = decklist['stickersCount'] > 0
+    def process_decklists(decklist: moxfield_t.DecklistV3) -> ProcessedDecklist:
+      process_decklist_data: ProcessedDecklist = {} # type: ignore
+      edh_top16_data = list(filter(lambda x: x['decklist'] ==  decklist['url'], filtered_data))[0]
+      process_decklist_data['url'] = decklist['url']
+      process_decklist_data['wins'] = edh_top16_data['wins']
+      process_decklist_data['winRate'] = edh_top16_data['winRate']
+      process_decklist_data['standing'] = edh_top16_data['standing']
+      process_decklist_data['tournamentName'] = edh_top16_data['tournamentName']
+      process_decklist_data['dateCreated'] = edh_top16_data['dateCreated']
+      process_decklist_data['hasCompanion'] = decklist['boards']['companions']['count'] > 0
+      process_decklist_data['companions'] = list(map(lambda x: x['card']['name'], decklist['boards']['companions']['cards'].values()))
+      process_decklist_data['hasStickers'] = decklist['boards']['stickers']['count'] > 0
+      process_decklist_data['stickers'] = list(map(lambda x: x['card']['name'], decklist['boards']['stickers']['cards'].values()))
       process_decklist_data['tokens'] = list(set(map(lambda y: y['name'], filter(lambda x: x['isToken'], decklist['tokens']))))
+      process_decklist_data['colorPercentages'] = decklist['colorPercentages']
+      process_decklist_data['colorIdentityPercentages'] = decklist['colorIdentityPercentages']
+      mainboard = list(map(lambda x: x['card'], decklist['boards']['mainboard']['cards'].values()))
+      commanders = list(map(lambda x: x['card'], decklist['boards']['commanders']['cards'].values()))
+      companions = list(map(lambda x: x['card'], decklist['boards']['companions']['cards'].values()))
+      all_cards = mainboard + commanders + companions
+      process_decklist_data['cantBattles'] = len(list(filter(lambda x: x['type'] == moxfield_t.CardType.BATTLE, all_cards)))
+      process_decklist_data['cantPlaneswalkers'] = len(list(filter(lambda x: moxfield_t.CardType(x['type']) == moxfield_t.CardType.PLANESWALKER, all_cards)))
+      process_decklist_data['cantCreatures'] = len(list(filter(lambda x: moxfield_t.CardType(x['type']) is moxfield_t.CardType.CREATURE, all_cards)))
+      process_decklist_data['cantSorceries'] = len(list(filter(lambda x: moxfield_t.CardType(x['type']) is moxfield_t.CardType.SORCERY, all_cards)))
+      process_decklist_data['cantInstants'] = len(list(filter(lambda x: moxfield_t.CardType(x['type']) is moxfield_t.CardType.INSTANT, all_cards)))
+      process_decklist_data['cantArtifacts'] = len(list(filter(lambda x: moxfield_t.CardType(x['type']) is moxfield_t.CardType.ARTIFACT, all_cards)))
+      process_decklist_data['cantEnchantments'] = len(list(filter(lambda x: moxfield_t.CardType(x['type']) is moxfield_t.CardType.ENCHANTMENT, all_cards)))
+      process_decklist_data['cantLands'] = len(list(filter(lambda x: moxfield_t.CardType(x['type']) is moxfield_t.CardType.LAND, all_cards)))
 
       return process_decklist_data
-    processed_decklists = map(process_decklists, decklists)
-    data[commander]['processed_decklists'] = list(processed_decklists)
+    processed_decklists = list(map(process_decklists, decklists))
+    data[commander]['processed_decklists'] = processed_decklists
+    data[commander]['avgCantBattles'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantBattles'], processed_decklists)) / len(processed_decklists)), 3)
+    data[commander]['avgCantPlaneswalkers'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantPlaneswalkers'], processed_decklists)) / len(processed_decklists)), 3)
+    data[commander]['avgCantCreatures'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantCreatures'], processed_decklists)) / len(processed_decklists)), 3)
+    data[commander]['avgCantSorceries'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantSorceries'], processed_decklists)) / len(processed_decklists)), 3)
+    data[commander]['avgCantInstants'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantInstants'], processed_decklists)) / len(processed_decklists)), 3)
+    data[commander]['avgCantArtifacts'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantArtifacts'], processed_decklists)) / len(processed_decklists)), 3)
+    data[commander]['avgCantEnchantments'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantEnchantments'], processed_decklists)) / len(processed_decklists)), 3)
+    data[commander]['avgCantLands'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantLands'], processed_decklists)) / len(processed_decklists)), 3)
+    data[commander]['avgColorPercentages'] = {
+      'white': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['white'], processed_decklists)) / len(processed_decklists)), 3),
+      'blue': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['blue'], processed_decklists)) / len(processed_decklists)), 3),
+      'black': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['black'], processed_decklists)) / len(processed_decklists)), 3),
+      'red': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['red'], processed_decklists)) / len(processed_decklists)), 3),
+      'green': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['green'], processed_decklists)) / len(processed_decklists)), 3)
+    }
+    data[commander]['avgColorIdentityPercentages'] = {
+      'white': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['white'], processed_decklists)) / len(processed_decklists)), 3),
+      'blue': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['blue'], processed_decklists)) / len(processed_decklists)), 3),
+      'black': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['black'], processed_decklists)) / len(processed_decklists)), 3),
+      'red': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['red'], processed_decklists)) / len(processed_decklists)), 3),
+      'green': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['green'], processed_decklists)) / len(processed_decklists)), 3)
+    }
   return data
 
-def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList], decklists_by_commander: dict[str, list[moxfield_t.DecklistV3]]):
+def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList], decklists_by_commander: dict[str, list[moxfield_t.DecklistV3]], stats_by_commander: StatsByCommander):
   data = {}
   data['cant_commanders'] = len(commanders)
   data['cant_lists'] = len(raw_lists)
