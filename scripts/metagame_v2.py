@@ -7,7 +7,7 @@ from utils.misc import pp_json
 
 BASE_PATH = r'./public/data'
 METAGAME_PATH = rf'{BASE_PATH}/metagame'
-FORCE_UPDATE = False
+FORCE_UPDATE = True
 
 logs.begin_log_block('Getting decklists from EDH Top 16')
 raw_lists = edhtop16.get_metagame_top_decklists()
@@ -22,12 +22,12 @@ logs.end_log_block('EDH Top 16 data preprocessed!')
 
 # load saved decklists
 logs.begin_log_block('Loading saved decklists')
-decklists_by_hash: dict[str, moxfield_t.Decklist] = files.read_json_file(METAGAME_PATH, 'decklists.json') if not FORCE_UPDATE else {}
+decklists_by_hash: dict[str, moxfield_t.DecklistV3] = files.read_json_file(METAGAME_PATH, 'decklists.json') if not FORCE_UPDATE else {}
 logs.end_log_block('Saved decklists loaded!')
 
 # get decklists from hashes (not saved)
 logs.begin_log_block('Getting decklists from hashes...')
-decklists_by_commander: dict[str, list[moxfield_t.Decklist]] = {}
+decklists_by_commander: dict[str, list[moxfield_t.DecklistV3]] = {}
 total_lists = len(raw_lists)
 cant_hashes_requested = 0
 no_new_data = True
@@ -40,7 +40,7 @@ for commander in commanders:
         continue
       decklists_by_commander[commander].append(decklists_by_hash[hash])
     else:
-      decklist = moxfield.get_decklists_data(hash)
+      decklist = moxfield.get_decklists_data(hash, version=3)
       if 'status' in list(decklist.keys()):
         continue
       decklists_by_commander[commander].append(decklist)

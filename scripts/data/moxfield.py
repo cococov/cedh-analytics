@@ -15,7 +15,7 @@ def get_decklists_from_bookmark(id: str) -> dict[str, Union[int, list[dict]]]:
 def get_decklist_hashes_from_bookmark(lists):
   return list(map(lambda x: x['deck']['publicId'], lists['data']))
 
-def get_decklists_data(hash, version=2):
+def get_decklists_data(hash: str, version=2):
   global decklists_data_obtained_number, VALID_DECKS
   time.sleep(1)
   raw_data = requests.get(f"https://api.moxfield.com/v{version}/decks/all/{hash}")

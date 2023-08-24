@@ -114,7 +114,7 @@ def get_condensed_commanders_data(commanders: list[str], raw_lists: list[EdhTop1
     })
   return data
 
-def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhTop16DeckList], decklists_by_commander: dict[str, list[moxfield_t.Decklist]]):
+def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhTop16DeckList], decklists_by_commander: dict[str, list[moxfield_t.DecklistV3]]):
   data = {}
   for commander in commanders:
     filtered_data = list(filter(lambda x: x['commander'] == commander, raw_lists))
@@ -125,7 +125,7 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
     data[commander]['avg_win_rate'] = round(functools.reduce(lambda x, y: float(x + y), map(lambda x: x['winRate'], filtered_data)) / data[commander]['appearances'], 3)
     data[commander]['best_standing'] = functools.reduce(lambda x, y: int(x) if x < y else int(y), map(lambda x: x['standing'], filtered_data))
     data[commander]['worst_standing'] = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['standing'], filtered_data))
-    def process_decklists(decklist: moxfield_t.Decklist):
+    def process_decklists(decklist: moxfield_t.DecklistV3):
       process_decklist_data = {}
       process_decklist_data['hasCompanion'] = decklist['companionsCount'] > 0
       process_decklist_data['companions'] = list(decklist['companions'].keys())
@@ -138,7 +138,7 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
     data[commander]['processed_decklists'] = list(processed_decklists)
   return data
 
-def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList], decklists_by_commander: dict[str, list[moxfield_t.Decklist]]):
+def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList], decklists_by_commander: dict[str, list[moxfield_t.DecklistV3]]):
   data = {}
   data['cant_commanders'] = len(commanders)
   data['cant_lists'] = len(raw_lists)
