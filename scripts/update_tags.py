@@ -27,7 +27,7 @@ logs.begin_log_block('Loading tournament cards...')
 tournaments: list[str] = files.folder_names_in_directory(TOURNAMENTS_PATH)
 
 for tournament in tournaments:
-  tournament_cards: list[dict] = files.read_json_file(rf'{TOURNAMENTS_PATH}/{tournament}/cards', 'competitiveCards.json')
+  tournament_cards: list[dict] | dict = files.read_json_file(rf'{TOURNAMENTS_PATH}/{tournament}/cards', 'competitiveCards.json')
   for card in tournament_cards:
     if card['scrapName'] not in cards:
       cards.append(card['scrapName'])
