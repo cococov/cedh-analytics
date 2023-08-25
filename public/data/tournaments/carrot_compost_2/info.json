@@ -13,16 +13,16 @@
   "placeDirection": "Larraín Alcalde 3505, La Serena, Coquimbo",
   "placePhotos": [
     {
-      "label": "Edificio",
-      "image": "centrocomunitario4esq.png"
+      "label": "Exterior",
+      "image": "exterior1.png"
     },
     {
-      "label": "Interior",
-      "image": "interior.jpg"
+      "label": "Interior 1",
+      "image": "interior1.png"
     },
     {
       "label": "Interior 2",
-      "image": "interior2.jpg"
+      "image": "interior2.png"
     }
   ],
   "prices": [
