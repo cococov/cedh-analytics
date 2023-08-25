@@ -23,8 +23,6 @@ DIRNAME = os.path.realpath('.')
 tournament_json_file = open('public/data/tournaments/list.json')
 tournament_json = json.load(open('public/data/tournaments/list.json'))
 FILE_NAME = r'/competitiveCards.json'
-VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
-INVALID_SETS = ['MB1']
 
 def run_setup(t_id):
   global TOURNAMENT_ID, VALID_DECKS, TOURNAMENTS_INFO, PARENT_FOLDER_PATH, FOLDER_PATH, OVERVIEW_PATH, tournament_json
@@ -54,7 +52,7 @@ mtg_json.download_csv_files()
 # GET CARDS INFO AND SETS
 logs.begin_log_block('Processing all printing')
 cards_csv = mtg_json.get_cards_csv()
-sets_csv = mtg_json.get_sets_csv(VALID_TYPE_SETS, INVALID_SETS)
+sets_csv = mtg_json.get_sets_csv()
 get_last_set_for_card = mtg_json.build_get_last_set_for_card(cards_csv, sets_csv)
 has_multiple_printings = mtg_json.build_has_multiple_printings(cards_csv, sets_csv)
 logs.end_log_block('Processing all printing')

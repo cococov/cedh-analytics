@@ -3,11 +3,30 @@ import data.moxfield as moxfield
 import utils.logs as logs
 import data.moxfield_t as moxfield_t
 from data import edhtop16
+import data.mtg_json as mtg_json
+import data.pre_processing as pre_processing
 from utils.misc import pp_json
 
 BASE_PATH = r'./public/data'
 METAGAME_PATH = rf'{BASE_PATH}/metagame'
 FORCE_UPDATE = False
+
+logs.simple_log('Beginning')
+
+# DELETE CSV DIRECTORY CONTENT
+files.clear_csv_directory()
+
+# DOWNLOAD ALL PRINTS
+mtg_json.download_csv_files()
+
+# GET CARDS INFO AND SETS
+logs.begin_log_block('Processing all printing')
+cards_csv = mtg_json.get_cards_csv()
+sets_csv = mtg_json.get_sets_csv()
+get_last_set_for_card = mtg_json.build_get_last_set_for_card(cards_csv, sets_csv)
+has_multiple_printings = mtg_json.build_has_multiple_printings(cards_csv, sets_csv)
+logs.end_log_block('Processing all printing')
+
 
 logs.begin_log_block('Getting decklists from EDH Top 16')
 raw_lists = edhtop16.get_metagame_top_decklists()
@@ -40,7 +59,7 @@ for commander in commanders:
         continue
       decklists_by_commander[commander].append(decklists_by_hash[hash])
     else:
-      decklist = moxfield.get_decklists_data(hash, version=3)
+      decklist = moxfield.get_decklists_data(hash, version=3, no_log=True)
       if 'status' in list(decklist.keys()):
         cant_hashes_requested += 1
         continue
@@ -56,16 +75,24 @@ for commander in to_delete:
   commanders.remove(commander)
   del decklist_hashes_by_commander[commander]
 
-logs.end_log_block('Decklists from hashes got!')
 
 # save decklists
 if not no_new_data:
   files.create_file_with_log(METAGAME_PATH, 'decklists.json', decklists_by_hash, 'Saving decklists', 'Decklists saved!')
 
+moxfield.VALID_DECKS = len(decklists_by_hash.keys())
+
+logs.end_log_block('Decklists from hashes got!')
+
+logs.begin_log_block('Processing data...')
 condensed_commanders_data = edhtop16.get_condensed_commanders_data(commanders, raw_lists)
 stats_by_commander = edhtop16.get_commander_stats_by_commander(commanders, raw_lists, decklists_by_commander)
-metagame_resume = edhtop16.get_metagame_resume(commanders, raw_lists, decklists_by_commander, stats_by_commander)
+metagame_resume = edhtop16.get_metagame_resume(commanders, raw_lists, stats_by_commander)
+logs.end_log_block('Data processed!')
 
-pp_json(stats_by_commander)
-pp_json(condensed_commanders_data)
-pp_json(metagame_resume)
+metagame_cards = pre_processing.process_cards(pre_processing.reduce_decks_to_cards(pre_processing.get_decklists_data(decklists_by_hash.values()), has_multiple_printings, get_last_set_for_card))
+
+#pp_json(metagame_cards)
+
+# CLEANING
+files.clear_csv_directory()

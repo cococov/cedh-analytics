@@ -15,14 +15,15 @@ def get_decklists_from_bookmark(id: str) -> dict[str, Union[int, list[dict]]]:
 def get_decklist_hashes_from_bookmark(lists):
   return list(map(lambda x: x['deck']['publicId'], lists['data']))
 
-def get_decklists_data(hash: str, version=2):
+def get_decklists_data(hash: str, version=3, no_log=False):
   global decklists_data_obtained_number, VALID_DECKS
   time.sleep(1)
   raw_data = requests.get(f"https://api.moxfield.com/v{version}/decks/all/{hash}")
   data = json.loads(raw_data.text)
   data['url'] = f"https://www.moxfield.com/decks/{hash}"
   decklists_data_obtained_number += 1
-  logs.loading_log("Getting decklists data", decklists_data_obtained_number, VALID_DECKS)
+  if not no_log:
+    logs.loading_log("Getting decklists data", decklists_data_obtained_number, VALID_DECKS)
   return data
 
 def get_decklists_data_from_hashes(hashes):

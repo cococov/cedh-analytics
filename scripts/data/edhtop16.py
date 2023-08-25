@@ -7,9 +7,8 @@ import requests
 import calendar
 import functools
 import data.moxfield_t as moxfield_t
-from data.edhtop16_t import EdhTop16DeckList, CondensedCommanderData, StatsByCommander, ProcessedDecklist
+from data.edhtop16_t import EdhTop16DeckList, CondensedCommanderData, StatsByCommander, ProcessedDecklist, MetagameResume
 from datetime import datetime, timedelta
-from utils.misc import pp_json
 
 URL = "https://edhtop16.com/api/req"
 HEADERS = {'Content-Type': 'application/json', 'Accept': 'application/json'}
@@ -74,7 +73,7 @@ def get_condensed_commanders_data(commanders: list[str], raw_lists: list[EdhTop1
     avg_win_rate = round(functools.reduce(lambda x, y: float(x + y), map(lambda x: x['winRate'], raw_data)) / appearances, 3)
     best_standing = functools.reduce(lambda x, y: int(x) if x < y else int(y), map(lambda x: x['standing'], raw_data))
     worst_standing = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['standing'], raw_data))
-    data.append({
+    commander_data: CondensedCommanderData = {
       'identity': raw_data[0]['colorID'],
       'commander': commander,
       'appearances': appearances,
@@ -82,21 +81,22 @@ def get_condensed_commanders_data(commanders: list[str], raw_lists: list[EdhTop1
       'avgWinRate': avg_win_rate,
       'bestStanding': best_standing,
       'worstStanding': worst_standing
-    })
+    }
+    data.append(commander_data)
   return data
 
-def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhTop16DeckList], decklists_by_commander: dict[str, list[moxfield_t.DecklistV3]]) -> StatsByCommander:
-  data: StatsByCommander = {} # type: ignore
+def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhTop16DeckList], decklists_by_commander: dict[str, list[moxfield_t.DecklistV3]]) -> dict[str, StatsByCommander]:
+  data: dict[str, StatsByCommander] = {}
   for commander in commanders:
     filtered_data = list(filter(lambda x: x['commander'] == commander, raw_lists))
     decklists = decklists_by_commander[commander]
-    data[commander] = {}
+    data[commander] = {} # type: ignore
     data[commander]['appearances'] = len(filtered_data)
     data[commander]['colorID'] = filtered_data[0]['colorID']
     data[commander]['wins'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['wins'], filtered_data))
-    data[commander]['avg_win_rate'] = round(functools.reduce(lambda x, y: float(x + y), map(lambda x: x['winRate'], filtered_data)) / data[commander]['appearances'], 3)
-    data[commander]['best_standing'] = functools.reduce(lambda x, y: int(x) if x < y else int(y), map(lambda x: x['standing'], filtered_data))
-    data[commander]['worst_standing'] = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['standing'], filtered_data))
+    data[commander]['avgWinRate'] = round(functools.reduce(lambda x, y: float(x + y), map(lambda x: x['winRate'], filtered_data)) / data[commander]['appearances'], 3)
+    data[commander]['bestStanding'] = functools.reduce(lambda x, y: int(x) if x < y else int(y), map(lambda x: x['standing'], filtered_data))
+    data[commander]['worstStanding'] = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['standing'], filtered_data))
     def process_decklists(decklist: moxfield_t.DecklistV3) -> ProcessedDecklist:
       process_decklist_data: ProcessedDecklist = {} # type: ignore
       edh_top16_data = list(filter(lambda x: x['decklist'] ==  decklist['url'], filtered_data))[0]
@@ -151,11 +151,45 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
       'red': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['red'], processed_decklists)) / len(processed_decklists)), 3),
       'green': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['green'], processed_decklists)) / len(processed_decklists)), 3)
     }
+    decksWhitStickers = len(list(filter(lambda x: x['hasStickers'], processed_decklists)))
+    decksWhitCompanions = len(list(filter(lambda x: x['hasCompanion'], processed_decklists)))
+    data[commander]['cantDecksWithStickers'] = decksWhitStickers
+    data[commander]['cantDecksWithCompanions'] = decksWhitCompanions
+    data[commander]['percentageDecksWithStickers'] = round((decksWhitStickers / len(processed_decklists)), 3)
+    data[commander]['percentageDecksWithCompanions'] = round((decksWhitCompanions / len(processed_decklists)), 3)
+    data[commander]['allTokens'] = list(functools.reduce(lambda x, y: list(set(x + y)), map(lambda x: x['tokens'], processed_decklists)))
   return data
 
-def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList], decklists_by_commander: dict[str, list[moxfield_t.DecklistV3]], stats_by_commander: StatsByCommander):
-  data = {}
-  data['cant_commanders'] = len(commanders)
-  data['cant_lists'] = len(raw_lists)
+def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList], stats_by_commander: dict[str, StatsByCommander]) -> MetagameResume:
+  data: MetagameResume = {} # type: ignore
+  data['cantCommanders'] = len(commanders)
+  data['cantLists'] = len(raw_lists)
+  data['avgColorPercentages'] = {
+    'white': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['white'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
+    'blue': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['blue'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
+    'black': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['black'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
+    'red': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['red'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
+    'green': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['green'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  }
+  data['avgColorIdentityPercentages'] = {
+    'white': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['white'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
+    'blue': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['blue'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
+    'black': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['black'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
+    'red': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['red'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
+    'green': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['green'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  }
+  data['avgCantBattles'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantBattles'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantPlaneswalkers'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantPlaneswalkers'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantCreatures'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantCreatures'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantSorceries'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantSorceries'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantInstants'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantInstants'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantArtifacts'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantArtifacts'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantEnchantments'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantEnchantments'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantLands'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantLands'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['cantDecksWithStickers'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantDecksWithStickers'], stats_by_commander.values()))
+  data['cantDecksWithCompanions'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantDecksWithCompanions'], stats_by_commander.values()))
+  data['percentageDecksWithStickers'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantDecksWithStickers'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['percentageDecksWithCompanions'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantDecksWithCompanions'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['allTokens'] = list(functools.reduce(lambda x, y: list(set(x + y)), map(lambda x: x['allTokens'], stats_by_commander.values())))
 
   return data

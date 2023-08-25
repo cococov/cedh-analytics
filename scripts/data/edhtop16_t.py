@@ -54,10 +54,11 @@ class ProcessedDecklist(typing.TypedDict):
 
 class StatsByCommander(typing.TypedDict):
   appearances: int
+  colorID: str
   wins: int
-  avg_win_rate: float
-  best_standing: int
-  worst_standing: int
+  avgWinRate: float
+  bestStanding: int
+  worstStanding: int
   processed_decklists: list[ProcessedDecklist]
   avgCantBattles: float
   avgCantPlaneswalkers: float
@@ -69,3 +70,28 @@ class StatsByCommander(typing.TypedDict):
   avgCantLands: float
   avgColorPercentages: dict[str, float]
   avgColorIdentityPercentages: dict[str, float]
+  cantDecksWithStickers: int
+  cantDecksWithCompanions: int
+  percentageDecksWithStickers: float
+  percentageDecksWithCompanions: float
+  allTokens: list[str]
+
+class MetagameResume(typing.TypedDict):
+  cantCommanders: int
+  cantLists: int
+  cantTournaments: int
+  avgColorPercentages: dict[str, float]
+  avgColorIdentityPercentages: dict[str, float]
+  avgCantBattles: float
+  avgCantPlaneswalkers: float
+  avgCantCreatures: float
+  avgCantSorceries: float
+  avgCantInstants: float
+  avgCantArtifacts: float
+  avgCantEnchantments: float
+  avgCantLands: float
+  cantDecksWithStickers: int
+  cantDecksWithCompanions: int
+  percentageDecksWithStickers: float
+  percentageDecksWithCompanions: float
+  allTokens: list[str]

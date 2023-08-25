@@ -5,6 +5,8 @@ from functools import lru_cache
 
 MTGJSON_CSV_PATH = 'https://mtgjson.com/api/v5/csv'
 CSV_PATH = './csv'
+VALID_TYPE_SETS = ['expansion', 'commander', 'duel_deck', 'draft_innovation', 'from_the_vault', 'masters', 'arsenal', 'spellbook', 'core', 'starter', 'funny', 'planechase']
+INVALID_SETS = ['MB1']
 
 def download_csv_files():
   logs.begin_log_block('Getting all printing')
@@ -15,7 +17,7 @@ def download_csv_files():
 def get_cards_csv():
   return pd.read_csv(f'{CSV_PATH}/cards.csv', dtype='unicode').dropna(axis=1)
 
-def get_sets_csv(VALID_TYPE_SETS, INVALID_SETS):
+def get_sets_csv():
   sets_csv = pd.read_csv(f'{CSV_PATH}/sets.csv', dtype='unicode').dropna(axis=1).sort_values(by='releaseDate',ascending=False).query("type in @VALID_TYPE_SETS").query("keyruneCode not in @INVALID_SETS").query("isOnlineOnly == '0'")
   sets_csv['releaseDate'] = pd.to_datetime(sets_csv['releaseDate'])
   return sets_csv
@@ -28,7 +30,13 @@ def build_get_last_set_for_card(cards_csv, sets_csv):
         return 'Secret Lair Drop'
       if card_name in ['Rot Hulk']:
         return 'Game Night'
+      if card_name in ['The Mightstone and Weakstone']:
+        return 'The Brothers\' War'
       card_printing_codes = cards_csv.loc[cards_csv['name'] == card_name].iloc[0]['printings'].split(', ')
+      if 'BOT' in card_printing_codes:
+        return 'Transformers'
+      if 'SLX' in card_printing_codes:
+        return 'Universes Within'
       card_printing_names = sets_csv.loc[sets_csv['keyruneCode'].isin(card_printing_codes)]['name']
       return card_printing_names.iloc[0]
     except:

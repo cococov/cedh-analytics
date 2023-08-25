@@ -52,7 +52,7 @@ def process_cards(cards):
 
 def map_decklists_data(decklist_data):
   result = {}
-  result['deck'] = { 'name': decklist_data['name'], 'url': decklist_data['url'], 'commanders': list(map(lambda x : { 'name': x['card']['name'], 'color_identity': x['card']['color_identity'] }, decklist_data['commanders'].values()))}
+  result['deck'] = { 'name': decklist_data['name'], 'url': decklist_data['url'], 'commanders': list(map(lambda x : { 'name': x['card']['name'], 'color_identity': x['card']['color_identity'] }, decklist_data['boards']['commanders']['cards'].values()))}
   color_identity = list(reduce(lambda y, z: set(y + z), map(lambda x: x['color_identity'], result['deck']['commanders']))) # type: ignore
   sorted_identity = sort_identity(color_identity)
   joined_identity = ''.join(sorted_identity)
@@ -60,7 +60,7 @@ def map_decklists_data(decklist_data):
     number_of_decks_by_identities.update({joined_identity: number_of_decks_by_identities[joined_identity] + 1})
   else:
     number_of_decks_by_identities[joined_identity] = 1
-  cards = decklist_data['mainboard'] | decklist_data['companions'] | decklist_data['commanders']
+  cards = decklist_data['boards']['mainboard']['cards'] | decklist_data['boards']['companions']['cards'] | decklist_data['boards']['commanders']['cards']
   result['cards'] = list(cards.values())
   return result
 
