@@ -19,6 +19,7 @@ interface Auspices {
   image: string;
   link?: string;
   rectangle?: boolean;
+  bigLogo?: boolean;
 }
 
 interface Contact {

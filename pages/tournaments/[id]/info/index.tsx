@@ -249,8 +249,8 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
                         key={i}
                         src={`/data/tournaments/${tournamentInfo.id}/auspices/${c.image}`}
                         alt={c.name}
-                        height={150}
-                        width={c.rectangle ? 200 : 150}
+                        height={c.bigLogo ? 100 : 150}
+                        width={c.bigLogo ? (c.rectangle ? 134 : 100) : (c.rectangle ? 200 : 150)}
                         quality={100}
                       />
                     </a>

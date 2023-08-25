@@ -11,7 +11,20 @@
   },
   "placeName": "Torneo cEDH Carrot Compost #2",
   "placeDirection": "Larraín Alcalde 3505, La Serena, Coquimbo",
-  "placePhotos": [],
+  "placePhotos": [
+    {
+      "label": "Edificio",
+      "image": "centrocomunitario4esq.png"
+    },
+    {
+      "label": "Interior",
+      "image": "interior.jpg"
+    },
+    {
+      "label": "Interior 2",
+      "image": "interior2.jpg"
+    }
+  ],
   "prices": [
     {
       "image": "survival.jpeg",
@@ -91,6 +104,13 @@
       "name": "Pay2Win",
       "image": "p2w.jpg",
       "link": "https://www.paytowin.cl/",
+      "rectangle": true,
+      "bigLogo": true
+    },
+    {
+      "name": "cEDH Nacional",
+      "image": "cedhnacional.png",
+      "link": "https://www.instagram.com/nacional_cedh/",
       "rectangle": true
     }
   ]
