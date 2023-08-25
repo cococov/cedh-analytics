@@ -5,5 +5,13 @@
 - Cambiar metagame project por edhtop16
 - Paginar torneos
 - Añadir buscador a torneos
-- Fixear tabla en mobile
+- Fix: tabla en mobile
 - Filtrar tags para dejar solo los útiles
+- Fix: Color está mal en cartas doble cara como Birgi, dejando incoloro.
+- Fix: Visualización de pagina de cartas de la db al poner todos las columnas
+- Cambiar nombre de cards a DB Cards
+
+- Procesar decklists por comandante
+- Guardar data procesada del metagame en json
+- Crear pagina resumen del metagame
+- Crear pagina de comandantes
