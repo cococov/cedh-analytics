@@ -1,5 +1,15 @@
 [
-
+  {
+    "name": "Carrot Compost #2 - cEDH La Serena",
+    "showName": true,
+    "id": "carrot_compost_2",
+    "bookmark": "",
+    "imageName": "carrot_compost_1.jpeg",
+    "serie": "carrot_compost",
+    "number": 1,
+    "hidden": true,
+    "kind": "eminence"
+  },
   {
     "name": "Carrot Compost - cEDH La Serena",
     "showName": true,

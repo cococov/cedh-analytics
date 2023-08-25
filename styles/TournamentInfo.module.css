@@ -177,13 +177,22 @@
   max-width: 50rem;
 }
 
+.rulesSection .listWithDots {
+  list-style: inside;
+}
+
+.rulesSection li ul {
+  list-style: circle inside;
+  text-align: left;
+}
+
 .rulesSection h2 {
   text-align: center;
   margin-bottom: 2.245rem;
 }
 
 .rulesSection p {
-  text-align: justify;
+  text-align: left;
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
 }
