@@ -7,7 +7,6 @@
 - Añadir buscador a torneos
 - Fix: tabla en mobile
 - Filtrar tags para dejar solo los útiles
-- Fix: Color está mal en cartas doble cara como Birgi, dejando incoloro.
 - Fix: Visualización de pagina de cartas de la db al poner todos las columnas
 - Cambiar nombre de cards a DB Cards
 
