@@ -96,9 +96,13 @@ logs.begin_log_block('Processing cards...')
 metagame_cards = pre_processing.process_cards(pre_processing.reduce_decks_to_cards(pre_processing.get_decklists_data(decklists_by_hash.values()), has_multiple_printings, get_last_set_for_card))
 metagame_resume['lastSet'] = LAST_SET[0]
 metagame_resume['lastSetTop10'] = processing.last_set_top_10(metagame_cards, LAST_SET)
+
+metagame_cards_by_commander = {}
+for commander in commanders:
+  metagame_cards_by_commander[commander] = pre_processing.process_cards(pre_processing.reduce_decks_to_cards(pre_processing.get_decklists_data(decklists_by_commander[commander]), has_multiple_printings, get_last_set_for_card))
 logs.end_log_block('Cards processed!')
 
-pp_json(metagame_resume)
+#pp_json(metagame_cards_by_commander)
 
 # CLEANING
 files.clear_csv_directory()
