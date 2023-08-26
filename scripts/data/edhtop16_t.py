@@ -51,6 +51,8 @@ class ProcessedDecklist(typing.TypedDict):
   cantArtifacts: int
   cantEnchantments: int
   cantLands: int
+  avgCmcWithLands: float
+  avgCmcWithoutLands: float
 
 class StatsByCommander(typing.TypedDict):
   appearances: int
@@ -75,6 +77,14 @@ class StatsByCommander(typing.TypedDict):
   percentageDecksWithStickers: float
   percentageDecksWithCompanions: float
   allTokens: list[str]
+  minCantLands: int
+  maxCantLands: int
+  avgCmcWithLands: float
+  avgCmcWithoutLands: float
+  minAvgCmcWithLands: float
+  minAvgCmcWithoutLands: float
+  maxAvgCmcWithLands: float
+  maxAvgCmcWithoutLands: float
 
 class MetagameResume(typing.TypedDict):
   cantCommanders: int
@@ -95,3 +105,11 @@ class MetagameResume(typing.TypedDict):
   percentageDecksWithStickers: float
   percentageDecksWithCompanions: float
   allTokens: list[str]
+  lastSet: str
+  lastSetTop10: list[dict[str, str | int]]
+  avgCmcWithLands: float
+  avgCmcWithoutLands: float
+  minAvgCmcWithLands: float
+  minAvgCmcWithoutLands: float
+  maxAvgCmcWithLands: float
+  maxAvgCmcWithoutLands: float

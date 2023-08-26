@@ -5,11 +5,13 @@ import data.moxfield_t as moxfield_t
 from data import edhtop16
 import data.mtg_json as mtg_json
 import data.pre_processing as pre_processing
+import data.processing as processing
 from utils.misc import pp_json
 
 BASE_PATH = r'./public/data'
 METAGAME_PATH = rf'{BASE_PATH}/metagame'
 FORCE_UPDATE = False
+LAST_SET = ["The Lord of the Rings: Tales of Middle-earth", "Tales of Middle-earth Commander"] # [base set, commander decks]
 
 logs.simple_log('Beginning')
 
@@ -90,9 +92,13 @@ stats_by_commander = edhtop16.get_commander_stats_by_commander(commanders, raw_l
 metagame_resume = edhtop16.get_metagame_resume(commanders, raw_lists, stats_by_commander)
 logs.end_log_block('Data processed!')
 
+logs.begin_log_block('Processing cards...')
 metagame_cards = pre_processing.process_cards(pre_processing.reduce_decks_to_cards(pre_processing.get_decklists_data(decklists_by_hash.values()), has_multiple_printings, get_last_set_for_card))
+metagame_resume['lastSet'] = LAST_SET[0]
+metagame_resume['lastSetTop10'] = processing.last_set_top_10(metagame_cards, LAST_SET)
+logs.end_log_block('Cards processed!')
 
-#pp_json(metagame_cards)
+pp_json(metagame_resume)
 
 # CLEANING
 files.clear_csv_directory()
