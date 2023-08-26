@@ -1,5 +1,6 @@
 import data.moxfield
 from functools import reduce
+from utils.misc import pp_json
 
 number_of_decks_by_identities = {}
 
@@ -80,7 +81,7 @@ def build_reduce_deck(has_multiple_printings, get_last_set_for_card):
       'cardName': current['card']['name'],
       'card_faces': [] if len(current['card']['card_faces']) == 0 else [current['card']['card_faces'][0]['name'], current['card']['card_faces'][1]['name']],
       'colorIdentity': 'C' if len(current['card']['color_identity']) == 0 else ''.join(current['card']['color_identity']),
-      'colors': 'C' if len(current['card']['colors']) == 0 else ''.join(current['card']['colors']),
+      'colors': ('C' if len(current['card']['card_faces']) == 0 else current['card']['card_faces'][0]['colors']) if len(current['card']['colors']) == 0 else ''.join(current['card']['colors']),
       'decklists': [current['deck']],
       'cmc': current['card']['cmc'],
       'prices': current['card']['prices'],
