@@ -88,6 +88,7 @@ const Tournament: React.FC<CardsProps> = ({ cards, tagsByCard, tournamentInfo, t
 
   useEffect(() => {
     const requestData = async () => {
+      if (selectedCard === undefined || selectedCard === '') return;
       const cardName = replace(/\s/g, '%20', selectedCard);
       const result = await fetchCards(cardName);
       setCardData({
@@ -103,7 +104,7 @@ const Tournament: React.FC<CardsProps> = ({ cards, tagsByCard, tournamentInfo, t
       toggleLoading(false);
     };
 
-    !!selectedCard && requestData();
+    requestData();
   }, [selectedCard]);
 
   return (
@@ -191,7 +192,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
     const rawData = await fetch(`${server}/data/tournaments/${params.id}/cards/competitiveCards.json`);
     const data = await rawData.json();
 
-    const tournamentInfo = find(propEq('id', params.id), TOURNAMENTS_LIST);
+    const tournamentInfo = find(propEq(params.id, 'id'), TOURNAMENTS_LIST);
     const rawTournamentResume = await fetch(`${server}/data/tournaments/${params.id}/home_overview.json`);
     const tournamentResume = await rawTournamentResume.json();
 

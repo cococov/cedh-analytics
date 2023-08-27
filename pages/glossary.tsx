@@ -9,11 +9,11 @@ const Glossary: NextPage = () => {
   return (
     <Layout title="cEDH Glossary" description="List of the most used concepts in cEDH and their meaning." image="/images/frantic_search.jpg">
       <main className={styles.glossaryMain} >
-        <span className={styles.glossaryImage}>
+        <span className={styles.glossaryImageContainer}>
           <Image
             src={CarefulStudy}
             alt="Careful Study"
-            layout="intrinsic"
+            className={styles.glossaryImage}
             width={600}
             height={447}
             placeholder="blur"

@@ -5,7 +5,8 @@ import { AppProvider } from '../../contexts';
 import styles from '../../styles/Home.module.css';
 
 const Layout: React.FC<{
-  title: string | string[] | undefined,
+  children?: any,
+  title: string | undefined,
   description?: string | undefined
   image?: string | undefined
   externalImage?: boolean | undefined
@@ -13,7 +14,7 @@ const Layout: React.FC<{
   return (
     <AppProvider>
       <div className={styles.container}>
-        <Header title={title} description={description} image={image} externalImage={externalImage} />
+        <Header title={title || ''} description={description} image={image} externalImage={externalImage} />
         <NavBar />
         {children}
         <Footer />
