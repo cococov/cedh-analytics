@@ -10,7 +10,7 @@
 - Fix: Visualización de pagina de cartas de la db al poner todos las columnas
 - Cambiar nombre de cards a DB Cards
 
-- Procesar decklists por comandante
-- Guardar data procesada del metagame en json
+- Añadir avg winrate de decks que las usan en resume y by_commander
 - Crear pagina resumen del metagame
 - Crear pagina de comandantes
+- Actualizar tags de cartas del metagame

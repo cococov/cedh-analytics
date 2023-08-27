@@ -47,10 +47,10 @@ def create_file_with_log(dirname, file_path, data, msg_begin, msg_end):
 
 def create_new_file(dirname, folder_path, file_name, data):
   logs.begin_log_block('Saving new file')
-  file_path = folder_path + file_name
+  file_path = os.path.join(folder_path, file_name)
   create_dir(folder_path)
   create_file(dirname, file_path, data)
-  logs.end_log_block('New file saved')
+  logs.end_log_block(f'{file_name} saved')
 
 def create_data_file(dirname, file_path, data):
   create_file_with_log(dirname, file_path, data, 'Saving new file', 'New file saved')
