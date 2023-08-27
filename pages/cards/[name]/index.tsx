@@ -4,7 +4,7 @@ import { CardInfoPage, Layout } from '../../../components';
 import fetchCards from '../../../utils/fetch/cardData';
 import DATA from '../../../public/data/cards/competitiveCards.json';
 
-type occurrencesForCard = { occurrences: number, persentaje: number };
+type occurrencesForCard = { occurrences: number, percentage: number };
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
 type Commander = { name: string, color_identity: ColorIdentity };
 type DeckList = { name: string, url: string, commanders: Commander[] };
@@ -83,7 +83,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
 
     const card = (DATA as any[]).find((current: any) => current['cardName'].toLowerCase() === (params.name as string).toLowerCase());
     const decklists: DeckListsByCommander[] = card?.decklists || [];
-    const occurrencesForCard = { occurrences: card?.occurrences || 0, persentaje: card?.percentageOfUse || 0 };
+    const occurrencesForCard = { occurrences: card?.occurrences || 0, percentage: card?.percentageOfUse || 0 };
 
     return {
       props: {
@@ -118,7 +118,7 @@ export const getServerSideProps = async ({ params, res }: Params) => {
         isReservedList: false,
         cardImage: '',
         cardFaces: null,
-        occurrencesForCard: { occurrences: 0, persentaje: 0 },
+        occurrencesForCard: { occurrences: 0, percentage: 0 },
         decklists: [],
       }
     };

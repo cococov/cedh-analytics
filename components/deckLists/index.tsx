@@ -10,7 +10,7 @@ import C from '../../public/images/C.png';
 
 const IDENTITY_COLORS = { B: B, G: G, R: R, U: U, W: W, C: C };
 
-type occurrencesForCard = { occurrences: number, persentaje: number };
+type occurrencesForCard = { occurrences: number, percentage: number };
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
 type Commander = { name: string, color_identity: ColorIdentity };
 type DeckList = { name: string, url: string, commanders: Commander[] };
@@ -43,7 +43,7 @@ const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = f
           <span className={styles['use']}>
             <span>{occurrencesForCard.occurrences} {occurrencesForCard.occurrences === 1 ? 'Deck' : 'Decks'}</span>
             <span>~</span>
-            <span>{occurrencesForCard.persentaje} %</span>
+            <span>{occurrencesForCard.percentage} %</span>
           </span>
         )}
       </span>

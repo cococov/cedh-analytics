@@ -4,7 +4,7 @@ import { split } from 'ramda';
 import ButtonLink from '../buttonLink';
 import DeckLists from '../deckLists';
 
-type occurrencesForCard = { occurrences: number, persentaje: number };
+type occurrencesForCard = { occurrences: number, percentage: number };
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
 type Commander = { name: string, color_identity: ColorIdentity };
 type DeckList = { name: string, url: string, commanders: Commander[] };
