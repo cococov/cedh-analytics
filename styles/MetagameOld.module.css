@@ -1,0 +1,57 @@
+.metagame {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 3.5rem;
+  overflow-x: hidden;
+}
+
+.overview {
+  display: flex;
+  flex: 2;
+  place-content: center;
+}
+
+.categories {
+  display: flex;
+  flex: 2;
+  place-content: center;
+}
+
+@media (max-width: 1500px) {
+  .metagame {
+    flex-direction: column;
+  }
+
+  .overview {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+
+  .categories {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 1930px) {
+  .metagame {
+    max-width: 80%;
+  }
+}
+
+@media (min-width: 2500px) {
+  .metagame {
+    max-width: 70%;
+  }
+}
+
+@media (min-width: 3000px) {
+  .metagame {
+    max-width: 60%;
+  }
+}

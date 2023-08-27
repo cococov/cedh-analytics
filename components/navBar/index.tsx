@@ -38,7 +38,7 @@ const NavBar: React.FC = () => {
                   <Link href="/decks_analysis" passHref>
                     Decks Analysis
                   </Link> */}
-                  <Link href="/metagame" passHref>
+                  <Link href="/metagame_old" passHref>
                     Metagame
                   </Link>
                   <Link href="/tournaments" passHref>
@@ -68,7 +68,7 @@ const NavBar: React.FC = () => {
             <Link href="/decks_analysis" passHref>
               Decks Analysis
             </Link> */}
-            <Link href="/metagame" passHref>
+            <Link href="/metagame_old" passHref>
               Metagame
             </Link>
             <Link href="/tournaments" passHref>

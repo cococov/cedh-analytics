@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import Layout from "../components/layout";
-import styles from '../styles/Metagame.module.css';
+import styles from '../styles/MetagameOld.module.css';
 import { MetagameOverviewTable, MetagameCategoriesTable } from '../components';
 import DATA from '../public/data/metagame/metagame_deprecated.json';
 
@@ -29,7 +29,7 @@ type MetagameProps = {
   data: Data,
 }
 
-const Metagame: NextPage<MetagameProps> = ({ data }) => {
+const MetagameOld: NextPage<MetagameProps> = ({ data }) => {
   return (
     <Layout title="Metagame" description="cEDH metagame analysis">
       <div className={styles.metagame}>
@@ -48,4 +48,4 @@ export const getStaticProps = async () => {
   return { props: { data: DATA } };
 };
 
-export default Metagame;
+export default MetagameOld;
