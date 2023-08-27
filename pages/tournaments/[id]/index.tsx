@@ -21,7 +21,7 @@ type TournamentInfo = {
   number: number;
 };
 
-type TounamentResume = {
+type TournamentResume = {
   decks: number;
   cards: number;
   staples: number;
@@ -35,7 +35,7 @@ type CardsProps = {
   cards: CardProps[];
   tagsByCard: { [key: string]: string[] };
   tournamentInfo: TournamentInfo;
-  tounamentResume: TounamentResume;
+  tournamentResume: TournamentResume;
 };
 
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
@@ -55,7 +55,7 @@ type CardData = {
   isDoubleFace: boolean;
 };
 
-const Tournament: React.FC<CardsProps> = ({ cards, tagsByCard, tournamentInfo, tounamentResume }) => {
+const Tournament: React.FC<CardsProps> = ({ cards, tagsByCard, tournamentInfo, tournamentResume }) => {
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [selectedCard, setSelectedCard] = useState<string>('');
@@ -124,28 +124,28 @@ const Tournament: React.FC<CardsProps> = ({ cards, tagsByCard, tournamentInfo, t
         <section className={styles.homeStatsSection}>
           <span className={styles.homeStat}>
             <h2>Total Decks</h2>
-            <p>{tounamentResume?.decks}</p>
+            <p>{tournamentResume?.decks}</p>
           </span>
           <span className={styles.homeStat}>
             <h2>Total Cards</h2>
-            <p>{tounamentResume?.cards}</p>
+            <p>{tournamentResume?.cards}</p>
           </span>
           {
-            tounamentResume?.decks < 15 ? (
+            tournamentResume?.decks < 15 ? (
               <span className={styles.homeStat}>
                 <h2>{'>'} 5 occurrences</h2>
-                <p>{tounamentResume?.staples_small}</p>
+                <p>{tournamentResume?.staples_small}</p>
               </span>
             ) : (
               <span className={styles.homeStat}>
                 <h2>{'>'} 10 occurrences</h2>
-                <p>{tounamentResume?.staples}</p>
+                <p>{tournamentResume?.staples}</p>
               </span>
             )
           }
           <span className={styles.homeStat}>
             <h2>1 occurrence</h2>
-            <p>{tounamentResume?.pet}</p>
+            <p>{tournamentResume?.pet}</p>
           </span>
         </section>
         <section className={styles.cardList}>
@@ -192,15 +192,15 @@ export const getServerSideProps = async ({ params, res }: Params) => {
     const data = await rawData.json();
 
     const tournamentInfo = find(propEq('id', params.id), TOURNAMENTS_LIST);
-    const rawTounamentResume = await fetch(`${server}/data/tournaments/${params.id}/home_overview.json`);
-    const tounamentResume = await rawTounamentResume.json();
+    const rawTournamentResume = await fetch(`${server}/data/tournaments/${params.id}/home_overview.json`);
+    const tournamentResume = await rawTournamentResume.json();
 
     return {
       props: {
         cards: data,
         tagsByCard: TAGS_BY_CARD,
         tournamentInfo,
-        tounamentResume
+        tournamentResume
       },
     };
   } catch (err) {
