@@ -42,7 +42,7 @@ type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
 type Commander = { name: string; color_identity: ColorIdentity };
 type DeckList = { name: string; url: string; commanders: Commander[] };
 type DeckListsByCommander = { commanders: string; decks: DeckList[]; colorIdentity: ColorIdentity };
-type occurrencesForCard = { occurrences: number; persentaje: number };
+type occurrencesForCard = { occurrences: number; percentage: number };
 
 type CardData = {
   cardImage: string;
@@ -59,7 +59,7 @@ const Tournament: React.FC<CardsProps> = ({ cards, tagsByCard, tournamentInfo, t
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [selectedCard, setSelectedCard] = useState<string>('');
-  const [occurrencesForCard, setOccurrencesForCard] = useState<occurrencesForCard>({ occurrences: 0, persentaje: 0 });
+  const [occurrencesForCard, setOccurrencesForCard] = useState<occurrencesForCard>({ occurrences: 0, percentage: 0 });
   const [decklists, setDecklists] = useState<DeckListsByCommander[]>([]);
   const [cardData, setCardData] = useState<CardData>({
     cardImage: '',
@@ -82,7 +82,7 @@ const Tournament: React.FC<CardsProps> = ({ cards, tagsByCard, tournamentInfo, t
     setSelectedCard(cardName || '');
     const card = cards.find((current: any) => current['cardName'] === cardName);
     const decklists: DeckListsByCommander[] = card?.decklists || [];
-    setOccurrencesForCard({ occurrences: card?.occurrences, persentaje: card?.percentageOfUse });
+    setOccurrencesForCard({ occurrences: card?.occurrences, percentage: card?.percentageOfUse });
     setDecklists(decklists);
   };
 
