@@ -13,8 +13,8 @@ const Layout: React.FC<{
 }> = ({ children, title, description, image, externalImage }) => {
   return (
     <AppProvider>
+      <Header title={title || ''} description={description} image={image} externalImage={externalImage} />
       <div className={styles.container}>
-        <Header title={title || ''} description={description} image={image} externalImage={externalImage} />
         <NavBar />
         {children}
         <Footer />
