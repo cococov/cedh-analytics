@@ -10,7 +10,7 @@ import data.processing as processing
 BASE_PATH = r'./public/data'
 METAGAME_PATH = rf'{BASE_PATH}/metagame'
 FORCE_UPDATE = False
-LAST_SET = ["The Lord of the Rings: Tales of Middle-earth", "Tales of Middle-earth Commander"] # [base set, commander decks]
+LAST_SET = ["Wilds of Eldraine", "Wilds of Eldraine Commander"] # [base set, commander decks]
 
 logs.simple_log('Beginning')
 
