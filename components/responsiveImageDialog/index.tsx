@@ -76,7 +76,7 @@ const ResponsiveImageDialog: React.FC<Props> = ({ imageDialogPayload, handleTogg
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <Image
             src={imageDialogPayload.image || "/images/fblthp.jpg"}
-            alt={imageDialogPayload.label}
+            alt={imageDialogPayload.label || 'image'}
             layout="fixed"
             height={fullScreen ? (isPortrait ? 448 : 224) : 448}
             width={fullScreen ? (isPortrait ? 800 : 400) : 800}

@@ -9,7 +9,7 @@
   background-color: white;
 }
 
-.aboutImage {
+.aboutImageContainer {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -18,8 +18,13 @@
   margin: 2rem -0.5rem;
 }
 
+.aboutImage {
+  width: 100%;
+  height: auto;
+}
+
 @media (max-width: 767px) {
-  .aboutImage {
+  .aboutImageContainer {
     margin-top: 0;
   }
 }

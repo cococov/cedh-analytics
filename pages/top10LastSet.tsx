@@ -19,9 +19,11 @@ const Top10LastSet: NextPage<Top10LastSetProps> = ({ data }) => {
   const router = useRouter();
   const [isLoading, toggle] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
 
-  const handleClickTopRow = useCallback((event) => {
+  const handleClickTopRow = useCallback<React.MouseEventHandler<HTMLTableRowElement>>((event) => {
     toggle(true);
-    router.push(`/cards/${replace(/\//g, '%2F', event.target.parentNode.childNodes[0].childNodes[0].data)}`);
+    const target = event.target as HTMLTableRowElement;
+    const node = target.parentNode?.childNodes[0].childNodes[0] as HTMLTableCellElement;
+    router.push(`/cards/${replace(/\//g, '%2F', node.textContent || '')}`);
   }, []);
 
   return (

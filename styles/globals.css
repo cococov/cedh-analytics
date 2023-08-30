@@ -45,6 +45,10 @@ ul {
   background-color: #ccc !important;
 }
 
+[class*='MTableToolbar-title'] {
+  overflow: visible !important;
+}
+
 /* Scroll */
 
 html {
