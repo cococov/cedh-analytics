@@ -9,7 +9,7 @@ import OathOfLiliana from '../public/images/Oath_of_Liliana.jpg';
 const Custom400 = () => (
   <Layout title="Bad Request">
     <div className={styles.error}>
-      <span className={styles.errorImageContainer}>
+      <span className={styles.errorImage}>
         <Image
           src={OathOfLiliana}
           alt="Bad"

@@ -11,38 +11,36 @@ import { Layout, SnackBarLoading, ButtonLink } from '../components';
 import SylvanLibrary from '../public/images/sylvan_library.jpg';
 
 type Data = {
-  decks: number;
-  cards: number;
-  staples: number;
-  pet: number;
-  last_set: string;
-  last_set_top_10: { occurrences: number, cardName: string }[];
+  decks: number,
+  cards: number,
+  staples: number,
+  pet: number,
+  last_set: string,
+  last_set_top_10: { occurrences: number, cardName: string }[],
 };
 
 type HomeProps = {
-  data: Data;
+  data: Data,
 }
 
 const Home: NextPage<HomeProps> = ({ data }) => {
   const router = useRouter();
   const [isLoading, toggle] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
 
-  const handleClickTopRow = useCallback<React.MouseEventHandler<HTMLTableRowElement>>((event) => {
+  const handleClickTopRow = useCallback((event) => {
     toggle(true);
-    const target = event.target as HTMLTableRowElement;
-    const node = target.parentNode?.childNodes[0].childNodes[0] as HTMLTableCellElement;
-    router.push(`/cards/${replace(/\//g, '%2F', node.textContent || '')}`);
+    router.push(`/cards/${replace(/\//g, '%2F', event.target.parentNode.childNodes[0].childNodes[0].data)}`);
   }, []);
 
   return (
     <Layout title="Home">
       <SnackBarLoading isOpen={isLoading} />
       <main className={styles['homeMain']} >
-        <span className={styles['homeImageHiddenContainer']}>
+        <span className={styles['homeImageHidden']}>
           <Image
             src={SylvanLibrary}
             alt="SylvanLibrary"
-            className={styles['homeImageHidden']}
+            layout="intrinsic"
             placeholder="blur"
             width={600}
             height={447}
@@ -76,20 +74,21 @@ const Home: NextPage<HomeProps> = ({ data }) => {
               </span>
             </Link>
           </span>
-          <Link href="/top10LastSet" className={styles['hiddenButtonTop10']}>
-            <>
+          <Link href="/top10LastSet">
+            <span className={styles['hiddenButtonTop10']}>
               <span>Top 10 cards of the last set</span>
               <Icon fontSize="medium">arrow_right_alt</Icon>
-            </>
+            </span>
           </Link>
         </section>
         <section className={styles['homeTextSection']}>
-          <span className={styles['homeImageContainer']}>
+          <span className={styles['homeImage']}>
             <Image
               src={SylvanLibrary}
-              className={styles['homeImage']}
               alt="SylvanLibrary"
+              layout='responsive'
               placeholder="blur"
+              objectFit='contain'
               priority
             />
           </span>

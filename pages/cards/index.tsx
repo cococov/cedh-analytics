@@ -93,7 +93,6 @@ const Cards: React.FC<CardsProps> = ({ cards, tagsByCard }) => {
           />
         </span>
         <CardsTable
-          title="DB Cards"
           cards={cards}
           tagsByCard={tagsByCard}
           toggleLoading={toggleLoading}

@@ -9,7 +9,7 @@ import MuddleTheMixture from '../public/images/muddle-the-mixture.jpg';
 const Custom500 = () => (
   <Layout title="Server Error">
     <div className={styles.error}>
-      <span className={styles.errorImageContainer}>
+      <span className={styles.errorImage}>
         <Image
           src={MuddleTheMixture}
           alt="Bad"

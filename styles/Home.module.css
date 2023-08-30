@@ -118,18 +118,13 @@
   text-align: left;
 }
 
-.homeImageContainer {
+.homeImage {
   position: relative;
   overflow-x: hidden;
   overflow-y: hidden;
   width: 100%;
   max-height: 35rem;
   margin-top: -20rem;
-}
-
-.homeImage {
-  width: 100%;
-  height: auto;
 }
 
 .homeResume {
@@ -309,17 +304,12 @@
   padding-right: 0.5rem;
 }
 
-.homeImageHiddenContainer {
+.homeImageHidden {
   display: none;
   overflow-x: hidden;
   overflow-y: hidden;
   max-height: 35rem;
   margin-top: -10rem;
-  width: 100%;
-}
-.homeImageHidden {
-  width: 100%;
-  height: auto;
 }
 
 .homeStatsHiddenSection {
@@ -381,8 +371,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 97%;
-  height: 95%;
+  width: 31%;
   margin: 0.2rem;
   padding-left: 0.8rem;
   padding-right: 0.8rem;
@@ -443,11 +432,11 @@
 }
 
 @media (max-width: 600px) {
-  .homeImageContainer {
+  .homeImage {
     display: none;
   }
 
-  .homeImageHiddenContainer {
+  .homeImageHidden {
     display: flex;
   }
 
