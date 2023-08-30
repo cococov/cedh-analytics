@@ -10,10 +10,10 @@ const NavBar: React.FC = () => {
   const isSmallScreen: boolean = useMediaQuery('(max-width: 600px)');
 
   useEffect(() => {
-    if (!isLoaded) setLoaded(true);
+    setLoaded(true);
   }, [isLoaded]);
 
-  if (!isLoaded) return null;
+  if (!isLoaded) return <></>;
 
   return (
     <>
