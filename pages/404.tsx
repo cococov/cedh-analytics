@@ -9,11 +9,11 @@ import Fblthp from '../public/images/fblthp.jpg';
 const Custom404 = () => (
   <Layout title="Page Not Found">
     <div className={styles.error}>
-      <span className={styles.errorImageContainer}>
+      <span className={styles.errorImage}>
         <Image
           src={Fblthp}
-          className={styles.errorImage}
           alt="lost"
+          layout="intrinsic"
           width={600}
           height={447}
           placeholder="blur"

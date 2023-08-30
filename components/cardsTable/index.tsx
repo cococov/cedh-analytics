@@ -20,7 +20,6 @@ const IDENTITY_COLORS = { B: B, G: G, R: R, U: U, W: W, C: C };
 type CardProps = any; // TODO: define type
 
 type CardsTableProps = {
-  title?: string;
   cards: CardProps[];
   tagsByCard: { [key: string]: string[] };
   toggleLoading: (state: boolean) => void;
@@ -29,7 +28,7 @@ type CardsTableProps = {
   tournamentId?: string;
 };
 
-const CardsTable: React.FC<CardsTableProps> = ({ title, cards, tagsByCard, toggleLoading, handleChangeCard, tournamentId, forceSnackBarLoading }) => {
+const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoading, handleChangeCard, tournamentId, forceSnackBarLoading }) => {
   const [isLoaded, setLoaded] = useState(false);
   const router = useRouter();
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
@@ -400,7 +399,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ title, cards, tagsByCard, toggl
     if (!isLoaded) setLoaded(true);
   }, [isLoaded]);
 
-  const handleClickRow = useCallback((_e: any, rowData: any = {}) => {
+  const handleClickRow = useCallback((_e, rowData = {}) => {
     if (isSmallScreen || isMediumScreen) {
       toggleLoading(true);
       router.push(
@@ -429,7 +428,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ title, cards, tagsByCard, toggl
         canSearch={true}
         withGrouping={false}
         rowHeight="5rem"
-        title={title || 'Cards Played'}
+        title="Cards Played"
         onRowClick={handleClickRow}
         actions={(isSmallScreen || isMediumScreen) ? [] : [
           {

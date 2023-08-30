@@ -12,9 +12,9 @@ interface Props {
 }
 
 const Error: NextPage<Props> = ({ statusCode }) => (
-  <Layout title={`${statusCode}`}>
+  <Layout title={`statusCode`}>
     <div className={styles.error}>
-      <span className={styles.errorImageContainer}>
+      <span className={styles.errorImage}>
         <Image
           src={OathOfLilianaImg}
           alt="Bad"
