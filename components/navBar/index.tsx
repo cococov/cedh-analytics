@@ -26,28 +26,28 @@ const NavBar: React.FC = () => {
             {
               isOpen && (
                 <>
-                  <Link href="/" passHref>
+                  <Link href="/">
                     Home
                   </Link>
-                  <Link href="/cards" passHref>
+                  <Link href="/cards">
                     Card List
                   </Link>
-                  {/* <Link href="/cards_analysis" passHref>
+                  {/* <Link href="/cards_analysis">
                     Cards Analysis
                   </Link>
-                  <Link href="/decks_analysis" passHref>
+                  <Link href="/decks_analysis">
                     Decks Analysis
                   </Link> */}
-                  <Link href="/metagame_old" passHref>
+                  <Link href="/metagame_old">
                     Metagame
                   </Link>
-                  <Link href="/tournaments" passHref>
+                  <Link href="/tournaments">
                     Tournaments
                   </Link>
-                  <Link href="/glossary" passHref>
+                  <Link href="/glossary">
                     Glossary
                   </Link>
-                  <Link href="/about" passHref>
+                  <Link href="/about">
                     About
                   </Link>
                 </>
@@ -56,28 +56,28 @@ const NavBar: React.FC = () => {
           </div>
         ) : (
           <div className={styles.navBar} >
-            <Link href="/" passHref>
+            <Link href="/">
               Home
             </Link>
-            <Link href="/cards" passHref>
+            <Link href="/cards">
               Card List
             </Link>
-            {/* <Link href="/cards_analysis" passHref>
+            {/* <Link href="/cards_analysis">
               Cards Analysis
             </Link>
-            <Link href="/decks_analysis" passHref>
+            <Link href="/decks_analysis">
               Decks Analysis
             </Link> */}
-            <Link href="/metagame_old" passHref>
+            <Link href="/metagame_old">
               Metagame
             </Link>
-            <Link href="/tournaments" passHref>
+            <Link href="/tournaments">
               Tournaments
             </Link>
-            <Link href="/glossary" passHref>
+            <Link href="/glossary">
               Glossary
             </Link>
-            <Link href="/about" passHref>
+            <Link href="/about">
               About
             </Link>
           </div>

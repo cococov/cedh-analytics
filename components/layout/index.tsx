@@ -14,11 +14,11 @@ const Layout: React.FC<{
   return (
     <AppProvider>
       <Header title={title || ''} description={description} image={image} externalImage={externalImage} />
-      <div className={styles.container}>
+      <span className={styles.container}>
         <NavBar />
         {children}
         <Footer />
-      </div >
+      </span >
     </AppProvider>
   )
 }
