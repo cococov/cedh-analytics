@@ -9,6 +9,7 @@
 - Filtrar tags para dejar solo los útiles
 - Fix: Visualización de pagina de cartas de la db al poner todos las columnas
 - Cambiar nombre de cards a DB Cards
+- Mover lógica de hooks de navbar a CSS para usar server component
 
 - Añadir avg winrate de decks que las usan en resume y by_commander
 - Crear pagina resumen del metagame
