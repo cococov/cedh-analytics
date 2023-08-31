@@ -1,19 +1,21 @@
-import { useReducer } from 'react';
+"use client"
+
+import { useReducer, useState, useEffect } from 'react';
 import Link from 'next/link'
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import Icon from '@material-ui/core/Icon';
 import styles from '../../styles/Home.module.css';
 
 const NavBar: React.FC = () => {
-  //const [isLoaded, setLoaded] = useState(false);
+  const [isLoaded, setLoaded] = useState(false);
   const [isOpen, toggle] = useReducer((state: boolean) => !state, false);
   const isSmallScreen: boolean = useMediaQuery('(max-width: 600px)');
 
-  // useEffect(() => {
-  //   setLoaded(true);
-  // }, [isLoaded]);
+  useEffect(() => {
+    setLoaded(true);
+  }, [isLoaded]);
 
-  // if (!isLoaded) return <></>;
+  if (!isLoaded) return null;
 
   return (
     <>
