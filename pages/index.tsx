@@ -332,7 +332,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
   )
 };
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const rawResult = await fetch(`${server}/data/home_overview.json`);
   const result = await rawResult.json();
   return { props: { data: result } };
