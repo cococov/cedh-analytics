@@ -1,5 +1,3 @@
-"use client";
-
 import { useCallback, useReducer } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -332,10 +330,10 @@ const Home: NextPage<HomeProps> = ({ data }) => {
   )
 };
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const rawResult = await fetch(`${server}/data/home_overview.json`);
   const result = await rawResult.json();
   return { props: { data: result } };
-}
+};
 
 export default Home;
