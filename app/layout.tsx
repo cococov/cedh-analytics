@@ -1,14 +1,20 @@
-import { useEffect } from 'react';
 import type { Metadata } from 'next';
 import Script from 'next/script';
+
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { Analytics } from '@vercel/analytics/react';
+
+import { AppProvider } from '../contexts/appStore';
+import { NavBar, Footer } from '../components';
+
 import '../styles/globals.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import styles from '../styles/Home.module.css';
 
 config.autoAddCss = false;
+library.add(fab);
 
 export const metadata: Metadata = {
   title: {
@@ -58,6 +64,9 @@ export const metadata: Metadata = {
     'decks', 'decklists', 'database',
     'competitive', 'cedhguide', 'cedhanalytics'
   ],
+  icons: {
+    icon: '/favicon-96x96.png',
+  },
   authors: [{ name: 'CoCoCov', url: 'https://www.moxfield.com/users/cococov' }],
 };
 
@@ -91,11 +100,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: {
   children: React.ReactNode
 }) {
-
-  useEffect(() => {
-    library.add(fab);
-  }, []);
-
   return (
     <html lang="en">
       <body>
@@ -118,7 +122,13 @@ export default function RootLayout({ children }: {
             });
           `}
         </Script>
-        {children}
+        <AppProvider>
+          <span className={styles.container}>
+            <NavBar />
+            {children}
+            <Footer />
+          </span >
+        </AppProvider>
         <Analytics />
       </body>
     </html>

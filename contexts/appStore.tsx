@@ -1,13 +1,15 @@
 "use client";
 
-import { createContext, useState} from 'react';
+import { createContext, useState, useReducer } from 'react';
 
 /**
  * Default Values
  */
 const DEFAULT_VALUES = {
   lang: 'en',
-  theme: 'light'
+  theme: 'light',
+  isLoading: false,
+  toggleLoading: (_a: boolean) => {},
 };
 
 /**
@@ -25,12 +27,16 @@ export interface IProviderProps {
 export const AppProvider: React.FC<IProviderProps> = ({ children }) => {
   const [lang, setLang] = useState(DEFAULT_VALUES['lang']);
   const [theme, setTheme] = useState(DEFAULT_VALUES['theme']);
+  const [isLoading, toggleLoading] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
+
 
   return (
   <AppContext.Provider
     value={{
       lang,
-      theme
+      theme,
+      isLoading,
+      toggleLoading,
     }}
   >
     {children}

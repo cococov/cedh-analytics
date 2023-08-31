@@ -1,9 +1,11 @@
 "use client";
 
 import { useReducer, useState, useEffect } from 'react';
-import Link from 'next/link'
+import Link from 'next/link';
+
+import { MenuOpenIcon, MenuClosedIcon } from '../vendor/materialIcon';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
-import Icon from '@material-ui/core/Icon';
+
 import styles from '../../styles/Home.module.css';
 
 const NavBar: React.FC = () => {
@@ -24,7 +26,7 @@ const NavBar: React.FC = () => {
         isSmallScreen ? (
           <div className={styles.navBarPhone}>
             <a className={styles.navBarPhoneIcon} onClick={toggle}>
-              {isOpen ? <Icon>menu_open</Icon> : <Icon>menu</Icon>}
+              {isOpen ? <MenuOpenIcon /> : <MenuClosedIcon />}
             </a>
             {
               isOpen && (

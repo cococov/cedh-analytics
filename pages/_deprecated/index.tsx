@@ -4,10 +4,10 @@ import { useRouter } from 'next/router';
 import Image from "next/image";
 import Link from 'next/link';
 import { replace } from 'ramda';
-import { server } from '../config';
+import { server } from '../../config';
 import styles from '../styles/Home.module.css';
 import Icon from '@material-ui/core/Icon';
-import { Layout, SnackBarLoading } from '../components';
+import { Layout, SnackBarLoading } from '../../components';
 import SylvanLibrary from '../public/images/sylvan_library.jpg';
 
 type Data = {

@@ -1,12 +1,19 @@
-import { useState, useEffect } from 'react';
+"use client";
+
+import { useState, useEffect, useContext } from 'react';
+
 import Snackbar from '@mui/material/Snackbar';
+
+import AppContext from '../../contexts/appStore';
+
 import style from '../../styles/SnackbarLoading.module.css';
 
 type SnackBarLoadingProps = {
-  isOpen: boolean,
+  isOpen?: boolean,
 };
 
 const SnackBarLoading: React.FC<SnackBarLoadingProps> = ({ isOpen }) => {
+  const { isLoading } = useContext(AppContext);
   const [colors, setColors] = useState({
     first: 'yellow',
     second: 'blue',
@@ -35,7 +42,7 @@ const SnackBarLoading: React.FC<SnackBarLoadingProps> = ({ isOpen }) => {
 
   return (
     <Snackbar
-      open={isOpen}
+      open={isLoading}
       autoHideDuration={6000}
     >
       <span className={style['snackBarLoadingBase']}>
