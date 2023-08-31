@@ -39,11 +39,11 @@ const About: NextPage<MetagameProps> = ({ update_dates }) => (
       <span className={styles.aboutText}>
         <h1>About</h1>
         <section>
-          cEDH Analytics is a website that analyzes and cross-references several EDH community's resources to give insights on the competitive metagame. Using the DDB, Moxfield, Metagame information from the community and other resources to compile the “cEDH card pool” as well as several statistics regarding card choices, preferred commanders, strategies, and color combinations. As we grow in content, we hope to be another resource in the cEDH player toolkit to brew and develop new cEDH decks.
+          cEDH Analytics is a website that analyzes and cross-references several EDH community&apos;s resources to give insights on the competitive metagame. Using the DDB, Moxfield, Metagame information from the community and other resources to compile the “cEDH card pool” as well as several statistics regarding card choices, preferred commanders, strategies, and color combinations. As we grow in content, we hope to be another resource in the cEDH player toolkit to brew and develop new cEDH decks.
         </section>
         <h2>About Us</h2>
         <section>
-          We are Carrot Compost! a small group of cEDH enthusiasts from La Serena, Chile. We've been playing cEDH since 2019 aiming to craft the most competitive lists possible using our ideas and resources like the good old TappedOut. As we watched the online community grow as well as other sites such as the competitive EDH deck list database and moxfield, we started taking the meta changes and new cards into account. This site reflects our endeavors to craft the best competitive decks by compiling and analyzing the community's data.
+          We are Carrot Compost! a small group of cEDH enthusiasts from La Serena, Chile. We&apos;ve been playing cEDH since 2019 aiming to craft the most competitive lists possible using our ideas and resources like the good old TappedOut. As we watched the online community grow as well as other sites such as the competitive EDH deck list database and moxfield, we started taking the meta changes and new cards into account. This site reflects our endeavors to craft the best competitive decks by compiling and analyzing the community&apos;s data.
         </section>
         <section className={styles.aboutTeam}>
           <h2>Carrot Compost</h2>
@@ -180,7 +180,7 @@ const About: NextPage<MetagameProps> = ({ update_dates }) => (
             Wizards of the Coast, Magic: The Gathering, and their logos are trademarks of Wizards of the Coast LLC in the United States and other countries. © 1993-2023 Wizards. All Rights Reserved.
           </p>
           <p className={styles.aboutLegalText}>
-            Carrot Compost is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC. Carrot Compost may use the trademarks and other intellectual property of Wizards of the Coast LLC, which is permitted under Wizards' Fan Site Policy. MAGIC: THE GATHERING® is a trademark of Wizards of the Coast. For more information about Wizards of the Coast or any of Wizards' trademarks or other intellectual property, please visit their website at {' '}
+            Carrot Compost is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC. Carrot Compost may use the trademarks and other intellectual property of Wizards of the Coast LLC, which is permitted under Wizards&apos; Fan Site Policy. MAGIC: THE GATHERING® is a trademark of Wizards of the Coast. For more information about Wizards of the Coast or any of Wizards&apos; trademarks or other intellectual property, please visit their website at {' '}
             <a
               href="https://company.wizards.com/"
               target="_blank"

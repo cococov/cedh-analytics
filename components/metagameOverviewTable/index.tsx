@@ -7,13 +7,13 @@ type Row = {
   "App.": number
   "Wins": number,
   "Win Rate": number
-}
+};
 
 type Data = Row[];
 
 type MetagameTableProps = {
   data: Data,
-}
+};
 
 const MetagameOverviewTable: React.FC<MetagameTableProps> = ({ data }) => {
   const [isLoaded, setLoaded] = useState(false);
@@ -73,7 +73,7 @@ const MetagameOverviewTable: React.FC<MetagameTableProps> = ({ data }) => {
       cellStyle: {
         minWidth: '7.5rem'
       },
-      render: (rowData: any, type: any) => {
+      render: function WinRate(rowData: any, type: any) {
         const value = type === 'row' ? rowData['Win Rate'] : rowData;
         return type === 'row' ? <span>{`${value}%`}</span> : value;
       },

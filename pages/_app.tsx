@@ -19,10 +19,14 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Script
+        id="gtag-init"
         strategy="lazyOnload"
         src="https://www.googletagmanager.com/gtag/js?id=G-DQ9YFFQRG1"
       />
-      <Script strategy="lazyOnload">
+      <Script
+        id="gtag-data"
+        strategy="lazyOnload"
+      >
         {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){window.dataLayer.push(arguments);}

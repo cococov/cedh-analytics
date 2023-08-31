@@ -9,7 +9,7 @@ import { replace } from 'ramda';
 import { server } from '../config';
 import styles from '../styles/Home.module.css';
 import Icon from '@material-ui/core/Icon';
-import { Layout, SnackBarLoading, ButtonLink } from '../components';
+import { Layout, SnackBarLoading } from '../components';
 import SylvanLibrary from '../public/images/sylvan_library.jpg';
 
 type Data = {
@@ -23,7 +23,7 @@ type Data = {
 
 type HomeProps = {
   data: Data;
-}
+};
 
 const Home: NextPage<HomeProps> = ({ data }) => {
   const router = useRouter();
@@ -97,7 +97,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
           </span>
           <h1>cEDH Analytics</h1>
           <p className={styles['homeResume']}>
-            cEDH Analytics is a website that analyzes and cross-references several EDH community's resources to give insights on the competitive metagame.
+            cEDH Analytics is a website that analyzes and cross-references several EDH community&apos;s resources to give insights on the competitive metagame.
           </p>
           <article className={styles['homeArticle']}>
             <h2>Credits</h2>
@@ -164,7 +164,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
           <article className={styles['homeArticle']}>
             <h2>What is cEDH?</h2>
             <p>
-              cEDH is a subcategory of EDH, defined by a single phrase, "Play to Win". Because of this one can define cEDH as a format where:
+              cEDH is a subcategory of EDH, defined by a single phrase, &quot;Play to Win&quot;. Because of this one can define cEDH as a format where:
             </p>
             <ul>
               <li>
@@ -180,7 +180,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
                 The budget is not a limit. In fact, most communities accept the use of proxies.
               </li>
               <li>
-                Did the game end on turn 2? Let's shuffle and play again.
+                Did the game end on turn 2? Let&apos;s shuffle and play again.
               </li>
             </ul>
           </article>
@@ -233,7 +233,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
             </p>
             <ul>
               <li>
-                Only the decks exposed in the "Competitive Decks" section of the database are considered. (In the future it's thought to make it optional to consider the "Brewer's Corner" data)
+                Only the decks exposed in the &quot;Competitive Decks&quot; section of the database are considered. (In the future it&apos;s thought to make it optional to consider the &quot;Brewer&apos;s Corner&quot; data)
               </li>
               <li>
                 Only the data of the lists that are in moxfield are processed.
@@ -272,7 +272,7 @@ const Home: NextPage<HomeProps> = ({ data }) => {
               Wizards of the Coast, Magic: The Gathering, and their logos are trademarks of Wizards of the Coast LLC in the United States and other countries. © 1993-2023 Wizards. All Rights Reserved.
             </p>
             <p className={styles.homeLegalText}>
-              Carrot Compost is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC. Carrot Compost may use the trademarks and other intellectual property of Wizards of the Coast LLC, which is permitted under Wizards' Fan Site Policy. MAGIC: THE GATHERING® is a trademark of Wizards of the Coast. For more information about Wizards of the Coast or any of Wizards' trademarks or other intellectual property, please visit their website at {' '}
+              Carrot Compost is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC. Carrot Compost may use the trademarks and other intellectual property of Wizards of the Coast LLC, which is permitted under Wizards&apos; Fan Site Policy. MAGIC: THE GATHERING® is a trademark of Wizards of the Coast. For more information about Wizards of the Coast or any of Wizards&apos; trademarks or other intellectual property, please visit their website at {' '}
               <a
                 href="https://company.wizards.com/"
                 target="_blank"

@@ -89,7 +89,7 @@ const MetagameCategoriesTable: React.FC<MetagameTableProps> = ({ data }) => {
       cellStyle: {
         minWidth: '7.5rem'
       },
-      render: (rowData: any, type: any) => {
+      render: function WinRate(rowData: any, type: any) {
         const value = type === 'row' ? rowData['Win Rate'] : rowData;
         return type === 'row' ? <span>{`${value}%`}</span> : value;
       },
@@ -106,7 +106,7 @@ const MetagameCategoriesTable: React.FC<MetagameTableProps> = ({ data }) => {
       cellStyle: {
         minWidth: '8rem'
       },
-      render: (rowData: any, type: any) => {
+      render: function AppRate(rowData: any, type: any) {
         const value = type === 'row' ? rowData['App. Rate'] : rowData;
         return type === 'row' ? <span>{`${value}%`}</span> : value;
       },

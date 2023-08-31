@@ -41,7 +41,8 @@
     "@types/ramda": "^0.29.3",
     "@types/react": "^18.2.21",
     "eslint": "^8.48.0",
+    "eslint-plugin-react": "7.11.1",
     "eslint-config-next": "^13.4.19",
-    "typescript": "^5.2.2"
+    "typescript": "5.1.6"
   }
 }

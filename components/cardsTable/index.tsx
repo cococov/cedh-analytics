@@ -127,14 +127,14 @@ const CardsTable: React.FC<CardsTableProps> = ({ title, cards, tagsByCard, toggl
       cellStyle: {
         minWidth: '5rem'
       },
-      render: (rowData: any, type: any) => {
+      render: function Identity(rowData: any, type: any) {
         const value = type === 'row' ? rowData.colorIdentity : rowData;
         return type === 'row' ? (
           <span>
             {
               value
                 .split('')
-                .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
+                .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image key={icon} src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
             }
           </span>
         ) : value;
@@ -184,14 +184,14 @@ const CardsTable: React.FC<CardsTableProps> = ({ title, cards, tagsByCard, toggl
       cellStyle: {
         minWidth: '5rem'
       },
-      render: (rowData: any, type: any) => {
+      render: function Colors(rowData: any, type: any) {
         const value = type === 'row' ? rowData.colors : rowData;
         return type === 'row' ? (
           <span>
             {
               value
                 .split('')
-                .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
+                .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image key={icon} src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
             }
           </span>
         ) : value;
@@ -312,7 +312,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ title, cards, tagsByCard, toggl
       editable: 'never',
       hidden: true,
       searchable: false,
-      render: (rowData: any, type: any) => {
+      render: function PercentageOfUse(rowData: any, type: any) {
         const value = type === 'row' ? rowData.percentageOfUse : rowData;
         return type === 'row' ? (<span>{value}%</span>) : value;
       },
@@ -326,7 +326,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ title, cards, tagsByCard, toggl
       editable: 'never',
       hidden: true,
       searchable: false,
-      render: (rowData: any, type: any) => {
+      render: function PercentageOfUseByIdentity(rowData: any, type: any) {
         const value = type === 'row' ? rowData.percentageOfUseByIdentity : rowData;
         return type === 'row' ? (<span>{value}%</span>) : value;
       },
@@ -344,12 +344,12 @@ const CardsTable: React.FC<CardsTableProps> = ({ title, cards, tagsByCard, toggl
       cellStyle: {
         minWidth: '13rem'
       },
-      render: (rowData: any, type: any) => {
+      render: function Tags(rowData: any, type: any) {
         const value = type === 'row' ? rowData.tags : rowData;
         return type === 'row' ? (
           <span className={styles['cardTagsWrapper']}>
             {
-              value.map((tag: string, index: number) => (<Chip key={tag} label={tag} size="small" className={styles['cardTag']}/>))
+              value.map((tag: string, index: number) => (<Chip key={tag} label={tag} size="small" className={styles['cardTag']} />))
             }
           </span>
         ) : value;
@@ -433,7 +433,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ title, cards, tagsByCard, toggl
         onRowClick={handleClickRow}
         actions={(isSmallScreen || isMediumScreen) ? [] : [
           {
-            icon: () => <ReadMoreIcon />,
+            icon: function ReadMore() { return <ReadMoreIcon /> },
             tooltip: 'Go to Card Page',
             onClick: (_event, rowData: any = {}) => {
               forceSnackBarLoading(true);

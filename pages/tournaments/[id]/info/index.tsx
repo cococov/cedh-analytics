@@ -1,8 +1,8 @@
 import { useReducer } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import { GoogleMap, useLoadScript, Marker, OverlayView } from '@react-google-maps/api';
 import { mergeAll, find, propEq } from 'ramda';
-import Image from 'next/image';
-import Link from 'next/link';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import EmailIcon from '@mui/icons-material/Email';
 import { green } from '@mui/material/colors';
@@ -126,7 +126,7 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
             <p>
               Se les recomienda a todos los jugadores, que, una vez terminada una ronda, cuenten las cartas de su mazo. <b>La obligación de presentar el mazo de forma correcta en cada una de las rondas es obligación del jugador.</b>
             </p>
-            <p className={styles.rulesDisclaimer}>Para más información sobre conceptos mencionados en las reglas, ver nuestro <a href='/glossary' className={styles.infoLink}>Glosario de cEDH</a>.</p>
+            <p className={styles.rulesDisclaimer}>Para más información sobre conceptos mencionados en las reglas, ver nuestro <Link href='/glossary' className={styles.infoLink}>Glosario de cEDH</Link>.</p>
           </section>
           <section className={styles.modeSection}>
             <h2>Estructura del torneo</h2>

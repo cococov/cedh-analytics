@@ -1,6 +1,6 @@
+import { useEffect } from 'react';
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { useEffect } from 'react';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { config } from '@fortawesome/fontawesome-svg-core';
@@ -100,10 +100,14 @@ export default function RootLayout({ children }: {
     <html lang="en">
       <body>
         <Script
+          id="gtag-init"
           strategy="lazyOnload"
           src="https://www.googletagmanager.com/gtag/js?id=G-DQ9YFFQRG1"
         />
-        <Script strategy="lazyOnload">
+        <Script
+          id="gtag-data"
+          strategy="lazyOnload"
+        >
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){window.dataLayer.push(arguments);}
