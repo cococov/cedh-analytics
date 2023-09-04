@@ -30,15 +30,15 @@ export const metadata: Metadata = {
     siteName: 'cEDH Analytics',
     images: [
       {
-        url: '/images/carrot_compost_white.png',
-        width: 788,
-        height: 788,
-      },
-      {
         url: '/images/carrot_compost_playmat.jpeg',
         width: 1800,
         height: 1600,
         alt: 'Carrot Compost\'s Logo',
+      },
+      {
+        url: '/images/carrot_compost_white.png',
+        width: 788,
+        height: 788,
       },
     ],
     locale: 'en_US',
@@ -66,29 +66,25 @@ export const metadata: Metadata = {
     'competitive', 'cedhguide', 'cedhanalytics'
   ],
   icons: {
-    icon: '/favicon-96x96.png',
+    icon: '/android-icon-192x192.png',
+    apple: [
+      { url: 'apple-icon.png' },
+      { url: 'apple-icon-57x57.png', sizes: '57x57' },
+      { url: 'apple-icon-60x60.png', sizes: '60x60' },
+      { url: 'apple-icon-72x72.png', sizes: '72x72' },
+      { url: 'apple-icon-76x76.png', sizes: '76x76' },
+      { url: 'apple-icon-114x114.png', sizes: '114x114' },
+      { url: 'apple-icon-120x120.png', sizes: '120x120' },
+      { url: 'apple-icon-144x144.png', sizes: '144x144' },
+      { url: 'apple-icon-120x120.png', sizes: '120x120' },
+      { url: 'apple-icon-144x144.png', sizes: '144x144' },
+      { url: 'apple-icon-152x152.png', sizes: '152x152' },
+      { url: 'apple-icon-180x180.png', sizes: '180x180' },
+    ]
   },
+  manifest: '/manifest.json',
   authors: [{ name: 'CoCoCov', url: 'https://www.moxfield.com/users/cococov' }],
 };
-
-/* <WIP>
-  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
-  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
-  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
-  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
-  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png" />
-  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png" />
-  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png" />
-  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-  <link rel="manifest" href="/manifest.json" />
-
-  https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
-*/
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
