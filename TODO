@@ -1,3 +1,5 @@
+# TODO
+
 - Mostrar imagen de atras de cartas doble cara
 - Optimizar imagenes para no depender de vercel en ello
 - Dejar de optimizar imagenes en info de carta desde vercel una vez sean optimas
@@ -9,9 +11,23 @@
 - Filtrar tags para dejar solo los útiles
 - Fix: Visualización de pagina de cartas de la db al poner todos las columnas
 - Cambiar nombre de cards a DB Cards
-- Mover lógica de hooks de navbar a CSS para usar server component
+
+## Metagame v2
 
 - Añadir avg winrate de decks que las usan en resume y by_commander
 - Crear pagina resumen del metagame
 - Crear pagina de comandantes
 - Actualizar tags de cartas del metagame
+
+## Next 13
+
+- Mover lógica de hooks de navbar a CSS para usar server component
+- Mover cards a server component
+- Mover card a server component
+- Eliminar metagame viejo
+- Mover tournaments a server component
+- Mover tournament a server component
+- Mover about a server component
+- Mover errores a server component
+- Mover glossary a server component
+- Mover top 10 last set a server component
