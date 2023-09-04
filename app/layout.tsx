@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Roboto } from 'next/font/google';
 import Script from 'next/script';
 
 import { fab } from '@fortawesome/free-brands-svg-icons';
@@ -25,16 +26,16 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'cEDH Analytics',
     description: 'cEDH Analytics is a website that analyzes and cross-references several EDH community\'s resources to give insights on the competitive metagame.',
-    url: 'https://cedh-analytics.com',
+    url: '/',
     siteName: 'cEDH Analytics',
     images: [
       {
-        url: 'https://www.cedh-analytics.com/images/carrot_compost_white.png',
+        url: '/images/carrot_compost_white.png',
         width: 788,
         height: 788,
       },
       {
-        url: 'https://www.cedh-analytics.com/images/carrot_compost_playmat.jpeg',
+        url: '/images/carrot_compost_playmat.jpeg',
         width: 1800,
         height: 1600,
         alt: 'Carrot Compost\'s Logo',
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
     creator: '@CoCoCov',
     creatorId: '@CoCoCov',
     images: {
-      url: 'https://www.cedh-analytics.com/images/carrot_compost_white.png',
+      url: '/images/carrot_compost_white.png',
       alt: 'Carrot Compost\'s Logo',
     },
   },
@@ -86,22 +87,21 @@ export const metadata: Metadata = {
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="manifest" href="/manifest.json" />
 
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/icon?family=Material+Icons"
-  />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300&display=swap" rel="stylesheet" />
-
   https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
 */
+
+const roboto = Roboto({
+  weight: ['300', '400', '500', '700'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 export default function RootLayout({ children }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={roboto.className}>
       <body>
         <Script
           id="gtag-init"
