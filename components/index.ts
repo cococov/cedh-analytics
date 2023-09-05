@@ -3,9 +3,9 @@ export { default as LastSetTop10 } from './lastSetTop10';
 export { default as SnackBarLoading } from './snackBarLoading';
 export { default as NavBar } from './navBar';
 export { default as Footer } from './footer';
+export { default as ButtonLink } from './buttonLink';
 
 // export { default as Header } from './header';
-// export { default as Footer } from './footer';
 // export { default as Table } from './table';
 // export { default as CardsTable } from './cardsTable';
 // export { default as MetagameCategoriesTable } from './metagameCategoriesTable';
@@ -14,6 +14,5 @@ export { default as Footer } from './footer';
 // export { default as DeckLists } from './deckLists';
 // export { default as CardInfoPage } from './cardInfoPage';
 // export { default as Loading } from './loading';
-// export { default as ButtonLink } from './buttonLink';
 // export { default as PriceByPlace } from './priceByPlace';
 // export { default as ResponsiveImageDialog } from './responsiveImageDialog';
