@@ -1,8 +1,8 @@
 # TODO
 
-- Mostrar imagen de atras de cartas doble cara
-- Optimizar imagenes para no depender de vercel en ello
-- Dejar de optimizar imagenes en info de carta desde vercel una vez sean optimas
+- Mostrar imagen de atrás de cartas doble cara
+- Optimizar imágenes para no depender de vercel en ello
+- Dejar de optimizar imágenes en info de carta desde vercel una vez sean optimas
 - Cargar torneos chilenos faltantes
 - Cambiar metagame project por edhtop16
 - Paginar torneos
