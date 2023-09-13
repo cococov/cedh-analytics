@@ -22,7 +22,6 @@
 
 ## Next 13
 
-- Mover lógica de hooks de navbar a CSS para usar server component
 - Mover cards a server component
 - Mover card a server component
 - Eliminar metagame viejo

@@ -1,0 +1,28 @@
+import Link from 'next/link';
+/* Static */
+import styles from '../../styles/Home.module.css';
+
+export default function BaseNavBar() {
+  return (
+    <div className={styles.navBar} >
+      <Link href="/">
+        Home
+      </Link>
+      <Link href="/cards">
+        Card List
+      </Link>
+      <Link href="/metagame_old">
+        Metagame
+      </Link>
+      <Link href="/tournaments">
+        Tournaments
+      </Link>
+      <Link href="/glossary">
+        Glossary
+      </Link>
+      <Link href="/about">
+        About
+      </Link>
+    </div>
+  )
+};

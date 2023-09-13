@@ -91,6 +91,24 @@
   padding-top: 0.5rem;
 }
 
+@media (max-width: 600px) {
+  .navBar {
+    display: none;
+  }
+  .navBarPhone {
+    display: flex;
+  }
+}
+
+@media (min-width: 601px) {
+  .navBar {
+    display: flex;
+  }
+  .navBarPhone {
+    display: none;
+  }
+}
+
 /* Home */
 
 .homeMain {
