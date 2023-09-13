@@ -1,15 +1,16 @@
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import Script from 'next/script';
-
+/* Vendor */
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { Analytics } from '@vercel/analytics/react';
-
+/* Own */
+import { openGraphMetadata, twitterMetadata, descriptionMetadata } from './shared-metadata';
 import { AppProvider } from '../contexts/appStore';
 import { NavBar, Footer } from '../components';
-
+/* Static */
 import '../styles/globals.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import styles from '../styles/Home.module.css';
@@ -18,44 +19,14 @@ config.autoAddCss = false;
 library.add(fab);
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.cedh-analytics.com'),
   title: {
     template: '%s | cEDH Analytics',
     default: 'cEDH Analytics'
   },
-  description: 'cEDH Analytics is a website that analyzes and cross-references several EDH community\'s resources to give insights on the competitive metagame.',
-  openGraph: {
-    title: 'cEDH Analytics',
-    description: 'cEDH Analytics is a website that analyzes and cross-references several EDH community\'s resources to give insights on the competitive metagame.',
-    url: '/',
-    siteName: 'cEDH Analytics',
-    images: [
-      {
-        url: '/images/carrot_compost_playmat.jpeg',
-        width: 1800,
-        height: 1600,
-        alt: 'Carrot Compost\'s Logo',
-      },
-      {
-        url: '/images/carrot_compost_white.png',
-        width: 788,
-        height: 788,
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary',
-    title: 'cEDH Analytics',
-    description: 'cEDH Analytics is a website that analyzes and cross-references several EDH community\'s resources to give insights on the competitive metagame.',
-    siteId: '@CoCoCov',
-    creator: '@CoCoCov',
-    creatorId: '@CoCoCov',
-    images: {
-      url: '/images/carrot_compost_white.png',
-      alt: 'Carrot Compost\'s Logo',
-    },
-  },
+  description: descriptionMetadata,
+  openGraph: openGraphMetadata,
+  twitter: twitterMetadata,
   themeColor: 'white',
   keywords: [
     'cedh', 'cEDH', 'Magic', 'Gathering', 'metagame', 'cedh-decklist-database',

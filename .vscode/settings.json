@@ -2,6 +2,9 @@
   "cSpell.words": [
     "Aufban",
     "cedh",
+    "cedhanalytics",
+    "cedhdb",
+    "cedhguide",
     "cocepcion",
     "colorshifted",
     "concepcion",
@@ -13,12 +16,14 @@
     "doesn",
     "edhtop",
     "Eldraine",
+    "fblthp",
     "Fblthp",
     "Fixear",
     "Haldarr",
     "Javierfreg",
     "keyrune",
     "LDZDM",
+    "magicthegathering",
     "mainboard",
     "maybeboard",
     "melipilla",
@@ -30,13 +35,16 @@
     "planechase",
     "Planeswalker",
     "Planeswalkers",
+    "playmat",
     "prefetch",
     "rhystic",
     "scryfall",
     "spellbook",
     "Stax",
     "Svartas",
-    "Tadeas"
+    "Tadeas",
+    "tierlist",
+    "YFFQRG"
   ],
   "python.analysis.typeCheckingMode": "basic"
 }

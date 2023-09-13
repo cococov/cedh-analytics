@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import Image from "next/image";
-
+/* Vendor */
 import { ArrowRightIcon } from '../components/vendor/materialIcon';
-
+/* Own */
 import { ButtonLink } from '../components';
-
+/* Static */
 import utilsStyles from '../styles/Utils.module.css';
 import styles from '../styles/Error.module.css';
 import Fblthp from '../public/images/fblthp.jpg';
