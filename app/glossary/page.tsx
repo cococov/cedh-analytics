@@ -42,7 +42,7 @@ export default async function About() {
           alt="Frantic Search"
           className={styles.glossaryImage}
           width={600}
-          height={447}
+          height={441}
           placeholder="blur"
           priority
         />

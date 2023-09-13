@@ -63,7 +63,7 @@ export default async function About() {
           className={styles.aboutImage}
           alt="Careful Study"
           width={600}
-          height={447}
+          height={490}
           placeholder="blur"
           priority
         />
