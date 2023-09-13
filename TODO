@@ -11,6 +11,7 @@
 - Filtrar tags para dejar solo los útiles
 - Fix: Visualización de pagina de cartas de la db al poner todos las columnas
 - Cambiar nombre de cards a DB Cards
+- Usar query params para filtros y columnas visibles en tabla de cartas
 
 ## Metagame v2
 
