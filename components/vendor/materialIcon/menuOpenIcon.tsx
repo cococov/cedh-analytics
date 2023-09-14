@@ -1,5 +1,3 @@
-"use client";
-
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 type IconProps = {
