@@ -282,6 +282,10 @@ export default async function Home() {
           <p>{data.pet}</p>
         </span>
         <span className={styles['homeStatTable']}>
+          <section className={styles['homeStatTableTitle']}>
+            <h2>Top 10 cards</h2>
+            <h3>{data.last_set}</h3>
+          </section>
           <LastSetTop10 last_set={data.last_set} last_set_top_10={data.last_set_top_10} />
         </span>
       </section>

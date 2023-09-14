@@ -9,6 +9,11 @@
   background-color: white;
 }
 
+.dummyTd {
+  margin: 0;
+  padding: 0;
+}
+
 .statTableTable {
   border-spacing: 0;
 }

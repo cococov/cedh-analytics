@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import Image from "next/image";
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
+import { LastSetTop10 } from '../../components';
 /* Static */
-import styles from '../../styles/Glossary.module.css';
+import styles from '../../styles/Top10LastSet.module.css';
 import { server } from '../../config';
 
 type Data = {
@@ -20,10 +19,10 @@ export const metadata: Metadata = {
     title: 'Top 10 Last Set | cEDH Analytics',
     images: [
       {
-        url: '/images/frantic_search.jpg',
-        width: 788,
-        height: 788,
-        alt: 'Frantic Search',
+        url: '/images/last_set_image.jpg',
+        width: 1280,
+        height: 720,
+        alt: 'Last Set Image',
       },
     ],
   },
@@ -32,15 +31,15 @@ export const metadata: Metadata = {
     title: `About | ${twitterMetadata.title}`,
     description: `List of most used cards of the last set. | ${twitterMetadata.description}`,
     images: {
-      url: '/images/frantic_search.jpg',
-      alt: 'Frantic Search',
+      url: '/images/last_set_image.jpg',
+      alt: 'Last Set Image',
     },
   },
 };
 
 const fetchData = async () => {
   const rawResult = await fetch(`${server}/data/home_overview.json`);
-  const result = await rawResult.json();
+  const result: Data = await rawResult.json();
   return { last_set: result['last_set'], last_set_top_10: result['last_set_top_10'] };
 };
 
@@ -53,22 +52,7 @@ export default async function Top10LastSet() {
           <h1>Top 10 cards</h1>
           <h2>{data.last_set}</h2>
         </section>
-        <table className={styles['statTableTable']}>
-          <thead className={styles[`statTableHead`]}>
-            <tr>
-              <th className={styles['statTableHeadName']}>Name</th>
-              <th className={styles['statTableHeadOccurrences']}>Occurrences</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.last_set_top_10.map((d, i) => (
-              <tr key={`row-last_set_top_10-${i}`} className={styles[`statTableBodyRow${i % 2}`]} onClick={handleClickTopRow}>
-                <td key={`name-last_set_top_10-${i}`} className={styles['statTableBodyName']}>{d.cardName}</td>
-                <td key={`occurrences-last_set_top_10-${i}`} className={styles['statTableBodyOccurrences']}>{d.occurrences}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <LastSetTop10 last_set={data.last_set} last_set_top_10={data.last_set_top_10} />
       </span>
     </main>
   );
