@@ -1,4 +1,3 @@
-export { default as Layout } from './layout';
 export { default as LastSetTop10 } from './lastSetTop10';
 export { default as SnackBarLoading } from './snackBarLoading';
 export { default as NavBar } from './navBar';
