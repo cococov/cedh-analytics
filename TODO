@@ -13,6 +13,7 @@
 - Cambiar nombre de cards a DB Cards
 - Usar query params para filtros y columnas visibles en tabla de cartas
 - Dejar de guardar data vieja de db cards
+- Implementar tailwind
 
 ## Metagame v2
 
