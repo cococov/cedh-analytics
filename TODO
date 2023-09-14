@@ -31,3 +31,4 @@
 - Fix glossary image in tablets
 - Fix error image in tablets
 - Levantar Snackbar en transiciones pesadas entre paginas (ej. carta en tabla de top 10)
+- Pasar loading de magic full a css
