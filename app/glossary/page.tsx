@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     ...twitterMetadata,
-    title: `About | ${twitterMetadata.title}`,
+    title: `cEDH Glossary | ${twitterMetadata.title}`,
     description: `List of the most used concepts in cEDH and their meaning. | ${twitterMetadata.description}`,
     images: {
       url: '/images/frantic_search.jpg',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function About() {
+export default async function Glossary() {
   return (
     <main className={styles.glossaryMain} >
       <span className={styles.glossaryImageContainer}>
