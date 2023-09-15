@@ -164,6 +164,7 @@ export default async function Card({
             cards={cards}
             tagsByCard={tagsByCard}
             context={TournamentResumeContext}
+            tournamentId={String(params.id)}
           />
           <CardInfoWithProvider context={TournamentResumeContext} />
         </section>

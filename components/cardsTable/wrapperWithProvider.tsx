@@ -15,11 +15,13 @@ export default function CardsTableWithProvider({
   cards,
   tagsByCard,
   context,
+  tournamentId,
 }: {
   title: string,
   cards: any[],
   tagsByCard: { [key: string]: string[] },
   context: any,
+  tournamentId?: string,
 }) {
   const { toggleLoading, handleChangeCard, forceSnackBarLoading } = useContext<Context>(context);
   return (
@@ -27,6 +29,7 @@ export default function CardsTableWithProvider({
       title="DB Cards"
       cards={cards}
       tagsByCard={tagsByCard}
+      tournamentId={tournamentId}
       toggleLoading={toggleLoading}
       handleChangeCard={handleChangeCard}
       forceSnackBarLoading={forceSnackBarLoading}
