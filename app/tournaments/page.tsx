@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from "next/image";
+/* Vendor */
+import { reject } from 'ramda';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
 /* Static */
@@ -45,7 +47,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Tournaments() {
-  const tournaments: Tournament[] = DATA;
+  const tournaments: Tournament[] = reject((x: Tournament) => x.hidden, DATA);
   return (
     <main className={styles.main}>
       <ul className={styles.list}>
