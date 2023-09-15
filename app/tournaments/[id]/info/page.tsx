@@ -1,44 +1,105 @@
-import { useReducer } from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { GoogleMap, useLoadScript, Marker, OverlayView } from '@react-google-maps/api';
+/* Vendor */
 import { mergeAll, find, propEq } from 'ramda';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import EmailIcon from '@mui/icons-material/Email';
 import { green } from '@mui/material/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-
-import { Layout, Loading, PriceByPlace, ResponsiveImageDialog } from '../../../../components';
-import { server } from '../../../../config';
-import styles from '../../../../styles/TournamentInfo.module.css';
-
+/* Own */
+import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../../../shared-metadata';
+import { GoogleMap, PriceByPlace, ResponsiveImageDialog } from '../../../../components';
+import { MaterialWhatsAppIcon, MaterialEmailIcon } from '../../../../components/vendor/materialIcon';
+import { TournamentInfoProvider } from '../../../../contexts/tournamentInfoStore';
+import type { EventInfo, EventData } from './TournamentInfo';
+/* Static */
 import TOURNAMENTS_LIST from '../../../../public/data/tournaments/list.json';
+import styles from '../../../../styles/TournamentInfo.module.css';
+import { server } from '../../../../config';
 
-import type { InfoProps, ImageDialogState, ImageDialogPayload, EventInfo, EventData, ServerSideParams, ServerSideAnswer } from './TournamentInfo';
+type PageData = {
+  tournamentInfo: EventData & EventInfo,
+};
 
-const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
-  const { breakpoints } = useTheme();
-  const [imageDialogPayload, toggleImageDialog] = useReducer<React.Reducer<ImageDialogState, ImageDialogPayload>>(
-    (state, action) => ({ image: action.image ?? '', label: action.label ?? '', isOpen: !state.isOpen }),
-    { isOpen: false, image: '', label: '' }
-  );
-  const { isLoaded } = useLoadScript({ googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '' });
-  const isSmallScreen = useMediaQuery(breakpoints.down('md'));
-  const isPortrait = useMediaQuery('(min-width:600px)');
+type ErrorData = { notFound: boolean };
+type ResponseData = PageData & ErrorData | ErrorData;
+type Params = { id: string | string[] | undefined };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Params,
+}): Promise<Metadata> {
+  const tournamentInfo = find(propEq(String(params.id), 'id'), TOURNAMENTS_LIST);
+  const description = `${tournamentInfo?.name} info | ${descriptionMetadata}`;
+  const image = `/data/tournaments/${!!tournamentInfo?.imageName ? `${tournamentInfo?.id}/${`small_${tournamentInfo?.imageName}`}` : 'default.jpg'}`;
+
+  return {
+    title: `${tournamentInfo?.name}`,
+    description: description,
+    openGraph: {
+      ...openGraphMetadata,
+      title: `${tournamentInfo?.name} | cEDH Analytics`,
+      images: [
+        {
+          url: image,
+          width: 1280,
+          height: 720,
+          alt: `${tournamentInfo?.name} Image`,
+        },
+      ],
+    },
+    twitter: {
+      ...twitterMetadata,
+      title: `${tournamentInfo?.name} | cEDH Analytics`,
+      description: description,
+      images: {
+        url: image,
+        alt: `${tournamentInfo?.name} Image`,
+      },
+    },
+  }
+};
+
+async function fetchData({ id }: Params): Promise<ResponseData> {
+  if (!id) return { notFound: true };
+
+  try {
+    const tournamentData = find(propEq(String(id), 'id'), TOURNAMENTS_LIST);
+    const rawTournamentInfo = await fetch(`${server}/data/tournaments/${String(id)}/info.json`);
+    const tournamentInfo: EventInfo = await rawTournamentInfo.json();
+
+    return {
+      tournamentInfo: mergeAll([tournamentData as EventData, tournamentInfo]),
+      notFound: false,
+    };
+  } catch (err) {
+    return { notFound: true };
+  }
+};
+
+export default async function TournamentInfo({
+  params
+}: {
+  params: Params
+}) {
+  const response = await fetchData({ id: decodeURI(String(params.id)) });
+
+  if (response.notFound) notFound();
+
+  const { tournamentInfo } = response as PageData;
 
   return (
-    <Layout title={`${tournamentInfo.name}`} description={`${tournamentInfo.name} info`} image={`/data/tournaments/${!!tournamentInfo.imageName ? `${tournamentInfo.id}/${`small_${tournamentInfo.imageName}`}` : 'default.jpg'}`}>
-      <main className={styles.main}>
+    <main className={styles.main}>
+      <TournamentInfoProvider>
         <section className={styles.tournamentImageContainer}>
           <Image
             className={styles.tournamentImage}
             src={`/data/tournaments/${!!tournamentInfo.imageName ? `${tournamentInfo.id}/${tournamentInfo.imageName}` : 'default.jpg'}`}
             alt={`${tournamentInfo.id} Image`}
-            layout="fill"
+            height={1920}
+            width={1080}
             quality={100}
-            onContextMenu={(e) => e.preventDefault()}
             priority
           />
           {tournamentInfo.showName && (<span className={styles.title}><h1>{tournamentInfo.name.split(' - ')[0]}</h1><h2>{tournamentInfo.name.split(' - ')[1]}</h2></span>)}
@@ -61,7 +122,7 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
             <h2>Premios</h2>
             <span className={styles.pricesWrapper}>
               {tournamentInfo.prices.map((c, i) => (
-                <PriceByPlace key={i} image={`/data/tournaments/${tournamentInfo.id}/prices/${c.image}`} place={c.place} name={c.name} info={c.info} isCard={c.isCard} small={c.small} isSmallScreen={isSmallScreen} />
+                <PriceByPlace key={i} image={`/data/tournaments/${tournamentInfo.id}/prices/${c.image}`} place={c.place} name={c.name} info={c.info} isCard={c.isCard} small={c.small} />
               ))}
             </span>
           </section>
@@ -121,7 +182,7 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
               </li>
             </ol>
             <p>
-            <b>(B)</b> Si cualquiera de las situaciones descritas en el punto <b>A</b> es descubierta durante el transcurso de una ronda, la sanción será Game Loss más un warning. El jugador será retirado de la mesa y los jugadores restantes seguirán la partida. Si la situación se da en la mitad de la resolución de una pila, el juez determinará cómo se resuelve la misma y en qué estado dejar o retrotraer el juego. Inmediatamente se comenzará una investigación por el juez, que junto con los organizadores del torneo analizarán si se le aplica una descalificación del torneo.
+              <b>(B)</b> Si cualquiera de las situaciones descritas en el punto <b>A</b> es descubierta durante el transcurso de una ronda, la sanción será Game Loss más un warning. El jugador será retirado de la mesa y los jugadores restantes seguirán la partida. Si la situación se da en la mitad de la resolución de una pila, el juez determinará cómo se resuelve la misma y en qué estado dejar o retrotraer el juego. Inmediatamente se comenzará una investigación por el juez, que junto con los organizadores del torneo analizarán si se le aplica una descalificación del torneo.
             </p>
             <p>
               Se les recomienda a todos los jugadores, que, una vez terminada una ronda, cuenten las cartas de su mazo. <b>La obligación de presentar el mazo de forma correcta en cada una de las rondas es obligación del jugador.</b>
@@ -165,34 +226,24 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
             <span className={styles.contactIcons}>
               {tournamentInfo.contact.map(c => (
                 c.kind === 'whatsapp' ? (
-                  <Link key={`key-${c.kind}`} href={`https://wa.me/${c.value}?text=Hola, me gustaría participar en el torneo ${tournamentInfo.name}`}>
-                    <a target="_blank" rel="noreferrer">
-                      <WhatsAppIcon sx={{ color: green[400], fontSize: 60 }} />
-                    </a>
+                  <Link key={`key-${c.kind}`} href={`https://wa.me/${c.value}?text=Hola, me gustaría participar en el torneo ${tournamentInfo.name}`} target="_blank" rel="noreferrer">
+                    <MaterialWhatsAppIcon sx={{ color: green[400], fontSize: 60 }} />
                   </Link>
                 ) : c.kind == 'discord' ? (
-                  <Link key={`key-${c.kind}`} href={c.value}>
-                    <a target="_blank" rel="noreferrer">
-                      <FontAwesomeIcon icon={['fab', 'discord']} size="3x" color="#5865F2" />
-                    </a>
+                  <Link key={`key-${c.kind}`} href={c.value} target="_blank" rel="noreferrer">
+                    <FontAwesomeIcon icon={['fab', 'discord']} size="3x" color="#5865F2" />
                   </Link>
                 ) : c.kind == 'instagram' ? (
-                  <Link key={`key-${c.kind}`} href={c.value}>
-                    <a target="_blank" rel="noreferrer">
-                      <FontAwesomeIcon icon={['fab', 'instagram']} size="3x" color="#E1306C" />
-                    </a>
+                  <Link key={`key-${c.kind}`} href={c.value} target="_blank" rel="noreferrer">
+                    <FontAwesomeIcon icon={['fab', 'instagram']} size="3x" color="#E1306C" />
                   </Link>
                 ) : c.kind == 'facebook' ? (
-                  <Link key={`key-${c.kind}`} href={c.value}>
-                    <a target="_blank" rel="noreferrer">
-                      <FontAwesomeIcon icon={['fab', 'facebook']} size="3x" color="#1877F2" />
-                    </a>
+                  <Link key={`key-${c.kind}`} href={c.value} target="_blank" rel="noreferrer">
+                    <FontAwesomeIcon icon={['fab', 'facebook']} size="3x" color="#1877F2" />
                   </Link>
                 ) : c.kind == 'email' ? (
-                  <Link key={`key-${c.kind}`} href={`mailto:${c.value}`}>
-                    <a target="_blank" rel="noreferrer">
-                      <EmailIcon sx={{ fontSize: 60 }} />
-                    </a>
+                  <Link key={`key-${c.kind}`} href={`mailto:${c.value}`} target="_blank" rel="noreferrer">
+                    <MaterialEmailIcon sx={{ fontSize: 60 }} />
                   </Link>
                 ) : null
               ))}
@@ -201,87 +252,38 @@ const Info: React.FC<InfoProps> = ({ tournamentInfo }) => {
           <section className={styles.mapSection}>
             <h2>Dirección</h2>
             <p>{tournamentInfo.placeDirection}</p>
-            {isLoaded ? (
-              <GoogleMap zoom={12} center={tournamentInfo.placeCoords} mapContainerClassName={styles.mapContainer}>
-                <Marker key="marker_pointer" position={tournamentInfo.placeCoords} visible={true} />
-                <OverlayView
-                  key='marker_overview'
-                  position={tournamentInfo.placeCoords}
-                  mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}>
-                  <div
-                    style={{
-                      background: `#203254`,
-                      padding: `7px 12px`,
-                      fontSize: '11px',
-                      color: `white`,
-                      borderRadius: '4px',
-                    }}
-                  >
-                    {tournamentInfo.placeName}
-                  </div>
-                </OverlayView>
-              </GoogleMap>
-            ) : <Loading />}
-            {!!tournamentInfo.placePhotos && (
-              <span className={styles.placePhotos}>
-                {tournamentInfo.placePhotos.map(({ image, label }, i) => (
-                  <span key={`span-place-photos-${i}`} className={styles.placePhoto} onClick={() => toggleImageDialog({ image: `/data/tournaments/${tournamentInfo.id}/place/${image}`, label: label })} >
-                    <Image
-                      key={`image-place-photos-${i}`}
-                      src={`/data/tournaments/${tournamentInfo.id}/place/${image}`}
-                      alt={`place-photo-${i}`}
-                      height={isSmallScreen ? (isPortrait ? 140.6 : 224) : 112}
-                      width={isSmallScreen ? (isPortrait ? 250 : 400) : 200}
-                    />
-                  </span>
-                ))}
-              </span>
-            )}
+            <GoogleMap
+              mapClassName={styles.mapContainer}
+              placeCoords={tournamentInfo.placeCoords}
+              placeName={tournamentInfo.placeName}
+              placePhotos={tournamentInfo.placePhotos}
+              basePathImages={`/data/tournaments/${tournamentInfo.id}/place`}
+              placePhotosClassName={styles.placePhotos}
+              placePhotoClassName={styles.placePhoto}
+            />
           </section>
           <section className={styles.auspicesSection}>
             <h2>Nos Apoyan</h2>
             <span className={styles.auspicesWrapper}>
               {tournamentInfo.auspices.map((c, i) => (
                 <span className={styles.auspice} key={`key-span-${c.name}`}>
-                  <Link key={`key-${c.name}`} href={c.link || "#"}>
-                    <a target="_blank" rel="noreferrer">
-                      <Image
-                        key={i}
-                        src={`/data/tournaments/${tournamentInfo.id}/auspices/${c.image}`}
-                        alt={c.name}
-                        height={c.bigLogo ? 100 : 150}
-                        width={c.bigLogo ? (c.rectangle ? 134 : 100) : (c.rectangle ? 200 : 150)}
-                        quality={100}
-                      />
-                    </a>
+                  <Link key={`key-${c.name}`} href={c.link || "#"} target="_blank" rel="noreferrer">
+                    <Image
+                      key={i}
+                      src={`/data/tournaments/${tournamentInfo.id}/auspices/${c.image}`}
+                      alt={c.name}
+                      height={c.bigLogo ? 100 : 150}
+                      width={c.bigLogo ? (c.rectangle ? 134 : 100) : (c.rectangle ? 200 : 150)}
+                      quality={100}
+                    />
                   </Link>
                 </span>
               ))}
             </span>
           </section>
         </span>
-        <ResponsiveImageDialog imageDialogPayload={imageDialogPayload} handleToggle={toggleImageDialog} />
-      </main >
-    </Layout >
-  )
+        <ResponsiveImageDialog />
+      </TournamentInfoProvider>
+    </main >
+  );
 };
-
-export const getServerSideProps = async ({ params, res }: ServerSideParams): Promise<ServerSideAnswer> => {
-  res.setHeader('Cache-Control', 'public, s-maxage=1000, stale-while-revalidate=59');
-
-  try {
-    const tournamentData = find(propEq('id', params.id), TOURNAMENTS_LIST);
-    const rawTournamentInfo = await fetch(`${server}/data/tournaments/${params.id}/info.json`);
-    const tournamentInfo: EventInfo = await rawTournamentInfo.json();
-
-    return {
-      props: {
-        tournamentInfo: mergeAll([tournamentData as EventData, tournamentInfo]),
-      },
-    };
-  } catch (e) {
-    return { notFound: true };
-  }
-};
-
-export default Info;

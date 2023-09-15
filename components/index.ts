@@ -11,10 +11,11 @@ export { default as DeckListsWithProvider } from './deckLists/wrapperWithProvide
 export { default as CardInfoWithProvider } from './cardInfo/wrapperWithProvider';
 export { default as CardsTableWithProvider } from './cardsTable/wrapperWithProvider';
 export { default as Loading } from './loading';
+export { default as ResponsiveImageDialog } from './responsiveImageDialog';
+export { default as PriceByPlace } from './priceByPlace';
+export { default as GoogleMap } from './googleMap';
 
 // export { default as Header } from './header';
 // export { default as Table } from './table';
 // export { default as MetagameCategoriesTable } from './metagameCategoriesTable';
 // export { default as MetagameOverviewTable } from './metagameOverviewTable';
-// export { default as PriceByPlace } from './priceByPlace';
-// export { default as ResponsiveImageDialog } from './responsiveImageDialog';

@@ -14,6 +14,7 @@
 }
 
 .content {
+  width: 100%;
   padding-left: 2rem;
   padding-right: 2rem;
 }
@@ -23,8 +24,9 @@
     display: flex;
   }
   .content {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    width: 100dvw;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
@@ -33,7 +35,6 @@
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
   position: relative;
   overflow: hidden;
   max-height: 600px;
@@ -42,7 +43,7 @@
 }
 
 .tournamentImageContainer .tournamentImage {
-  position: relative;
+  position: absolute;
   object-fit: cover;
   max-width: calc(400px / (722px / 1280px));;
   max-height: 400px;
