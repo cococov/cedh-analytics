@@ -1,6 +1,8 @@
-import { NextPage } from 'next';
-import Layout from "../../components/layout";
-import styles from '../styles/Metagame.module.css';
+import type { Metadata } from 'next';
+/* Own */
+import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
+/* Static */
+import styles from '../../styles/Metagame.module.css';
 import RESUME from '../../public/data/metagame/metagame_resume.json';
 import COMMANDERS from '../../public/data/metagame/condensed_commanders_data.json';
 import CARDS from '../../public/data/metagame/metagame_cards.json';
@@ -52,27 +54,43 @@ type MetagameProps = {
   cards_data: CardsData,
 }
 
-const Metagame: NextPage<MetagameProps> = ({ resume_data, commanders_data, cards_data }) => {
-  return (
-    <Layout title="Metagame" description="cEDH metagame analysis">
-      <span>
-        <section>
-        </section>
-        < section>
-        </section>
-      </span>
-    </Layout>
-  );
+export const metadata: Metadata = {
+  title: 'cEDH Metagame',
+  description: `Metagame. | ${descriptionMetadata}`,
+  openGraph: {
+    ...openGraphMetadata,
+    title: 'cEDH Metagame | cEDH Analytics',
+    images: [
+      {
+        url: '/images/frantic_search.jpg',
+        width: 788,
+        height: 788,
+        alt: 'Frantic Search',
+      },
+    ],
+  },
+  twitter: {
+    ...twitterMetadata,
+    title: `Metagame | ${twitterMetadata.title}`,
+    description: `Metagame. | ${twitterMetadata.description}`,
+    images: {
+      url: '/images/frantic_search.jpg',
+      alt: 'Frantic Search',
+    },
+  },
 };
 
-export const getStaticProps = async () => {
+const fetchData = async () => {
   return {
-    props: {
-      resume_data: RESUME,
-      commanders_data: COMMANDERS,
-      cards_data: CARDS
-    }
+
   };
 };
 
-export default Metagame;
+export default async function Cards() {
+  const {  } = await fetchData();
+  return (
+    <main className={styles.main}>
+      <h1>WIP</h1>
+    </main>
+  );
+};

@@ -11,7 +11,7 @@ export default function BaseNavBar() {
       <Link href="/cards">
         Card List
       </Link>
-      <Link href="/metagame_old">
+      <Link href="/metagame">
         Metagame
       </Link>
       <Link href="/tournaments">
