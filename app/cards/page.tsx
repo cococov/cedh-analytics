@@ -1,11 +1,14 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import Image from "next/image";
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
+import { CardsTableWithProvider, CardInfoWithProvider, DeckListsWithProvider } from '../../components';
+import DbCardsContext, { DbCardsProvider } from '../../contexts/dbCardsStore';
 /* Static */
-import styles from '../../styles/Glossary.module.css';
-import FranticSearch from '../../public/images/frantic_search.jpg';
+import styles from '../../styles/CardsList.module.css';
+import DATA from '../../public/data/cards/competitiveCards.json';
+import TAGS_BY_CARD from '../../public/data/cards/tags.json';
+
+type CardProps = any; // TODO: define type
 
 export const metadata: Metadata = {
   title: 'cEDH Glossary',
@@ -33,8 +36,29 @@ export const metadata: Metadata = {
   },
 };
 
+const fetchData = async () => {
+  return {
+    cards: DATA as CardProps[],
+    tagsByCard: TAGS_BY_CARD,
+  };
+};
+
 export default async function Cards() {
+  const { cards, tagsByCard } = await fetchData();
   return (
-    <h1 style={{height: '100dvh'}}>Not Implemented</h1>
+    <main className={styles.main}>
+      <DbCardsProvider cards={cards}>
+        <span className={styles['left-span']}>
+          <DeckListsWithProvider size="medium" context={DbCardsContext} />
+        </span>
+        <CardsTableWithProvider
+          title="DB Cards"
+          cards={cards}
+          tagsByCard={tagsByCard}
+          context={DbCardsContext}
+        />
+        <CardInfoWithProvider context={DbCardsContext} />
+      </DbCardsProvider>
+    </main>
   );
 };

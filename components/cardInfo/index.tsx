@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styles from '../../styles/CardsList.module.css';
-import Tooltip from '@material-ui/core/Tooltip';
+import { MaterialTooltip } from '../vendor/materialUi';
 import Loading from '../loading';
 import { split } from 'ramda';
 import CardBack from '../../public/images/mtg-back.jpg';
@@ -82,12 +82,12 @@ const CardInfo: React.FC<CardInfoProps> = ({
                 )}
                 <span className={styles['card-reserved-list-container']}>
                   {isReservedList &&
-                    <Tooltip
+                    <MaterialTooltip
                       title="Reserved List"
                       aria-label="Reserved List"
                     >
                       <span className={styles['card-reserved-list']}>💎</span>
-                    </Tooltip>
+                    </MaterialTooltip>
                   }
                 </span>
               </span>

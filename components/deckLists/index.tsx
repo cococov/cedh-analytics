@@ -15,14 +15,18 @@ type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
 type Commander = { name: string, color_identity: ColorIdentity };
 type DeckList = { name: string, url: string, commanders: Commander[] };
 type DeckListsByCommander = { commanders: string, decks: DeckList[], colorIdentity: ColorIdentity };
-type DeckListsProps = {
+
+export default function DeckLists({
+  occurrencesForCard,
+  isLoading = false,
+  decklists,
+  size
+}: {
   occurrencesForCard: occurrencesForCard,
   isLoading?: boolean,
   decklists: DeckListsByCommander[],
   size: 'small' | 'medium' | 'large',
-};
-
-const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = false, decklists, size }) => {
+}) {
   const getIdentityImages = (colorIdentity: ColorIdentity) => {
     return (
       <span className={styles['identityGroup']}>
@@ -36,23 +40,23 @@ const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = f
   };
 
   return (
-    <span className={styles['container']}>
-      <span className={styles['title']}>
+    <span className={styles.container}>
+      <span className={styles.title}>
         <h3>Deck Lists</h3>
         {occurrencesForCard.occurrences > 0 && (
-          <span className={styles['use']}>
+          <span className={styles.use}>
             <span>{occurrencesForCard.occurrences} {occurrencesForCard.occurrences === 1 ? 'Deck' : 'Decks'}</span>
             <span>~</span>
             <span>{occurrencesForCard.percentage} %</span>
           </span>
         )}
       </span>
-      <span className={`${styles['content']} ${styles[`content-${size}`]}`}>
+      <span className={`${styles.content} ${styles[`content-${size}`]}`}>
         {isLoading ? <Loading /> : (
           (!!decklists && decklists?.length > 0) ? (
             decklists.map(({ commanders, decks, colorIdentity }) => (
               <details key={`${commanders}-details`}>
-                <summary className={styles['commander']} key={`${commanders}-summary`}>
+                <summary className={styles.commander} key={`${commanders}-summary`}>
                   {getIdentityImages(colorIdentity)}
                   <span key={`${commanders}-name`}>{commanders}</span>
                 </summary>
@@ -78,11 +82,9 @@ const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = f
               </details>
             ))
           ) :
-            < h2 className={styles['no-card-selected']} >NO CARD SELECTED</h2>
+            <h2 className={styles['no-card-selected']}>NO CARD SELECTED</h2>
         )}
       </span>
-    </span >
+    </span>
   )
-}
-
-export default DeckLists
+};

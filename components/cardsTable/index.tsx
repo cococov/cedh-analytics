@@ -1,12 +1,14 @@
+"use client";
+
 import React, { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { replace, isNil } from 'ramda';
-import ReadMoreIcon from '@mui/icons-material/ReadMore';
-import Chip from '@mui/material/Chip';
 import Image from 'next/image';
 import styles from '../../styles/CardsList.module.css';
 import Table from '../table';
 import { Loading } from '../../components';
+import { MaterialReadMoreIcon } from '../vendor/materialIcon';
+import { MaterialChip } from '../vendor/materialUi';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import B from '../../public/images/B.png';
 import G from '../../public/images/G.png';
@@ -349,7 +351,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ title, cards, tagsByCard, toggl
         return type === 'row' ? (
           <span className={styles['cardTagsWrapper']}>
             {
-              value.map((tag: string, index: number) => (<Chip key={tag} label={tag} size="small" className={styles['cardTag']} />))
+              value.map((tag: string, index: number) => (<MaterialChip key={tag} label={tag} size="small" className={styles['cardTag']} />))
             }
           </span>
         ) : value;
@@ -433,7 +435,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ title, cards, tagsByCard, toggl
         onRowClick={handleClickRow}
         actions={(isSmallScreen || isMediumScreen) ? [] : [
           {
-            icon: function ReadMore() { return <ReadMoreIcon /> },
+            icon: function ReadMore() { return <MaterialReadMoreIcon /> },
             tooltip: 'Go to Card Page',
             onClick: (_event, rowData: any = {}) => {
               forceSnackBarLoading(true);
@@ -448,6 +450,6 @@ const CardsTable: React.FC<CardsTableProps> = ({ title, cards, tagsByCard, toggl
       />
     </span>
   )
-}
+};
 
 export default CardsTable;

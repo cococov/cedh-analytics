@@ -1,3 +1,5 @@
+"use client";
+
 import MaterialTable, { Action } from '@material-table/core';
 import { ExportCsv, ExportPdf } from '@material-table/exporters';
 

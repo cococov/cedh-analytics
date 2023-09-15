@@ -14,6 +14,7 @@
 - Usar query params para filtros y columnas visibles en tabla de cartas
 - Dejar de guardar data vieja de db cards
 - Implementar tailwind
+- Pasar carga de data pesada a cliente para mejorar first content paint
 
 ## Metagame v2
 
@@ -24,7 +25,6 @@
 
 ## Next 13
 
-- Mover cards a server component
 - Mover tournament a server component
 - Mover tournament card a server component
 - Fix glossary image in tablets
