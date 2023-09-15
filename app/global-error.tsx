@@ -2,10 +2,9 @@
 
 import type { Metadata } from 'next';
 import Image from "next/image";
-
+/* Vendor */
 import { Button } from '../components/vendor/materialUi';
-
-import styles from '../styles/Error.module.css';
+/* Static */
 import MuddleTheMixture from '../public/images/muddle-the-mixture.jpg';
 
 export const metadata: Metadata = { title: 'Error!' };
@@ -20,11 +19,27 @@ export default function GlobalError({
   return (
     <html>
       <body>
-        <div className={styles.error}>
-          <span className={styles.errorImageContainer}>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingBottom: '3.5rem',
+          overflowX: 'hidden',
+          backgroundColor: 'white',
+          width: '100%',
+        }}>
+          <span style={{
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+            alignItems: 'center',
+            margin: '2rem -0.5rem',
+          }}>
             <Image
               src={MuddleTheMixture}
-              className={styles.errorImage}
+              style={{ height: 'auto' }}
               alt="lost"
               width={600}
               height={447}
@@ -32,7 +47,12 @@ export default function GlobalError({
               priority
             />
           </span>
-          <span className={styles.errorText}>
+          <span style={{
+            display: 'flex',
+            flexDirection: 'column',
+            flexGrow: 1,
+            textAlign: 'center',
+          }}>
             <h1>Something went wrong!</h1>
             <p>{error?.digest}</p>
             <Button variant="contained" color="primary" onClick={reset}>
