@@ -25,8 +25,8 @@
 
 ## Next 13
 
-- Mover tournament a server component
 - Mover tournament card a server component
+- Mover tournament info a server component
 - Fix glossary image in tablets
 - Fix error image in tablets
 - Levantar Snackbar en transiciones pesadas entre paginas (ej. carta en tabla de top 10)
