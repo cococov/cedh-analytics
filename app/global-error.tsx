@@ -19,7 +19,7 @@ export default function GlobalError({
   return (
     <html>
       <body>
-        <div style={{
+        <main style={{
           display: 'flex',
           flexDirection: 'column',
           flex: 1,
@@ -29,6 +29,7 @@ export default function GlobalError({
           overflowX: 'hidden',
           backgroundColor: 'white',
           width: '100%',
+          height: '100dvh',
         }}>
           <span style={{
             display: 'flex',
@@ -59,7 +60,7 @@ export default function GlobalError({
               Try Again
             </Button>
           </span>
-        </div>
+        </main>
       </body>
     </html>
   );
