@@ -1,15 +1,15 @@
-import Link from 'next/link';
 /* Vendor */
 import { replace } from 'ramda';
+/* Own */
+import TableRowWithLink from '../tableRowWithLink';
 /* Static */
 import styles from '../../styles/Top10LastSet.module.css';
 
-type Props = {
-  last_set: string;
-  last_set_top_10: { occurrences: number, cardName: string }[];
-};
-
-const LastSetTop10: React.FC<Props> = ({ last_set, last_set_top_10 }) => {
+export default function LastSetTop10({
+  last_set_top_10
+}: {
+  last_set_top_10: { occurrences: number, cardName: string }[],
+}) {
   return (
     <table className={styles['statTableTable']}>
       <thead className={styles[`statTableHead`]}>
@@ -20,22 +20,16 @@ const LastSetTop10: React.FC<Props> = ({ last_set, last_set_top_10 }) => {
       </thead>
       <tbody>
         {last_set_top_10.map((d, i) => (
-          <tr key={`row-last_set_top_10-${i}`} className={styles[`statTableBodyRow${i % 2}`]}>
+          <TableRowWithLink key={`row-last_set_top_10-${i}`} className={styles[`statTableBodyRow${i % 2}`]} link={`/cards/${replace(/\//g, '%2F', d.cardName)}`}>
             <td key={`name-last_set_top_10-${i}`} className={styles['statTableBodyName']}>
-              <Link href={`/cards/${replace(/\//g, '%2F', d.cardName)}`}>
-                <span className={styles['dummyTd']}>{d.cardName}</span>
-              </Link>
+              <span className={styles['dummyTd']}>{d.cardName}</span>
             </td>
             <td key={`occurrences-last_set_top_10-${i}`} className={styles['statTableBodyOccurrences']}>
-              <Link href={`/cards/${replace(/\//g, '%2F', d.cardName)}`}>
-                <span className={styles['dummyTd']}>{d.occurrences}</span>
-              </Link>
+              <span className={styles['dummyTd']}>{d.occurrences}</span>
             </td>
-          </tr>
+          </TableRowWithLink>
         ))}
       </tbody>
     </table>
   );
 };
-
-export default LastSetTop10;

@@ -287,7 +287,7 @@ export default async function Home() {
             <h2>Top 10 cards</h2>
             <h3>{data.last_set}</h3>
           </section>
-          <LastSetTop10 last_set={data.last_set} last_set_top_10={data.last_set_top_10} />
+          <LastSetTop10 last_set_top_10={data.last_set_top_10} />
         </span>
       </section>
     </main>

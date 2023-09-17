@@ -52,7 +52,7 @@ export default async function Top10LastSet() {
           <h1>Top 10 cards</h1>
           <h2>{data.last_set}</h2>
         </section>
-        <LastSetTop10 last_set={data.last_set} last_set_top_10={data.last_set_top_10} />
+        <LastSetTop10 last_set_top_10={data.last_set_top_10} />
       </span>
     </main>
   );
