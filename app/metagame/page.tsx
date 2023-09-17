@@ -86,7 +86,7 @@ const fetchData = async () => {
   };
 };
 
-export default async function Cards() {
+export default async function Metagame() {
   const {  } = await fetchData();
   return (
     <main className={styles.main}>

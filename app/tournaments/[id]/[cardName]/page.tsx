@@ -125,7 +125,7 @@ async function fetchData({ cardName, id }: Params): Promise<ResponseData> {
   }
 };
 
-export default async function Card({
+export default async function TournamentCard({
   params
 }: {
   params: Params
