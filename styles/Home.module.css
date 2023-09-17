@@ -116,7 +116,7 @@
   flex: 1;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: center;
   overflow-x: hidden;
   background-color: #ececec;
@@ -182,8 +182,10 @@
   display: flex;
   flex-direction: column;
   margin-top: 5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   align-items: center;
+  flex-grow: 1;
+  justify-content: flex-end;
 }
 
 .homeLegal p {
