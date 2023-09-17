@@ -1,7 +1,7 @@
 "use client";
 
 import MaterialTable, { Action } from '@material-table/core';
-import { ExportCsv, ExportPdf } from '@material-table/exporters';
+import { pdfExporter, csvExporter } from '../../utils/exporters';
 
 interface RowData {
   'cardName'?: string;
@@ -56,10 +56,10 @@ const Table: React.FC<ITable> = ({
       options={{
         exportMenu: [{
           label: 'Export PDF',
-          exportFunc: (cols, datas) => ExportPdf(cols, datas, title)
+          exportFunc: (cols, datas) => pdfExporter(cols, datas, title)
         }, {
           label: 'Export CSV',
-          exportFunc: (cols, datas) => ExportCsv(cols, datas, title)
+          exportFunc: (cols, datas) => csvExporter(cols, datas, title)
         }],
         pageSize: defaultNumberOfRows,
         draggable: isDraggable,
