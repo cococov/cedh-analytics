@@ -32,6 +32,7 @@
 @media (max-width: 767px) {
   .errorImageContainer {
     margin-top: 0;
+    width: 100%;
   }
 
   .errorImage {

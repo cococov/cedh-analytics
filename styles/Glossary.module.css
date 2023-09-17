@@ -27,6 +27,7 @@
 @media (max-width: 767px) {
   .glossaryImageContainer {
     margin-top: 0;
+    width: 100%;
   }
 }
 
