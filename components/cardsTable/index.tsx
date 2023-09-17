@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { replace, isNil } from 'ramda';
 import Image from 'next/image';
@@ -21,17 +21,23 @@ const IDENTITY_COLORS = { B: B, G: G, R: R, U: U, W: W, C: C };
 
 type CardProps = any; // TODO: define type
 
-type CardsTableProps = {
-  title?: string;
-  cards: CardProps[];
-  tagsByCard: { [key: string]: string[] };
-  toggleLoading: (state: boolean) => void;
-  handleChangeCard: (cardName: string | undefined) => void;
-  forceSnackBarLoading: (state: boolean) => void;
-  tournamentId?: string;
-};
-
-const CardsTable: React.FC<CardsTableProps> = ({ title, cards, tagsByCard, toggleLoading, handleChangeCard, tournamentId, forceSnackBarLoading }) => {
+export default function CardsTable({
+  title,
+  cards,
+  tagsByCard,
+  toggleLoading,
+  handleChangeCard,
+  tournamentId,
+  forceSnackBarLoading
+}: {
+  title?: string,
+  cards: CardProps[],
+  tagsByCard: { [key: string]: string[] },
+  toggleLoading: (state: boolean) => void,
+  handleChangeCard: (cardName: string | undefined) => void,
+  forceSnackBarLoading: (state: boolean) => void,
+  tournamentId?: string,
+}) {
   const [isLoaded, setLoaded] = useState(false);
   const router = useRouter();
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
@@ -451,5 +457,3 @@ const CardsTable: React.FC<CardsTableProps> = ({ title, cards, tagsByCard, toggl
     </span>
   )
 };
-
-export default CardsTable;
