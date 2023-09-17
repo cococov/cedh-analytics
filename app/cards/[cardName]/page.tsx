@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+/* Vendor */
+import { replace } from 'ramda';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../../shared-metadata';
 import { CardInfoPage } from '../../../components';
@@ -53,7 +55,7 @@ export async function generateMetadata({
 }: {
   params: Params,
 }): Promise<Metadata> {
-  const cardName = decodeURI(String(params.cardName));
+  const cardName = replace(/%2C/, ',', decodeURI(String(params.cardName)));
   const description = `${cardName} info and usage in cEDH decks from the cEDH database. | ${descriptionMetadata}`;
   const result = await fetchCards(cardName);
   const capitalizedCardName = cardName.split(' ').map((w, i) => {
@@ -128,7 +130,7 @@ export default async function Card({
 }: {
   params: { cardName: string }
 }) {
-  const response = await fetchData({ cardName: decodeURI(params.cardName) });
+  const response = await fetchData({ cardName: replace(/%2C/, ',', decodeURI(String(params.cardName))) });
   if (response.notFound) notFound();
 
   const data = response as PageData;
