@@ -1,18 +1,18 @@
 "use client";
 
 import { useState, useEffect, useContext } from 'react';
-
+/* Vendor */
 import Snackbar from '@mui/material/Snackbar';
-
+/* Own */
 import AppContext from '../../contexts/appStore';
-
+/* Static */
 import style from '../../styles/SnackbarLoading.module.css';
 
-type SnackBarLoadingProps = {
-  isOpen?: boolean,
-};
-
-const SnackBarLoading: React.FC<SnackBarLoadingProps> = ({ isOpen }) => {
+export default function SnackBarLoading({
+  isOpen
+}: {
+  isOpen: boolean,
+}) {
   const { isLoading } = useContext(AppContext);
   const [colors, setColors] = useState({
     first: 'yellow',
@@ -62,5 +62,3 @@ const SnackBarLoading: React.FC<SnackBarLoadingProps> = ({ isOpen }) => {
     </Snackbar>
   )
 };
-
-export default SnackBarLoading;

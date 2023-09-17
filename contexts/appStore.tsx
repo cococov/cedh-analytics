@@ -1,6 +1,9 @@
 "use client";
 
-import { createContext, useState, useReducer } from 'react';
+import { createContext, useState, useReducer, useEffect, useRef } from 'react';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+/* Own */
+import { SnackBarLoading } from '../components';
 
 /**
  * Default Values
@@ -9,7 +12,7 @@ const DEFAULT_VALUES = {
   lang: 'en',
   theme: 'light',
   isLoading: false,
-  toggleLoading: (_a: boolean) => {},
+  toggleLoading: (_a: boolean) => { },
 };
 
 /**
@@ -25,23 +28,34 @@ export interface IProviderProps {
  * App Provider
  */
 export const AppProvider: React.FC<IProviderProps> = ({ children }) => {
+  const pathname = usePathname();
   const [lang, setLang] = useState(DEFAULT_VALUES['lang']);
   const [theme, setTheme] = useState(DEFAULT_VALUES['theme']);
   const [isLoading, toggleLoading] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
+  const pathNameRef = useRef(pathname);
 
+  useEffect(() => {
+    const handleStop = () => { toggleLoading(false) };
+    if (pathNameRef.current !== pathname) {
+
+      handleStop();
+      pathNameRef.current = pathname;
+    }
+  }, [pathname]);
 
   return (
-  <AppContext.Provider
-    value={{
-      lang,
-      theme,
-      isLoading,
-      toggleLoading,
-    }}
-  >
-    {children}
-  </AppContext.Provider>
+    <AppContext.Provider
+      value={{
+        lang,
+        theme,
+        isLoading,
+        toggleLoading,
+      }}
+    >
+      <SnackBarLoading isOpen={isLoading} />
+      {children}
+    </AppContext.Provider>
   );
 };
 
-  export default AppContext;
+export default AppContext;

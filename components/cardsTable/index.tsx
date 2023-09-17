@@ -1,15 +1,19 @@
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import { useRouter } from 'next/navigation';
-import { replace, isNil } from 'ramda';
 import Image from 'next/image';
-import styles from '../../styles/CardsList.module.css';
-import Table from '../table';
-import { Loading } from '../../components';
+/* Vendor */
+import { replace, isNil } from 'ramda';
 import { MaterialReadMoreIcon } from '../vendor/materialIcon';
 import { MaterialChip } from '../vendor/materialUi';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
+/* Own */
+import Table from '../table';
+import Loading from '../loading';
+import AppContext from '../../contexts/appStore';
+/* Static */
+import styles from '../../styles/CardsList.module.css';
 import B from '../../public/images/B.png';
 import G from '../../public/images/G.png';
 import R from '../../public/images/R.png';
@@ -25,21 +29,18 @@ export default function CardsTable({
   title,
   cards,
   tagsByCard,
-  toggleLoading,
   handleChangeCard,
   tournamentId,
-  forceSnackBarLoading
 }: {
   title?: string,
   cards: CardProps[],
   tagsByCard: { [key: string]: string[] },
-  toggleLoading: (state: boolean) => void,
   handleChangeCard: (cardName: string | undefined) => void,
-  forceSnackBarLoading: (state: boolean) => void,
   tournamentId?: string,
 }) {
-  const [isLoaded, setLoaded] = useState(false);
   const router = useRouter();
+  const { toggleLoading } = useContext(AppContext);
+  const [isLoaded, setLoaded] = useState(false);
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
@@ -444,7 +445,7 @@ export default function CardsTable({
             icon: function ReadMore() { return <MaterialReadMoreIcon /> },
             tooltip: 'Go to Card Page',
             onClick: (_event, rowData: any = {}) => {
-              forceSnackBarLoading(true);
+              toggleLoading(true);
               router.push(
                 isNil(tournamentId)
                   ? `/cards/${replace(/\//g, '%2F', rowData['cardName'])}`

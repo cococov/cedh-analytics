@@ -28,9 +28,9 @@ type CardData = {
 const DEFAULT_VALUES = {
   occurrencesForCard: { occurrences: 0, percentage: 0 },
   isLoadingDeckLists: false,
+  isLoadingCard: false,
   decklists: [] as DeckListsByCommander[],
   selectedCard: '',
-  isLoading: false,
   cardData: {
     cardImage: '',
     cardType: '',
@@ -42,13 +42,10 @@ const DEFAULT_VALUES = {
     isDoubleFace: false,
   },
   setOccurrencesForCard: (_occurrencesForCard: occurrencesForCard) => { },
-  toggleLoadingDecklists: (_state: boolean) => { },
   setDecklists: (_decklists: DeckListsByCommander[]) => { },
   setSelectedCard: (_selectedCard: string) => { },
-  toggleLoading: (_newValue: boolean) => { },
   setCardData: (_cardData: CardData) => { },
   handleChangeCard: (_cardName: string | undefined) => { },
-  forceSnackBarLoading: (_newValue: boolean) => { },
 };
 
 /**
@@ -67,9 +64,8 @@ export function TournamentResumeProvider({
   children: any,
 }) {
   const selectedCardRef = useRef<string>('');
-  const [isForcedSnackBarLoading, forceSnackBarLoading] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
   const [isLoadingDeckLists, toggleLoadingDecklists] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
-  const [isLoading, toggleLoading] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
+  const [isLoadingCard, toggleIsLoadingCard] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
   const [occurrencesForCard, setOccurrencesForCard] = useState<occurrencesForCard>(DEFAULT_VALUES.occurrencesForCard);
   const [decklists, setDecklists] = useState<DeckListsByCommander[]>([]);
   const [selectedCard, setSelectedCard] = useState('');
@@ -83,12 +79,13 @@ export function TournamentResumeProvider({
     isReservedList: false,
     isDoubleFace: false,
   });
+  const toggleLoadingDecklistsTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const handleChangeCard = async (cardName: string | undefined) => {
     if (selectedCardRef.current === cardName) return;
     toggleLoadingDecklists(true);
-    setTimeout(() => { toggleLoadingDecklists(false) }, 300);
-    toggleLoading(true);
+    toggleIsLoadingCard(true);
+    toggleLoadingDecklistsTimeoutRef.current = setTimeout(() => { toggleLoadingDecklists(false) }, 300);
     setSelectedCard(cardName || '');
     selectedCardRef.current = cardName || '';
     const card = cards.find((current: any) => current['cardName'] === cardName);
@@ -111,7 +108,9 @@ export function TournamentResumeProvider({
         isReservedList: result['isReservedList'],
         isDoubleFace: result['isDoubleFace'],
       });
-      toggleLoading(false);
+      toggleIsLoadingCard(false);
+      toggleLoadingDecklists(false);
+      clearTimeout(toggleLoadingDecklistsTimeoutRef.current);
     };
 
     !!selectedCard && requestData();
@@ -122,18 +121,15 @@ export function TournamentResumeProvider({
       value={{
         occurrencesForCard,
         isLoadingDeckLists,
+        isLoadingCard,
         decklists,
         selectedCard,
-        isLoading,
         cardData,
         setOccurrencesForCard,
-        toggleLoadingDecklists,
         setDecklists,
         setSelectedCard,
-        toggleLoading,
         setCardData,
         handleChangeCard,
-        forceSnackBarLoading,
       }}
     >
       {children}

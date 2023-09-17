@@ -5,9 +5,7 @@ import { useContext } from 'react';
 import CardsTable from '../cardsTable';
 
 interface Context {
-  toggleLoading: (_newValue: boolean) => {},
-  handleChangeCard: (_cardName: string | undefined) => { },
-  forceSnackBarLoading: (_newValue: boolean) => { },
+  handleChangeCard: (_cardName: string | undefined) => {},
 };
 
 export default function CardsTableWithProvider({
@@ -17,22 +15,20 @@ export default function CardsTableWithProvider({
   context,
   tournamentId,
 }: {
-  title: string,
+  title?: string,
   cards: any[],
   tagsByCard: { [key: string]: string[] },
   context: any,
   tournamentId?: string,
 }) {
-  const { toggleLoading, handleChangeCard, forceSnackBarLoading } = useContext<Context>(context);
+  const { handleChangeCard } = useContext<Context>(context);
   return (
     <CardsTable
-      title="DB Cards"
+      title={title || "DB Cards"}
       cards={cards}
       tagsByCard={tagsByCard}
       tournamentId={tournamentId}
-      toggleLoading={toggleLoading}
       handleChangeCard={handleChangeCard}
-      forceSnackBarLoading={forceSnackBarLoading}
     />
   );
 };

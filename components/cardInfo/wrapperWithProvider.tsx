@@ -6,7 +6,7 @@ import CardInfo from '../cardInfo';
 
 interface Context {
   selectedCard: string;
-  isLoading: boolean;
+  isLoadingCard: boolean;
   cardData: {
     cardImage: string;
     cardType: string;
@@ -24,11 +24,11 @@ export default function CardInfoWithProvider({
 }: {
   context: any,
 }) {
-  const { selectedCard, isLoading, cardData } = useContext<Context>(context);
+  const { selectedCard, isLoadingCard, cardData } = useContext<Context>(context);
   return (
     <CardInfo
       selectedCard={selectedCard}
-      isLoading={isLoading}
+      isLoading={isLoadingCard}
       cardData={cardData}
     />
   );

@@ -1,7 +1,9 @@
-
 "use client";
 
+import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
+/* Own */
+import AppContext from '../../contexts/appStore';
 
 export default function TableRowWithLink({
   key,
@@ -15,8 +17,10 @@ export default function TableRowWithLink({
   children: React.ReactNode,
 }) {
   const router = useRouter();
+  const { toggleLoading } = useContext(AppContext);
 
   const handleClickTopRow = (link: string) => (_event: React.MouseEvent<HTMLTableRowElement, MouseEvent> | undefined) => {
+    toggleLoading(true);
     router.push(link);
   };
 
