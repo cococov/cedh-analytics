@@ -122,8 +122,9 @@ export default async function Card({
             className={styles.tournamentImage}
             src={`/data/tournaments/${!!tournamentInfo.imageName ? `${tournamentInfo.id}/${tournamentInfo.imageName}` : 'default.jpg'}`}
             alt={`${tournamentInfo.id} Image`}
-            layout="fill"
             quality={100}
+            width={1920}
+            height={1080}
             priority
           />
           {tournamentInfo.showName && <h1>{tournamentInfo.name}</h1>}

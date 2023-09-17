@@ -177,7 +177,7 @@
 }
 
 .tournamentImageContainer .tournamentImage {
-  position: relative;
+  position: absolute;
   object-fit: cover;
   max-width: calc(400px / (722px / 1280px));;
   max-height: 400px;
