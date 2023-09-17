@@ -1,6 +1,5 @@
 "use client";
 
-import type { ReactNode } from 'react';
 import { Dispatch, useContext } from 'react';
 import Dialog from '@mui/material/Dialog';
 import { styled } from '@mui/material/styles';
@@ -15,7 +14,7 @@ type ImageDialogPayload = { isOpen: boolean; image?: string, label?: string };
 
 interface DialogTitleProps {
   id: string;
-  children?: ReactNode;
+  children?: React.ReactNode;
   onClose: Dispatch<ImageDialogPayload>;
 }
 
