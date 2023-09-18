@@ -356,9 +356,9 @@ export default function CardsTable({
       render: function Tags(rowData: any, type: any) {
         const value = type === 'row' ? rowData.tags : rowData;
         return type === 'row' ? (
-          <span className={styles['cardTagsWrapper']}>
+          <span className={styles.cardTagsWrapper}>
             {
-              value.map((tag: string, index: number) => (<MaterialChip key={tag} label={tag} size="small" className={styles['cardTag']} />))
+              value.map((tag: string, _index: number) => (<MaterialChip key={tag} label={tag} size="small" className={styles.cardTag} />))
             }
           </span>
         ) : value;
@@ -425,7 +425,7 @@ export default function CardsTable({
   if (!isLoaded) return <Loading />;
 
   return (
-    <span className={styles['cards-table']}>
+    <span className={styles.cardsTable}>
       <Table
         key={renderKey}
         columns={columns}

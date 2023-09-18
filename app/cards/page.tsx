@@ -48,7 +48,7 @@ export default async function Cards() {
   return (
     <main className={styles.main}>
       <DbCardsProvider cards={cards}>
-        <span className={styles['left-span']}>
+        <span className={styles.leftSpan}>
           <DeckListsWithProvider size="medium" context={DbCardsContext} />
         </span>
         <CardsTableWithProvider

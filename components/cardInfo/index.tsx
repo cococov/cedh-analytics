@@ -1,8 +1,11 @@
 import Image from 'next/image';
-import styles from '../../styles/CardsList.module.css';
-import { MaterialTooltip } from '../vendor/materialUi';
-import Loading from '../loading';
+/* Vendor */
 import { split } from 'ramda';
+import { MaterialTooltip } from '../vendor/materialUi';
+/* Own */
+import Loading from '../loading';
+/* Static */
+import styles from '../../styles/CardsList.module.css';
 import CardBack from '../../public/images/mtg-back.jpg';
 
 
@@ -38,9 +41,9 @@ const CardInfo: React.FC<CardInfoProps> = ({
   }
 }) => {
   return (
-    <span className={styles['card-info-container']}>
-      <span className={styles['card-info']}>
-        <span className={styles['card-image']}>
+    <span className={styles.cardInfoContainer}>
+      <span className={styles.cardInfo}>
+        <span className={styles.cardImage}>
           {(!!!selectedCard || isLoading) ? (
             <Image src={CardBack} alt="Card placeholder" width={256} height={366} placeholder="blur" priority />
           ) : (
@@ -48,18 +51,18 @@ const CardInfo: React.FC<CardInfoProps> = ({
           )}
         </span>
         {
-          isLoading ? (<span className={styles['card-text-container-loading']}><Loading /></span>) : (
+          isLoading ? (<span className={styles.cardTextContainerLoading}><Loading /></span>) : (
             !!selectedCard ? (
-              <span className={styles['card-text-container']}>
-                <h2 className={styles['card-name']}>{selectedCard || 'Card Name'}</h2>
-                <h3 className={styles['card-type']}>{cardType || 'Type'}</h3>
-                <p className={styles['card-text']} >
+              <span className={styles.cardTextContainer}>
+                <h2 className={styles.cardName}>{selectedCard || 'Card Name'}</h2>
+                <h3 className={styles.cardType}>{cardType || 'Type'}</h3>
+                <p className={styles.cardText} >
                   {split('--DIVIDE--', cardText)[0] || 'Oracle text.'}
                 </p>
                 {isDoubleFace && (
                   <>
-                    <h3 className={styles['card-type']}>{cardFaces[1]['type_line'] || 'Type'}</h3>
-                    <p className={styles['card-text']} >
+                    <h3 className={styles.cardType}>{cardFaces[1]['type_line'] || 'Type'}</h3>
+                    <p className={styles.cardText} >
                       {split('--DIVIDE--', cardText)[1] || 'Oracle text.'}
                     </p>
                   </>
@@ -69,29 +72,29 @@ const CardInfo: React.FC<CardInfoProps> = ({
                 </p>
                 {!!gathererId ? (
                   <a
-                    className={styles['card-gatherer']}
+                    className={styles.cardGatherer}
                     rel="author noopener noreferrer"
                     target="_blank"
                     href={`https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=${gathererId}`}
                   >
                     Gatherer
                   </a>) : (
-                  <span className={styles['card-gatherer-disabled']} title="Has no gatherer.">
+                  <span className={styles.cardGathererDisabled} title="Has no gatherer.">
                     Gatherer
                   </span>
                 )}
-                <span className={styles['card-reserved-list-container']}>
+                <span className={styles.cardReservedListContainer}>
                   {isReservedList &&
                     <MaterialTooltip
                       title="Reserved List"
                       aria-label="Reserved List"
                     >
-                      <span className={styles['card-reserved-list']}>💎</span>
+                      <span className={styles.cardReservedList}>💎</span>
                     </MaterialTooltip>
                   }
                 </span>
               </span>
-            ) : (<span className={styles['card-text-container-no-card-selected']}><h2 className={styles['no-card-selected']} >NO CARD SELECTED</h2></span>)
+            ) : (<span className={styles.cardTextContainerNoCardSelected}><h2 className={styles.noCardSelected} >NO CARD SELECTED</h2></span>)
           )
         }
       </span>

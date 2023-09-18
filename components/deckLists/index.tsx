@@ -1,5 +1,7 @@
 import Image from 'next/image';
+/* Own */
 import Loading from '../loading';
+/* Static */
 import styles from '../../styles/DeckLists.module.css';
 import B from '../../public/images/B.png';
 import G from '../../public/images/G.png';
@@ -29,7 +31,7 @@ export default function DeckLists({
 }) {
   const getIdentityImages = (colorIdentity: ColorIdentity) => {
     return (
-      <span className={styles['identityGroup']}>
+      <span className={styles.identityGroup}>
         {
           colorIdentity.map(color => (
             <Image src={IDENTITY_COLORS[color]} alt={color} width={18} height={18} priority key={color} />
@@ -51,7 +53,7 @@ export default function DeckLists({
           </span>
         )}
       </span>
-      <span className={`${styles.content} ${styles[`content-${size}`]}`}>
+      <span className={`${styles.content} ${styles[`content${size.charAt(0).toUpperCase() + size.slice(1)}`]}`}>
         {isLoading ? <Loading /> : (
           (!!decklists && decklists?.length > 0) ? (
             decklists.map(({ commanders, decks, colorIdentity }) => (
@@ -60,7 +62,7 @@ export default function DeckLists({
                   {getIdentityImages(colorIdentity)}
                   <span key={`${commanders}-name`}>{commanders}</span>
                 </summary>
-                <ul className={styles['card-lists']} key={`${commanders}-decklists`}>
+                <ul className={styles.cardLists} key={`${commanders}-decklists`}>
                   {
                     decks.map(({ name, url }) => (
                       <a
@@ -71,7 +73,7 @@ export default function DeckLists({
                       >
                         <li
                           key={`li-card-list-${url}`}
-                          className={styles['card-list']}
+                          className={styles.cardList}
                         >
                           {name}
                         </li>
@@ -82,7 +84,7 @@ export default function DeckLists({
               </details>
             ))
           ) :
-            <h2 className={styles['no-card-selected']}>NO CARD SELECTED</h2>
+            <h2 className={styles.noCardSelected}>NO CARD SELECTED</h2>
         )}
       </span>
     </span>

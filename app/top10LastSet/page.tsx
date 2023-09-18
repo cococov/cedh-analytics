@@ -46,9 +46,9 @@ const fetchData = async () => {
 export default async function Top10LastSet() {
   const data = await fetchData();
   return (
-    <main className={styles['main']} >
-      <span className={styles['statTable']}>
-        <section className={styles['statTableTitle']}>
+    <main className={styles.main} >
+      <span className={styles.statTable}>
+        <section className={styles.statTableTitle}>
           <h1>Top 10 cards</h1>
           <h2>{data.last_set}</h2>
         </section>

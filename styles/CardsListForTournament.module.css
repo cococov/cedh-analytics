@@ -43,12 +43,12 @@
   }
 }
 
-.cards-table {
+.cardsTable {
   flex: 3;
 }
 
 @media (min-width: 857px) {
-  .cards-table {
+  .cardsTable {
     padding-left: 5rem;
     padding-right: 5rem;
   }
@@ -179,7 +179,8 @@
 .tournamentImageContainer .tournamentImage {
   position: absolute;
   object-fit: cover;
-  max-width: calc(400px / (722px / 1280px));;
+  max-width: calc(400px / (722px / 1280px));
+  ;
   max-height: 400px;
   z-index: 0;
   opacity: 1;

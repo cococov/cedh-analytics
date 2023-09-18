@@ -56,7 +56,7 @@
   scrollbar-color: var(--thumbBG2) var(--scrollbarBG2);
 }
 
-.content-small {
+.contentSmall {
   max-height: 40vh;
 }
 
@@ -69,7 +69,7 @@
   border: 0px solid var(--scrollbarBG2);
 }
 
-.no-card-selected {
+.noCardSelected {
   flex-grow: 1;
   align-self: center;
   margin-left: 1rem;
@@ -78,13 +78,13 @@
   font-size: 1.3rem;
 }
 
-.card-lists {
+.cardLists {
   padding-inline-start: 0px;
   margin-top: 0px;
   margin-bottom: 0px;
 }
 
-.card-list {
+.cardList {
   display: flex;
   align-items: center;
   border-bottom: solid;
@@ -95,7 +95,7 @@
   background-color: rgba(0, 0, 0, 0.04);
 }
 
-.card-list:hover {
+.cardList:hover {
   background-color: rgba(0, 0, 0, 0.08);
 }
 

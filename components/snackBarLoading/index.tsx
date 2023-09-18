@@ -1,19 +1,16 @@
 "use client";
 
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 /* Vendor */
 import Snackbar from '@mui/material/Snackbar';
-/* Own */
-import AppContext from '../../contexts/appStore';
 /* Static */
-import style from '../../styles/SnackbarLoading.module.css';
+import styles from '../../styles/SnackbarLoading.module.css';
 
 export default function SnackBarLoading({
   isOpen
 }: {
   isOpen: boolean,
 }) {
-  const { isLoading } = useContext(AppContext);
   const [colors, setColors] = useState({
     first: 'yellow',
     second: 'blue',
@@ -42,20 +39,20 @@ export default function SnackBarLoading({
 
   return (
     <Snackbar
-      open={isLoading}
+      open={isOpen}
       autoHideDuration={6000}
     >
-      <span className={style['snackBarLoadingBase']}>
-        <span className={style['mtg-loading-container']}>
-          <span className={style['mtg-loading']}>
-            <span className={style['mtg-loading-first']} style={{ backgroundColor: colors['first'] }} />
-            <span className={style['mtg-loading-second']} style={{ backgroundColor: colors['second'] }} />
-            <span className={style['mtg-loading-third']} style={{ backgroundColor: colors['third'] }} />
-            <span className={style['mtg-loading-fourth']} style={{ backgroundColor: colors['fourth'] }} />
-            <span className={style['mtg-loading-fifth']} style={{ backgroundColor: colors['fifth'] }} />
+      <span className={styles.snackBarLoadingBase}>
+        <span className={styles.mtgLoadingContainer}>
+          <span className={styles.mtgLoading}>
+            <span className={styles.mtgLoadingFirst} style={{ backgroundColor: colors['first'] }} />
+            <span className={styles.mtgLoadingSecond} style={{ backgroundColor: colors['second'] }} />
+            <span className={styles.mtgLoadingThird} style={{ backgroundColor: colors['third'] }} />
+            <span className={styles.mtgLoadingFourth} style={{ backgroundColor: colors['fourth'] }} />
+            <span className={styles.mtgLoadingFifth} style={{ backgroundColor: colors['fifth'] }} />
           </span>
         </span>
-        <span className={style['snackBarLoadingText']}>
+        <span className={styles.snackBarLoadingText}>
           LOADING...
         </span>
       </span>

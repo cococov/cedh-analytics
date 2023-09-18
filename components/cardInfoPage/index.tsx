@@ -1,8 +1,11 @@
 import Image from 'next/image';
-import styles from '../../styles/CardPage.module.css';
+/* Vendor */
 import { split } from 'ramda';
+/* Own */
 import ButtonLink from '../buttonLink';
 import DeckLists from '../deckLists';
+/* Static */
+import styles from '../../styles/CardPage.module.css';
 
 type occurrencesForCard = { occurrences: number, percentage: number };
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
@@ -24,24 +27,24 @@ type CardProps = {
 }
 
 const CardInfoPage: React.FC<CardProps> = ({ cardName, cardType, cardText, gathererId, averagePrice, cardFaces, isReservedList, isDoubleFace, cardImage, occurrencesForCard, decklists }: CardProps) => (
-  <span className={styles['card-info-container']}>
-    <h1 className={styles['card-name']}>{cardName || 'Card Name'}</h1>
+  <span className={styles.cardInfoContainer}>
+    <h1 className={styles.cardName}>{cardName || 'Card Name'}</h1>
     {isReservedList &&
-      <h2 className={styles['card-reserved-list']}> Reserved List</h2>
+      <h2 className={styles.cardReservedList}> Reserved List</h2>
     }
-    <span className={styles['card-info']}>
+    <span className={styles.cardInfo}>
       <section>
         <Image src={cardImage} alt={`${cardName} image`} placeholder="blur" blurDataURL="/images/mtg-back.jpg" width={256} height={366} priority />
       </section>
-      <section className={styles['card-text-container']}>
+      <section className={styles.cardTextContainer}>
         <h3>{cardType || 'Type'}</h3>
-        <p className={styles['card-text']} >
+        <p className={styles.cardText} >
           {split('--DIVIDE--', cardText)[0] || 'Oracle text.'}
         </p>
         {isDoubleFace && (
           <>
-            <h3 className={styles['card-type']}>{cardFaces[1]['type_line'] || 'Type'}</h3>
-            <p className={styles['card-text']} >
+            <h3 className={styles.cardType}>{cardFaces[1]['type_line'] || 'Type'}</h3>
+            <p className={styles.cardText} >
               {split('--DIVIDE--', cardText)[1] || 'Oracle text.'}
             </p>
           </>
