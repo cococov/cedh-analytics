@@ -1,29 +1,25 @@
 # TODO
 
 - Mostrar imagen de atrás de cartas doble cara
-- Optimizar imágenes para no depender de vercel en ello
-- Dejar de optimizar imágenes en info de carta desde vercel una vez sean optimas
 - Cargar torneos chilenos faltantes
-- Cambiar metagame project por edhtop16
 - Paginar torneos
 - Añadir buscador a torneos
 - Fix: tabla en mobile
 - Filtrar tags para dejar solo los útiles
 - Fix: Visualización de pagina de cartas de la db al poner todos las columnas
-- Cambiar nombre de cards a DB Cards
 - Usar query params para filtros y columnas visibles en tabla de cartas
 - Dejar de guardar data vieja de db cards
 - Implementar tailwind
 - Pasar carga de data pesada a cliente para mejorar first content paint
+- Pasar loading de magic full a css
+- Optimizar imágenes para no depender de vercel en ello
+- Dejar de optimizar imágenes en info de carta desde vercel una vez sean optimas
 
 ## Metagame v2
 
 - Añadir avg winrate de decks que las usan en resume y by_commander
-- Crear pagina resumen del metagame
+- Crear página resumen del metagame
 - Crear pagina de comandantes
+- Crear página de carta
 - Actualizar tags de cartas del metagame
-
-## Next 13
-
-- Levantar Snackbar en transiciones pesadas entre paginas (ej. carta en tabla de top 10)
-- Pasar loading de magic full a css
+- Cambiar metagame project por edhtop16 en créditos
