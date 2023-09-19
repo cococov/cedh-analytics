@@ -90,7 +90,7 @@ logs.end_log_block('Decklists from hashes got')
 logs.begin_log_block('Processing data')
 condensed_commanders_data = edhtop16.get_condensed_commanders_data(commanders, raw_lists)
 stats_by_commander = edhtop16.get_commander_stats_by_commander(commanders, raw_lists, decklists_by_commander)
-metagame_resume = edhtop16.get_metagame_resume(commanders, raw_lists, stats_by_commander)
+metagame_resume = edhtop16.get_metagame_resume(commanders, raw_lists, stats_by_commander, decklist_hashes_by_tournament)
 logs.end_log_block('Data processed!')
 
 # PROCESS CARDS

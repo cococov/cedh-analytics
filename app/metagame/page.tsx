@@ -81,16 +81,63 @@ export const metadata: Metadata = {
 };
 
 const fetchData = async () => {
+  const resume = RESUME as ResumeData;
   return {
-
+    resume,
   };
 };
 
 export default async function Metagame() {
-  const {  } = await fetchData();
+  const { resume } = await fetchData();
   return (
     <main className={styles.main}>
-      <h1>WIP</h1>
+      <section className={styles.topResumeContainer}>
+        <span className={styles.topResume}>
+          <span className={styles.topResumeContent}>
+            <table>
+              <tr><td><b>No. of Commanders:</b></td><td>{resume.cantCommanders}</td></tr>
+              <tr><td><b>No. of Decks:</b></td><td>{resume.cantLists}</td></tr>
+              <tr><td><b>No. of Tournaments:</b></td><td>{resume.cantTournaments}</td></tr>
+              <tr><td><b>Decks with stickers:</b></td><td>{resume.percentageDecksWithStickers * 100}%</td></tr>
+              <tr><td><b>Decks with companions:</b></td><td>{resume.percentageDecksWithCompanions * 100}%</td></tr>
+            </table>
+          </span>
+        </span>
+        <span className={styles.topResume}>
+          <span className={styles.topResumeContent}>
+            <table>
+              <tr><td><b>Avg. cmc with lands:</b></td><td>{Math.round((resume.avgCmcWithLands + Number.EPSILON) * 100) / 100}</td></tr>
+              <tr><td><b>Avg. cmc without lands:</b></td><td>{Math.round((resume.avgCmcWithoutLands + Number.EPSILON) * 100) / 100}</td></tr>
+              <tr><td><b>Min. avg. cmc with lands:</b></td><td>{Math.round((resume.minAvgCmcWithLands + Number.EPSILON) * 100) / 100}</td></tr>
+              <tr><td><b>Min. avg. cmc without lands:</b></td><td>{Math.round((resume.minAvgCmcWithoutLands + Number.EPSILON) * 100) / 100}</td></tr>
+              <tr><td><b>Max. avg. cmc without lands:</b></td><td>{Math.round((resume.maxAvgCmcWithoutLands + Number.EPSILON) * 100) / 100}</td></tr>
+              <tr><td><b>Max. avg. cmc without lands:</b></td><td>{Math.round((resume.maxAvgCmcWithoutLands + Number.EPSILON) * 100) / 100}</td></tr>
+              <p>COLOR GRAPH</p>
+            </table>
+          </span>
+        </span>
+        <span className={styles.topResume}>
+          <span className={styles.topResumeContent}>
+            <table>
+              <tr><td><b>Avg. creatures:</b></td><td>{Math.round((resume.avgCantCreatures + Number.EPSILON) * 100) / 100}</td></tr>
+              <tr><td><b>Avg. artifacts:</b></td><td>{Math.round((resume.avgCantArtifacts + Number.EPSILON) * 100) / 100}</td></tr>
+              <tr><td><b>Avg. enchantments:</b></td><td>{Math.round((resume.avgCantEnchantments + Number.EPSILON) * 100) / 100}</td></tr>
+              <tr><td><b>Avg. instants:</b></td><td>{Math.round((resume.avgCantInstants + Number.EPSILON) * 100) / 100}</td></tr>
+              <tr><td><b>Avg. sorceries:</b></td><td>{Math.round((resume.avgCantSorceries + Number.EPSILON) * 100) / 100}</td></tr>
+              <tr><td><b>Avg. lands:</b></td><td>{Math.round((resume.avgCantLands + Number.EPSILON) * 100) / 100}</td></tr>
+              <tr><td><b>Avg. planeswalkers:</b></td><td>{Math.round((resume.avgCantPlaneswalkers + Number.EPSILON) * 100) / 100}</td></tr>
+              <tr><td><b>Avg. battles:</b></td><td>{Math.round((resume.avgCantBattles + Number.EPSILON) * 100) / 100}</td></tr>
+            </table>
+          </span>
+        </span>
+        <span className={styles.topResume}>
+          <span className={styles.topResumeContent}>
+            <table>
+              <p>PIE GRAPH</p>
+            </table>
+          </span>
+        </span>
+      </section>
     </main>
   );
 };

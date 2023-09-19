@@ -170,10 +170,11 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
     data[commander]['allTokens'] = list(functools.reduce(lambda x, y: list(set(x + y)), map(lambda x: x['tokens'], processed_decklists)))
   return data
 
-def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList], stats_by_commander: dict[str, StatsByCommander]) -> MetagameResume:
+def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList], stats_by_commander: dict[str, StatsByCommander], decklist_hashes_by_tournament: dict[str, list[str]]) -> MetagameResume:
   data: MetagameResume = {} # type: ignore
   data['cantCommanders'] = len(commanders)
   data['cantLists'] = len(raw_lists)
+  data['cantTournaments'] = len(decklist_hashes_by_tournament.keys())
   data['avgCmcWithLands'] = round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgCmcWithLands'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
   data['avgCmcWithoutLands'] = round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgCmcWithoutLands'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
   data['minAvgCmcWithLands'] = functools.reduce(lambda x, y: float(x) if x < y else float(y), map(lambda x: x['minAvgCmcWithLands'], stats_by_commander.values()))
