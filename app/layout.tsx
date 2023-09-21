@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     'competitive', 'cedhguide', 'cedhanalytics'
   ],
   icons: {
-    icon: '/android-icon-192x192.png',
+    icon: '/favicon.ico',
     apple: [
       { url: 'apple-icon.png' },
       { url: 'apple-icon-57x57.png', sizes: '57x57' },
