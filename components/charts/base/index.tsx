@@ -1,13 +1,64 @@
 "use client";
 
 import { useRef, useEffect } from 'react';
+/* Vendor */
 import * as echarts from 'echarts/core';
-import { TooltipComponent, LegendComponent } from 'echarts/components';
-import type { EChartsOption, SetOptionOpts } from "echarts";
-import { RadarChart, PieChart } from 'echarts/charts';
+import { TooltipComponent, LegendComponent, GridComponent, ToolboxComponent } from 'echarts/components';
+import type { EChartsOption, SetOptionOpts, ToolboxComponentOption, SeriesOption } from "echarts";
+import { RadarChart, PieChart, BarChart, LineChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 
-echarts.use([TooltipComponent, LegendComponent, RadarChart, CanvasRenderer, PieChart]);
+echarts.use([
+  TooltipComponent,
+  ToolboxComponent,
+  LegendComponent,
+  RadarChart,
+  CanvasRenderer,
+  PieChart,
+  BarChart,
+  LineChart,
+  GridComponent,
+]);
+
+type App = {
+  configParameters: {
+    rotate: {
+      min: number,
+      max: number,
+    },
+    align: {
+      options: {
+        left: string,
+        center: string,
+        right: string,
+      },
+    },
+    verticalAlign: {
+      options: {
+        top: string,
+        middle: string,
+        bottom: string,
+      },
+    },
+    position: {
+      options: {
+        [key: string]: string,
+      },
+    },
+    distance: {
+      min: number,
+      max: number,
+    },
+  },
+  config: {
+    rotate: number,
+    align: string,
+    verticalAlign: string,
+    position: string,
+    distance: number,
+    onChange: () => void,
+  },
+}
 
 export interface ReactEChartsProps {
   option: EChartsOption;

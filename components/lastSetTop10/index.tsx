@@ -6,9 +6,11 @@ import TableRowWithLink from '../tableRowWithLink';
 import styles from '../../styles/Top10LastSet.module.css';
 
 export default function LastSetTop10({
-  last_set_top_10
+  last_set_top_10,
+  noLink,
 }: {
   last_set_top_10: { occurrences: number, cardName: string }[],
+  noLink?: boolean,
 }) {
   return (
     <table className={styles.statTableTable}>
@@ -20,14 +22,25 @@ export default function LastSetTop10({
       </thead>
       <tbody>
         {last_set_top_10.map((d, i) => (
-          <TableRowWithLink key={`row-last_set_top_10-${i}`} className={styles[`statTableBodyRow${i % 2}`]} link={`/cards/${replace(/\//g, '%2F', d.cardName)}`}>
-            <td key={`name-last_set_top_10-${i}`} className={styles.statTableBodyName}>
-              <span className={styles.dummyTd}>{d.cardName}</span>
-            </td>
-            <td key={`occurrences-last_set_top_10-${i}`} className={styles.statTableBodyOccurrences}>
-              <span className={styles.dummyTd}>{d.occurrences}</span>
-            </td>
-          </TableRowWithLink>
+          noLink ? (
+            <tr key={`row-last_set_top_10-${i}`} className={styles[`statTableBodyRow${i % 2}NoLink`]}>
+              <td key={`name-last_set_top_10-${i}`} className={styles.statTableBodyName}>
+                <span className={styles.dummyTd}>{d.cardName}</span>
+              </td>
+              <td key={`occurrences-last_set_top_10-${i}`} className={styles.statTableBodyOccurrences}>
+                <span className={styles.dummyTd}>{d.occurrences}</span>
+              </td>
+            </tr>
+          ) : (
+            <TableRowWithLink key={`row-last_set_top_10-${i}`} className={styles[`statTableBodyRow${i % 2}`]} link={`/cards/${replace(/\//g, '%2F', d.cardName)}`}>
+              <td key={`name-last_set_top_10-${i}`} className={styles.statTableBodyName}>
+                <span className={styles.dummyTd}>{d.cardName}</span>
+              </td>
+              <td key={`occurrences-last_set_top_10-${i}`} className={styles.statTableBodyOccurrences}>
+                <span className={styles.dummyTd}>{d.occurrences}</span>
+              </td>
+            </TableRowWithLink>
+          )
         ))}
       </tbody>
     </table>

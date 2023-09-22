@@ -1,6 +1,7 @@
+/* Own */
 import EChartBase from "../base";
 
-export default function RadarChart({ options }: {
+export default function PieChart({ options }: {
   options: {
     title: string,
     data: { value: number, name: string, selected?: boolean }[],

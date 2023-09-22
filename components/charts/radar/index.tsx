@@ -1,3 +1,4 @@
+/* Own */
 import EChartBase from "../base";
 
 export default function RadarChart({ options }: {

@@ -3,13 +3,7 @@
 import MaterialTable, { Action } from '@material-table/core';
 import { pdfExporter, csvExporter } from '../../utils/exporters';
 
-interface RowData {
-  'cardName'?: string;
-  'occurrences'?: string;
-  'typeLine'?: string;
-  'colorIdentity'?: string;
-  'reserved'?: string;
-}
+interface RowData { [key: string]: any }
 interface ITable {
   columns: object[];
   data: RowData[];

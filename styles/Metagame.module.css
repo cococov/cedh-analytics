@@ -1,12 +1,14 @@
 .main {
   display: flex;
-  height: 100dvh;
-  width: 80%;
+  min-height: 100dvh;
+  width: 80dvw;
+  margin-bottom: 5rem;
+  flex-direction: column;
 }
 
 @media (max-width: 1380px) {
   .main {
-    width: 100%;
+    width: 100dvw;
   }
 }
 
@@ -30,6 +32,8 @@
 
 @media (max-width: 500px) {
   .topResumeContainer {
+    gap: 0.5rem;
+    margin: 0;
     grid-template-columns: repeat(1, 1fr);
   }
 }
@@ -91,4 +95,16 @@
   flex-direction: row;
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
+}
+
+.commandersContainer {
+  display: flex;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.cardsContainer {
+  display: flex;
+  width: 100%;
+  margin-top: 1rem;
 }

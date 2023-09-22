@@ -35,7 +35,7 @@ export default function CardsTable({
   title?: string,
   cards: CardProps[],
   tagsByCard: { [key: string]: string[] },
-  handleChangeCard: (cardName: string | undefined) => void,
+  handleChangeCard?: (cardName: string | undefined) => void,
   tournamentId?: string,
 }) {
   const router = useRouter();
@@ -418,7 +418,9 @@ export default function CardsTable({
           : `/tournaments/${tournamentId}/${replace(/\//g, '%2F', rowData['cardName'])}`
       );
     } else {
-      handleChangeCard(rowData['cardName']);
+      if (handleChangeCard !== undefined) {
+        handleChangeCard(rowData['cardName']);
+      }
     }
   }, [isSmallScreen, isMediumScreen]);
 

@@ -1,15 +1,14 @@
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
-/* Vendor */
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
-import { RadarChart, PieChart } from '../../components/charts';
+import { RadarChart, PieChart, BarChart } from '../../components/charts';
 import { HeadlessTable } from '../../components/vendor/nextUi';
+import { LastSetTop10, AsyncCardsTable, AsyncCommandersTable, Loading } from '../../components';
 /* Static */
 import styles from '../../styles/Metagame.module.css';
 import RESUME from '../../public/data/metagame/metagame_resume.json';
-import COMMANDERS from '../../public/data/metagame/condensed_commanders_data.json';
-import CARDS from '../../public/data/metagame/metagame_cards.json';
+import { server } from '../../config';
 
 type ResumeData = {
   cantCommanders: number;
@@ -31,7 +30,7 @@ type ResumeData = {
   percentageDecksWithCompanions: number;
   allTokens: string[];
   lastSet: string;
-  lastSetTop10: { [key: string]: number | string }[];
+  lastSetTop10: { occurrences: number; cardName: string; }[];
   avgCmcWithLands: number;
   avgCmcWithoutLands: number;
   minAvgCmcWithLands: number;
@@ -39,24 +38,6 @@ type ResumeData = {
   maxAvgCmcWithLands: number;
   maxAvgCmcWithoutLands: number;
 };
-
-type CommandersData = {
-  identity: string;
-  commander: string;
-  appearances: number;
-  wins: number;
-  avgWinRate: number;
-  bestStanding: number;
-  worstStanding: number;
-};
-
-type CardsData = any;
-
-type MetagameProps = {
-  resume_data: ResumeData,
-  commanders_data: CommandersData,
-  cards_data: CardsData,
-}
 
 export const metadata: Metadata = {
   title: 'cEDH Metagame',
@@ -103,14 +84,12 @@ export default async function Metagame() {
               'No. of Commanders': resume.cantCommanders,
               'No. of Decks': resume.cantLists,
               'No. of Tournaments': resume.cantTournaments,
+              'Decks with partners': 0,
               'Decks with stickers': `${resume.percentageDecksWithStickers * 100}%`,
               'Decks with companions': `${resume.percentageDecksWithCompanions * 100}%`,
-              'Avg. cmc with lands': Math.round((resume.avgCmcWithLands + Number.EPSILON) * 100) / 100,
-              'Avg. cmc without lands': Math.round((resume.avgCmcWithoutLands + Number.EPSILON) * 100) / 100,
-              'Min. avg. cmc with lands': Math.round((resume.minAvgCmcWithLands + Number.EPSILON) * 100) / 100,
-              'Min. avg. cmc without lands': Math.round((resume.minAvgCmcWithoutLands + Number.EPSILON) * 100) / 100,
-              'Max. avg. cmc with lands': Math.round((resume.maxAvgCmcWithLands + Number.EPSILON) * 100) / 100,
-              'Max. avg. cmc without lands': Math.round((resume.maxAvgCmcWithoutLands + Number.EPSILON) * 100) / 100,
+              'Min no. of lands': Math.round((0)),
+              'Avg no. of lands': Math.round((resume.avgCantLands)),
+              'Max no. of lands': Math.round((0)),
             }} />
           </span>
         </span>
@@ -180,6 +159,44 @@ export default async function Metagame() {
             }} />
           </span>
         </span>
+        <span className={[styles.topResume, styles.topResumeChart].join(' ')}>
+          <h3 className={styles.topResumeTitle}>Avg deck's CMC</h3>
+          <span className={styles.topResumeContent}>
+            <BarChart options={{
+              categories: ['Min', 'Avg', 'Max'],
+              subCategories: ['With lands', 'Without lands'],
+              data: [
+                { "With lands": resume.minAvgCmcWithLands, "Without lands": resume.minAvgCmcWithoutLands },
+                { "With lands": resume.avgCmcWithLands, "Without lands": resume.avgCmcWithoutLands },
+                { "With lands": resume.maxAvgCmcWithLands, "Without lands": resume.maxAvgCmcWithoutLands },
+              ],
+            }} />
+          </span>
+        </span>
+        <span className={[styles.topResume, styles.topResumeChart].join(' ')}>
+          <h3 className={styles.topResumeTitle}>Top 10 cards</h3>
+          <b>{resume.lastSet}</b>
+          <span className={styles.topResumeContent}>
+            <LastSetTop10 last_set_top_10={resume.lastSetTop10} noLink />
+          </span>
+        </span>
+      </section>
+      <section className={styles.commandersContainer}>
+        <Suspense fallback={<Loading />}>
+          <AsyncCommandersTable
+            title="Metagame Commanders"
+            commandersURL={`${server}/data/metagame/condensed_commanders_data.json`}
+          />
+        </Suspense>
+      </section>
+      <section className={styles.cardsContainer}>
+        <Suspense fallback={<Loading />}>
+          <AsyncCardsTable
+            title="Metagame Cards"
+            cardsURL={`${server}/data/metagame/metagame_cards.json`}
+            tagsByCardURL={`${server}/data/cards/tags.json`}
+          />
+        </Suspense>
       </section>
     </main>
   );
