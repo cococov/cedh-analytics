@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
+/* Vendor */
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
+import { RadarChart, PieChart } from '../../components/charts';
+import { HeadlessTable } from '../../components/vendor/nextUi';
 /* Static */
 import styles from '../../styles/Metagame.module.css';
 import RESUME from '../../public/data/metagame/metagame_resume.json';
@@ -94,47 +98,86 @@ export default async function Metagame() {
       <section className={styles.topResumeContainer}>
         <span className={styles.topResume}>
           <span className={styles.topResumeContent}>
-            <table>
-              <tr><td><b>No. of Commanders:</b></td><td>{resume.cantCommanders}</td></tr>
-              <tr><td><b>No. of Decks:</b></td><td>{resume.cantLists}</td></tr>
-              <tr><td><b>No. of Tournaments:</b></td><td>{resume.cantTournaments}</td></tr>
-              <tr><td><b>Decks with stickers:</b></td><td>{resume.percentageDecksWithStickers * 100}%</td></tr>
-              <tr><td><b>Decks with companions:</b></td><td>{resume.percentageDecksWithCompanions * 100}%</td></tr>
-            </table>
+            <h3 className={styles.topResumeTitle}>Stats</h3>
+            <HeadlessTable data={{
+              'No. of Commanders': resume.cantCommanders,
+              'No. of Decks': resume.cantLists,
+              'No. of Tournaments': resume.cantTournaments,
+              'Decks with stickers': `${resume.percentageDecksWithStickers * 100}%`,
+              'Decks with companions': `${resume.percentageDecksWithCompanions * 100}%`,
+              'Avg. cmc with lands': Math.round((resume.avgCmcWithLands + Number.EPSILON) * 100) / 100,
+              'Avg. cmc without lands': Math.round((resume.avgCmcWithoutLands + Number.EPSILON) * 100) / 100,
+              'Min. avg. cmc with lands': Math.round((resume.minAvgCmcWithLands + Number.EPSILON) * 100) / 100,
+              'Min. avg. cmc without lands': Math.round((resume.minAvgCmcWithoutLands + Number.EPSILON) * 100) / 100,
+              'Max. avg. cmc with lands': Math.round((resume.maxAvgCmcWithLands + Number.EPSILON) * 100) / 100,
+              'Max. avg. cmc without lands': Math.round((resume.maxAvgCmcWithoutLands + Number.EPSILON) * 100) / 100,
+            }} />
           </span>
         </span>
         <span className={styles.topResume}>
-          <span className={styles.topResumeContent}>
-            <table>
-              <tr><td><b>Avg. cmc with lands:</b></td><td>{Math.round((resume.avgCmcWithLands + Number.EPSILON) * 100) / 100}</td></tr>
-              <tr><td><b>Avg. cmc without lands:</b></td><td>{Math.round((resume.avgCmcWithoutLands + Number.EPSILON) * 100) / 100}</td></tr>
-              <tr><td><b>Min. avg. cmc with lands:</b></td><td>{Math.round((resume.minAvgCmcWithLands + Number.EPSILON) * 100) / 100}</td></tr>
-              <tr><td><b>Min. avg. cmc without lands:</b></td><td>{Math.round((resume.minAvgCmcWithoutLands + Number.EPSILON) * 100) / 100}</td></tr>
-              <tr><td><b>Max. avg. cmc without lands:</b></td><td>{Math.round((resume.maxAvgCmcWithoutLands + Number.EPSILON) * 100) / 100}</td></tr>
-              <tr><td><b>Max. avg. cmc without lands:</b></td><td>{Math.round((resume.maxAvgCmcWithoutLands + Number.EPSILON) * 100) / 100}</td></tr>
-              <p>COLOR GRAPH</p>
-            </table>
+          <span className={[styles.topResume, styles.topResumeChart].join(' ')}>
+            <span className={styles.topResumeContentWithTitle}>
+              <h3 className={styles.topResumeTitle}>Colors</h3>
+              <PieChart options={{
+                title: 'Colors',
+                data: Object.keys(resume.avgColorPercentages).map((key) => ({
+                  value: resume.avgColorPercentages[key],
+                  name: key,
+                })),
+                colors: [
+                  '#fbd969',
+                  '#5470c6',
+                  '#333333',
+                  '#ee6666',
+                  '#91cc75',
+                ]
+              }} />
+            </span>
+            <span className={styles.topResumeContentWithTitle}>
+              <h3 className={styles.topResumeTitle}>Identity</h3>
+              <PieChart options={{
+                title: 'Colors',
+                data: Object.keys(resume.avgColorIdentityPercentages).map((key) => ({
+                  value: resume.avgColorIdentityPercentages[key],
+                  name: key,
+                })),
+                colors: [
+                  '#fbd969',
+                  '#5470c6',
+                  '#333333',
+                  '#ee6666',
+                  '#91cc75',
+                ]
+              }} />
+            </span>
           </span>
         </span>
-        <span className={styles.topResume}>
+        <span className={[styles.topResume, styles.topResumeChart].join(' ')}>
+          <h3 className={styles.topResumeTitle}>Avg uses of card types</h3>
           <span className={styles.topResumeContent}>
-            <table>
-              <tr><td><b>Avg. creatures:</b></td><td>{Math.round((resume.avgCantCreatures + Number.EPSILON) * 100) / 100}</td></tr>
-              <tr><td><b>Avg. artifacts:</b></td><td>{Math.round((resume.avgCantArtifacts + Number.EPSILON) * 100) / 100}</td></tr>
-              <tr><td><b>Avg. enchantments:</b></td><td>{Math.round((resume.avgCantEnchantments + Number.EPSILON) * 100) / 100}</td></tr>
-              <tr><td><b>Avg. instants:</b></td><td>{Math.round((resume.avgCantInstants + Number.EPSILON) * 100) / 100}</td></tr>
-              <tr><td><b>Avg. sorceries:</b></td><td>{Math.round((resume.avgCantSorceries + Number.EPSILON) * 100) / 100}</td></tr>
-              <tr><td><b>Avg. lands:</b></td><td>{Math.round((resume.avgCantLands + Number.EPSILON) * 100) / 100}</td></tr>
-              <tr><td><b>Avg. planeswalkers:</b></td><td>{Math.round((resume.avgCantPlaneswalkers + Number.EPSILON) * 100) / 100}</td></tr>
-              <tr><td><b>Avg. battles:</b></td><td>{Math.round((resume.avgCantBattles + Number.EPSILON) * 100) / 100}</td></tr>
-            </table>
-          </span>
-        </span>
-        <span className={styles.topResume}>
-          <span className={styles.topResumeContent}>
-            <table>
-              <p>PIE GRAPH</p>
-            </table>
+            <RadarChart options={{
+              title: 'Avg uses of card types',
+              indicators: [
+                { name: 'creatures', max: 30 },
+                { name: 'artifacts', max: 30 },
+                { name: 'enchantments', max: 30 },
+                { name: 'instants', max: 30 },
+                { name: 'sorceries', max: 30 },
+                { name: 'lands', max: 30 },
+                { name: 'planeswalkers', max: 30 },
+                { name: 'battles', max: 30 },
+              ],
+              values: [
+                Math.round((resume.avgCantCreatures + Number.EPSILON) * 100) / 100,
+                Math.round((resume.avgCantArtifacts + Number.EPSILON) * 100) / 100,
+                Math.round((resume.avgCantEnchantments + Number.EPSILON) * 100) / 100,
+                Math.round((resume.avgCantInstants + Number.EPSILON) * 100) / 100,
+                Math.round((resume.avgCantSorceries + Number.EPSILON) * 100) / 100,
+                Math.round((resume.avgCantLands + Number.EPSILON) * 100) / 100,
+                Math.round((resume.avgCantPlaneswalkers + Number.EPSILON) * 100) / 100,
+                Math.round((resume.avgCantBattles + Number.EPSILON) * 100) / 100,
+              ],
+            }} />
           </span>
         </span>
       </section>

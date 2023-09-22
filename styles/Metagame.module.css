@@ -1,6 +1,19 @@
 .main {
   display: flex;
   height: 100dvh;
+  width: 80%;
+}
+
+@media (max-width: 1380px) {
+  .main {
+    width: 100%;
+  }
+}
+
+@media (max-width: 750px) {
+  .main {
+    height: fit-content;
+  }
 }
 
 .topResumeContainer {
@@ -21,15 +34,9 @@
   }
 }
 
-@media (max-width: 750px) and (min-width:501px) {
+@media (max-width: 1130px) and (min-width:501px) {
   .topResumeContainer {
     grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 1000px) and (min-width: 751px) {
-  .topResumeContainer {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -42,6 +49,21 @@
   background-color: white;
   border-radius: 12px;
   height: 100%;
+  width: 100%;
+}
+
+.topResumeChart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: span 2;
+}
+
+@media (max-width: 500px) {
+  .topResumeChart {
+    grid-column: span 1;
+    justify-content: space-between;
+  }
 }
 
 .topResume .topResumeTitle {
@@ -56,9 +78,17 @@
   flex-direction: column;
   text-align: left;
   padding: 1rem;
+  flex-grow: 1;
 }
 
 .topResume .topResumeContent table tr td {
   padding-left: 0.2rem;
   padding-right: 0.2rem;
+}
+
+.topResume .topResumeTitle {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
