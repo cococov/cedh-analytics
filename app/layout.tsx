@@ -8,8 +8,8 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import { Analytics } from '@vercel/analytics/react';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from './shared-metadata';
-import { AppProvider } from '../contexts/appStore';
 import { NavBar, Footer } from '../components';
+import Providers from './providers';
 /* Static */
 import '../styles/globals.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -62,6 +62,7 @@ const roboto = Roboto({
   style: ['normal', 'italic'],
   subsets: ['latin'],
   display: 'swap',
+  variable: '--display-font',
 });
 
 export default function RootLayout({ children }: {
@@ -89,13 +90,13 @@ export default function RootLayout({ children }: {
             });
           `}
         </Script>
-        <AppProvider>
+        <Providers>
           <span className={styles.container}>
             <NavBar />
             {children}
             <Footer />
           </span >
-        </AppProvider>
+        </Providers>
         <Analytics />
       </body>
     </html>

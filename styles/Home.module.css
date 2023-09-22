@@ -95,6 +95,7 @@
   .navBar {
     display: none;
   }
+
   .navBarPhone {
     display: flex;
   }
@@ -104,6 +105,7 @@
   .navBar {
     display: flex;
   }
+
   .navBarPhone {
     display: none;
   }
@@ -337,6 +339,7 @@
   margin-top: -10rem;
   width: 100%;
 }
+
 .homeImageHidden {
   width: 100%;
   height: auto;
