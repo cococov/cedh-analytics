@@ -2,15 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
+html {
+  overflow: hidden;
+  padding: 0 !important;
+  margin: 0;
+}
+
 body {
   padding: 0 !important;
   margin: 0;
   background-color: #ececec;
-}
-
-body {
   overflow-x: hidden;
+  overflow-y: auto !important;
+  max-height: 100vh;
 }
 
 a {
@@ -50,6 +54,14 @@ ul {
 
 [class*='MTableToolbar-title'] {
   overflow: visible !important;
+}
+
+.MuiSelect-select {
+  min-width: 90% !important;
+}
+
+.MuiTablePagination-input .MuiTablePagination-select {
+  margin-right: 9rem !important;
 }
 
 /* Scroll */
