@@ -239,7 +239,7 @@ export default function CommandersTable({
         actions={(isSmallScreen || isMediumScreen) ? [] : [
           {
             icon: function ReadMore() { return <MaterialReadMoreIcon /> },
-            tooltip: 'Go to Card Page',
+            tooltip: 'Go to Commander page',
             onClick: (_event, rowData: any = {}) => {
               toggleLoading(true);
               router.push('/');// TODO: Go to commander page
