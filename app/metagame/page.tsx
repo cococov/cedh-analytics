@@ -160,7 +160,7 @@ export default async function Metagame() {
           </span>
         </span>
         <span className={[styles.topResume, styles.topResumeChart].join(' ')}>
-          <h3 className={styles.topResumeTitle}>Avg deck's CMC</h3>
+          <h3 className={styles.topResumeTitle}>Avg deck&apos;s CMC</h3>
           <span className={styles.topResumeContent}>
             <BarChart options={{
               categories: ['Min', 'Avg', 'Max'],
