@@ -1,30 +1,13 @@
 "use client";
 
+/* Vendor */
 import MaterialTable, { Action } from '@material-table/core';
+/* Own */
 import { pdfExporter, csvExporter } from '../../utils/exporters';
 
-interface RowData { [key: string]: any }
-interface ITable {
-  columns: object[];
-  data: RowData[];
-  title: string;
-  defaultNumberOfRows?: number;
-  rowHeight?: string;
-  canExportAllData?: boolean;
-  canFilter?: boolean;
-  canSearch?: boolean;
-  isDraggable?: boolean;
-  withGrouping?: boolean;
-  actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
-  isLoading: boolean;
-  onRowClick?: (
-    event?: React.MouseEvent,
-    rowData?: RowData,
-    toggleDetailPanel?: (panelIndex?: number) => void
-  ) => void;
-}
+interface RowData { [key: string]: any };
 
-const Table: React.FC<ITable> = ({
+export default function Table({
   columns,
   data,
   title,
@@ -38,7 +21,25 @@ const Table: React.FC<ITable> = ({
   actions,
   isLoading,
   onRowClick,
-}) => {
+}: {
+  columns: object[],
+  data: RowData[],
+  title: string,
+  defaultNumberOfRows?: number,
+  rowHeight?: string,
+  canExportAllData?: boolean,
+  canFilter?: boolean,
+  canSearch?: boolean,
+  isDraggable?: boolean,
+  withGrouping?: boolean,
+  actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[],
+  isLoading: boolean,
+  onRowClick?: (
+    event?: React.MouseEvent,
+    rowData?: RowData,
+    toggleDetailPanel?: (panelIndex?: number) => void
+  ) => void,
+}) {
 
   return (
     <MaterialTable
@@ -75,7 +76,3 @@ const Table: React.FC<ITable> = ({
     />
   );
 };
-
-
-
-export default Table;
