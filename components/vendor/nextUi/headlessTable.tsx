@@ -2,7 +2,7 @@
 
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 
-export default async function HeadlessTable({
+export default function HeadlessTable({
   data
 }: {
   data: { [key: string]: string | number }
