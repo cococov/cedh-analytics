@@ -40,6 +40,7 @@
 
 @media (max-width: 1130px) and (min-width:501px) {
   .topResumeContainer {
+    margin: 0rem;
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -103,8 +104,20 @@
   margin-top: 1rem;
 }
 
+@media (max-width: 1080px) {
+  .commandersContainer {
+    overflow-x: scroll;
+  }
+}
+
 .cardsContainer {
   display: flex;
   width: 100%;
   margin-top: 1rem;
+}
+
+@media (max-width: 1080px) {
+  .cardsContainer {
+    overflow-x: scroll;
+  }
 }

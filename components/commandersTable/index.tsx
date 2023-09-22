@@ -54,7 +54,7 @@ export default function CommandersTable({
       editable: 'never',
       hidden: false,
       cellStyle: {
-        minWidth: '13rem'
+        minWidth: '10rem'
       },
     },
     {
