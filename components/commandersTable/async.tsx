@@ -8,7 +8,7 @@ async function getData(commandersURL: string) {
   return {
     commanders,
   };
-}
+};
 
 export default async function AsyncCommandersTable({
   title,
