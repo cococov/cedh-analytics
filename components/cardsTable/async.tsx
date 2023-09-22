@@ -17,10 +17,12 @@ export default async function AsyncCardsTable({
   title,
   cardsURL,
   tagsByCardURL,
+  noInfo,
 }: {
   title?: string,
   cardsURL: string,
   tagsByCardURL: string,
+  noInfo?: boolean,
 }) {
   const { cards, tagsByCard } = await getData(cardsURL, tagsByCardURL);
   return (
@@ -28,6 +30,7 @@ export default async function AsyncCardsTable({
       title={title || "DB Cards"}
       cards={cards}
       tagsByCard={tagsByCard}
+      noInfo={noInfo}
     />
   );
 };

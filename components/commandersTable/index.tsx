@@ -234,8 +234,8 @@ export default function CommandersTable({
         canSearch={true}
         withGrouping={false}
         rowHeight="5rem"
-        title={title || 'Cards Played'}
-        onRowClick={handleClickRow}
+        title={title || 'Commanders'}
+        onRowClick={(isSmallScreen || isMediumScreen) ? handleClickRow : undefined}
         actions={(isSmallScreen || isMediumScreen) ? [] : [
           {
             icon: function ReadMore() { return <MaterialReadMoreIcon /> },

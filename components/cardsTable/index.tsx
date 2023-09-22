@@ -31,12 +31,14 @@ export default function CardsTable({
   tagsByCard,
   handleChangeCard,
   tournamentId,
+  noInfo,
 }: {
   title?: string,
   cards: CardProps[],
   tagsByCard: { [key: string]: string[] },
   handleChangeCard?: (cardName: string | undefined) => void,
   tournamentId?: string,
+  noInfo?: boolean,
 }) {
   const router = useRouter();
   const { toggleLoading } = useContext(AppContext);
@@ -441,7 +443,7 @@ export default function CardsTable({
         withGrouping={false}
         rowHeight="5rem"
         title={title || 'Cards Played'}
-        onRowClick={handleClickRow}
+        onRowClick={(isSmallScreen || isMediumScreen || !Boolean(noInfo)) ? handleClickRow : undefined}
         actions={(isSmallScreen || isMediumScreen) ? [] : [
           {
             icon: function ReadMore() { return <MaterialReadMoreIcon /> },

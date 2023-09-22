@@ -195,6 +195,7 @@ export default async function Metagame() {
             title="Metagame Cards"
             cardsURL={`${server}/data/metagame/metagame_cards.json`}
             tagsByCardURL={`${server}/data/cards/tags.json`}
+            noInfo
           />
         </Suspense>
       </section>
