@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useState, useReducer, useEffect, useRef } from 'react';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 /* Own */
 import { SnackBarLoading } from '../components';
 
@@ -21,8 +21,8 @@ const DEFAULT_VALUES = {
 const AppContext = createContext(DEFAULT_VALUES);
 
 export interface IProviderProps {
-  children?: any;
-}
+  children: React.ReactNode;
+};
 
 /**
  * App Provider

@@ -31,7 +31,7 @@ const TournamentInfoContext = createContext(DEFAULT_VALUES);
 export function TournamentInfoProvider({
   children,
 }: {
-  children: any,
+  children: React.ReactNode,
 }) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));

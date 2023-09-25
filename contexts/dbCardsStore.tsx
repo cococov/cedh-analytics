@@ -61,7 +61,7 @@ export function DbCardsProvider({
   children,
 }: {
   cards: any[],
-  children: any,
+  children: React.ReactNode,
 }) {
   const selectedCardRef = useRef<string>('');
   const [isLoadingDeckLists, toggleLoadingDecklists] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
