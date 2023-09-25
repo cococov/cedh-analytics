@@ -43,7 +43,7 @@ export default async function Home() {
             <span className={styles.homeStatDisclaimer}>(More than 10 occurrences)</span>
             <p>{data.staples}</p>
           </span>
-          <Link href="/top10LastSet">
+          <Link href="/top-10-last-set">
             <span className={styles.hiddenButtonTop10Tablet}>
               <span className={styles.hiddenButtonTop10TabletLeft}>
                 <h3>Top 10 cards</h3>
@@ -55,7 +55,7 @@ export default async function Home() {
             </span>
           </Link>
         </span>
-        <Link href="/top10LastSet" className={styles.hiddenButtonTop10}>
+        <Link href="/top-10-last-set" className={styles.hiddenButtonTop10}>
           <>
             <span>Top 10 cards of the last set</span>
             <ArrowRightIcon fontSize="medium" />

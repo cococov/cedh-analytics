@@ -32,6 +32,5 @@
 
 ## FIX
 
-- Fix: usar kebab-case en todas las urls
 - Fix: scroll horizontal de tabla en mobile (db cards y tournament)
 - Fix: Zoom tournament image en mobile
