@@ -14,7 +14,7 @@ body {
   background-color: #ececec;
   overflow-x: hidden;
   overflow-y: auto !important;
-  max-height: 100vh;
+  max-height: 100dvh;
 }
 
 a {
