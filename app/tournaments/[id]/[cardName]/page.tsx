@@ -9,39 +9,51 @@ import styles from '../../../../styles/CardsList.module.css';
 import { server } from '../../../../config';
 
 type occurrencesForCard = { occurrences: number, percentage: number };
-type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
+type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[];
 type Commander = { name: string, color_identity: ColorIdentity };
 type DeckList = { name: string, url: string, commanders: Commander[] };
 type DeckListsByCommander = { commanders: string, decks: DeckList[], colorIdentity: ColorIdentity };
 type CardFace = {
-  object: string,
-  name: string,
-  mana_cost: string,
-  type_line: string,
-  oracle_text: string,
-  colors: string[],
-  artist: string,
-  artist_id: string,
-  illustration_id: string,
-  image_uris: { normal: string, large: string }
+  object: string;
+  name: string;
+  mana_cost: string;
+  type_line: string;
+  oracle_text: string;
+  colors: string[];
+  artist: string;
+  artist_id: string;
+  illustration_id: string;
+  image_uris: { normal: string, large: string };
 };
 
 type PageData = {
-  cmc: number,
-  cardName: string,
-  cardType: string,
-  cardText: string,
-  gathererId: number,
-  averagePrice: number,
-  isDoubleFace: boolean,
-  isReservedList: boolean,
-  rarity: string,
-  cardImage: string,
-  cardFaces: CardFace[],
-  colorIdentity: ColorIdentity,
-  occurrencesForCard: occurrencesForCard,
-  decklists: DeckListsByCommander[],
+  cmc: number;
+  cardName: string;
+  cardType: string;
+  cardText: string;
+  gathererId: number;
+  averagePrice: number;
+  isDoubleFace: boolean;
+  isReservedList: boolean;
+  rarity: string;
+  cardImage: string;
+  cardFaces: CardFace[];
+  colorIdentity: ColorIdentity;
+  occurrencesForCard: occurrencesForCard;
+  decklists: DeckListsByCommander[];
 };
+
+type TournamentInfo = {
+  name: string;
+  showName: boolean;
+  id: string;
+  bookmark: string;
+  imageName: string;
+  serie: string;
+  number: number;
+  hidden: boolean;
+  kind: string;
+}
 
 type ErrorData = { notFound: boolean };
 type ResponseData = PageData & ErrorData | ErrorData;
@@ -52,8 +64,11 @@ export async function generateMetadata({
 }: {
   params: Params,
 }): Promise<Metadata> {
+  const rawTournamentLists = await fetch(`${server}/data/tournaments/list.json`);
+  const tournamentLists: TournamentInfo[] = await rawTournamentLists.json();
+  const tournamentInfo = tournamentLists.find(current => current.id === params.id);
   const cardName = decodeURI(String(params.cardName));
-  const description = `${cardName} info and usage in cEDH decks from the cEDH database. | ${descriptionMetadata}`;
+  const description = `${cardName} info and usage in cEDH decks from the '${tournamentInfo?.name}' tournament. | ${descriptionMetadata}`;
   const result = await fetchCards(cardName);
   const capitalizedCardName = cardName.split(' ').map((w, i) => {
     if (i === 0) return w.charAt(0).toUpperCase() + w.slice(1);
@@ -67,6 +82,7 @@ export async function generateMetadata({
     openGraph: {
       ...openGraphMetadata,
       title: `${capitalizedCardName} | cEDH Analytics`,
+      description: description,
       images: [
         {
           url: result.error ? '/' : result.cardImage,
