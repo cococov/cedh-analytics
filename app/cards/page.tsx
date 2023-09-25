@@ -11,14 +11,14 @@ import TAGS_BY_CARD from '../../public/data/cards/tags.json';
 type CardProps = any; // TODO: define type
 
 export const metadata: Metadata = {
-  title: 'cEDH Glossary',
-  description: `List of the most used concepts in cEDH and their meaning. | ${descriptionMetadata}`,
+  title: 'DB Cards',
+  description: `Cards used in cEDH database's decklists. | ${descriptionMetadata}`,
   openGraph: {
     ...openGraphMetadata,
-    title: 'cEDH Glossary | cEDH Analytics',
+    title: 'DB Cards | cEDH Analytics',
     images: [
       {
-        url: '/images/frantic_search.jpg',
+        url: '/images/frantic_search_og.jpg',
         width: 788,
         height: 788,
         alt: 'Frantic Search',
@@ -27,10 +27,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     ...twitterMetadata,
-    title: `About | ${twitterMetadata.title}`,
-    description: `List of the most used concepts in cEDH and their meaning. | ${twitterMetadata.description}`,
+    title: `DB Cards | ${twitterMetadata.title}`,
+    description: `Cards used in cEDH database's decklists. | ${twitterMetadata.description}`,
     images: {
-      url: '/images/frantic_search.jpg',
+      url: '/images/frantic_search_og.jpg',
       alt: 'Frantic Search',
     },
   },
