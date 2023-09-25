@@ -46,9 +46,10 @@ export default function RadarChart({ options }: {
                 value: options.values,
                 name: options.title,
               }
-            ]
+            ],
           }
-        ]
+        ],
+        color: ['#422273'],
       }}
     />
   );

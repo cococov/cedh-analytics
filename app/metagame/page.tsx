@@ -165,6 +165,7 @@ export default async function Metagame() {
             <BarChart options={{
               categories: ['Min', 'Avg', 'Max'],
               subCategories: ['With lands', 'Without lands'],
+              colors: ['#029e5b', '#422273'],
               data: [
                 { "With lands": resume.minAvgCmcWithLands, "Without lands": resume.minAvgCmcWithoutLands },
                 { "With lands": resume.avgCmcWithLands, "Without lands": resume.avgCmcWithoutLands },

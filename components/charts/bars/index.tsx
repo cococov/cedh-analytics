@@ -6,6 +6,7 @@ export default function BarChart({ options }: {
     categories: string[],
     subCategories: string[],
     data: { [key: string]: number }[],
+    colors?: string[],
     withToolBox?: boolean,
   },
 }) {
@@ -53,6 +54,7 @@ export default function BarChart({ options }: {
           },
           data: options.data.map((data) => data[subCategory]),
         })),
+        color: options.colors,
       }}
     />
   );
