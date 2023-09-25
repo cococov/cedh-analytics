@@ -1,5 +1,5 @@
 /* Own */
-import CardsTable from '../cardsTable';
+import CardsTableWithProvider from '../cardsTable/wrapperWithProvider';
 
 async function getData(cardsURL: string, tagsByCardURL: string) {
   const rawCards = await fetch(cardsURL, { cache: 'no-store' });
@@ -17,19 +17,23 @@ export default async function AsyncCardsTable({
   title,
   cardsURL,
   tagsByCardURL,
+  context,
   noInfo,
 }: {
   title?: string,
   cardsURL: string,
   tagsByCardURL: string,
+  context: any,
   noInfo?: boolean,
 }) {
   const { cards, tagsByCard } = await getData(cardsURL, tagsByCardURL);
   return (
-    <CardsTable
+    <CardsTableWithProvider
       title={title || "DB Cards"}
       cards={cards}
       tagsByCard={tagsByCard}
+      context={context}
+      cardUrlBase="/metagame-cards"
       noInfo={noInfo}
     />
   );

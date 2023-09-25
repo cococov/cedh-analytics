@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
 import { RadarChart, PieChart, BarChart } from '../../components/charts';
 import { HeadlessTable } from '../../components/vendor/nextUi';
-import { LastSetTop10, AsyncCardsTable, AsyncCommandersTable, Loading } from '../../components';
+import { LastSetTop10, AsyncCommandersTable, Loading } from '../../components';
 /* Static */
 import styles from '../../styles/Metagame.module.css';
 import RESUME from '../../public/data/metagame/metagame_resume.json';
@@ -186,16 +186,6 @@ export default async function Metagame() {
           <AsyncCommandersTable
             title="Metagame Commanders"
             commandersURL={`${server}/data/metagame/condensed_commanders_data.json`}
-          />
-        </Suspense>
-      </section>
-      <section className={styles.cardsContainer}>
-        <Suspense fallback={<Loading />}>
-          <AsyncCardsTable
-            title="Metagame Cards"
-            cardsURL={`${server}/data/metagame/metagame_cards.json`}
-            tagsByCardURL={`${server}/data/cards/tags.json`}
-            noInfo
           />
         </Suspense>
       </section>

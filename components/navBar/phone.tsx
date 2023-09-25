@@ -22,11 +22,14 @@ export default function PhoneNavBar({
             <Link href="/">
               Home
             </Link>
-            <Link href="/cards">
-              Card List
+            <Link href="/db-cards">
+              DB Cards
             </Link>
             <Link href="/metagame">
               Metagame
+            </Link>
+            <Link href="/metagame-cards">
+              Metagame Cards
             </Link>
             <Link href="/tournaments">
               Tournaments

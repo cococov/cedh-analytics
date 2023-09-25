@@ -30,14 +30,14 @@ export default function CardsTable({
   cards,
   tagsByCard,
   handleChangeCard,
-  tournamentId,
+  cardUrlBase,
   noInfo,
 }: {
   title?: string,
   cards: CardProps[],
   tagsByCard: { [key: string]: string[] },
   handleChangeCard?: (cardName: string | undefined) => void,
-  tournamentId?: string,
+  cardUrlBase: string,
   noInfo?: boolean,
 }) {
   const router = useRouter();
@@ -414,11 +414,7 @@ export default function CardsTable({
   const handleClickRow = useCallback((_e: any, rowData: any = {}) => {
     if (isSmallScreen || isMediumScreen) {
       toggleLoading(true);
-      router.push(
-        isNil(tournamentId)
-          ? `/cards/${replace(/\//g, '%2F', rowData['cardName'])}`
-          : `/tournaments/${tournamentId}/${replace(/\//g, '%2F', rowData['cardName'])}`
-      );
+      router.push(`${cardUrlBase}/${replace(/\//g, '%2F', rowData['cardName'])}`);
     } else {
       if (handleChangeCard !== undefined) {
         handleChangeCard(rowData['cardName']);
@@ -450,11 +446,7 @@ export default function CardsTable({
             tooltip: 'Go to Card Page',
             onClick: (_event, rowData: any = {}) => {
               toggleLoading(true);
-              router.push(
-                isNil(tournamentId)
-                  ? `/cards/${replace(/\//g, '%2F', rowData['cardName'])}`
-                  : `/tournaments/${tournamentId}/${replace(/\//g, '%2F', rowData['cardName'])}`
-              );
+              router.push(`${cardUrlBase}/${replace(/\//g, '%2F', rowData['cardName'])}`);
             }
           }
         ]}

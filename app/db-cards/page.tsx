@@ -56,6 +56,7 @@ export default async function Cards() {
           cards={cards}
           tagsByCard={tagsByCard}
           context={DbCardsContext}
+          cardUrlBase="/db-cards"
         />
         <CardInfoWithProvider context={DbCardsContext} />
       </DbCardsProvider>

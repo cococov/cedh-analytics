@@ -13,13 +13,15 @@ export default function CardsTableWithProvider({
   cards,
   tagsByCard,
   context,
-  tournamentId,
+  cardUrlBase,
+  noInfo,
 }: {
   title?: string,
   cards: any[],
   tagsByCard: { [key: string]: string[] },
   context: any,
-  tournamentId?: string,
+  cardUrlBase: string,
+  noInfo?: boolean,
 }) {
   const { handleChangeCard } = useContext<Context>(context);
   return (
@@ -27,8 +29,9 @@ export default function CardsTableWithProvider({
       title={title || "DB Cards"}
       cards={cards}
       tagsByCard={tagsByCard}
-      tournamentId={tournamentId}
       handleChangeCard={handleChangeCard}
+      cardUrlBase={cardUrlBase}
+      noInfo={noInfo}
     />
   );
 };

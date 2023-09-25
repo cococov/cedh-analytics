@@ -27,7 +27,7 @@ export default function PriceByPlace({
 
   return (
     <Card sx={{ maxWidth: 345, margin: '1rem', boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 15%), 0px 1px 1px 0px rgb(0 0 0 / 10.5%), 0px 1px 3px 0px rgb(0 0 0 / 9%)' }}>
-      <CardActionArea href={isCard ? `/cards/${name}` : ''} disabled={!isCard}>
+      <CardActionArea href={isCard ? `/db-cards/${name}` : ''} disabled={!isCard}>
         <CardMedia
           component="img"
           image={image}

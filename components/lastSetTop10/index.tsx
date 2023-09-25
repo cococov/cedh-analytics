@@ -32,7 +32,7 @@ export default function LastSetTop10({
               </td>
             </tr>
           ) : (
-            <TableRowWithLink key={`row-last_set_top_10-${i}`} className={styles[`statTableBodyRow${i % 2}`]} link={`/cards/${replace(/\//g, '%2F', d.cardName)}`}>
+            <TableRowWithLink key={`row-last_set_top_10-${i}`} className={styles[`statTableBodyRow${i % 2}`]} link={`/db-cards/${replace(/\//g, '%2F', d.cardName)}`}>
               <td key={`name-last_set_top_10-${i}`} className={styles.statTableBodyName}>
                 <span className={styles.dummyTd}>{d.cardName}</span>
               </td>

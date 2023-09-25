@@ -60,14 +60,14 @@ export default async function Glossary() {
         <section id='Spite Play' className={styles.glossarySection}>
           <h2>Spite Play</h2>
           <p>
-            Any play that doesn&apos;t benefit you, but hurts your opponents. For example, using <Link className={styles.glossaryLink} href='/cards/sword%20to%20plowshares'>Sword to Plowshares</Link> on a creature of one of your opponents before you die by drawing a card with an empty library.
+            Any play that doesn&apos;t benefit you, but hurts your opponents. For example, using <Link className={styles.glossaryLink} href='/db-cards/swords%20to%20plowshares'>Sword to Plowshares</Link> on a creature of one of your opponents before you die by drawing a card with an empty library.
           </p>
         </section>
 
         <section id='King Making' className={styles.glossarySection}>
           <h2>King Making</h2>
           <p>
-            Do something that favors one of your opponents without this presenting a benefit to you. Sometimes causing one of your opponents to win the game. For example allowing your opponent to draw a lot of cards with his <Link className={styles.glossaryLink} href='/cards/rhystic%20study'>Rhystic Study</Link>.
+            Do something that favors one of your opponents without this presenting a benefit to you. Sometimes causing one of your opponents to win the game. For example allowing your opponent to draw a lot of cards with his <Link className={styles.glossaryLink} href='/db-cards/rhystic%20study'>Rhystic Study</Link>.
           </p>
         </section>
 
