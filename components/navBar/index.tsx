@@ -13,5 +13,5 @@ export default function NavBar() {
       <BaseNavBar />
       <PhoneNavBar isOpen={isOpen} toggleOpen={toggle} />
     </>
-  )
+  );
 };

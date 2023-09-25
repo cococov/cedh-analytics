@@ -27,5 +27,5 @@ export default function BaseNavBar() {
         About
       </Link>
     </div>
-  )
+  );
 };

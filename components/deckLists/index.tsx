@@ -88,5 +88,5 @@ export default function DeckLists({
         )}
       </span>
     </span>
-  )
+  );
 };

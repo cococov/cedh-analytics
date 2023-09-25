@@ -4,12 +4,14 @@ import { Button } from '../vendor/materialUi';
 
 type LinkRef = HTMLAnchorElement | HTMLButtonElement
 type NextLinkProps = (Omit<any, 'href'> &
-  Pick<LinkProps, 'href' | 'as' | 'prefetch' | 'locale'>) | any
+  Pick<LinkProps, 'href' | 'as' | 'prefetch' | 'locale'>) | any;
 
-const NextLink = ({ href, as, prefetch, locale, ...props }: LinkProps, ref: Ref<LinkRef>) => (
-  <Link href={href} as={as} prefetch={prefetch} locale={locale} passHref>
-    <Button ref={ref as any} {...props as any} />
-  </Link>
-);
+function NextLink({ href, as, prefetch, locale, ...props }: LinkProps, ref: Ref<LinkRef>) {
+  return (
+    <Link href={href} as={as} prefetch={prefetch} locale={locale} passHref>
+      <Button ref={ref as any} {...props as any} />
+    </Link>
+  );
+};
 
 export default forwardRef<LinkRef, NextLinkProps>(NextLink);

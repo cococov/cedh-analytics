@@ -126,7 +126,7 @@ async function fetchData({ cardName }: Params): Promise<ResponseData> {
   }
 };
 
-export default async function Card({
+export default async function MetagameCard({
   params
 }: {
   params: { cardName: string }

@@ -20,13 +20,7 @@ type CardData = {
   isReservedList: boolean,
 };
 
-type CardInfoProps = {
-  selectedCard: string,
-  isLoading: boolean,
-  cardData: CardData,
-};
-
-const CardInfo: React.FC<CardInfoProps> = ({
+export default function CardInfo({
   selectedCard,
   isLoading,
   cardData: {
@@ -39,7 +33,11 @@ const CardInfo: React.FC<CardInfoProps> = ({
     isReservedList,
     isDoubleFace,
   }
-}) => {
+}: {
+  selectedCard: string,
+  isLoading: boolean,
+  cardData: CardData,
+}) {
   return (
     <span className={styles.cardInfoContainer}>
       <span className={styles.cardInfo}>
@@ -99,7 +97,5 @@ const CardInfo: React.FC<CardInfoProps> = ({
         }
       </span>
     </span >
-  )
-}
-
-export default CardInfo;
+  );
+};

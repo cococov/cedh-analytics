@@ -452,5 +452,5 @@ export default function CardsTable({
         ]}
       />
     </span>
-  )
+  );
 };

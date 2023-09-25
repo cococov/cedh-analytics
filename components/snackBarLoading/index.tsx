@@ -57,5 +57,5 @@ export default function SnackBarLoading({
         </span>
       </span>
     </Snackbar>
-  )
+  );
 };

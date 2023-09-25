@@ -8,8 +8,6 @@ import MetagameCardsContext, { MetagameCardsProvider } from '../../contexts/meta
 import styles from '../../styles/CardsList.module.css';
 import { server } from '../../config';
 
-type CardProps = any; // TODO: define type
-
 export const metadata: Metadata = {
   title: 'Metagame Cards',
   description: `Cards used in metagame decklists. | ${descriptionMetadata}`,
@@ -36,7 +34,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Cards() {
+export default async function MetagameCards() {
   return (
     <main className={styles.main}>
       <MetagameCardsProvider cardsURL={`${server}/data/metagame/metagame_cards.json`}>
