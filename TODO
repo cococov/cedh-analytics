@@ -18,7 +18,6 @@
 
 ## Metagame v2
 
-- Crear página de cartas y mover tabla de cartas a ella
 - Añadir avg winrate de decks que las usan en metagame cards y by_commander
 - Quitar opciones de gráfico de barras AVG cmc
 - Sacar estadísticas de tierra de la tabla y reemplazarla por un boxwhisker
