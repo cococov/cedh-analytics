@@ -15,6 +15,7 @@
 - Arch: actualizar material table
 - Ref: Deduplicar lista de navbar para en un mismo origen para evitar tener problemas de homologación
 - Feat: usar skeleton loader en tabla de cartas
+- Chore: eliminar componentes y estilos tabla vieja de top 10
 
 ## Metagame v2
 
