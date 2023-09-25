@@ -4,9 +4,7 @@
 - Data: Cargar torneos chilenos faltantes
 - Perf: Paginar torneos
 - Feat: Añadir buscador a torneos
-- Fix: tabla en mobile
 - Data: Filtrar tags para dejar solo los útiles
-- Fix: Visualización de pagina de cartas de la db al poner todos las columnas
 - Feat: Usar query params para filtros y columnas visibles en tabla de cartas
 - Data: Dejar de guardar data vieja de db cards
 - Arch: Implementar tailwind
@@ -15,6 +13,8 @@
 - Perf: Dejar de optimizar imágenes en info de carta desde vercel una vez sean optimas
 - Perf: Usar tabla asíncrona en cards y tournaments
 - Arch: actualizar material table
+- Ref: Deduplicar lista de navbar para en un mismo origen para evitar tener problemas de homologación
+- Feat: usar skeleton loader en tabla de cartas
 
 ## Metagame v2
 
@@ -28,3 +28,11 @@
 - Crear página de carta
 - Actualizar tags de cartas del metagame
 - Cambiar metagame project por edhtop16 en créditos
+- Agregar source y estrategia a metagame
+- intercambiar top y colores en metagame
+
+## FIX
+
+- Fix: usar kebab-case en todas las urls
+- Fix: scroll horizontal de tabla en mobile (db cards y tournament)
+- Fix: Zoom tournament image en mobile
