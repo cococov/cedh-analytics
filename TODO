@@ -19,7 +19,6 @@
 ## Metagame v2
 
 - Añadir avg winrate de decks que las usan en metagame cards y by_commander
-- Quitar opciones de gráfico de barras AVG cmc
 - Sacar estadísticas de tierra de la tabla y reemplazarla por un boxwhisker
 - Usar colores de carrot compost
 - Usar tabla nueva en top 10 cards

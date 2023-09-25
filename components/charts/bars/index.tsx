@@ -6,6 +6,7 @@ export default function BarChart({ options }: {
     categories: string[],
     subCategories: string[],
     data: { [key: string]: number }[],
+    withToolBox?: boolean,
   },
 }) {
   return (
@@ -21,7 +22,7 @@ export default function BarChart({ options }: {
           data: options.subCategories,
         },
         toolbox: {
-          show: true,
+          show: options.withToolBox,
           orient: 'vertical',
           left: 'right',
           top: 'center',
