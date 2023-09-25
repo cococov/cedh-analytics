@@ -18,6 +18,12 @@
   border-spacing: 0;
 }
 
+@media (min-width: 1080px) {
+  .statTableContent {
+    width: 40rem;
+  }
+}
+
 .statTable {
   display: flex;
   flex-direction: column;

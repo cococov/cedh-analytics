@@ -52,7 +52,9 @@ export default async function Top10LastSet() {
           <h1>Top 10 cards</h1>
           <h2>{data.last_set}</h2>
         </section>
-        <LastSetTop10 last_set_top_10={data.last_set_top_10} />
+        <section className={styles.statTableContent}>
+          <LastSetTop10 last_set_top_10={data.last_set_top_10} urlBase='/db-cards' />
+        </section>
       </span>
     </main>
   );

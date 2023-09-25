@@ -178,7 +178,7 @@ export default async function Metagame() {
           <h3 className={styles.topResumeTitle}>Top 10 cards</h3>
           <b>{resume.lastSet}</b>
           <span className={styles.topResumeContent}>
-            <LastSetTop10 last_set_top_10={resume.lastSetTop10} noLink />
+            <LastSetTop10 last_set_top_10={resume.lastSetTop10} urlBase='/metagame-cards' />
           </span>
         </span>
       </section>
