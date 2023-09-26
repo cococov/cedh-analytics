@@ -1,11 +1,14 @@
 /* Own */
 import EChartBase from "../base";
 
+type DataWithStyle = { value: number, itemStyle: { color: string } }
+type DataWithSubCategory = { [key: string]: (number | DataWithStyle) };
+
 export default function BarChart({ options }: {
   options: {
     categories: string[],
-    subCategories: string[],
-    data: { [key: string]: number }[],
+    subCategories?: string[],
+    data: (number | DataWithSubCategory | DataWithStyle)[],
     colors?: string[],
     withToolBox?: boolean,
   },
@@ -46,14 +49,22 @@ export default function BarChart({ options }: {
             type: 'value'
           }
         ],
-        series: options.subCategories.map((subCategory) => ({
-          name: subCategory,
-          type: 'bar',
-          emphasis: {
-            focus: 'series'
+        series: (options.subCategories !== undefined)
+          ? options.subCategories.map((subCategory) => ({
+            name: subCategory,
+            type: 'bar',
+            emphasis: {
+              focus: 'series'
+            },
+            data: options.data.map((data) => (data as DataWithSubCategory)[subCategory]),
+          }))
+          : {
+            type: 'bar',
+            emphasis: {
+              focus: 'series'
+            },
+            data: (options.data as any),
           },
-          data: options.data.map((data) => data[subCategory]),
-        })),
         color: options.colors,
       }}
     />

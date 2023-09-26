@@ -14,8 +14,8 @@ type ResumeData = {
   cantCommanders: number;
   cantLists: number;
   cantTournaments: number;
-  avgColorPercentages: { [key: string]: number };
-  avgColorIdentityPercentages: { [key: string]: number };
+  avgColorPercentages: { white: number; blue: number; black: number; red: number; green: number; };
+  avgColorIdentityPercentages: { white: number; blue: number; black: number; red: number; green: number; };
   avgCantBattles: number;
   avgCantPlaneswalkers: number;
   avgCantCreatures: number;
@@ -94,41 +94,10 @@ export default async function Metagame() {
           </span>
         </span>
         <span className={styles.topResume}>
-          <span className={[styles.topResume, styles.topResumeChart].join(' ')}>
-            <span className={styles.topResumeContentWithTitle}>
-              <h3 className={styles.topResumeTitle}>Colors</h3>
-              <PieChart options={{
-                title: 'Colors',
-                data: Object.keys(resume.avgColorPercentages).map((key) => ({
-                  value: resume.avgColorPercentages[key],
-                  name: key,
-                })),
-                colors: [
-                  '#fbd969',
-                  '#5470c6',
-                  '#333333',
-                  '#ee6666',
-                  '#91cc75',
-                ]
-              }} />
-            </span>
-            <span className={styles.topResumeContentWithTitle}>
-              <h3 className={styles.topResumeTitle}>Identity</h3>
-              <PieChart options={{
-                title: 'Colors',
-                data: Object.keys(resume.avgColorIdentityPercentages).map((key) => ({
-                  value: resume.avgColorIdentityPercentages[key],
-                  name: key,
-                })),
-                colors: [
-                  '#fbd969',
-                  '#5470c6',
-                  '#333333',
-                  '#ee6666',
-                  '#91cc75',
-                ]
-              }} />
-            </span>
+          <h3 className={styles.topResumeTitle}>Top 10 cards</h3>
+          <b>{resume.lastSet}</b>
+          <span className={styles.topResumeContent}>
+            <LastSetTop10 last_set_top_10={resume.lastSetTop10} urlBase='/metagame-cards' />
           </span>
         </span>
         <span className={[styles.topResume, styles.topResumeChart].join(' ')}>
@@ -175,10 +144,38 @@ export default async function Metagame() {
           </span>
         </span>
         <span className={[styles.topResume, styles.topResumeChart].join(' ')}>
-          <h3 className={styles.topResumeTitle}>Top 10 cards</h3>
-          <b>{resume.lastSet}</b>
+          <h3 className={styles.topResumeTitle}>Colors</h3>
           <span className={styles.topResumeContent}>
-            <LastSetTop10 last_set_top_10={resume.lastSetTop10} urlBase='/metagame-cards' />
+            <BarChart options={{
+              categories: ['White', 'Blue', 'Black', 'Red', 'Green'],
+              subCategories: ['Color', 'Identity'],
+              colors: [
+                '#eeeeee',
+                '#888888',
+              ],
+              data: [
+                {
+                  Color: { value: resume.avgColorPercentages['white'], itemStyle: { color: '#fdfb8e' } },
+                  Identity: { value: resume.avgColorIdentityPercentages['white'], itemStyle: { color: '#eac858' } },
+                },
+                {
+                  Color: { value: resume.avgColorPercentages['blue'], itemStyle: { color: '#7692e8' } },
+                  Identity: { value: resume.avgColorIdentityPercentages['blue'], itemStyle: { color: '#4360b5' } },
+                },
+                {
+                  Color: { value: resume.avgColorPercentages['black'], itemStyle: { color: '#555555' } },
+                  Identity: { value: resume.avgColorIdentityPercentages['black'], itemStyle: { color: '#111111' } },
+                },
+                {
+                  Color: { value: resume.avgColorPercentages['red'], itemStyle: { color: '#ff8888' } },
+                  Identity: { value: resume.avgColorIdentityPercentages['red'], itemStyle: { color: '#dd5555' } },
+                },
+                {
+                  Color: { value: resume.avgColorPercentages['green'], itemStyle: { color: '#b3ee97' } },
+                  Identity: { value: resume.avgColorIdentityPercentages['green'], itemStyle: { color: '#80bb64' } },
+                },
+              ],
+            }} />
           </span>
         </span>
       </section>
