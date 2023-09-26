@@ -84,12 +84,12 @@ export default async function Metagame() {
               'No. of Commanders': resume.cantCommanders,
               'No. of Decks': resume.cantLists,
               'No. of Tournaments': resume.cantTournaments,
-              'Decks with partners': 0,
+              'Decks with partners': '-',
               'Decks with stickers': `${resume.percentageDecksWithStickers * 100}%`,
               'Decks with companions': `${resume.percentageDecksWithCompanions * 100}%`,
-              'Min no. of lands': Math.round((0)),
+              'Min no. of lands': '-',
               'Avg no. of lands': Math.round((resume.avgCantLands)),
-              'Max no. of lands': Math.round((0)),
+              'Max no. of lands': '-',
             }} />
           </span>
         </span>

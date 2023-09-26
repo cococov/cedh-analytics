@@ -242,7 +242,7 @@ export default function CommandersTable({
             tooltip: 'Go to Commander page',
             onClick: (_event, rowData: any = {}) => {
               toggleLoading(true);
-              router.push('/');// TODO: Go to commander page
+              router.push(`/metagame/${rowData.commander}`);// TODO: Go to commander page
             }
           }
         ]}
