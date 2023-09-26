@@ -144,36 +144,17 @@ export default async function Metagame() {
           </span>
         </span>
         <span className={[styles.topResume, styles.topResumeChart].join(' ')}>
-          <h3 className={styles.topResumeTitle}>Colors</h3>
+          <h3 className={styles.topResumeTitle}>Avg. use of colors</h3>
           <span className={styles.topResumeContent}>
             <BarChart options={{
               categories: ['White', 'Blue', 'Black', 'Red', 'Green'],
-              subCategories: ['Color', 'Identity'],
-              colors: [
-                '#eeeeee',
-                '#888888',
-              ],
+              yAxisLabelFormat: '{value}%',
               data: [
-                {
-                  Color: { value: resume.avgColorPercentages['white'], itemStyle: { color: '#fdfb8e' } },
-                  Identity: { value: resume.avgColorIdentityPercentages['white'], itemStyle: { color: '#eac858' } },
-                },
-                {
-                  Color: { value: resume.avgColorPercentages['blue'], itemStyle: { color: '#7692e8' } },
-                  Identity: { value: resume.avgColorIdentityPercentages['blue'], itemStyle: { color: '#4360b5' } },
-                },
-                {
-                  Color: { value: resume.avgColorPercentages['black'], itemStyle: { color: '#555555' } },
-                  Identity: { value: resume.avgColorIdentityPercentages['black'], itemStyle: { color: '#111111' } },
-                },
-                {
-                  Color: { value: resume.avgColorPercentages['red'], itemStyle: { color: '#ff8888' } },
-                  Identity: { value: resume.avgColorIdentityPercentages['red'], itemStyle: { color: '#dd5555' } },
-                },
-                {
-                  Color: { value: resume.avgColorPercentages['green'], itemStyle: { color: '#b3ee97' } },
-                  Identity: { value: resume.avgColorIdentityPercentages['green'], itemStyle: { color: '#80bb64' } },
-                },
+                { value: Math.round((resume.avgColorPercentages['white'] + Number.EPSILON) * 10000) / 100, itemStyle: { color: '#fbd969' } },
+                { value: Math.round((resume.avgColorPercentages['blue'] + Number.EPSILON) * 10000) / 100, itemStyle: { color: '#5470c6' } },
+                { value: Math.round((resume.avgColorPercentages['black'] + Number.EPSILON) * 10000) / 100, itemStyle: { color: '#333333' } },
+                { value: Math.round((resume.avgColorPercentages['red'] + Number.EPSILON) * 10000) / 100, itemStyle: { color: '#ee6666' } },
+                { value: Math.round((resume.avgColorPercentages['green'] + Number.EPSILON) * 10000) / 100, itemStyle: { color: '#91cc75' } },
               ],
             }} />
           </span>

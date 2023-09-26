@@ -1,3 +1,5 @@
+/* Vendor */
+import { replace } from 'ramda';
 /* Own */
 import EChartBase from "../base";
 
@@ -10,6 +12,7 @@ export default function BarChart({ options }: {
     subCategories?: string[],
     data: (number | DataWithSubCategory | DataWithStyle)[],
     colors?: string[],
+    yAxisLabelFormat?: string,
     withToolBox?: boolean,
   },
 }) {
@@ -46,7 +49,11 @@ export default function BarChart({ options }: {
         ],
         yAxis: [
           {
-            type: 'value'
+            type: 'value',
+            axisLabel: {
+              formatter: options.yAxisLabelFormat || '{value}',
+              fontSize: 14,
+            },
           }
         ],
         series: (options.subCategories !== undefined)
@@ -62,6 +69,11 @@ export default function BarChart({ options }: {
             type: 'bar',
             emphasis: {
               focus: 'series'
+            },
+            tooltip: {
+              valueFormatter: (value) => {
+                return replace(/{value}/g, String(value), String(options.yAxisLabelFormat));
+              }
             },
             data: (options.data as any),
           },
