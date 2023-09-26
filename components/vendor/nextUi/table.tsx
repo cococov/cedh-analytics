@@ -13,10 +13,10 @@ export default function NextUITable({
 }) {
   return (
     <Table isStriped aria-label="Table">
-      <TableHeader>
+      <TableHeader style={{ backgroundColor: '#422273' }}>
         {
           header.map((column, index) => (
-            <TableColumn key={index}>{column}</TableColumn>
+            <TableColumn key={index} style={{ backgroundColor: '#422273', color: '#ececec', fontSize: '0.9rem' }}>{column}</TableColumn>
           ))
         }
       </TableHeader>

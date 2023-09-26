@@ -108,22 +108,22 @@ export default async function Metagame() {
               indicators: [
                 { name: 'creatures', max: 30 },
                 { name: 'artifacts', max: 30 },
+                { name: 'lands', max: 30 },
                 { name: 'enchantments', max: 30 },
                 { name: 'instants', max: 30 },
                 { name: 'sorceries', max: 30 },
-                { name: 'lands', max: 30 },
-                { name: 'planeswalkers', max: 30 },
                 { name: 'battles', max: 30 },
+                { name: 'planeswalkers', max: 30 },
               ],
               values: [
                 Math.round((resume.avgCantCreatures + Number.EPSILON) * 100) / 100,
                 Math.round((resume.avgCantArtifacts + Number.EPSILON) * 100) / 100,
+                Math.round((resume.avgCantLands + Number.EPSILON) * 100) / 100,
                 Math.round((resume.avgCantEnchantments + Number.EPSILON) * 100) / 100,
                 Math.round((resume.avgCantInstants + Number.EPSILON) * 100) / 100,
                 Math.round((resume.avgCantSorceries + Number.EPSILON) * 100) / 100,
-                Math.round((resume.avgCantLands + Number.EPSILON) * 100) / 100,
-                Math.round((resume.avgCantPlaneswalkers + Number.EPSILON) * 100) / 100,
                 Math.round((resume.avgCantBattles + Number.EPSILON) * 100) / 100,
+                Math.round((resume.avgCantPlaneswalkers + Number.EPSILON) * 100) / 100,
               ],
             }} />
           </span>

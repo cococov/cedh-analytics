@@ -27,9 +27,10 @@ export default function RadarChart({ options }: {
           indicator: options.indicators,
           radius: 135,
           center: ['50%', '50%'],
-          axisNameGap: 2,
+          axisNameGap: 4,
           axisName: {
-            fontSize: 11,
+            fontSize: 12,
+            fontWeight: 700,
             color: '#ccc',
           },
         },
