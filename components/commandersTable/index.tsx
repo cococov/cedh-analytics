@@ -147,6 +147,10 @@ export default function CommandersTable({
       editable: 'never',
       hidden: false,
       searchable: false,
+      render: function PercentageOfUse(rowData: any, type: any) {
+        const value = type === 'row' ? rowData.avgWinRate : rowData;
+        return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
+      },
     },
     {
       title: 'Best Standing',
