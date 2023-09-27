@@ -19,6 +19,7 @@
 
 ## Metagame v2
 
+- Fix: se rompieron las listas de las cartas del metagame
 - Añadir avg winrate de decks que las usan en metagame cards y by_commander
 - Crear pagina de comandantes
 - Mejorar página de carta
@@ -30,3 +31,4 @@
 
 - Fix: scroll horizontal de tabla en mobile (db cards y tournament)
 - Fix: Zoom tournament image en mobile
+- Fix: Cambiar nombre de tabla de cartas en tournaments
