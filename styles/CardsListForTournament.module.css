@@ -176,6 +176,12 @@
   min-width: 100%;
 }
 
+@media (max-width: 690px) {
+  .tournamentImage {
+    width: auto;
+  }
+}
+
 .tournamentImageContainer .tournamentImage {
   position: absolute;
   object-fit: cover;
