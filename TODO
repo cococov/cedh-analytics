@@ -19,7 +19,6 @@
 
 ## Metagame v2
 
-- Fix: se rompieron las listas de las cartas del metagame
 - Añadir avg winrate de decks que las usan en metagame cards y by_commander
 - Crear pagina de comandantes
 - Mejorar página de carta
