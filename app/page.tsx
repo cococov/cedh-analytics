@@ -116,7 +116,7 @@ export default async function Home() {
             >
               MTGJSON
             </a>
-            {', '}
+            {' and '}
             <a
               href="https://edhtop16.com/"
               target="_blank"
@@ -124,15 +124,6 @@ export default async function Home() {
               className={styles.homeLink}
             >
               EDH Top 16
-            </a>
-            {' and '}
-            <a
-              href="https://drive.google.com/drive/folders/1jU-slPNt9XNzl2grGUarZTXh5afTsNvy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.homeLink}
-            >
-              The Metagame Project
             </a>
             {' data.'}
           </p>
@@ -193,9 +184,7 @@ export default async function Home() {
             >
               Scryfall
             </a>
-            {' '}
-            and
-            {' '}
+            {' and '}
             <a
               href="https://mtgjson.com/"
               target="_blank"
@@ -220,27 +209,63 @@ export default async function Home() {
             </li>
           </ul>
           <p>
-            For the metagame section, the information collected by the Metagame Project was obtained. You can see their data
+            In the
+            {' '}
+            <Link href="/metagame" className={styles.homeLink}>
+              Metagame
+            </Link>
+            {' '}
+            section, we gathered data from
             {' '}
             <a
-              href="https://drive.google.com/drive/folders/1jU-slPNt9XNzl2grGUarZTXh5afTsNvy"
+              href="https://edhtop16.com/"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.homeLink}
             >
-              here
+              EDH Top 16
             </a>
-            {' '}
-            and upload your game data
+            {' and '}
+            cross-referenced it with
             {' '}
             <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLScZzUaMJRl50KjeCO1KqJgaHXnrZY88Tv9NZeqZUAFXhpw0vQ/viewform"
+              href="https://www.moxfield.com/"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.homeLink}
             >
-              here
-            </a>.
+              Moxfield
+            </a>
+            {' and '}
+            finally obtains specific information of each card from {' '}
+            <a
+              href="https://scryfall.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.homeLink}
+            >
+              Scryfall
+            </a>
+            {' and '}
+            <a
+              href="https://mtgjson.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.homeLink}
+            >
+              MTGJSON
+            </a>
+            {' to '}
+            obtain the statistics and information that you can see in
+            {' '}
+            <Link href="/metagame" className={styles.homeLink}>
+              Metagame
+            </Link>
+            {' and '}
+            <Link href="/metagame-cards" className={styles.homeLink}>
+              Metagame Cards
+            </Link>
+            .
           </p>
         </article>
 

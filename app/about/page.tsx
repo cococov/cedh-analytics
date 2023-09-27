@@ -195,16 +195,6 @@ export default async function About() {
                 cEDH Decklist Database
               </a>
             </li>
-            <li>
-              <a
-                href="https://drive.google.com/drive/folders/1jU-slPNt9XNzl2grGUarZTXh5afTsNvy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.aboutLinkSource}
-              >
-                Metagame Project
-              </a>
-            </li>
           </ul>
         </section>
         <section className={styles.aboutLegal}>
