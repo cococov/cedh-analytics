@@ -58,6 +58,7 @@ for commander in commanders:
     logs.loading_log("Getting decklists from hashes", cant_hashes_requested, total_lists)
     if hash in decklists_by_hash.keys():
       if 'status' in list(decklists_by_hash[hash].keys()):
+        cant_hashes_requested += 1
         continue
       decklists_by_commander[commander].append(decklists_by_hash[hash])
     else:

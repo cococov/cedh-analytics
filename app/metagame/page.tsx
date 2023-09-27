@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import type { Metadata } from 'next';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
-import { RadarChart, PieChart, BarChart } from '../../components/charts';
+import { RadarChart, BoxwhiskerChart, BarChart } from '../../components/charts';
 import { HeadlessTable } from '../../components/vendor/nextUi';
 import { LastSetTop10, AsyncCommandersTable, Loading } from '../../components';
 /* Static */
@@ -24,8 +24,14 @@ type ResumeData = {
   avgCantArtifacts: number;
   avgCantEnchantments: number;
   avgCantLands: number;
+  minCantLands: number;
+  q1CantLands: number;
+  medianCantLands: number;
+  q3CantLands: number;
+  maxCantLands: number;
   cantDecksWithStickers: number;
   cantDecksWithCompanions: number;
+  percentageDecksWithPartners: number;
   percentageDecksWithStickers: number;
   percentageDecksWithCompanions: number;
   allTokens: string[];
@@ -78,25 +84,25 @@ export default async function Metagame() {
     <main className={styles.main}>
       <section className={styles.topResumeContainer}>
         <span className={styles.topResume}>
-          <span className={styles.topResumeContent}>
-            <h3 className={styles.topResumeTitle}>Stats</h3>
+          <h3 className={styles.topResumeTitle}>Stats</h3>
+          <span className={[styles.topResumeContent, styles.topResumeContentWithSpace].join(' ')}>
             <HeadlessTable data={{
               'No. of Commanders': resume.cantCommanders,
               'No. of Decks': resume.cantLists,
               'No. of Tournaments': resume.cantTournaments,
-              'Decks with partners': '-',
+              'Decks with partners': `${resume.percentageDecksWithPartners * 100}%`,
               'Decks with stickers': `${resume.percentageDecksWithStickers * 100}%`,
               'Decks with companions': `${resume.percentageDecksWithCompanions * 100}%`,
-              'Min no. of lands': '-',
+              'Min no. of lands': Math.round((resume.minCantLands)),
               'Avg no. of lands': Math.round((resume.avgCantLands)),
-              'Max no. of lands': '-',
+              'Max no. of lands': Math.round((resume.maxCantLands)),
             }} />
           </span>
         </span>
         <span className={styles.topResume}>
           <h3 className={styles.topResumeTitle}>Top 10 cards</h3>
           <b>{resume.lastSet}</b>
-          <span className={styles.topResumeContent}>
+          <span className={[styles.topResumeContent, styles.topResumeContentWithSpace].join(' ')}>
             <LastSetTop10 last_set_top_10={resume.lastSetTop10} urlBase='/metagame-cards' />
           </span>
         </span>
@@ -125,6 +131,16 @@ export default async function Metagame() {
                 Math.round((resume.avgCantBattles + Number.EPSILON) * 100) / 100,
                 Math.round((resume.avgCantPlaneswalkers + Number.EPSILON) * 100) / 100,
               ],
+            }} />
+            <BoxwhiskerChart options={{
+              title: 'Use of Lands',
+              data: [
+                resume.minCantLands,
+                resume.q1CantLands,
+                resume.medianCantLands,
+                resume.q3CantLands,
+                resume.maxCantLands,
+              ]
             }} />
           </span>
         </span>

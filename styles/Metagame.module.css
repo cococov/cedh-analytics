@@ -55,6 +55,7 @@
   border-radius: 12px;
   height: 100%;
   width: 100%;
+  padding-top: 1rem;
 }
 
 .topResumeChart {
@@ -84,6 +85,10 @@
   text-align: left;
   padding: 1rem;
   flex-grow: 1;
+}
+
+.topResume .topResumeContentWithSpace {
+  margin-top: 1rem;
 }
 
 .topResume .topResumeContent table tr td {

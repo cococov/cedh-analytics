@@ -34,6 +34,7 @@ class ProcessedDecklist(typing.TypedDict):
   wins: int
   winRate: float
   standing: int
+  hasPartners: bool
   tournamentName: str
   dateCreated: str
   hasCompanion: bool
@@ -58,6 +59,8 @@ class StatsByCommander(typing.TypedDict):
   appearances: int
   colorID: str
   wins: int
+  hasPartners: bool
+  sortedUseOfLands: list[int]
   avgWinRate: float
   bestStanding: int
   worstStanding: int
@@ -100,8 +103,14 @@ class MetagameResume(typing.TypedDict):
   avgCantArtifacts: float
   avgCantEnchantments: float
   avgCantLands: float
+  minCantLands: int
+  q1CantLands: float
+  medianCantLands: int
+  q3CantLands: float
+  maxCantLands: int
   cantDecksWithStickers: int
   cantDecksWithCompanions: int
+  percentageDecksWithPartners: float
   percentageDecksWithStickers: float
   percentageDecksWithCompanions: float
   allTokens: list[str]
