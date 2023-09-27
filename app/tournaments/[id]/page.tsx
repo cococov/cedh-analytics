@@ -162,7 +162,7 @@ export default async function Card({
           </span>
           <span className={styles.commandersContainer}>
             <CardsTableWithProvider
-              title="DB Cards"
+              title="Cards"
               cards={cards}
               tagsByCard={tagsByCard}
               context={TournamentResumeContext}
