@@ -51,13 +51,15 @@ export default async function Cards() {
         <span className={styles.leftSpan}>
           <DeckListsWithProvider size="medium" context={DbCardsContext} />
         </span>
-        <CardsTableWithProvider
-          title="DB Cards"
-          cards={cards}
-          tagsByCard={tagsByCard}
-          context={DbCardsContext}
-          cardUrlBase="/db-cards"
-        />
+        <span className={styles.commandersContainer}>
+          <CardsTableWithProvider
+            title="DB Cards"
+            cards={cards}
+            tagsByCard={tagsByCard}
+            context={DbCardsContext}
+            cardUrlBase="/db-cards"
+          />
+        </span>
         <CardInfoWithProvider context={DbCardsContext} />
       </DbCardsProvider>
     </main>

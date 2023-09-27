@@ -56,6 +56,14 @@ ul {
   overflow: visible !important;
 }
 
+[class*='MTableToolbar-actions'] div div {
+  flex-wrap: wrap;
+}
+
+.MuiToolbar-root {
+  overflow: hidden !important;
+}
+
 .MuiSelect-select {
   min-width: 90% !important;
 }

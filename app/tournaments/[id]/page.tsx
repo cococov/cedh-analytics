@@ -160,13 +160,15 @@ export default async function Card({
           <span className={styles.leftSpan}>
             <DeckListsWithProvider size="medium" context={TournamentResumeContext} />
           </span>
-          <CardsTableWithProvider
-            title="DB Cards"
-            cards={cards}
-            tagsByCard={tagsByCard}
-            context={TournamentResumeContext}
-            cardUrlBase={`/tournaments/${String(params.id)}`}
-          />
+          <span className={styles.commandersContainer}>
+            <CardsTableWithProvider
+              title="DB Cards"
+              cards={cards}
+              tagsByCard={tagsByCard}
+              context={TournamentResumeContext}
+              cardUrlBase={`/tournaments/${String(params.id)}`}
+            />
+          </span>
           <CardInfoWithProvider context={TournamentResumeContext} />
         </section>
       </TournamentResumeProvider>

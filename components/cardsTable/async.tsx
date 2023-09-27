@@ -1,5 +1,7 @@
 /* Own */
 import CardsTableWithProvider from '../cardsTable/wrapperWithProvider';
+/* Static */
+import styles from '../../styles/CardsList.module.css';
 
 async function getData(cardsURL: string, tagsByCardURL: string) {
   const rawCards = await fetch(cardsURL, { cache: 'no-store' });
@@ -28,13 +30,15 @@ export default async function AsyncCardsTable({
 }) {
   const { cards, tagsByCard } = await getData(cardsURL, tagsByCardURL);
   return (
-    <CardsTableWithProvider
-      title={title || "DB Cards"}
-      cards={cards}
-      tagsByCard={tagsByCard}
-      context={context}
-      cardUrlBase="/metagame-cards"
-      noInfo={noInfo}
-    />
+    <span className={styles.commandersContainer}>
+      <CardsTableWithProvider
+        title={title || "DB Cards"}
+        cards={cards}
+        tagsByCard={tagsByCard}
+        context={context}
+        cardUrlBase="/metagame-cards"
+        noInfo={noInfo}
+      />
+    </span>
   );
 };
