@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     title: 'cEDH Metagame | cEDH Analytics',
     images: [
       {
-        url: '/images/frantic_search.jpg',
+        url: '/images/frantic_search_og.jpg',
         width: 788,
         height: 788,
         alt: 'Frantic Search',
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     title: `Metagame | ${twitterMetadata.title}`,
     description: `Metagame. | ${twitterMetadata.description}`,
     images: {
-      url: '/images/frantic_search.jpg',
+      url: '/images/frantic_search_og.jpg',
       alt: 'Frantic Search',
     },
   },
