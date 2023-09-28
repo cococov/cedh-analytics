@@ -29,3 +29,4 @@
 
 ## FIX
 
+Fix: decklist no se muestran al hacer click en carta en metagame cards (solución va por pedir la data en el store como se hace en la tabla - ver si podemos hacer una sola petición, por ejemplo haciendo un setData desde la tabla al store)
