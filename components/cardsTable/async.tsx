@@ -29,6 +29,7 @@ export default async function AsyncCardsTable({
   noInfo?: boolean,
 }) {
   const { cards, tagsByCard } = await getData(cardsURL, tagsByCardURL);
+
   return (
     <span className={styles.commandersContainer}>
       <CardsTableWithProvider

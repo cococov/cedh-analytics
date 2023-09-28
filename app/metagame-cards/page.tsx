@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 export default async function MetagameCards() {
   return (
     <main className={styles.main}>
-      <MetagameCardsProvider cardsURL={`${server}/data/metagame/metagame_cards.json`}>
+      <MetagameCardsProvider cardsURL={'/data/metagame/metagame_cards.json'}>
         <span className={styles.leftSpan}>
           <DeckListsWithProvider size="medium" context={MetagameCardsContext} />
         </span>
