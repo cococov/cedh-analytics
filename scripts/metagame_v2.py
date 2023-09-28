@@ -1,13 +1,18 @@
+import os
+import json
 import subprocess
+import utils.date as u_date
 import utils.files as files
 import data.moxfield as moxfield
 import utils.logs as logs
 import data.moxfield_t as moxfield_t
-from data import edhtop16
 import data.mtg_json as mtg_json
 import data.pre_processing as pre_processing
 import data.processing as processing
+import data.edhtop16 as edhtop16
+from datetime import datetime
 
+DIRNAME = os.path.realpath('.')
 BASE_PATH = r'./public/data'
 METAGAME_PATH = rf'{BASE_PATH}/metagame'
 FORCE_UPDATE = False
@@ -137,4 +142,18 @@ files.create_new_file('', METAGAME_PATH, 'metagame_cards_by_commander.json', met
 
 # CLEANING
 files.clear_csv_directory()
+
+print('Updating date...', end='\r')
+
+update_date = {}
+update_date_path = os.path.join(DIRNAME, r'public/data/update_date.json')
+with open(update_date_path, 'r+') as f:
+  update_date = json.load(f) if os.stat(update_date_path).st_size > 0 else {}
+
+update_date['metagame'] = u_date.custom_strftime('%B {S}, %Y', datetime.today())
+
+with open(update_date_path, 'w', encoding='utf8') as f:
+  json.dump(update_date, f, ensure_ascii=False)
+
+print('\033[KDate updated \033[92mDone!\033[0m')
 
