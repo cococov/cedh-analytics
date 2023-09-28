@@ -99,11 +99,18 @@ export function MetagameCardsProvider({
     toggleLoadingDecklistsTimeoutRef.current = setTimeout(() => { toggleLoadingDecklists(false) }, 300);
     setSelectedCard(cardName || '');
     selectedCardRef.current = cardName || '';
-    const card = cards.find((current: any) => current['cardName'] === cardName);
-    const decklists: DeckListsByCommander[] = card?.decklists || [];
-    setOccurrencesForCard({ occurrences: card?.occurrences, percentage: card?.percentageOfUse });
-    setDecklists(decklists);
   };
+
+  useEffect(() => {
+    const updateDecklists = async () => {
+      const card = cards.find((current: any) => current['cardName'] === selectedCard);
+      const decklists: DeckListsByCommander[] = card?.decklists || [];
+      setOccurrencesForCard({ occurrences: card?.occurrences, percentage: card?.percentageOfUse });
+      setDecklists(decklists);
+    };
+
+    !!selectedCard && updateDecklists();
+  }, [selectedCard]);
 
   useEffect(() => {
     const requestData = async () => {
