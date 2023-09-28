@@ -14,6 +14,7 @@
 - Perf: Optimizar imágenes para no depender de vercel en ello
 - Perf: Dejar de optimizar imágenes en info de carta desde vercel una vez sean optimas
 - Perf: Usar tabla asíncrona en cards y tournaments
+- Perf: En tablas asíncronas pedir el json solo una vez en vez de en la tabla y en el store
 
 - Arch: Actualizar material table
 - Arch: Usar alias para los imports (con @)
@@ -34,5 +35,3 @@
 - Actualizar fecha de última actualización de metagame
 
 ## FIX
-
-Fix: decklist no se muestran al hacer click en carta en metagame cards (solución va por pedir la data en el store como se hace en la tabla - ver si podemos hacer una sola petición, por ejemplo haciendo un setData desde la tabla al store)
