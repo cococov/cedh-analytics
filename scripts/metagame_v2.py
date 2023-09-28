@@ -1,3 +1,4 @@
+import subprocess
 import utils.files as files
 import data.moxfield as moxfield
 import utils.logs as logs
@@ -114,3 +115,6 @@ files.create_new_file('', METAGAME_PATH, 'metagame_cards_by_commander.json', met
 
 # CLEANING
 files.clear_csv_directory()
+
+# Update tags
+subprocess.Popen(['python3', 'scripts/update_tags.py']).wait()

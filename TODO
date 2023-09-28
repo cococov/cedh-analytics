@@ -23,8 +23,9 @@
 - Añadir avg winrate de decks que las usan en metagame cards y by_commander
 - Crear pagina de comandantes
 - Mejorar página de carta
-- Actualizar tags de cartas del metagame
 - Agregar source y estrategia a metagame
+- Añadir tutores, counters, removals, mana rocks, stax, draw engines y mana dorks a boxwhisker usando los tags
+- Añadir flag de si carta está en las cartas de la db en metagame cards y by_commander
 
 ## FIX
 
