@@ -47,6 +47,7 @@ export default async function MetagameCards() {
             cardsURL={`${server}/data/metagame/metagame_cards.json`}
             tagsByCardURL={`${server}/data/cards/tags.json`}
             context={MetagameCardsContext}
+            fromMetagame
           />
         </Suspense>
         <CardInfoWithProvider context={MetagameCardsContext} />

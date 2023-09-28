@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 /* Vendor */
-import { replace, isNil } from 'ramda';
+import { replace, findIndex } from 'ramda';
 import { MaterialReadMoreIcon } from '../vendor/materialIcon';
 import { MaterialChip } from '../vendor/materialUi';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
@@ -31,6 +31,7 @@ export default function CardsTable({
   tagsByCard,
   handleChangeCard,
   cardUrlBase,
+  fromMetagame,
   noInfo,
 }: {
   title?: string,
@@ -38,6 +39,7 @@ export default function CardsTable({
   tagsByCard: { [key: string]: string[] },
   handleChangeCard?: (cardName: string | undefined) => void,
   cardUrlBase: string,
+  fromMetagame?: boolean,
   noInfo?: boolean,
 }) {
   const router = useRouter();
@@ -402,6 +404,30 @@ export default function CardsTable({
     }
     setRenderKey(`render-${Math.random()}`);
   }, [isSmallScreen]);
+
+  useEffect(() => {
+    if (findIndex(x => x.field === 'avgWinRate', columns) !== -1 && !fromMetagame) return;
+    setColumns((previous) => {
+      if (findIndex(x => x.field === 'avgWinRate', previous) !== -1) return previous;
+      return [
+        ...previous,
+        {
+          title: 'Avg. Winrate',
+          field: 'avgWinRate',
+          align: 'center',
+          grouping: false,
+          filtering: false,
+          editable: 'never',
+          hidden: true,
+          searchable: false,
+          render: function PercentageOfUse(rowData: any, type: any) {
+            const value = type === 'row' ? rowData.avgWinRate : rowData;
+            return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
+          },
+        },
+      ]
+    });
+  }, [fromMetagame]);
 
   useEffect(() => {
     setRenderKey(`render-${Math.random()}`);

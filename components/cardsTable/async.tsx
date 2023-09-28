@@ -20,12 +20,14 @@ export default async function AsyncCardsTable({
   cardsURL,
   tagsByCardURL,
   context,
+  fromMetagame,
   noInfo,
 }: {
   title?: string,
   cardsURL: string,
   tagsByCardURL: string,
   context: any,
+  fromMetagame?: boolean,
   noInfo?: boolean,
 }) {
   const { cards, tagsByCard } = await getData(cardsURL, tagsByCardURL);
@@ -38,6 +40,7 @@ export default async function AsyncCardsTable({
         tagsByCard={tagsByCard}
         context={context}
         cardUrlBase="/metagame-cards"
+        fromMetagame={fromMetagame}
         noInfo={noInfo}
       />
     </span>

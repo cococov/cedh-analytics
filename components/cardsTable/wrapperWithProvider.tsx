@@ -14,6 +14,7 @@ export default function CardsTableWithProvider({
   tagsByCard,
   context,
   cardUrlBase,
+  fromMetagame,
   noInfo,
 }: {
   title?: string,
@@ -21,6 +22,7 @@ export default function CardsTableWithProvider({
   tagsByCard: { [key: string]: string[] },
   context: any,
   cardUrlBase: string,
+  fromMetagame?: boolean,
   noInfo?: boolean,
 }) {
   const { handleChangeCard } = useContext<Context>(context);
@@ -31,6 +33,7 @@ export default function CardsTableWithProvider({
       tagsByCard={tagsByCard}
       handleChangeCard={handleChangeCard}
       cardUrlBase={cardUrlBase}
+      fromMetagame={fromMetagame}
       noInfo={noInfo}
     />
   );
