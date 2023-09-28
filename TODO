@@ -1,22 +1,27 @@
 # TODO
 
 - Feat: Mostrar imagen de atrás de cartas doble cara
-- Data: Cargar torneos chilenos faltantes
-- Perf: Paginar torneos
 - Feat: Añadir buscador a torneos
-- Data: Filtrar tags para dejar solo los útiles
 - Feat: Usar query params para filtros y columnas visibles en tabla de cartas
+- Feat: Usar skeleton loader en tabla de cartas
+
+- Data: Cargar torneos chilenos faltantes
+- Data: Filtrar tags para dejar solo los útiles
 - Data: Dejar de guardar data vieja de db cards
-- Arch: Implementar tailwind
-- Pef: Pasar loading de magic full a css
-- Pef: Optimizar imágenes para no depender de vercel en ello
+
+- Perf: Paginar torneos
+- Perf: Pasar loading de magic full a css
+- Perf: Optimizar imágenes para no depender de vercel en ello
 - Perf: Dejar de optimizar imágenes en info de carta desde vercel una vez sean optimas
 - Perf: Usar tabla asíncrona en cards y tournaments
-- Arch: actualizar material table
+
+- Arch: Actualizar material table
+- Arch: Usar alias para los imports (con @)
+- Arch: Instalar eslint y prettier (ejemplo de buena config: https://github.com/goncy/interview-challenges/blob/main/proyectos-live/migrado-libre/.eslintrc.cjs)
+
 - Ref: Deduplicar lista de navbar para en un mismo origen para evitar tener problemas de homologación
-- Feat: usar skeleton loader en tabla de cartas
-- Chore: eliminar componentes y estilos tabla vieja de top 10
-- Arch: usar alias para los imports (con @)
+
+- Chore: Eliminar componentes y estilos tabla vieja de top 10
 
 ## Metagame v2
 
@@ -26,6 +31,7 @@
 - Agregar source y estrategia a metagame
 - Añadir tutores, counters, removals, mana rocks, stax, draw engines y mana dorks a boxwhisker usando los tags
 - Añadir flag de si carta está en las cartas de la db en metagame cards y by_commander
+- Actualizar fecha de última actualización de metagame
 
 ## FIX
 
