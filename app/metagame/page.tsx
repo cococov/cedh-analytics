@@ -10,6 +10,49 @@ import styles from '../../styles/Metagame.module.css';
 import RESUME from '../../public/data/metagame/metagame_resume.json';
 import { server } from '../../config';
 
+type UseOfCards = {
+  minCantLands: number;
+  q1CantLands: number;
+  medianCantLands: number;
+  q3CantLands: number;
+  maxCantLands: number;
+  minCantDraw: number;
+  q1CantDraw: number;
+  medianCantDraw: number;
+  q3CantDraw: number;
+  maxCantDraw: number;
+  minCantTutor: number;
+  q1CantTutor: number;
+  medianCantTutor: number;
+  q3CantTutor: number;
+  maxCantTutor: number;
+  minCantCounter: number;
+  q1CantCounter: number;
+  medianCantCounter: number;
+  q3CantCounter: number;
+  maxCantCounter: number;
+  minCantRemoval: number;
+  q1CantRemoval: number;
+  medianCantRemoval: number;
+  q3CantRemoval: number;
+  maxCantRemoval: number;
+  minCantManaRock: number;
+  q1CantManaRock: number;
+  medianCantManaRock: number;
+  q3CantManaRock: number;
+  maxCantManaRock: number;
+  minCantManaDork: number;
+  q1CantManaDork: number;
+  medianCantManaDork: number;
+  q3CantManaDork: number;
+  maxCantManaDork: number;
+  minCantStax: number;
+  q1CantStax: number;
+  medianCantStax: number;
+  q3CantStax: number;
+  maxCantStax: number;
+};
+
 type ResumeData = {
   cantCommanders: number;
   cantLists: number;
@@ -24,11 +67,7 @@ type ResumeData = {
   avgCantArtifacts: number;
   avgCantEnchantments: number;
   avgCantLands: number;
-  minCantLands: number;
-  q1CantLands: number;
-  medianCantLands: number;
-  q3CantLands: number;
-  maxCantLands: number;
+  useOfCards: UseOfCards
   cantDecksWithStickers: number;
   cantDecksWithCompanions: number;
   percentageDecksWithPartners: number;
@@ -93,9 +132,9 @@ export default async function Metagame() {
               'Decks with partners': `${resume.percentageDecksWithPartners * 100}%`,
               'Decks with stickers': `${resume.percentageDecksWithStickers * 100}%`,
               'Decks with companions': `${resume.percentageDecksWithCompanions * 100}%`,
-              'Min no. of lands': Math.round((resume.minCantLands)),
+              'Min no. of lands': Math.round((resume.useOfCards.minCantLands)),
               'Avg no. of lands': Math.round((resume.avgCantLands)),
-              'Max no. of lands': Math.round((resume.maxCantLands)),
+              'Max no. of lands': Math.round((resume.useOfCards.maxCantLands)),
             }} />
           </span>
         </span>
@@ -132,16 +171,6 @@ export default async function Metagame() {
                 Math.round((resume.avgCantPlaneswalkers + Number.EPSILON) * 100) / 100,
               ],
             }} />
-            <BoxwhiskerChart options={{
-              title: 'Use of Lands',
-              data: [
-                resume.minCantLands,
-                resume.q1CantLands,
-                resume.medianCantLands,
-                resume.q3CantLands,
-                resume.maxCantLands,
-              ]
-            }} />
           </span>
         </span>
         <span className={[styles.topResume, styles.topResumeChart].join(' ')}>
@@ -176,6 +205,78 @@ export default async function Metagame() {
           </span>
         </span>
       </section>
+      <span className={styles.boxwhiskerChart}>
+      <h3 className={styles.topResumeTitle}>Use of Cards</h3>
+        <BoxwhiskerChart options={{
+          title: 'Use of Cards',
+          data: [
+            [
+              'Lands',
+              resume.useOfCards.minCantLands,
+              resume.useOfCards.q1CantLands,
+              resume.useOfCards.medianCantLands,
+              resume.useOfCards.q3CantLands,
+              resume.useOfCards.maxCantLands,
+            ],
+            [
+              'Draw Engines',
+              resume.useOfCards.minCantDraw,
+              resume.useOfCards.q1CantDraw,
+              resume.useOfCards.medianCantDraw,
+              resume.useOfCards.q3CantDraw,
+              resume.useOfCards.maxCantDraw,
+            ],
+            [
+              'Tutors',
+              resume.useOfCards.minCantTutor,
+              resume.useOfCards.q1CantTutor,
+              resume.useOfCards.medianCantTutor,
+              resume.useOfCards.q3CantTutor,
+              resume.useOfCards.maxCantTutor,
+            ],
+            [
+              'Counters',
+              resume.useOfCards.minCantCounter,
+              resume.useOfCards.q1CantCounter,
+              resume.useOfCards.medianCantCounter,
+              resume.useOfCards.q3CantCounter,
+              resume.useOfCards.maxCantCounter,
+            ],
+            [
+              'Removal',
+              resume.useOfCards.minCantRemoval,
+              resume.useOfCards.q1CantRemoval,
+              resume.useOfCards.medianCantRemoval,
+              resume.useOfCards.q3CantRemoval,
+              resume.useOfCards.maxCantRemoval,
+            ],
+            [
+              'Mana Rocks',
+              resume.useOfCards.minCantManaRock,
+              resume.useOfCards.q1CantManaRock,
+              resume.useOfCards.medianCantManaRock,
+              resume.useOfCards.q3CantManaRock,
+              resume.useOfCards.maxCantManaRock,
+            ],
+            [
+              'Mana Dorks',
+              resume.useOfCards.minCantManaDork,
+              resume.useOfCards.q1CantManaDork,
+              resume.useOfCards.medianCantManaDork,
+              resume.useOfCards.q3CantManaDork,
+              resume.useOfCards.maxCantManaDork,
+            ],
+            [
+              'Stax',
+              resume.useOfCards.minCantStax,
+              resume.useOfCards.q1CantStax,
+              resume.useOfCards.medianCantStax,
+              resume.useOfCards.q3CantStax,
+              resume.useOfCards.maxCantStax,
+            ],
+          ]
+        }} />
+      </span>
       <section className={styles.commandersContainer}>
         <Suspense fallback={<Loading />}>
           <AsyncCommandersTable

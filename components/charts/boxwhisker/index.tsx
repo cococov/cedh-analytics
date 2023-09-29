@@ -4,14 +4,14 @@ import EChartBase from "../base";
 export default function BoxwhiskerChart({ options }: {
   options: {
     title: string,
-    data: number[],
+    data: (number | string)[][],
   },
 }) {
   return (
     <EChartBase
       option={{
         title: {
-          text: options.title,
+          text: '',
           left: 'center',
           top: 20,
           bottom: 0,
@@ -23,12 +23,12 @@ export default function BoxwhiskerChart({ options }: {
           }
         },
         grid: {
-          left: '30%',
-          right: '30%',
+          left: '10%',
+          right: '5%',
           bottom: '15%'
         },
         xAxis: {
-          show: false,
+          show: true,
           type: 'category',
           boundaryGap: true,
           nameGap: 30,
@@ -37,20 +37,34 @@ export default function BoxwhiskerChart({ options }: {
           },
           splitLine: {
             show: false
-          }
+          },
+          axisLabel: {
+            fontSize: 14,
+            fontWeight: 400,
+            rotate: 45,
+          },
         },
         yAxis: {
           type: 'value',
           splitArea: {
             show: true
           },
-          min: 20,
+          min: 0,
+          axisLabel: {
+            fontSize: 14,
+            fontWeight: 400,
+          },
+        },
+        dataset: {
+          source: [
+            ['score', 'min', 'Q1', 'median', 'Q3', 'max'],
+            ...options.data,
+          ]
         },
         series: [
           {
             name: '',
             type: 'boxplot',
-            data: [{ value: options.data }],
             itemStyle: { color: '#7555a6', borderColor: '#422273', opacity: 0.7 },
             encode: {
               x: '',
@@ -61,6 +75,8 @@ export default function BoxwhiskerChart({ options }: {
           },
         ]
       }}
+      width="100%"
+      height="600px"
     />
   );
 };

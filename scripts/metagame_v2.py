@@ -126,6 +126,12 @@ files.create_new_file('', METAGAME_PATH, 'metagame_cards.json', metagame_cards)
 # UPDATE TAGS
 subprocess.Popen(['python3', 'scripts/update_tags.py']).wait()
 
+# USE OF CARD TYPES
+logs.begin_log_block('Calculating use of card types')
+uses_by_card_types = processing.get_uses_by_card_types(full_decklists)
+metagame_resume['useOfCards'] = {**metagame_resume['useOfCards'], **uses_by_card_types}
+logs.end_log_block('Use of card types calculated!')
+
 # PROCESS CARDS BY COMMANDER
 logs.begin_log_block('Processing cards by commander')
 metagame_cards_by_commander = {}

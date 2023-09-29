@@ -211,11 +211,12 @@ def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList]
   data['avgCantLands'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantLands'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
   sorted_use_of_lands: list[int] = sorted(functools.reduce(lambda x,y: x + y, (map(lambda x: x['sortedUseOfLands'], stats_by_commander.values()))))
   use_of_lads_df = pd.DataFrame(sorted_use_of_lands)
-  data['minCantLands'] = use_of_lads_df.min().to_dict()[0]
-  data['q1CantLands'] = use_of_lads_df.quantile([.25]).to_dict()[0][0.25]
-  data['medianCantLands'] = use_of_lads_df.quantile([.5]).to_dict()[0][0.5]
-  data['q3CantLands'] = use_of_lads_df.quantile([.75]).to_dict()[0][0.75]
-  data['maxCantLands'] = use_of_lads_df.max().to_dict()[0]
+  data['useOfCards'] = {}
+  data['useOfCards']['minCantLands'] = use_of_lads_df.min().to_dict()[0]
+  data['useOfCards']['q1CantLands'] = use_of_lads_df.quantile([.25]).to_dict()[0][0.25]
+  data['useOfCards']['medianCantLands'] = use_of_lads_df.quantile([.5]).to_dict()[0][0.5]
+  data['useOfCards']['q3CantLands'] = use_of_lads_df.quantile([.75]).to_dict()[0][0.75]
+  data['useOfCards']['maxCantLands'] = use_of_lads_df.max().to_dict()[0]
   data['percentageDecksWithPartners'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['appearances'] if x['hasPartners'] else 0, stats_by_commander.values())) / data['cantLists']), 3)
   data['cantDecksWithStickers'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantDecksWithStickers'], stats_by_commander.values()))
   data['cantDecksWithCompanions'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantDecksWithCompanions'], stats_by_commander.values()))

@@ -29,7 +29,8 @@
 - Crear pagina de comandantes
 - Mejorar página de carta
 - Agregar source y estrategia a metagame
-- Añadir tutores, counters, removals, mana rocks, stax, draw engines y mana dorks a boxwhisker usando los tags
-- Añadir flag de si carta está en las cartas de la db en metagame cards y by_commander
+- Añadir flag de si carta está en las cartas de la db en metagame cards y by_commander (ojo con by_commander de tomar en cuenta al commander)
+- Añadir cantidad de cartas que están en metagame pero no en la db
 
 ## FIX
+- Fix: avg win rate se está mostrando en db cards
