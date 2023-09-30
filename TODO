@@ -33,4 +33,3 @@
 - Añadir cantidad de cartas que están en metagame pero no en la db
 
 ## FIX
-- Fix: avg win rate se está mostrando en db cards

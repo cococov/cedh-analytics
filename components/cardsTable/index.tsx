@@ -406,7 +406,9 @@ export default function CardsTable({
   }, [isSmallScreen]);
 
   useEffect(() => {
-    if (findIndex(x => x.field === 'avgWinRate', columns) !== -1 && !fromMetagame) return;
+    if (!fromMetagame) return;
+    if (findIndex(x => x.field === 'avgWinRate', columns) !== -1) return;
+
     setColumns((previous) => {
       if (findIndex(x => x.field === 'avgWinRate', previous) !== -1) return previous;
       return [
