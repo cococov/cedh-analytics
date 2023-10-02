@@ -102,6 +102,7 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
       process_decklist_data: ProcessedDecklist = {} # type: ignore
       edh_top16_data = list(filter(lambda x: x['decklist'] ==  decklist['url'], filtered_data))[0]
       process_decklist_data['url'] = decklist['url']
+      process_decklist_data['name'] = decklist['name']
       process_decklist_data['hasPartners'] = decklist['boards']['commanders']['count'] > 1
       process_decklist_data['wins'] = edh_top16_data['wins']
       process_decklist_data['winRate'] = edh_top16_data['winRate']

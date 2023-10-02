@@ -6,3 +6,4 @@ export { default as MenuClosedIcon } from './menuClosedIcon';
 export { default as MaterialReadMoreIcon } from './readMoreIcon';
 export { default as MaterialWhatsAppIcon } from './whatsAppIcon';
 export { default as MaterialEmailIcon } from './emailIcon';
+export { default as MaterialOpenInNewIcon } from './openInNewIcon';

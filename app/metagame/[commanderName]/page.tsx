@@ -8,7 +8,7 @@ import { replace, split, pipe, any, pluck, equals, flatten, reduce, max } from '
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../../shared-metadata';
 import { RadarChart, BoxwhiskerChart, BarChart, PieChart } from '../../../components/charts';
 import { HeadlessTable } from '../../../components/vendor/nextUi';
-import { LastSetTop10, AsyncCardsTable, Loading } from '../../../components';
+import { LastSetTop10, AsyncCardsTable, DecklistsTable, Loading } from '../../../components';
 import fetchCards from '../../../utils/fetch/cardData';
 /* Static */
 import styles from '../../../styles/CommanderMetagame.module.css';
@@ -60,6 +60,7 @@ type UseOfCards = {
 
 type Decklist = {
   url: string;
+  name: string;
   wins: number;
   winRate: number;
   standing: number;
@@ -447,6 +448,12 @@ export default async function MetagameCard({
             ]
           }} />
         </span>
+        <section className={styles.decklistsContainer}>
+          <DecklistsTable
+            title='Decklists'
+            decklists={data.metagameData.processed_decklists}
+          />
+        </section>
         <section className={styles.cardsContainer}>
           <Suspense fallback={<Loading />}>
             <AsyncCardsTable
@@ -457,11 +464,6 @@ export default async function MetagameCard({
               fromMetagame
               noInfo
             />
-          </Suspense>
-        </section>
-        <section className={styles.decklistsContainer}>
-          <Suspense fallback={<Loading />}>
-            <h2>Decklists</h2>
           </Suspense>
         </section>
       </span>

@@ -16,3 +16,4 @@ export { default as PriceByPlace } from './priceByPlace';
 export { default as GoogleMap } from './googleMap';
 export { default as AsyncCardsTable } from './cardsTable/async';
 export { default as AsyncCommandersTable } from './commandersTable/async';
+export { default as DecklistsTable } from './decklistsTable';

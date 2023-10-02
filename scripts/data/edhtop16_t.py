@@ -31,6 +31,7 @@ class CondensedCommanderData(typing.TypedDict):
 
 class ProcessedDecklist(typing.TypedDict):
   url: str
+  name: str
   wins: int
   winRate: float
   standing: int
