@@ -72,6 +72,16 @@ ul {
   margin-right: 9rem !important;
 }
 
+@media (max-width: 600px) {
+  .MuiTablePagination-input .MuiTablePagination-select {
+    margin-right: 0 !important;
+  }
+
+  .MuiTablePagination-selectRoot {
+    padding-right: 1rem !important;
+  }
+}
+
 /* Scroll */
 
 html {
