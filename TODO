@@ -26,7 +26,6 @@
 
 ## Metagame v2
 
-- Que links de top 10 vayan a carta de metagame y no de db
 - Crear tabla de decks en pagina de commander de metagame con win rate y otros datos
 - Obtener data para boxwhisker de pagina de commander de metagame
 - Mejorar página de carta
