@@ -34,4 +34,3 @@
 - Añadir cantidad de cartas que están en metagame pero no en la db
 
 ## FIX
-- Fix: Usar misma estrategia de scroll-x en tabla de comandantes que en las otras tablas

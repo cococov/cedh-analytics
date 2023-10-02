@@ -206,7 +206,7 @@ export default async function Metagame() {
         </span>
       </section>
       <span className={styles.boxwhiskerChart}>
-      <h3 className={styles.topResumeTitle}>Use of Cards</h3>
+        <h3 className={styles.topResumeTitle}>Use of Cards</h3>
         <BoxwhiskerChart options={{
           title: 'Use of Cards',
           data: [
@@ -277,14 +277,16 @@ export default async function Metagame() {
           ]
         }} />
       </span>
-      <section className={styles.commandersContainer}>
-        <Suspense fallback={<Loading />}>
-          <AsyncCommandersTable
-            title="Metagame Commanders"
-            commandersURL={`${server}/data/metagame/condensed_commanders_data.json`}
-          />
-        </Suspense>
-      </section>
+      <span>
+        <section className={styles.commandersContainer}>
+          <Suspense fallback={<Loading />}>
+            <AsyncCommandersTable
+              title="Metagame Commanders"
+              commandersURL={`${server}/data/metagame/condensed_commanders_data.json`}
+            />
+          </Suspense>
+        </section>
+      </span>
     </main>
   );
 };

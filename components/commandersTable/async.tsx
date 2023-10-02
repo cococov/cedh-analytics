@@ -1,5 +1,7 @@
 /* Own */
 import CommandersTable from '../commandersTable';
+/* Static */
+import styles from '../../styles/CardsList.module.css';
 
 async function getData(commandersURL: string) {
   const rawCards = await fetch(commandersURL);
@@ -19,9 +21,11 @@ export default async function AsyncCommandersTable({
 }) {
   const { commanders } = await getData(commandersURL);
   return (
-    <CommandersTable
-      title={title || "Commanders"}
-      commanders={commanders}
-    />
+    <span className={styles.commandersContainer}>
+      <CommandersTable
+        title={title || "Commanders"}
+        commanders={commanders}
+      />
+    </span>
   );
 };
