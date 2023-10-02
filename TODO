@@ -27,7 +27,6 @@
 ## Metagame v2
 
 - Crear tabla de decks en pagina de commander de metagame con win rate y otros datos
-- Obtener data para boxwhisker de pagina de commander de metagame
 - Mejorar página de carta
 - Agregar source y estrategia a metagame
 - Añadir flag de si carta está en las cartas de la db en metagame cards y by_commander (ojo con by_commander de tomar en cuenta al commander)

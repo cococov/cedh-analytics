@@ -15,6 +15,49 @@ import styles from '../../../styles/CommanderMetagame.module.css';
 import STATS_BY_COMMANDER from '../../../public/data/metagame/stats_by_commander.json';
 import { server } from '../../../config';
 
+type UseOfCards = {
+  minCantLands: number;
+  q1CantLands: number;
+  medianCantLands: number;
+  q3CantLands: number;
+  maxCantLands: number;
+  minCantDraw: number;
+  q1CantDraw: number;
+  medianCantDraw: number;
+  q3CantDraw: number;
+  maxCantDraw: number;
+  minCantTutor: number;
+  q1CantTutor: number;
+  medianCantTutor: number;
+  q3CantTutor: number;
+  maxCantTutor: number;
+  minCantCounter: number;
+  q1CantCounter: number;
+  medianCantCounter: number;
+  q3CantCounter: number;
+  maxCantCounter: number;
+  minCantRemoval: number;
+  q1CantRemoval: number;
+  medianCantRemoval: number;
+  q3CantRemoval: number;
+  maxCantRemoval: number;
+  minCantManaRock: number;
+  q1CantManaRock: number;
+  medianCantManaRock: number;
+  q3CantManaRock: number;
+  maxCantManaRock: number;
+  minCantManaDork: number;
+  q1CantManaDork: number;
+  medianCantManaDork: number;
+  q3CantManaDork: number;
+  maxCantManaDork: number;
+  minCantStax: number;
+  q1CantStax: number;
+  medianCantStax: number;
+  q3CantStax: number;
+  maxCantStax: number;
+};
+
 type Decklist = {
   url: string;
   wins: number;
@@ -78,6 +121,7 @@ type StatsByCommander = {
     minAvgCmcWithoutLands: number;
     maxAvgCmcWithLands: number;
     maxAvgCmcWithoutLands: number;
+    useOfCards: UseOfCards;
     avgCant?: {
       creatures: number;
       artifacts: number;
@@ -255,7 +299,6 @@ export default async function MetagameCard({
                 'Max no. of lands': Math.round((data.metagameData.maxCantLands)),
                 'Avg. Win Rate': `${Math.round((data.metagameData.avgWinRate + Number.EPSILON) * 10000) / 100}%`,
                 'Best Standing': data.metagameData.bestStanding,
-                'Worst Standing': data.metagameData.worstStanding,
               }} />
             </span>
           </span>
@@ -339,67 +382,67 @@ export default async function MetagameCard({
             data: [
               [
                 'Lands',
-                0,
-                0,
-                0,
-                0,
-                0,
+                data.metagameData.useOfCards.minCantLands,
+                data.metagameData.useOfCards.q1CantLands,
+                data.metagameData.useOfCards.medianCantLands,
+                data.metagameData.useOfCards.q3CantLands,
+                data.metagameData.useOfCards.maxCantLands,
               ],
               [
                 'Draw Engines',
-                0,
-                0,
-                0,
-                0,
-                0,
+                data.metagameData.useOfCards.minCantDraw,
+                data.metagameData.useOfCards.q1CantDraw,
+                data.metagameData.useOfCards.medianCantDraw,
+                data.metagameData.useOfCards.q3CantDraw,
+                data.metagameData.useOfCards.maxCantDraw,
               ],
               [
                 'Tutors',
-                0,
-                0,
-                0,
-                0,
-                0,
+                data.metagameData.useOfCards.minCantTutor,
+                data.metagameData.useOfCards.q1CantTutor,
+                data.metagameData.useOfCards.medianCantTutor,
+                data.metagameData.useOfCards.q3CantTutor,
+                data.metagameData.useOfCards.maxCantTutor,
               ],
               [
                 'Counters',
-                0,
-                0,
-                0,
-                0,
-                0,
+                data.metagameData.useOfCards.minCantCounter,
+                data.metagameData.useOfCards.q1CantCounter,
+                data.metagameData.useOfCards.medianCantCounter,
+                data.metagameData.useOfCards.q3CantCounter,
+                data.metagameData.useOfCards.maxCantCounter,
               ],
               [
                 'Removal',
-                0,
-                0,
-                0,
-                0,
-                0,
+                data.metagameData.useOfCards.minCantRemoval,
+                data.metagameData.useOfCards.q1CantRemoval,
+                data.metagameData.useOfCards.medianCantRemoval,
+                data.metagameData.useOfCards.q3CantRemoval,
+                data.metagameData.useOfCards.maxCantRemoval,
               ],
               [
                 'Mana Rocks',
-                0,
-                0,
-                0,
-                0,
-                0,
+                data.metagameData.useOfCards.minCantManaRock,
+                data.metagameData.useOfCards.q1CantManaRock,
+                data.metagameData.useOfCards.medianCantManaRock,
+                data.metagameData.useOfCards.q3CantManaRock,
+                data.metagameData.useOfCards.maxCantManaRock,
               ],
               [
                 'Mana Dorks',
-                0,
-                0,
-                0,
-                0,
-                0,
+                data.metagameData.useOfCards.minCantManaDork,
+                data.metagameData.useOfCards.q1CantManaDork,
+                data.metagameData.useOfCards.medianCantManaDork,
+                data.metagameData.useOfCards.q3CantManaDork,
+                data.metagameData.useOfCards.maxCantManaDork,
               ],
               [
                 'Stax',
-                0,
-                0,
-                0,
-                0,
-                0,
+                data.metagameData.useOfCards.minCantStax,
+                data.metagameData.useOfCards.q1CantStax,
+                data.metagameData.useOfCards.medianCantStax,
+                data.metagameData.useOfCards.q3CantStax,
+                data.metagameData.useOfCards.maxCantStax,
               ],
             ]
           }} />

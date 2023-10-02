@@ -174,6 +174,13 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
     data[commander]['percentageDecksWithStickers'] = round((decksWhitStickers / len(processed_decklists)), 3)
     data[commander]['percentageDecksWithCompanions'] = round((decksWhitCompanions / len(processed_decklists)), 3)
     data[commander]['allTokens'] = list(functools.reduce(lambda x, y: list(set(x + y)), map(lambda x: x['tokens'], processed_decklists)))
+    use_of_lads_df = pd.DataFrame(data[commander]['sortedUseOfLands'])
+    data[commander]['useOfCards'] = {}
+    data[commander]['useOfCards']['minCantLands'] = use_of_lads_df.min().to_dict()[0]
+    data[commander]['useOfCards']['q1CantLands'] = use_of_lads_df.quantile([.25]).to_dict()[0][0.25]
+    data[commander]['useOfCards']['medianCantLands'] = use_of_lads_df.quantile([.5]).to_dict()[0][0.5]
+    data[commander]['useOfCards']['q3CantLands'] = use_of_lads_df.quantile([.75]).to_dict()[0][0.75]
+    data[commander]['useOfCards']['maxCantLands'] = use_of_lads_df.max().to_dict()[0]
   return data
 
 def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList], stats_by_commander: dict[str, StatsByCommander], decklist_hashes_by_tournament: dict[str, list[str]]) -> MetagameResume:

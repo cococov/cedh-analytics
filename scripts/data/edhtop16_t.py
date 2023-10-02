@@ -55,42 +55,6 @@ class ProcessedDecklist(typing.TypedDict):
   avgCmcWithLands: float
   avgCmcWithoutLands: float
 
-class StatsByCommander(typing.TypedDict):
-  appearances: int
-  colorID: str
-  wins: int
-  lastSet: str
-  lastSetTop10: list[dict[str, str | int]]
-  hasPartners: bool
-  sortedUseOfLands: list[int]
-  avgWinRate: float
-  bestStanding: int
-  worstStanding: int
-  processed_decklists: list[ProcessedDecklist]
-  avgCantBattles: float
-  avgCantPlaneswalkers: float
-  avgCantCreatures: float
-  avgCantSorceries: float
-  avgCantInstants: float
-  avgCantArtifacts: float
-  avgCantEnchantments: float
-  avgCantLands: float
-  avgColorPercentages: dict[str, float]
-  avgColorIdentityPercentages: dict[str, float]
-  cantDecksWithStickers: int
-  cantDecksWithCompanions: int
-  percentageDecksWithStickers: float
-  percentageDecksWithCompanions: float
-  allTokens: list[str]
-  minCantLands: int
-  maxCantLands: int
-  avgCmcWithLands: float
-  avgCmcWithoutLands: float
-  minAvgCmcWithLands: float
-  minAvgCmcWithoutLands: float
-  maxAvgCmcWithLands: float
-  maxAvgCmcWithoutLands: float
-
 class UseOfCards(typing.TypedDict, total=False):
   minCantLands: int
   q1CantLands: float
@@ -132,6 +96,43 @@ class UseOfCards(typing.TypedDict, total=False):
   medianCantStax: int
   q3CantStax: float
   maxCantStax: int
+
+class StatsByCommander(typing.TypedDict):
+  appearances: int
+  colorID: str
+  wins: int
+  lastSet: str
+  lastSetTop10: list[dict[str, str | int]]
+  hasPartners: bool
+  sortedUseOfLands: list[int]
+  avgWinRate: float
+  bestStanding: int
+  worstStanding: int
+  processed_decklists: list[ProcessedDecklist]
+  avgCantBattles: float
+  avgCantPlaneswalkers: float
+  avgCantCreatures: float
+  avgCantSorceries: float
+  avgCantInstants: float
+  avgCantArtifacts: float
+  avgCantEnchantments: float
+  avgCantLands: float
+  avgColorPercentages: dict[str, float]
+  avgColorIdentityPercentages: dict[str, float]
+  cantDecksWithStickers: int
+  cantDecksWithCompanions: int
+  percentageDecksWithStickers: float
+  percentageDecksWithCompanions: float
+  allTokens: list[str]
+  minCantLands: int
+  maxCantLands: int
+  avgCmcWithLands: float
+  avgCmcWithoutLands: float
+  minAvgCmcWithLands: float
+  minAvgCmcWithoutLands: float
+  maxAvgCmcWithLands: float
+  maxAvgCmcWithoutLands: float
+  useOfCards: UseOfCards
 
 class MetagameResume(typing.TypedDict):
   cantCommanders: int

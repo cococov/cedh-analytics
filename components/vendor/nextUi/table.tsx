@@ -20,7 +20,7 @@ export default function NextUITable({
           ))
         }
       </TableHeader>
-      <TableBody>
+      <TableBody emptyContent={"No data to display."}>
         {
           data.map((row, index) => (
             <TableRow key={index} onClick={handleRowClick && handleRowClick(row)} style={handleRowClick && { cursor: 'pointer' }}>
