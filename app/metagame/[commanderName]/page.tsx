@@ -155,39 +155,44 @@ export async function generateMetadata({
 }: {
   params: Params,
 }): Promise<Metadata> {
-  return {};
-  const commanderName = replace(/%2C/, ',', decodeURI(String(params.commanderName)));
-  const description = `${commanderName} info and usage in cEDH decks from the cEDH metagame. | ${descriptionMetadata}`;
-  const result = await fetchCards(commanderName);
-  const capitalizedCardName = commanderName.split(' ').map((w, i) => {
-    if (i === 0) return w.charAt(0).toUpperCase() + w.slice(1);
-    if (w === 'of' || w === 'the' || w === 'from') return w;
-    return w.charAt(0).toUpperCase() + w.slice(1);
-  }).join(' ');
+  const decodedCommanderName = pipe(
+    replace(/%2C/g, ','),
+    replace(/%2F/g, '/'),
+  )(decodeURI(String(params.commanderName)));
+
+  const commanders = split(' / ', decodedCommanderName);
+    const commanderNumber = commanders.length;
+    const commandersData = await Promise.all(commanders.map(commander => fetchCards(String(commander))));
+    const capitalizedCommanderNames = commanders.map(c => c.split(' ').map((w, i) => {
+      if (i === 0) return w.charAt(0).toUpperCase() + w.slice(1);
+      if (w === 'of' || w === 'the' || w === 'from') return w;
+      return w.charAt(0).toUpperCase() + w.slice(1);
+    }).join(' ')).join(' / ');
+    const description = `Metagame data for ${capitalizedCommanderNames} commander${commanderNumber > 1 ? 's' : ''}. | ${descriptionMetadata}`;
 
   return {
-    title: `${capitalizedCardName}`,
+    title: `${capitalizedCommanderNames}`,
     description: description,
     openGraph: {
       ...openGraphMetadata,
-      title: `${capitalizedCardName} | cEDH Analytics`,
+      title: `${capitalizedCommanderNames} | cEDH Analytics`,
       description: description,
       images: [
         {
-          url: result.error ? '/' : result.cardImage,
+          url: commandersData[0].error ? '/' : commandersData[0].cardImage,
           width: 788,
           height: 788,
-          alt: `${capitalizedCardName} Image`,
+          alt: `${capitalizedCommanderNames} Image`,
         },
       ],
     },
     twitter: {
       ...twitterMetadata,
-      title: `${capitalizedCardName} | cEDH Analytics`,
+      title: `${capitalizedCommanderNames} | cEDH Analytics`,
       description: description,
       images: {
-        url: result.error ? '/' : result.cardImage,
-        alt: `${capitalizedCardName} Image`,
+        url: commandersData[0].error ? '/' : commandersData[0].cardImage,
+        alt: `${capitalizedCommanderNames} Image`,
       },
     },
   };
