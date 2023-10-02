@@ -5,6 +5,7 @@ import utils.date as u_date
 import utils.files as files
 import data.moxfield as moxfield
 import utils.logs as logs
+import utils.git as git
 import data.moxfield_t as moxfield_t
 import data.mtg_json as mtg_json
 import data.pre_processing as pre_processing
@@ -167,3 +168,5 @@ with open(update_date_path, 'w', encoding='utf8') as f:
 
 print('\033[KDate updated \033[92mDone!\033[0m')
 
+# GIT
+git.update('chore: update Metagame')
