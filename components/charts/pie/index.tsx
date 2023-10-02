@@ -19,7 +19,7 @@ export default function PieChart({ options }: {
           {
             name: options.title,
             type: 'pie',
-            radius: [30, '100%'],
+            radius: [30, '90%'],
             roseType: 'radius',
             label: {
               position: 'inner',
@@ -38,7 +38,7 @@ export default function PieChart({ options }: {
         color: options.colors,
       }}
       width={'350px'}
-      height={'200px'}
+      height={'250px'}
     />
   );
 };

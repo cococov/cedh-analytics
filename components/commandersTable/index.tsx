@@ -6,6 +6,7 @@ import Image from 'next/image';
 /* Vendor */
 import { MaterialReadMoreIcon } from '../vendor/materialIcon';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { replace } from 'ramda';
 /* Own */
 import Table from '../table';
 import Loading from '../loading';
@@ -218,7 +219,7 @@ export default function CommandersTable({
   const handleClickRow = useCallback((_e: any, rowData: any = {}) => {
     if (isSmallScreen || isMediumScreen) {
       toggleLoading(true);
-      router.push('/');// TODO: Go to commander page
+      router.push(`/metagame/${replace(/\//g, '%2F',rowData.commander)}`);// TODO: Go to commander page
     }
   }, [isSmallScreen, isMediumScreen]);
 
@@ -246,7 +247,7 @@ export default function CommandersTable({
             tooltip: 'Go to Commander page',
             onClick: (_event, rowData: any = {}) => {
               toggleLoading(true);
-              router.push(`/metagame/${rowData.commander}`);// TODO: Go to commander page
+              router.push(`/metagame/${replace(/\//g, '%2F',rowData.commander)}`);// TODO: Go to commander page
             }
           }
         ]}

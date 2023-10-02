@@ -59,6 +59,8 @@ class StatsByCommander(typing.TypedDict):
   appearances: int
   colorID: str
   wins: int
+  lastSet: str
+  lastSetTop10: list[dict[str, str | int]]
   hasPartners: bool
   sortedUseOfLands: list[int]
   avgWinRate: float

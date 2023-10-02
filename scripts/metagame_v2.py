@@ -138,6 +138,8 @@ metagame_cards_by_commander = {}
 for commander in commanders:
   metagame_cards_by_commander[commander] = pre_processing.process_cards(pre_processing.reduce_decks_to_cards(pre_processing.get_decklists_data(decklists_by_commander[commander]), has_multiple_printings, get_last_set_for_card))
   metagame_cards_by_commander[commander] = processing.get_cards_winrate(metagame_cards_by_commander[commander], raw_lists)
+  stats_by_commander[commander]['lastSet'] = LAST_SET[0]
+  stats_by_commander[commander]['lastSetTop10'] = processing.last_set_top_10(metagame_cards_by_commander[commander], LAST_SET)
 logs.end_log_block('Cards by commander processed!')
 
 # SAVE NEW FILES
