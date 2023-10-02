@@ -1,16 +1,34 @@
-- Mostrar imagen de atras de cartas doble cara
-- Optimizar imagenes para no depender de vercel en ello
-- Dejar de optimizar imagenes en info de carta desde vercel una vez sean optimas
-- Cargar torneos chilenos faltantes
-- Cambiar metagame project por edhtop16
-- Paginar torneos
-- Añadir buscador a torneos
-- Fix: tabla en mobile
-- Filtrar tags para dejar solo los útiles
-- Fix: Visualización de pagina de cartas de la db al poner todos las columnas
-- Cambiar nombre de cards a DB Cards
+# TODO
 
-- Añadir avg winrate de decks que las usan en resume y by_commander
-- Crear pagina resumen del metagame
-- Crear pagina de comandantes
-- Actualizar tags de cartas del metagame
+- Feat: Mostrar imagen de atrás de cartas doble cara
+- Feat: Añadir buscador a torneos
+- Feat: Usar query params para filtros y columnas visibles en tabla de cartas
+- Feat: Usar skeleton loader en tabla de cartas
+
+- Data: Cargar torneos chilenos faltantes
+- Data: Filtrar tags para dejar solo los útiles
+- Data: Dejar de guardar data vieja de db cards
+
+- Perf: Paginar torneos
+- Perf: Pasar loading de magic full a css
+- Perf: Optimizar imágenes para no depender de vercel en ello
+- Perf: Dejar de optimizar imágenes en info de carta desde vercel una vez sean optimas
+- Perf: Usar tabla asíncrona en cards y tournaments
+- Perf: En tablas asíncronas pedir el json solo una vez en vez de en la tabla y en el store
+
+- Arch: Actualizar material table
+- Arch: Usar alias para los imports (con @)
+- Arch: Instalar eslint y prettier (ejemplo de buena config: https://github.com/goncy/interview-challenges/blob/main/proyectos-live/migrado-libre/.eslintrc.cjs)
+
+- Ref: Deduplicar lista de navbar para en un mismo origen para evitar tener problemas de homologación
+
+- Chore: Eliminar componentes y estilos tabla vieja de top 10
+
+## Metagame v2
+
+- Mejorar página de carta
+- Agregar source y estrategia a metagame
+- Añadir flag de si carta está en las cartas de la db en metagame cards y by_commander (ojo con by_commander de tomar en cuenta al commander)
+- Añadir cantidad de cartas que están en metagame pero no en la db
+
+## FIX

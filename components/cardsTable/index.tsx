@@ -1,13 +1,19 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/router';
-import { replace, isNil } from 'ramda';
-import ReadMoreIcon from '@mui/icons-material/ReadMore';
-import Chip from '@mui/material/Chip';
+"use client";
+
+import { useState, useEffect, useCallback, useContext } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import styles from '../../styles/CardsList.module.css';
-import Table from '../table';
-import { Loading } from '../../components';
+/* Vendor */
+import { replace, findIndex } from 'ramda';
+import { MaterialReadMoreIcon } from '../vendor/materialIcon';
+import { MaterialChip } from '../vendor/materialUi';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
+/* Own */
+import Table from '../table';
+import Loading from '../loading';
+import AppContext from '../../contexts/appStore';
+/* Static */
+import styles from '../../styles/CardsList.module.css';
 import B from '../../public/images/B.png';
 import G from '../../public/images/G.png';
 import R from '../../public/images/R.png';
@@ -19,18 +25,26 @@ const IDENTITY_COLORS = { B: B, G: G, R: R, U: U, W: W, C: C };
 
 type CardProps = any; // TODO: define type
 
-type CardsTableProps = {
-  cards: CardProps[];
-  tagsByCard: { [key: string]: string[] };
-  toggleLoading: (state: boolean) => void;
-  handleChangeCard: (cardName: string | undefined) => void;
-  forceSnackBarLoading: (state: boolean) => void;
-  tournamentId?: string;
-};
-
-const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoading, handleChangeCard, tournamentId, forceSnackBarLoading }) => {
-  const [isLoaded, setLoaded] = useState(false);
+export default function CardsTable({
+  title,
+  cards,
+  tagsByCard,
+  handleChangeCard,
+  cardUrlBase,
+  fromMetagame,
+  noInfo,
+}: {
+  title?: string,
+  cards: CardProps[],
+  tagsByCard: { [key: string]: string[] },
+  handleChangeCard?: (cardName: string | undefined) => void,
+  cardUrlBase: string,
+  fromMetagame?: boolean,
+  noInfo?: boolean,
+}) {
   const router = useRouter();
+  const { toggleLoading } = useContext(AppContext);
+  const [isLoaded, setLoaded] = useState(false);
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
@@ -126,14 +140,14 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
       cellStyle: {
         minWidth: '5rem'
       },
-      render: (rowData: any, type: any) => {
+      render: function Identity(rowData: any, type: any) {
         const value = type === 'row' ? rowData.colorIdentity : rowData;
         return type === 'row' ? (
           <span>
             {
               value
                 .split('')
-                .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
+                .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image key={icon} src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
             }
           </span>
         ) : value;
@@ -183,14 +197,14 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
       cellStyle: {
         minWidth: '5rem'
       },
-      render: (rowData: any, type: any) => {
+      render: function Colors(rowData: any, type: any) {
         const value = type === 'row' ? rowData.colors : rowData;
         return type === 'row' ? (
           <span>
             {
               value
                 .split('')
-                .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
+                .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image key={icon} src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
             }
           </span>
         ) : value;
@@ -311,7 +325,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
       editable: 'never',
       hidden: true,
       searchable: false,
-      render: (rowData: any, type: any) => {
+      render: function PercentageOfUse(rowData: any, type: any) {
         const value = type === 'row' ? rowData.percentageOfUse : rowData;
         return type === 'row' ? (<span>{value}%</span>) : value;
       },
@@ -325,7 +339,7 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
       editable: 'never',
       hidden: true,
       searchable: false,
-      render: (rowData: any, type: any) => {
+      render: function PercentageOfUseByIdentity(rowData: any, type: any) {
         const value = type === 'row' ? rowData.percentageOfUseByIdentity : rowData;
         return type === 'row' ? (<span>{value}%</span>) : value;
       },
@@ -343,12 +357,12 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
       cellStyle: {
         minWidth: '13rem'
       },
-      render: (rowData: any, type: any) => {
+      render: function Tags(rowData: any, type: any) {
         const value = type === 'row' ? rowData.tags : rowData;
         return type === 'row' ? (
-          <span className={styles['cardTagsWrapper']}>
+          <span className={styles.cardTagsWrapper}>
             {
-              value.map((tag: string, index: number) => (<Chip key={tag} label={tag} size="small" className={styles['cardTag']}/>))
+              value.map((tag: string, _index: number) => (<MaterialChip key={tag} label={tag} size="small" className={styles.cardTag} />))
             }
           </span>
         ) : value;
@@ -392,6 +406,32 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
   }, [isSmallScreen]);
 
   useEffect(() => {
+    if (!fromMetagame) return;
+    if (findIndex(x => x.field === 'avgWinRate', columns) !== -1) return;
+
+    setColumns((previous) => {
+      if (findIndex(x => x.field === 'avgWinRate', previous) !== -1) return previous;
+      return [
+        ...previous,
+        {
+          title: 'Avg. Winrate',
+          field: 'avgWinRate',
+          align: 'center',
+          grouping: false,
+          filtering: false,
+          editable: 'never',
+          hidden: true,
+          searchable: false,
+          render: function PercentageOfUse(rowData: any, type: any) {
+            const value = type === 'row' ? rowData.avgWinRate : rowData;
+            return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
+          },
+        },
+      ]
+    });
+  }, [fromMetagame]);
+
+  useEffect(() => {
     setRenderKey(`render-${Math.random()}`);
   }, [isLargeVerticalScreen]);
 
@@ -399,23 +439,21 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
     if (!isLoaded) setLoaded(true);
   }, [isLoaded]);
 
-  const handleClickRow = useCallback((_e, rowData = {}) => {
+  const handleClickRow = useCallback((_e: any, rowData: any = {}) => {
     if (isSmallScreen || isMediumScreen) {
       toggleLoading(true);
-      router.push(
-        isNil(tournamentId)
-          ? `/cards/${replace(/\//g, '%2F', rowData['cardName'])}`
-          : `/tournaments/${tournamentId}/${replace(/\//g, '%2F', rowData['cardName'])}`
-      );
+      router.push(`${cardUrlBase}/${replace(/\//g, '%2F', rowData['cardName'])}`);
     } else {
-      handleChangeCard(rowData['cardName']);
+      if (handleChangeCard !== undefined) {
+        handleChangeCard(rowData['cardName']);
+      }
     }
   }, [isSmallScreen, isMediumScreen]);
 
   if (!isLoaded) return <Loading />;
 
   return (
-    <span className={styles['cards-table']}>
+    <span className={styles.cardsTable}>
       <Table
         key={renderKey}
         columns={columns}
@@ -428,25 +466,19 @@ const CardsTable: React.FC<CardsTableProps> = ({ cards, tagsByCard, toggleLoadin
         canSearch={true}
         withGrouping={false}
         rowHeight="5rem"
-        title="Cards Played"
-        onRowClick={handleClickRow}
+        title={title || 'Cards Played'}
+        onRowClick={(isSmallScreen || isMediumScreen || !Boolean(noInfo)) ? handleClickRow : undefined}
         actions={(isSmallScreen || isMediumScreen) ? [] : [
           {
-            icon: () => <ReadMoreIcon />,
+            icon: function ReadMore() { return <MaterialReadMoreIcon /> },
             tooltip: 'Go to Card Page',
             onClick: (_event, rowData: any = {}) => {
-              forceSnackBarLoading(true);
-              router.push(
-                isNil(tournamentId)
-                  ? `/cards/${replace(/\//g, '%2F', rowData['cardName'])}`
-                  : `/tournaments/${tournamentId}/${replace(/\//g, '%2F', rowData['cardName'])}`
-              );
+              toggleLoading(true);
+              router.push(`${cardUrlBase}/${replace(/\//g, '%2F', rowData['cardName'])}`);
             }
           }
         ]}
       />
     </span>
-  )
-}
-
-export default CardsTable;
+  );
+};

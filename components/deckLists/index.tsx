@@ -1,5 +1,7 @@
 import Image from 'next/image';
+/* Own */
 import Loading from '../loading';
+/* Static */
 import styles from '../../styles/DeckLists.module.css';
 import B from '../../public/images/B.png';
 import G from '../../public/images/G.png';
@@ -15,17 +17,21 @@ type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]
 type Commander = { name: string, color_identity: ColorIdentity };
 type DeckList = { name: string, url: string, commanders: Commander[] };
 type DeckListsByCommander = { commanders: string, decks: DeckList[], colorIdentity: ColorIdentity };
-type DeckListsProps = {
+
+export default function DeckLists({
+  occurrencesForCard,
+  isLoading = false,
+  decklists,
+  size
+}: {
   occurrencesForCard: occurrencesForCard,
   isLoading?: boolean,
   decklists: DeckListsByCommander[],
   size: 'small' | 'medium' | 'large',
-};
-
-const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = false, decklists, size }) => {
+}) {
   const getIdentityImages = (colorIdentity: ColorIdentity) => {
     return (
-      <span className={styles['identityGroup']}>
+      <span className={styles.identityGroup}>
         {
           colorIdentity.map(color => (
             <Image src={IDENTITY_COLORS[color]} alt={color} width={18} height={18} priority key={color} />
@@ -36,27 +42,27 @@ const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = f
   };
 
   return (
-    <span className={styles['container']}>
-      <span className={styles['title']}>
+    <span className={styles.container}>
+      <span className={styles.title}>
         <h3>Deck Lists</h3>
         {occurrencesForCard.occurrences > 0 && (
-          <span className={styles['use']}>
+          <span className={styles.use}>
             <span>{occurrencesForCard.occurrences} {occurrencesForCard.occurrences === 1 ? 'Deck' : 'Decks'}</span>
             <span>~</span>
             <span>{occurrencesForCard.percentage} %</span>
           </span>
         )}
       </span>
-      <span className={`${styles['content']} ${styles[`content-${size}`]}`}>
+      <span className={`${styles.content} ${styles[`content${size.charAt(0).toUpperCase() + size.slice(1)}`]}`}>
         {isLoading ? <Loading /> : (
           (!!decklists && decklists?.length > 0) ? (
             decklists.map(({ commanders, decks, colorIdentity }) => (
               <details key={`${commanders}-details`}>
-                <summary className={styles['commander']} key={`${commanders}-summary`}>
+                <summary className={styles.commander} key={`${commanders}-summary`}>
                   {getIdentityImages(colorIdentity)}
                   <span key={`${commanders}-name`}>{commanders}</span>
                 </summary>
-                <ul className={styles['card-lists']} key={`${commanders}-decklists`}>
+                <ul className={styles.cardLists} key={`${commanders}-decklists`}>
                   {
                     decks.map(({ name, url }) => (
                       <a
@@ -67,7 +73,7 @@ const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = f
                       >
                         <li
                           key={`li-card-list-${url}`}
-                          className={styles['card-list']}
+                          className={styles.cardList}
                         >
                           {name}
                         </li>
@@ -78,11 +84,9 @@ const DeckLists: React.FC<DeckListsProps> = ({ occurrencesForCard, isLoading = f
               </details>
             ))
           ) :
-            < h2 className={styles['no-card-selected']} >NO CARD SELECTED</h2>
+            <h2 className={styles.noCardSelected}>NO CARD SELECTED</h2>
         )}
       </span>
-    </span >
-  )
-}
-
-export default DeckLists
+    </span>
+  );
+};

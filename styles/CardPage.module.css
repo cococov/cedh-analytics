@@ -1,4 +1,4 @@
-.card-info-container {
+.cardInfoContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,14 +7,14 @@
   max-width: 40%;
 }
 
-.card-info {
+.cardInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.card-text-container {
+.cardTextContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -22,45 +22,45 @@
   width: 95%;
 }
 
-.card-text {
+.cardText {
   text-align: justify;
 }
 
 @media (max-width: 1024px) {
-  .card-info {
+  .cardInfo {
     max-width: 75%;
   }
 
-  .card-text-container {
+  .cardTextContainer {
     width: 75%;
   }
 
-  .card-info-container {
+  .cardInfoContainer {
     max-width: 95%;
   }
 }
 
 @media (max-width: 600px) {
-  .card-info {
+  .cardInfo {
     max-width: 100%;
     width: 100%;
   }
 
-  .card-text-container {
+  .cardTextContainer {
     width: 90%;
   }
 
-  .card-info-container {
+  .cardInfoContainer {
     max-width: 100%;
     width: 100%;
   }
 }
 
-.home-button-container {
+.homeButtonContainer {
   width: 100%;
 }
 
-.card-reserved-list {
+.cardReservedList {
   opacity: 0.5;
   color: #422273;
   margin-top: -10px;

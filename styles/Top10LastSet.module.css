@@ -9,8 +9,19 @@
   background-color: white;
 }
 
+.dummyTd {
+  margin: 0;
+  padding: 0;
+}
+
 .statTableTable {
   border-spacing: 0;
+}
+
+@media (min-width: 1080px) {
+  .statTableContent {
+    width: 40rem;
+  }
 }
 
 .statTable {
@@ -92,4 +103,20 @@
   padding-right: 0.5rem;
   background-color: #ccc;
   cursor: pointer;
+}
+
+.statTableBodyRow0NoLink td {
+  margin: 0;
+  padding: 0.3rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  background-color: #ececec;
+}
+
+.statTableBodyRow1NoLink td {
+  margin: 0;
+  padding: 0.3rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  background-color: #ccc;
 }

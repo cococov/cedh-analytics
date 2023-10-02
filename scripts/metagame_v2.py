@@ -1,12 +1,18 @@
+import os
+import json
+import subprocess
+import utils.date as u_date
 import utils.files as files
 import data.moxfield as moxfield
 import utils.logs as logs
 import data.moxfield_t as moxfield_t
-from data import edhtop16
 import data.mtg_json as mtg_json
 import data.pre_processing as pre_processing
 import data.processing as processing
+import data.edhtop16 as edhtop16
+from datetime import datetime
 
+DIRNAME = os.path.realpath('.')
 BASE_PATH = r'./public/data'
 METAGAME_PATH = rf'{BASE_PATH}/metagame'
 FORCE_UPDATE = False
@@ -52,13 +58,19 @@ total_lists = len(raw_lists)
 cant_hashes_requested = 0
 no_new_data = True
 to_delete = []
+cant_decklists_by_hash = {}
 for commander in commanders:
   decklists_by_commander[commander] = []
   for hash in decklist_hashes_by_commander[commander]:
     logs.loading_log("Getting decklists from hashes", cant_hashes_requested, total_lists)
     if hash in decklists_by_hash.keys():
       if 'status' in list(decklists_by_hash[hash].keys()):
+        cant_hashes_requested += 1
         continue
+      if hash in cant_decklists_by_hash.keys():
+        cant_decklists_by_hash[hash] += 1
+      else:
+        cant_decklists_by_hash[hash] = 1
       decklists_by_commander[commander].append(decklists_by_hash[hash])
     else:
       decklist = moxfield.get_decklists_data(hash, version=3, no_log=True)
@@ -67,6 +79,7 @@ for commander in commanders:
         continue
       decklists_by_commander[commander].append(decklist)
       decklists_by_hash[hash] = decklist
+      cant_decklists_by_hash[hash] = 1
       no_new_data = False
     cant_hashes_requested += 1
   if(len(decklists_by_commander[commander]) == 0):
@@ -82,7 +95,13 @@ for commander in to_delete:
 if not no_new_data:
   files.create_file_with_log(METAGAME_PATH, 'decklists.json', decklists_by_hash, 'Saving decklists', 'Decklists saved!')
 
-moxfield.VALID_DECKS = len(decklists_by_hash.keys())
+full_decklists = []
+
+for hash in decklists_by_hash.keys():
+  for _ in range(cant_decklists_by_hash[hash]):
+    full_decklists.append(decklists_by_hash[hash])
+
+moxfield.VALID_DECKS = len(full_decklists)
 
 logs.end_log_block('Decklists from hashes got')
 
@@ -90,26 +109,61 @@ logs.end_log_block('Decklists from hashes got')
 logs.begin_log_block('Processing data')
 condensed_commanders_data = edhtop16.get_condensed_commanders_data(commanders, raw_lists)
 stats_by_commander = edhtop16.get_commander_stats_by_commander(commanders, raw_lists, decklists_by_commander)
-metagame_resume = edhtop16.get_metagame_resume(commanders, raw_lists, stats_by_commander)
+metagame_resume = edhtop16.get_metagame_resume(commanders, raw_lists, stats_by_commander, decklist_hashes_by_tournament)
 logs.end_log_block('Data processed!')
 
 # PROCESS CARDS
 logs.begin_log_block('Processing cards')
-metagame_cards = pre_processing.process_cards(pre_processing.reduce_decks_to_cards(pre_processing.get_decklists_data(decklists_by_hash.values()), has_multiple_printings, get_last_set_for_card))
+metagame_cards = pre_processing.process_cards(pre_processing.reduce_decks_to_cards(pre_processing.get_decklists_data(full_decklists), has_multiple_printings, get_last_set_for_card))
 metagame_resume['lastSet'] = LAST_SET[0]
 metagame_resume['lastSetTop10'] = processing.last_set_top_10(metagame_cards, LAST_SET)
+metagame_cards = processing.get_cards_winrate(metagame_cards, raw_lists)
+logs.end_log_block('Cards processed!')
 
+# SAVE CARDS
+files.create_new_file('', METAGAME_PATH, 'metagame_cards.json', metagame_cards)
+
+# UPDATE TAGS
+subprocess.Popen(['python3', 'scripts/update_tags.py']).wait()
+
+# USE OF CARD TYPES
+logs.begin_log_block('Calculating use of card types')
+uses_by_card_types = processing.get_uses_by_card_types(full_decklists)
+metagame_resume['useOfCards'] = {**metagame_resume['useOfCards'], **uses_by_card_types}
+logs.end_log_block('Use of card types calculated!')
+
+# PROCESS CARDS BY COMMANDER
+logs.begin_log_block('Processing cards by commander')
 metagame_cards_by_commander = {}
 for commander in commanders:
   metagame_cards_by_commander[commander] = pre_processing.process_cards(pre_processing.reduce_decks_to_cards(pre_processing.get_decklists_data(decklists_by_commander[commander]), has_multiple_printings, get_last_set_for_card))
-logs.end_log_block('Cards processed!')
+  metagame_cards_by_commander[commander] = processing.get_cards_winrate(metagame_cards_by_commander[commander], raw_lists)
+  stats_by_commander[commander]['lastSet'] = LAST_SET[0]
+  stats_by_commander[commander]['lastSetTop10'] = processing.last_set_top_10(metagame_cards_by_commander[commander], LAST_SET)
+  uses_by_card_types = processing.get_uses_by_card_types(decklists_by_commander[commander])
+  stats_by_commander[commander]['useOfCards'] = {**metagame_resume['useOfCards'], **uses_by_card_types}
+logs.end_log_block('Cards by commander processed!')
 
 # SAVE NEW FILES
 files.create_new_file('', METAGAME_PATH, 'condensed_commanders_data.json', condensed_commanders_data)
 files.create_new_file('', METAGAME_PATH, 'stats_by_commander.json', stats_by_commander)
 files.create_new_file('', METAGAME_PATH, 'metagame_resume.json', metagame_resume)
-files.create_new_file('', METAGAME_PATH, 'metagame_cards.json', metagame_cards)
 files.create_new_file('', METAGAME_PATH, 'metagame_cards_by_commander.json', metagame_cards_by_commander)
 
 # CLEANING
 files.clear_csv_directory()
+
+print('Updating date...', end='\r')
+
+update_date = {}
+update_date_path = os.path.join(DIRNAME, r'public/data/update_date.json')
+with open(update_date_path, 'r+') as f:
+  update_date = json.load(f) if os.stat(update_date_path).st_size > 0 else {}
+
+update_date['metagame'] = u_date.custom_strftime('%B {S}, %Y', datetime.today())
+
+with open(update_date_path, 'w', encoding='utf8') as f:
+  json.dump(update_date, f, ensure_ascii=False)
+
+print('\033[KDate updated \033[92mDone!\033[0m')
+

@@ -1,34 +1,13 @@
+"use client";
+
+/* Vendor */
 import MaterialTable, { Action } from '@material-table/core';
-import { ExportCsv, ExportPdf } from '@material-table/exporters';
+/* Own */
+import { pdfExporter, csvExporter } from '../../utils/exporters';
 
-interface RowData {
-  'cardName'?: string;
-  'occurrences'?: string;
-  'typeLine'?: string;
-  'colorIdentity'?: string;
-  'reserved'?: string;
-}
-interface ITable {
-  columns: object[];
-  data: RowData[];
-  title: string;
-  defaultNumberOfRows?: number;
-  rowHeight?: string;
-  canExportAllData?: boolean;
-  canFilter?: boolean;
-  canSearch?: boolean;
-  isDraggable?: boolean;
-  withGrouping?: boolean;
-  actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[];
-  isLoading: boolean;
-  onRowClick?: (
-    event?: React.MouseEvent,
-    rowData?: RowData,
-    toggleDetailPanel?: (panelIndex?: number) => void
-  ) => void;
-}
+interface RowData { [key: string]: any };
 
-const Table: React.FC<ITable> = ({
+export default function Table({
   columns,
   data,
   title,
@@ -42,7 +21,25 @@ const Table: React.FC<ITable> = ({
   actions,
   isLoading,
   onRowClick,
-}) => {
+}: {
+  columns: object[],
+  data: RowData[],
+  title: string,
+  defaultNumberOfRows?: number,
+  rowHeight?: string,
+  canExportAllData?: boolean,
+  canFilter?: boolean,
+  canSearch?: boolean,
+  isDraggable?: boolean,
+  withGrouping?: boolean,
+  actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[],
+  isLoading: boolean,
+  onRowClick?: (
+    event?: React.MouseEvent,
+    rowData?: RowData,
+    toggleDetailPanel?: (panelIndex?: number) => void
+  ) => void,
+}) {
 
   return (
     <MaterialTable
@@ -54,10 +51,10 @@ const Table: React.FC<ITable> = ({
       options={{
         exportMenu: [{
           label: 'Export PDF',
-          exportFunc: (cols, datas) => ExportPdf(cols, datas, title)
+          exportFunc: (cols, datas) => pdfExporter(cols, datas, title)
         }, {
           label: 'Export CSV',
-          exportFunc: (cols, datas) => ExportCsv(cols, datas, title)
+          exportFunc: (cols, datas) => csvExporter(cols, datas, title)
         }],
         pageSize: defaultNumberOfRows,
         draggable: isDraggable,
@@ -79,7 +76,3 @@ const Table: React.FC<ITable> = ({
     />
   );
 };
-
-
-
-export default Table;

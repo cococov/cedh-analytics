@@ -1,7 +1,10 @@
+"use client";
+
 import { useState, useEffect } from 'react';
+/* Static */
 import styles from '../../styles/Loading.module.css';
 
-const Loading: React.FC = () => {
+export default function Loading() {
   const [colors, setColors] = useState({
     first: 'yellow',
     second: 'blue',
@@ -26,19 +29,17 @@ const Loading: React.FC = () => {
     return () => {
       clearInterval(ref);
     }
-  }, [])
+  }, []);
 
   return (
-    <span className={styles['mtg-loading-container']}>
-      <span className={styles['mtg-loading']}>
-        <span className={styles['mtg-loading-first']} style={{ backgroundColor: colors['first'] }} />
-        <span className={styles['mtg-loading-second']} style={{ backgroundColor: colors['second'] }} />
-        <span className={styles['mtg-loading-third']} style={{ backgroundColor: colors['third'] }} />
-        <span className={styles['mtg-loading-fourth']} style={{ backgroundColor: colors['fourth'] }} />
-        <span className={styles['mtg-loading-fifth']} style={{ backgroundColor: colors['fifth'] }} />
+    <span className={styles.mtgLoadingContainer}>
+      <span className={styles.mtgLoading}>
+        <span className={styles.mtgLoadingFirst} style={{ backgroundColor: colors['first'] }} />
+        <span className={styles.mtgLoadingSecond} style={{ backgroundColor: colors['second'] }} />
+        <span className={styles.mtgLoadingThird} style={{ backgroundColor: colors['third'] }} />
+        <span className={styles.mtgLoadingFourth} style={{ backgroundColor: colors['fourth'] }} />
+        <span className={styles.mtgLoadingFifth} style={{ backgroundColor: colors['fifth'] }} />
       </span>
     </span>
-  )
-}
-
-export default Loading;
+  );
+};

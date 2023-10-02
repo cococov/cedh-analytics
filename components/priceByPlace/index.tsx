@@ -1,24 +1,33 @@
-import React from 'react';
+"use client";
+
+import { useContext } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import TournamentInfoContext from '../../contexts/tournamentInfoStore';
 
-type Props = {
-  image: string;
-  place: string;
-  name: string;
-  info: string;
-  isCard?: boolean;
-  small?: boolean;
-  isSmallScreen?: boolean;
-};
+export default function PriceByPlace({
+  image,
+  place,
+  name,
+  info,
+  isCard,
+  small
+}: {
+  image: string,
+  place: string,
+  name: string,
+  info: string,
+  isCard?: boolean,
+  small?: boolean,
+}) {
+  const { isSmallScreen } = useContext(TournamentInfoContext);
 
-const PriceByPlace: React.FC<Props> = ({ image, place, name, info, isCard, small, isSmallScreen }) => {
   return (
     <Card sx={{ maxWidth: 345, margin: '1rem', boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 15%), 0px 1px 1px 0px rgb(0 0 0 / 10.5%), 0px 1px 3px 0px rgb(0 0 0 / 9%)' }}>
-      <CardActionArea href={isCard ? `/cards/${name}` : ''} disabled={!isCard}>
+      <CardActionArea href={isCard ? `/db-cards/${name}` : ''} disabled={!isCard}>
         <CardMedia
           component="img"
           image={image}
@@ -40,5 +49,3 @@ const PriceByPlace: React.FC<Props> = ({ image, place, name, info, isCard, small
     </Card>
   );
 };
-
-export default PriceByPlace;

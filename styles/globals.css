@@ -1,13 +1,20 @@
-html,
-body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  overflow: hidden;
   padding: 0 !important;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Droid Sans, sans-serif;
-  background-color: #ececec;
 }
 
 body {
+  padding: 0 !important;
+  margin: 0;
+  background-color: #ececec;
   overflow-x: hidden;
+  overflow-y: auto !important;
+  max-height: 100dvh;
 }
 
 a {
@@ -45,6 +52,36 @@ ul {
   background-color: #ccc !important;
 }
 
+[class*='MTableToolbar-title'] {
+  overflow: visible !important;
+}
+
+[class*='MTableToolbar-actions'] div div {
+  flex-wrap: wrap;
+}
+
+.MuiToolbar-root {
+  overflow: hidden !important;
+}
+
+.MuiSelect-select {
+  min-width: 90% !important;
+}
+
+.MuiTablePagination-input .MuiTablePagination-select {
+  margin-right: 9rem !important;
+}
+
+@media (max-width: 600px) {
+  .MuiTablePagination-input .MuiTablePagination-select {
+    margin-right: 0 !important;
+  }
+
+  .MuiTablePagination-selectRoot {
+    padding-right: 1rem !important;
+  }
+}
+
 /* Scroll */
 
 html {
@@ -70,4 +107,8 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background-color: var(--thumbBG1);
   border: 0px solid var(--scrollbarBG1);
+}
+
+table {
+  border-spacing: unset;
 }

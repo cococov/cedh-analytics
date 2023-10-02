@@ -20,23 +20,23 @@
 
 /* Base structure */
 
-.left-span {
+.leftSpan {
   flex: 3;
 }
 
-@media (max-width: 1500px) {
-  .left-span {
+@media (max-width: 1600px) {
+  .leftSpan {
     flex: none;
     display: none;
   }
 }
 
-.cards-table {
+.cardsTable {
   flex: 3;
 }
 
 @media (min-width: 857px) {
-  .cards-table {
+  .cardsTable {
     padding-left: 5rem;
     padding-right: 5rem;
   }
@@ -44,28 +44,28 @@
 
 /* Card Info */
 
-.card-info-container {
+.cardInfoContainer {
   display: flex;
   flex: 3;
   flex-direction: column;
   margin-right: 1rem;
 }
 
-@media (max-width: 1170px) {
-  .card-info-container {
+@media (max-width: 1432px) {
+  .cardInfoContainer {
     flex: none;
     visibility: hidden;
     display: none;
   }
 }
 
-.card-info {
+.cardInfo {
   display: flex;
   align-self: flex-start;
   flex-wrap: wrap;
 }
 
-.card-info .no-card-selected {
+.cardInfo .noCardSelected {
   flex-grow: 1;
   align-self: center;
   margin-left: 1rem;
@@ -74,60 +74,60 @@
   font-size: 1.3rem;
 }
 
-.card-info .card-reserved-list {
+.cardInfo .cardReservedList {
   cursor: default;
 }
 
-.card-info .card-reserved-list-container {
+.cardInfo .cardReservedListContainer {
   cursor: default;
   float: right;
 }
 
-.card-info .card-text-container {
+.cardInfo .cardTextContainer {
   margin-left: 0rem;
   min-width: 45%;
 }
 
-.card-info .card-text-container-loading {
+.cardInfo .cardTextContainerLoading {
   display: flex;
   flex: 1;
   margin-left: 0rem;
   min-width: 45%;
 }
 
-.card-info .card-text-container-no-card-selected {
+.cardInfo .cardTextContainerNoCardSelected {
   display: flex;
   flex: 1;
   margin-left: 0rem;
   min-width: 45%;
 }
 
-.card-info .card-name {
+.cardInfo .cardName {
   text-align: left;
 }
 
-.card-info .card-type {
+.cardInfo .cardType {
   text-align: left;
 }
 
-.card-info .card-text {
+.cardInfo .cardText {
   text-align: justify;
   text-justify: inter-word;
 }
 
-.card-info .card-image {
+.cardInfo .cardImage {
   flex-shrink: 0;
   flex-grow: 1;
   align-self: center;
   text-align: center;
 }
 
-.card-info .card-gatherer {
+.cardInfo .cardGatherer {
   color: #422273;
   font-weight: 700;
 }
 
-.card-info .card-gatherer-disabled {
+.cardInfo .cardGathererDisabled {
   color: #bcbcbc;
   font-weight: 700;
   cursor: pointer;
@@ -140,11 +140,11 @@
 }
 
 @media (min-width: 1921px) {
-  .card-info {
+  .cardInfo {
     flex-wrap: nowrap;
   }
 
-  .card-info .card-image {
+  .cardInfo .cardImage {
     margin-right: 2rem;
   }
 }
@@ -158,4 +158,16 @@
 .cardTag {
   margin-top: 0.2rem;
   margin-right: 0.5rem;
+}
+
+.commandersContainer {
+  display: flex;
+  overflow-x: auto;
+}
+
+@media (max-width: 1080px) {
+  .commandersContainer {
+    display: block;
+    overflow-x: scroll;
+  }
 }

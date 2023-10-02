@@ -91,6 +91,26 @@
   padding-top: 0.5rem;
 }
 
+@media (max-width: 720px) {
+  .navBar {
+    display: none;
+  }
+
+  .navBarPhone {
+    display: flex;
+  }
+}
+
+@media (min-width: 721px) {
+  .navBar {
+    display: flex;
+  }
+
+  .navBarPhone {
+    display: none;
+  }
+}
+
 /* Home */
 
 .homeMain {
@@ -98,7 +118,7 @@
   flex: 1;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: center;
   overflow-x: hidden;
   background-color: #ececec;
@@ -118,13 +138,18 @@
   text-align: left;
 }
 
-.homeImage {
+.homeImageContainer {
   position: relative;
   overflow-x: hidden;
   overflow-y: hidden;
   width: 100%;
   max-height: 35rem;
   margin-top: -20rem;
+}
+
+.homeImage {
+  width: 100%;
+  height: auto;
 }
 
 .homeResume {
@@ -159,8 +184,10 @@
   display: flex;
   flex-direction: column;
   margin-top: 5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   align-items: center;
+  flex-grow: 1;
+  justify-content: flex-end;
 }
 
 .homeLegal p {
@@ -304,12 +331,18 @@
   padding-right: 0.5rem;
 }
 
-.homeImageHidden {
+.homeImageHiddenContainer {
   display: none;
   overflow-x: hidden;
   overflow-y: hidden;
   max-height: 35rem;
   margin-top: -10rem;
+  width: 100%;
+}
+
+.homeImageHidden {
+  width: 100%;
+  height: auto;
 }
 
 .homeStatsHiddenSection {
@@ -371,7 +404,8 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 31%;
+  width: 97%;
+  height: 95%;
   margin: 0.2rem;
   padding-left: 0.8rem;
   padding-right: 0.8rem;
@@ -432,11 +466,11 @@
 }
 
 @media (max-width: 600px) {
-  .homeImage {
+  .homeImageContainer {
     display: none;
   }
 
-  .homeImageHidden {
+  .homeImageHiddenContainer {
     display: flex;
   }
 

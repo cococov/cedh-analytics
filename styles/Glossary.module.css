@@ -10,7 +10,7 @@
   width: 100%;
 }
 
-.glossaryImage {
+.glossaryImageContainer {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -19,9 +19,15 @@
   margin: 2rem -0.5rem;
 }
 
+.glossaryImage {
+  height: auto;
+  width: 100%;
+}
+
 @media (max-width: 767px) {
-  .glossaryImage {
+  .glossaryImageContainer {
     margin-top: 0;
+    width: 100%;
   }
 }
 
@@ -39,7 +45,7 @@
   text-align: center;
   align-items: center;
   max-width: 50%;
-  text-align: justify;
+  text-align: left;
   margin-bottom: 2rem;
 }
 

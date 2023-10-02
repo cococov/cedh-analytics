@@ -15,6 +15,7 @@ If you want to force the script to get tags for all cards, set the variable `FOR
 BASE_PATH = r'./public/data'
 TOURNAMENTS_PATH = rf'{BASE_PATH}/tournaments'
 CARDS_PATH = rf'{BASE_PATH}/cards'
+METAGAME_PATH = rf'{BASE_PATH}/metagame'
 FORCE_UPDATE = False
 
 # Load db cards json
@@ -32,6 +33,14 @@ for tournament in tournaments:
     if card['scrapName'] not in cards:
       cards.append(card['scrapName'])
 logs.end_log_block('Tournament cards loaded!')
+
+# Load metagame cards json
+logs.begin_log_block('Loading metagame cards...')
+metagame_cards: list[dict] | dict = files.read_json_file(METAGAME_PATH, 'metagame_cards.json')
+for card in metagame_cards:
+  if card['scrapName'] not in cards:
+    cards.append(card['scrapName'])
+logs.end_log_block('Metagame cards loaded!')
 
 # Load json
 logs.begin_log_block('Loading tags...')

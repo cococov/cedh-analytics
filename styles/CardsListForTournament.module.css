@@ -36,19 +36,19 @@
   flex: 3;
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 1600px) {
   .leftSpan {
     flex: none;
     display: none;
   }
 }
 
-.cards-table {
+.cardsTable {
   flex: 3;
 }
 
 @media (min-width: 857px) {
-  .cards-table {
+  .cardsTable {
     padding-left: 5rem;
     padding-right: 5rem;
   }
@@ -64,7 +64,7 @@
   z-index: 0;
 }
 
-@media (max-width: 1170px) {
+@media (max-width: 1432px) {
   .card-info-container {
     flex: none;
     visibility: hidden;
@@ -176,10 +176,17 @@
   min-width: 100%;
 }
 
+@media (max-width: 690px) {
+  .tournamentImage {
+    width: auto;
+  }
+}
+
 .tournamentImageContainer .tournamentImage {
-  position: relative;
+  position: absolute;
   object-fit: cover;
-  max-width: calc(400px / (722px / 1280px));;
+  max-width: calc(400px / (722px / 1280px));
+  ;
   max-height: 400px;
   z-index: 0;
   opacity: 1;
@@ -228,4 +235,16 @@
 .homeStat p {
   font-size: 2rem;
   margin-top: 0.8rem;
+}
+
+.commandersContainer {
+  display: flex;
+  overflow-x: auto;
+}
+
+@media (max-width: 1080px) {
+  .commandersContainer {
+    display: block;
+    overflow-x: scroll;
+  }
 }

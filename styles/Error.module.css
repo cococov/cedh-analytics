@@ -10,12 +10,16 @@
   width: 100%;
 }
 
-.errorImage {
+.errorImageContainer {
   display: flex;
   flex-direction: column;
   flex: 1;
   align-items: center;
   margin: 2rem -0.5rem;
+}
+
+.errorImage {
+  height: auto;
 }
 
 .errorText {
@@ -26,7 +30,13 @@
 }
 
 @media (max-width: 767px) {
-  .errorImage {
+  .errorImageContainer {
     margin-top: 0;
+    width: 100%;
+  }
+
+  .errorImage {
+    height: auto;
+    width: 100%;
   }
 }

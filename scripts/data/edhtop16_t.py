@@ -31,9 +31,11 @@ class CondensedCommanderData(typing.TypedDict):
 
 class ProcessedDecklist(typing.TypedDict):
   url: str
+  name: str
   wins: int
   winRate: float
   standing: int
+  hasPartners: bool
   tournamentName: str
   dateCreated: str
   hasCompanion: bool
@@ -54,10 +56,56 @@ class ProcessedDecklist(typing.TypedDict):
   avgCmcWithLands: float
   avgCmcWithoutLands: float
 
+class UseOfCards(typing.TypedDict, total=False):
+  minCantLands: int
+  q1CantLands: float
+  medianCantLands: int
+  q3CantLands: float
+  maxCantLands: int
+  minCantDraw: int
+  q1CantDraw: float
+  medianCantDraw: int
+  q3CantDraw: float
+  maxCantDraw: int
+  minCantTutor: int
+  q1CantTutor: float
+  medianCantTutor: int
+  q3CantTutor: float
+  maxCantTutor: int
+  minCantCounter: int
+  q1CantCounter: float
+  medianCantCounter: int
+  q3CantCounter: float
+  maxCantCounter: int
+  minCantRemoval: int
+  q1CantRemoval: float
+  medianCantRemoval: int
+  q3CantRemoval: float
+  maxCantRemoval: int
+  minCantManaRock: int
+  q1CantManaRock: float
+  medianCantManaRock: int
+  q3CantManaRock: float
+  maxCantManaRock: int
+  minCantManaDork: int
+  q1CantManaDork: float
+  medianCantManaDork: int
+  q3CantManaDork: float
+  maxCantManaDork: int
+  minCantStax: int
+  q1CantStax: float
+  medianCantStax: int
+  q3CantStax: float
+  maxCantStax: int
+
 class StatsByCommander(typing.TypedDict):
   appearances: int
   colorID: str
   wins: int
+  lastSet: str
+  lastSetTop10: list[dict[str, str | int]]
+  hasPartners: bool
+  sortedUseOfLands: list[int]
   avgWinRate: float
   bestStanding: int
   worstStanding: int
@@ -85,6 +133,7 @@ class StatsByCommander(typing.TypedDict):
   minAvgCmcWithoutLands: float
   maxAvgCmcWithLands: float
   maxAvgCmcWithoutLands: float
+  useOfCards: UseOfCards
 
 class MetagameResume(typing.TypedDict):
   cantCommanders: int
@@ -100,8 +149,10 @@ class MetagameResume(typing.TypedDict):
   avgCantArtifacts: float
   avgCantEnchantments: float
   avgCantLands: float
+  useOfCards: UseOfCards
   cantDecksWithStickers: int
   cantDecksWithCompanions: int
+  percentageDecksWithPartners: float
   percentageDecksWithStickers: float
   percentageDecksWithCompanions: float
   allTokens: list[str]
