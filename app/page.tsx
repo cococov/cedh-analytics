@@ -266,6 +266,20 @@ export default async function Home() {
               Metagame Cards
             </Link>
             .
+            <p>
+              Metagame criteria:
+            </p>
+            <ul>
+              <li>
+                1 year of data is considered. (now - 1 year)
+              </li>
+              <li>
+                Only tournaments with 64 or more players are considered.
+              </li>
+              <li>
+                Only top 32 decks are considered.
+              </li>
+            </ul>
           </p>
         </article>
 
