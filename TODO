@@ -8,6 +8,7 @@
 - Data: Cargar torneos chilenos faltantes
 - Data: Filtrar tags para dejar solo los útiles
 - Data: Dejar de guardar data vieja de db cards
+- Data: Poner flag de update a scripts, para que no siempre se actualicen y así evitar comentar el update en pruebas
 
 - Perf: Paginar torneos
 - Perf: Pasar loading de magic full a css
@@ -21,6 +22,7 @@
 - Arch: Instalar eslint y prettier (ejemplo de buena config: https://github.com/goncy/interview-challenges/blob/main/proyectos-live/migrado-libre/.eslintrc.cjs)
 
 - Ref: Deduplicar lista de navbar para en un mismo origen para evitar tener problemas de homologación
+- Ref: Refactorizar, tipar y ordenar scripts procesadores de cartas
 
 - Chore: Eliminar componentes y estilos tabla vieja de top 10
 
