@@ -84,8 +84,14 @@
     "tailwindcss",
     "tcgplayer",
     "tierlist",
+    "UBRG",
     "untapper",
+    "WBRG",
     "whatsapp",
+    "WUBG",
+    "WUBR",
+    "WUBRG",
+    "WURG",
     "YFFQRG"
   ],
   "python.analysis.typeCheckingMode": "basic"
