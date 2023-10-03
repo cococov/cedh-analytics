@@ -35,3 +35,4 @@
 - Añadir cantidad de cartas que están en metagame pero no en la db
 
 ## FIX
+Fix: Ordenar identidad de color de comandantes en metagame con el mismo orden de colores que en las tablas de cartas
