@@ -26,6 +26,9 @@
 
 ## Metagame v2
 
+- Añadir tokens a comandantes
+- Añadir fecha de ultimo deck a comandantes
+- Añadir fecha a decklists de comandantes
 - Mejorar página de carta
 - Agregar source y estrategia a metagame
 - Añadir flag de si carta está en las cartas de la db en metagame cards y by_commander (ojo con by_commander de tomar en cuenta al commander)
