@@ -26,6 +26,7 @@
 
 ## Metagame v2
 
+- Add has partner to commanders table
 - Añadir tokens a comandantes
 - Añadir fecha de ultimo deck a comandantes
 - Añadir fecha a decklists de comandantes
