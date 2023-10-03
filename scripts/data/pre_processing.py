@@ -1,6 +1,5 @@
 import data.moxfield
 from functools import reduce
-from utils.misc import pp_json
 
 number_of_decks_by_identities = {}
 
@@ -12,6 +11,11 @@ def sort_identity(identity):
   identities = { 'W': 0, 'U': 1, 'B': 2, 'R': 3, 'G': 4 }
   sorted_identities = sorted(identity, key=lambda x: identities[x])
   return sorted_identities
+
+def sort_identity_str(identity):
+  identities = { 'W': 0, 'U': 1, 'B': 2, 'R': 3, 'G': 4, 'C' : 5 }
+  sorted_identities = sorted(list(identity), key=lambda x: identities[x])
+  return ''.join(sorted_identities)
 
 def getType(type):
   if type == '1':
@@ -44,7 +48,7 @@ def percentage_of_use_by_identity(occurrences, identity):
 
 def map_cards(card):
   decklists = sort_and_group_decks(card['decklists'])
-  return {**card, 'decklists': decklists, 'percentageOfUse': round(card['occurrences'] / data.moxfield.VALID_DECKS * 100, 2), 'percentageOfUseByIdentity': percentage_of_use_by_identity(card['occurrences'], card['colorIdentity'])}
+  return {**card, 'colors': sort_identity_str(card['colors']), 'colorIdentity': sort_identity_str(card['colorIdentity']),'decklists': decklists, 'percentageOfUse': round(card['occurrences'] / data.moxfield.VALID_DECKS * 100, 2), 'percentageOfUseByIdentity': percentage_of_use_by_identity(card['occurrences'], card['colorIdentity'])}
 
 def process_cards(cards):
   return list(map(map_cards, cards))

@@ -65,12 +65,9 @@ def get_decklist_hashes_by_tournament(raw_lists: list[EdhTop16DeckList]) -> dict
     tournaments[list['tournamentName']].append(list['decklist'].split('/')[-1])
   return tournaments
 
-def sort_identity(identity):
-  if identity == 'C':
-    return 'C'
-  splitted_identity = list(identity)
-  identities = { 'W': 0, 'U': 1, 'B': 2, 'R': 3, 'G': 4 }
-  sorted_identities = sorted(splitted_identity, key=lambda x: identities[x])
+def sort_identity_str(identity):
+  identities = { 'W': 0, 'U': 1, 'B': 2, 'R': 3, 'G': 4, 'C' : 5 }
+  sorted_identities = sorted(list(identity), key=lambda x: identities[x])
   return ''.join(sorted_identities)
 
 def get_condensed_commanders_data(commanders: list[str], raw_lists: list[EdhTop16DeckList]) -> list[CondensedCommanderData]:
@@ -83,7 +80,7 @@ def get_condensed_commanders_data(commanders: list[str], raw_lists: list[EdhTop1
     best_standing = functools.reduce(lambda x, y: int(x) if x < y else int(y), map(lambda x: x['standing'], raw_data))
     worst_standing = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['standing'], raw_data))
     commander_data: CondensedCommanderData = {
-      'identity': sort_identity(raw_data[0]['colorID']),
+      'identity': sort_identity_str(raw_data[0]['colorID']),
       'commander': commander,
       'appearances': appearances,
       'wins': wins,
