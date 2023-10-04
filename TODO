@@ -4,6 +4,7 @@
 - Feat: Añadir buscador a torneos
 - Feat: Usar query params para filtros y columnas visibles en tabla de cartas
 - Feat: Usar skeleton loader en tabla de cartas
+- Feat: Mejorar filtros de tabla de cartas
 
 - Data: Cargar torneos chilenos faltantes
 - Data: Filtrar tags para dejar solo los útiles
