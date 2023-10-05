@@ -18,6 +18,7 @@
 - Perf: Dejar de optimizar imágenes en info de carta desde vercel una vez sean optimas
 - Perf: Usar tabla asíncrona en cards y tournaments
 - Perf: En tablas asíncronas pedir el json solo una vez en vez de en la tabla y en el store
+- Perf: Cachear jsons de tablas
 
 - Arch: Actualizar material table
 - Arch: Usar alias para los imports (con @)
