@@ -17,25 +17,54 @@
 /* Base Layout */
 
 .footer {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
   width: 100%;
   height: fit-content;
   border-top: 1px solid #eaeaea;
-  display: flex;
   justify-content: center;
   align-items: center;
   background-color: #ccc;
   min-height: 76px;
-}
-
-.footer a {
-  display: flex;
   justify-content: center;
   align-items: center;
   flex-grow: 1;
 }
 
+.footer .madeWithLove {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0.5rem;
+  grid-column: 2;
+}
+
+.footer .donate {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  margin: 0.5rem;
+  grid-column: 3;
+  padding-right: 2rem;
+}
+
 .logo {
   margin-left: 0.5rem;
+}
+
+@media (max-width: 767px) {
+  .footer {
+    grid-template-columns: 0fr 2fr 1fr;
+  }
+
+  .footer .donate {
+    padding-right: 0.5rem;
+  }
 }
 
 /* Nav Bar */

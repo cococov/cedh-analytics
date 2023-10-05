@@ -13,6 +13,6 @@ module.exports = withPWA({
   swcMinify: true,
   images: {
     minimumCacheTTL: 60 * 60 * 24, // 1 day
-    domains: ['c1.scryfall.com', 'cards.scryfall.io'],
+    domains: ['c1.scryfall.com', 'cards.scryfall.io', 'storage.ko-fi.com'],
   }
 });

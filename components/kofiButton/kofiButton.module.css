@@ -1,0 +1,14 @@
+.kofiButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #422273;
+  color: #cccccc;
+  padding: 0.5rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.kofiButton img {
+  margin-right: 0.3rem;
+}
