@@ -5,6 +5,7 @@
 - Feat: Usar query params para filtros y columnas visibles en tabla de cartas
 - Feat: Usar skeleton loader en tabla de cartas
 - Feat: Mejorar filtros de tabla de cartas
+- Feat: Añadir tracking de eventos (como uso de eventos y filtros)
 
 - Data: Cargar torneos chilenos faltantes
 - Data: Filtrar tags para dejar solo los útiles
