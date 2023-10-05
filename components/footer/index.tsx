@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <span className={styles.madeWithLove}>
-        Made with ❤ by {' '}
+        Made with 💜 by {' '}
         <span className={styles.logo}>
           <Image src="/images/carrot_compost.svg" alt="Carrot Compost logo" width={72} height={72} />
         </span>
