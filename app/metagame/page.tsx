@@ -132,9 +132,9 @@ export default async function Metagame() {
               'Decks with partners': `${Math.round((resume.percentageDecksWithPartners + Number.EPSILON) * 10000) / 100}%`,
               'Decks with stickers': `${Math.round((resume.percentageDecksWithStickers + Number.EPSILON) * 10000) / 100}%`,
               'Decks with companions': `${Math.round((resume.percentageDecksWithCompanions + Number.EPSILON) * 10000) / 100}%`,
-              'Min no. of lands': Math.round((resume.useOfCards.minCantLands)),
-              'Avg no. of lands': Math.round((resume.avgCantLands)),
-              'Max no. of lands': Math.round((resume.useOfCards.maxCantLands)),
+              'Min no. of lands': Math.round(resume.useOfCards.minCantLands),
+              'Avg no. of lands': Math.round(resume.avgCantLands),
+              'Max no. of lands': Math.round(resume.useOfCards.maxCantLands),
             }} />
           </span>
         </span>
