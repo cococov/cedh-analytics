@@ -1,11 +1,11 @@
 # TODO
 
-- Feat: Mostrar imagen de atrás de cartas doble cara
-- Feat: Añadir buscador a torneos
+- Feat: Mejorar filtros de tabla de cartas (mayor igual, menor igual, contiene, etc...)
 - Feat: Usar query params para filtros y columnas visibles en tabla de cartas
+- Feat: Mostrar imagen de atrás de cartas doble cara
 - Feat: Usar skeleton loader en tabla de cartas
-- Feat: Mejorar filtros de tabla de cartas
-- Feat: Añadir tracking de eventos (como uso de eventos y filtros)
+- Feat: Añadir tracking de eventos (como uso de botones y filtros)
+- Feat: Añadir buscador a torneos
 
 - Data: Cargar torneos chilenos faltantes
 - Data: Filtrar tags para dejar solo los útiles
