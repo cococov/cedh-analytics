@@ -298,11 +298,11 @@ export default async function MetagameCard({
             <span className={[styles.topResumeContent, styles.topResumeContentWithSpace].join(' ')}>
               <HeadlessTable data={{
                 'No. of Decks': data.metagameData.appearances,
-                'Decks with stickers': `${data.metagameData.percentageDecksWithStickers * 100}%`,
-                'Decks with companions': `${data.metagameData.percentageDecksWithCompanions * 100}%`,
-                'Min no. of lands': Math.round((data.metagameData.minCantLands)),
-                'Avg no. of lands': Math.round((data.metagameData.avgCantLands)),
-                'Max no. of lands': Math.round((data.metagameData.maxCantLands)),
+                'Decks with stickers': `${Math.round(data.metagameData.percentageDecksWithStickers * 10000) / 100}%`,
+                'Decks with companions': `${Math.round(data.metagameData.percentageDecksWithCompanions * 10000) / 100}%`,
+                'Min no. of lands': Math.round(data.metagameData.minCantLands),
+                'Avg no. of lands': Math.round(data.metagameData.avgCantLands),
+                'Max no. of lands': Math.round(data.metagameData.maxCantLands),
                 'Avg. Win Rate': `${Math.round((data.metagameData.avgWinRate + Number.EPSILON) * 10000) / 100}%`,
                 'Best Standing': data.metagameData.bestStanding,
               }} />
