@@ -125,7 +125,7 @@ subprocess.Popen(['python3', 'scripts/update_tags.py']).wait()
 if ALL_TOURNAMENTS:
   git.push_with_log()
 else:
-  git.update(f'chore: update tournament {TOURNAMENT_ID}')
+  git.update_to_new_branch(f'chore: update tournament {TOURNAMENT_ID}', f'chore/update_tournament_{TOURNAMENT_ID}')
 
 # Close file
 tournament_json_file.close()

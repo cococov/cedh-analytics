@@ -169,4 +169,4 @@ with open(update_date_path, 'w', encoding='utf8') as f:
 print('\033[KDate updated \033[92mDone!\033[0m')
 
 # GIT
-git.update('chore: update Metagame')
+git.update_to_new_branch('chore: update Metagame', 'chore/update_metagame')
