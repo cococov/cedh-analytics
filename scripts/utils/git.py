@@ -1,5 +1,7 @@
 import time
 import utils.logs as logs
+import utils.date as date
+from datetime import datetime
 from subprocess import DEVNULL, STDOUT, check_call
 
 def add_all():
@@ -26,6 +28,16 @@ def push_with_log():
 
 def update(msg):
   logs.begin_log_block('Uploading changes')
+  add_all()
+  commit(msg)
+  push()
+  time.sleep(1)
+  logs.success_log('Updated!')
+
+def update_to_new_branch(msg: str, branch_name: str) -> None:
+  logs.begin_log_block('Uploading changes')
+  date_str = date.custom_strftime('%B_{S}_%Y', datetime.today())
+  check_call(['git', 'checkout', '-b', f'{branch_name}_{date_str}'], stdout=DEVNULL, stderr=STDOUT)
   add_all()
   commit(msg)
   push()
