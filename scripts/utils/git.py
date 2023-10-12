@@ -13,6 +13,9 @@ def commit(message):
 def push():
   check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT)
 
+def push_set_upstream(origin: str) -> None:
+  check_call(['git', 'push', '--set-upstream', 'origin', origin], stdout=DEVNULL, stderr=STDOUT)
+
 def add_and_commit_tournament(tournament):
   logs.begin_log_block('Commit changes')
   add_all()
@@ -37,9 +40,10 @@ def update(msg):
 def update_to_new_branch(msg: str, branch_name: str) -> None:
   logs.begin_log_block('Uploading changes')
   date_str = date.custom_strftime('%B_{S}_%Y', datetime.today())
-  check_call(['git', 'checkout', '-b', f'{branch_name}_{date_str}'], stdout=DEVNULL, stderr=STDOUT)
+  branch_name_with_date = f'{branch_name.lower()}_{date_str}'
+  check_call(['git', 'checkout', '-b', branch_name_with_date], stdout=DEVNULL, stderr=STDOUT)
   add_all()
   commit(msg)
-  push()
+  push_set_upstream(branch_name_with_date)
   time.sleep(1)
   logs.success_log('Updated!')
