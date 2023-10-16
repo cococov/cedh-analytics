@@ -5,14 +5,12 @@
 - Feat: Mostrar imagen de atrás de cartas doble cara
 - Feat: Usar skeleton loader en tabla de cartas
 - Feat: Añadir tracking de eventos (como uso de botones y filtros)
-- Feat: Añadir buscador a torneos
 
 - Data: Cargar torneos chilenos faltantes
 - Data: Filtrar tags para dejar solo los útiles
 - Data: Dejar de guardar data vieja de db cards
 - Data: Poner flag de update a scripts, para que no siempre se actualicen y así evitar comentar el update en pruebas
 
-- Perf: Paginar torneos
 - Perf: Pasar loading de magic full a css
 - Perf: Optimizar imágenes para no depender de vercel en ello
 - Perf: Dejar de optimizar imágenes en info de carta desde vercel una vez sean optimas
@@ -39,5 +37,15 @@
 - Agregar source y estrategia a metagame
 - Añadir flag de si carta está en las cartas de la db en metagame cards y by_commander (ojo con by_commander de tomar en cuenta al commander)
 - Añadir cantidad de cartas que están en metagame pero no en la db
+- Añadir herramienta de selector de número en página de Talion
+
+## Tournaments V2
+
+- Perf: Paginar torneos y añadir buscador (pasarlo a tabla)
+- Feat: Hacer análisis de metagame para torneos
+- Feat: Añadir disclaimer de que si se actualizaron las listas posterior al torneo, puede haber variaciones
+- Feat: Automatizar lista de torneos en base a edhtop16 (solo torneos de >64)
 
 ## FIX
+
+- No deformar elementos al cargar data de tablas (usar grid en vez de flex)
