@@ -38,6 +38,7 @@
 - Añadir flag de si carta está en las cartas de la db en metagame cards y by_commander (ojo con by_commander de tomar en cuenta al commander)
 - Añadir cantidad de cartas que están en metagame pero no en la db
 - Añadir herramienta de selector de número en página de Talion
+- Update data de home para que tenga total de decks y cartas de metagame en vez de lo de staples y niche cards
 
 ## Tournaments V2
 
