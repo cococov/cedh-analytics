@@ -168,6 +168,5 @@
 @media (max-width: 1080px) {
   .commandersContainer {
     display: block;
-    overflow-x: scroll;
   }
 }
