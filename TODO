@@ -5,6 +5,8 @@
 - Feat: Mostrar imagen de atrás de cartas doble cara
 - Feat: Usar skeleton loader en tabla de cartas
 - Feat: Añadir tracking de eventos (como uso de botones y filtros)
+- Feat: crear submenu de db y metagame que contenga analysis y cards.
+- Feat: Añadir análisis de db
 
 - Data: Cargar torneos chilenos faltantes
 - Data: Filtrar tags para dejar solo los útiles
