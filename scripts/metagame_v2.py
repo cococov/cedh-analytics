@@ -157,6 +157,33 @@ logs.begin_log_block('Getting tournaments list')
 tournaments = edhtop16.get_tournaments_resume(tournaments, list(decklist_hashes_by_tournament.keys()))
 logs.end_log_block('Tournaments list got!')
 
+#[X] iterar por los torneos no procesados
+#[X] obtener lista de decklists
+#[] cargar decklists guardadas que no están en el json de decklists base desde la carpeta del torneo
+#[] descargar y mezclar decklists del torneo que no están en el json de decklists base
+#[] guardar decklists que no están en el json de decklists base en carpeta de torneo (ignorar el archivo en git)
+#[] obtener get_commander_stats_by_commander para cada torneo
+#[] obtener get_metagame_resume para cada torneo
+#[] obtener metagame_cards para cada torneo
+#[] No obtendremos data por comandante para cada torneo, solo la data general
+#[] Actualizar en la lista de torneos los torneos como procesados
+list_of_tournaments_to_process = [x for x in decklist_hashes_by_tournament.keys() if x not in list(map(lambda t: t['name'], tournaments))]
+for tournament in list_of_tournaments_to_process:
+  logs.begin_log_block(f'Processing tournament {tournament}')
+  decklists = []
+  for hash in decklist_hashes_by_tournament[tournament]:
+    if hash in decklists_by_hash.keys():
+      if 'status' in list(decklists_by_hash[hash].keys()): # status in response usually means error 404
+        continue
+      decklists.append(decklists_by_hash[hash])
+    else:
+      decklist = moxfield.get_decklists_data(hash, version=3, no_log=True)
+      if 'status' in list(decklist.keys()): # status in response usually means error 404
+        continue
+      decklists.append(decklist)
+      decklists_by_hash[hash] = decklist
+  files.create_new_file('', f"{METAGAME_PATH}/{tournament}", 'decklists.json', decklists)
+
 # SAVE TOURNAMENTS
 logs.begin_log_block('Updating tournaments list')
 files.create_new_file('', METAGAME_PATH, 'tournaments.json', tournaments)
@@ -186,4 +213,4 @@ with open(update_date_path, 'w', encoding='utf8') as f:
 print('\033[KDate updated \033[92mDone!\033[0m')
 
 # GIT
-git.update_to_new_branch('chore: update Metagame', 'chore/update_metagame')
+#git.update_to_new_branch('chore: update Metagame', 'chore/update_metagame')
