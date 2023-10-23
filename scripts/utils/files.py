@@ -74,12 +74,12 @@ def update_db_date(DIRNAME):
   update_date(DIRNAME, 'database')
   logs.end_log_block('Date updated')
 
-def read_json_file(dirname, file_name):
+def read_json_file(dirname, file_name, default={}):
   try:
     with open(os.path.join(dirname, file_name), 'r') as f:
       return json.load(f)
   except:
-    return {}
+    return default
 
 def folder_names_in_directory(dirname):
-  return list(filter(lambda x: os.path.isdir(os.path.join(dirname, x)), os.listdir(dirname)))
+  return list(filter(lambda x: os.path.isdir(os.path.join(dirname, x)), os.listdir(dirname))) # type: ignore

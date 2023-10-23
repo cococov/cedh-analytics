@@ -8,10 +8,11 @@ import calendar
 import functools
 import data.moxfield_t as moxfield_t
 import pandas as pd
-from data.edhtop16_t import EdhTop16DeckList, CondensedCommanderData, StatsByCommander, ProcessedDecklist, MetagameResume
+from data.edhtop16_t import EdhTop16DeckList, CondensedCommanderData, StatsByCommander, ProcessedDecklist, MetagameResume, Tournament
 from datetime import datetime, timedelta
 
 URL = "https://edhtop16.com/api/req"
+TOURNAMENTS_URL = "https://edhtop16.com/api/list_tourneys"
 HEADERS = {'Content-Type': 'application/json', 'Accept': 'application/json'}
 
 def get_all_decklists_by_tournament(name: str) -> list[EdhTop16DeckList]:
@@ -238,3 +239,20 @@ def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList]
   data['allTokens'] = list(functools.reduce(lambda x, y: list(set(x + y)), map(lambda x: x['allTokens'], stats_by_commander.values())))
 
   return data
+
+def get_tournaments_resume(saved_tournaments: list[Tournament], tournament_names: list[str]) -> list[Tournament]:
+  new_tournaments: list[Tournament] = saved_tournaments
+  saved_tournaments_names = list(map(lambda x: x['name'], saved_tournaments))
+  for tournament_name in tournament_names:
+    if tournament_name not in saved_tournaments_names:
+      data = {'tournamentName': {'$regex': rf'^{tournament_name}$'}}
+      result = list(json.loads(requests.post(TOURNAMENTS_URL, json=data, headers=HEADERS).text)).pop()
+      new_tournaments.append({
+        'name': tournament_name,
+        'TID': result['TID'],
+        'size': result['size'],
+        'date': result['date'],
+        'processed': False
+      })
+
+  return new_tournaments

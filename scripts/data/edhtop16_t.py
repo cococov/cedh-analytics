@@ -164,3 +164,10 @@ class MetagameResume(typing.TypedDict):
   minAvgCmcWithoutLands: float
   maxAvgCmcWithLands: float
   maxAvgCmcWithoutLands: float
+
+class Tournament(typing.TypedDict):
+  TID: str
+  name: str
+  date: str
+  size: int
+  processed: bool

@@ -7,6 +7,7 @@ import data.moxfield as moxfield
 import utils.logs as logs
 import utils.git as git
 import data.moxfield_t as moxfield_t
+import data.edhtop16_t as edhtop16_t
 import data.mtg_json as mtg_json
 import data.pre_processing as pre_processing
 import data.processing as processing
@@ -143,6 +144,23 @@ for commander in commanders:
   uses_by_card_types = processing.get_uses_by_card_types(decklists_by_commander[commander])
   stats_by_commander[commander]['useOfCards'] = {**stats_by_commander[commander]['useOfCards'], **uses_by_card_types}
 logs.end_log_block('Cards by commander processed!')
+
+# PROCESS TOURNAMENTS
+
+# LOAD SAVED DECKLISTS
+logs.begin_log_block('Loading saved tournaments')
+tournaments: list[edhtop16_t.Tournament] = []#files.read_json_file(METAGAME_PATH, 'tournaments.json', []) if not FORCE_UPDATE else []
+logs.end_log_block('Saved tournaments loaded')
+
+# GET TOURNAMENTS RESUME
+logs.begin_log_block('Getting tournaments list')
+tournaments = edhtop16.get_tournaments_resume(tournaments, list(decklist_hashes_by_tournament.keys()))
+logs.end_log_block('Tournaments list got!')
+
+# SAVE TOURNAMENTS
+logs.begin_log_block('Updating tournaments list')
+files.create_new_file('', METAGAME_PATH, 'tournaments.json', tournaments)
+logs.end_log_block('Tournaments list saved!')
 
 # SAVE NEW FILES
 files.create_new_file('', METAGAME_PATH, 'condensed_commanders_data.json', condensed_commanders_data)

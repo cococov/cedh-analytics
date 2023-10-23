@@ -17,3 +17,4 @@ export { default as GoogleMap } from './googleMap';
 export { default as AsyncCardsTable } from './cardsTable/async';
 export { default as AsyncCommandersTable } from './commandersTable/async';
 export { default as DecklistsTable } from './decklistsTable';
+export { default as TournamentsTable } from './tournamentsTable';
