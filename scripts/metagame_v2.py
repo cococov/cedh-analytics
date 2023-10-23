@@ -65,7 +65,7 @@ for commander in commanders:
   for hash in decklist_hashes_by_commander[commander]:
     logs.loading_log("Getting decklists from hashes", cant_hashes_requested, total_lists)
     if hash in decklists_by_hash.keys():
-      if 'status' in list(decklists_by_hash[hash].keys()):
+      if 'status' in list(decklists_by_hash[hash].keys()): # status in response usually means error 404
         cant_hashes_requested += 1
         continue
       if hash in cant_decklists_by_hash.keys():
@@ -75,7 +75,7 @@ for commander in commanders:
       decklists_by_commander[commander].append(decklists_by_hash[hash])
     else:
       decklist = moxfield.get_decklists_data(hash, version=3, no_log=True)
-      if 'status' in list(decklist.keys()):
+      if 'status' in list(decklist.keys()): # status in response usually means error 404
         cant_hashes_requested += 1
         continue
       decklists_by_commander[commander].append(decklist)
@@ -91,7 +91,6 @@ for commander in to_delete:
   commanders.remove(commander)
   del decklist_hashes_by_commander[commander]
 
-
 # SAVE DECKLISTS
 if not no_new_data:
   files.create_file_with_log(METAGAME_PATH, 'decklists.json', decklists_by_hash, 'Saving decklists', 'Decklists saved!')
@@ -99,7 +98,7 @@ if not no_new_data:
 full_decklists = []
 
 for hash in decklists_by_hash.keys():
-  for _ in range(cant_decklists_by_hash[hash]):
+  for _ in range(cant_decklists_by_hash[hash] if hash in cant_decklists_by_hash.keys() else 1):
     full_decklists.append(decklists_by_hash[hash])
 
 moxfield.VALID_DECKS = len(full_decklists)

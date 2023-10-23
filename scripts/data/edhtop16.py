@@ -26,11 +26,11 @@ def get_metagame_top_decklists() -> list[EdhTop16DeckList]:
   """ Get metagame data
   Criteria:
     - Tournament with at least 64 players
-    - At least top 32
+    - At least 2 wins
     - Last year only (now - 1 year)
   """
   data = {
-    'standing': { '$lte': 32 },
+    'wins': { '$gte': 2 },
     'tourney_filter': {
       'size': { '$gte': 64 }
     },
@@ -214,14 +214,14 @@ def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList]
     'red': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['red'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
     'green': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['green'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
   }
-  data['avgCantBattles'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantBattles'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCantPlaneswalkers'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantPlaneswalkers'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCantCreatures'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantCreatures'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCantSorceries'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantSorceries'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCantInstants'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantInstants'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCantArtifacts'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantArtifacts'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCantEnchantments'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantEnchantments'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCantLands'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['avgCantLands'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantBattles'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantBattles'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantPlaneswalkers'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantPlaneswalkers'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantCreatures'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantCreatures'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantSorceries'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantSorceries'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantInstants'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantInstants'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantArtifacts'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantArtifacts'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantEnchantments'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantEnchantments'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+  data['avgCantLands'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantLands'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
   sorted_use_of_lands: list[int] = sorted(functools.reduce(lambda x,y: x + y, (map(lambda x: x['sortedUseOfLands'], stats_by_commander.values()))))
   use_of_lads_df = pd.DataFrame(sorted_use_of_lands)
   data['useOfCards'] = {}
