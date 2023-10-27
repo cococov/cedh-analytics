@@ -10,6 +10,7 @@ import data.moxfield_t as moxfield_t
 import pandas as pd
 from data.edhtop16_t import EdhTop16DeckList, CondensedCommanderData, StatsByCommander, ProcessedDecklist, MetagameResume, Tournament
 from datetime import datetime, timedelta
+import utils.misc as misc
 
 URL = "https://edhtop16.com/api/req"
 TOURNAMENTS_URL = "https://edhtop16.com/api/list_tourneys"
@@ -23,17 +24,17 @@ def get_all_decklists_by_tournament(name: str) -> list[EdhTop16DeckList]:
 def get_decklist_hashes_from_tournament(lists: list[EdhTop16DeckList]):
   return list(map(lambda x: x['decklist'].split('/')[-1], lists))
 
-def get_metagame_top_decklists() -> list[EdhTop16DeckList]:
-  """ Get metagame data
+def get_metagame_top_decklists(min_wins=2, min_tournament_size=64) -> list[EdhTop16DeckList]:
+  """ Get metagame data from EDH Top 16
   Criteria:
-    - Tournament with at least 64 players
-    - At least 2 wins
+    - [Default] Tournament with at least 64 players
+    - [Default] At least 2 wins
     - Last year only (now - 1 year)
   """
   data = {
-    'wins': { '$gte': 2 },
+    'wins': { '$gte': min_wins },
     'tourney_filter': {
-      'size': { '$gte': 64 }
+      'size': { '$gte': min_tournament_size }
     },
     'dateCreated': {
       '$gte': calendar.timegm((datetime.now()  - timedelta(days=1*365)).timetuple())
@@ -42,6 +43,12 @@ def get_metagame_top_decklists() -> list[EdhTop16DeckList]:
   raw_lists = json.loads(requests.post(URL, json=data, headers=HEADERS).text)
 
   return list(filter(lambda x: 'commander' in x.keys() and x['commander'] != 'Unknown Commander', raw_lists)) # TODO: poner filtro de commander en query
+
+def index_decklists_by_hash(raw_lists: list[EdhTop16DeckList]) -> dict[str, EdhTop16DeckList]:
+  decklists_by_hash = {}
+  for list in raw_lists:
+    decklists_by_hash[list['decklist'].split('/')[-1]] = list
+  return decklists_by_hash
 
 def get_commanders_from_data(raw_lists: list[EdhTop16DeckList]) -> list[str]:
   commanders = []
@@ -101,7 +108,7 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
     data[commander]['appearances'] = len(filtered_data)
     data[commander]['colorID'] = filtered_data[0]['colorID']
     data[commander]['wins'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['wins'], filtered_data))
-    data[commander]['avgWinRate'] = round(functools.reduce(lambda x, y: float(x + y), map(lambda x: x['winRate'], filtered_data)) / data[commander]['appearances'], 3)
+    data[commander]['avgWinRate'] = round(functools.reduce(lambda x, y: float(x + y), map(lambda x: (0 if not x['winRate'] else x['winRate']), filtered_data)) / data[commander]['appearances'], 3)
     data[commander]['bestStanding'] = functools.reduce(lambda x, y: int(x) if x < y else int(y), map(lambda x: x['standing'], filtered_data))
     data[commander]['worstStanding'] = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['standing'], filtered_data))
     def process_decklists(decklist: moxfield_t.DecklistV3) -> ProcessedDecklist | dict:
@@ -141,46 +148,51 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
 
       return process_decklist_data
     processed_decklists:  list[ProcessedDecklist] = list(filter(lambda x: len(x.keys()) != 0, map(process_decklists, decklists))) # type: ignore
+    cant_processed_decklists = len(processed_decklists)
+    # Eliminamos el comandante si ninguna de sus decklists era válida
+    if cant_processed_decklists == 0:
+      data[commander]['isValid'] = False
+      continue
     data[commander]['processed_decklists'] = processed_decklists
-    data[commander]['hasPartners'] = functools.reduce(lambda x, y: x or y, map(lambda x: x['hasPartners'], processed_decklists))
-    data[commander]['avgCantBattles'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantBattles'], processed_decklists)) / len(processed_decklists)), 3)
-    data[commander]['avgCantPlaneswalkers'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantPlaneswalkers'], processed_decklists)) / len(processed_decklists)), 3)
-    data[commander]['avgCantCreatures'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantCreatures'], processed_decklists)) / len(processed_decklists)), 3)
-    data[commander]['avgCantSorceries'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantSorceries'], processed_decklists)) / len(processed_decklists)), 3)
-    data[commander]['avgCantInstants'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantInstants'], processed_decklists)) / len(processed_decklists)), 3)
-    data[commander]['avgCantArtifacts'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantArtifacts'], processed_decklists)) / len(processed_decklists)), 3)
-    data[commander]['avgCantEnchantments'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantEnchantments'], processed_decklists)) / len(processed_decklists)), 3)
-    data[commander]['avgCantLands'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantLands'], processed_decklists)) / len(processed_decklists)), 3)
-    data[commander]['minCantLands'] = functools.reduce(lambda x, y: int(x) if x < y else int(y), map(lambda x: x['cantLands'], processed_decklists))
-    data[commander]['maxCantLands'] = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['cantLands'], processed_decklists))
+    data[commander]['hasPartners'] = functools.reduce(lambda x, y: x or y, map(lambda x: x['hasPartners'], processed_decklists), False)
+    data[commander]['avgCantBattles'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantBattles'], processed_decklists), 0) / cant_processed_decklists), 3)
+    data[commander]['avgCantPlaneswalkers'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantPlaneswalkers'], processed_decklists), 0) / cant_processed_decklists), 3)
+    data[commander]['avgCantCreatures'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantCreatures'], processed_decklists), 0) / cant_processed_decklists), 3)
+    data[commander]['avgCantSorceries'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantSorceries'], processed_decklists), 0) / cant_processed_decklists), 3)
+    data[commander]['avgCantInstants'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantInstants'], processed_decklists), 0) / cant_processed_decklists), 3)
+    data[commander]['avgCantArtifacts'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantArtifacts'], processed_decklists), 0) / cant_processed_decklists), 3)
+    data[commander]['avgCantEnchantments'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantEnchantments'], processed_decklists), 0) / cant_processed_decklists), 3)
+    data[commander]['avgCantLands'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantLands'], processed_decklists), 0) / cant_processed_decklists), 3)
+    data[commander]['minCantLands'] = functools.reduce(lambda x, y: int(x) if x < y else int(y), map(lambda x: x['cantLands'], processed_decklists), 999)
+    data[commander]['maxCantLands'] = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['cantLands'], processed_decklists), 0)
     data[commander]['sortedUseOfLands'] = list(map(lambda x: x['cantLands'], sorted(processed_decklists, key=lambda x: x['cantLands'])))
-    data[commander]['avgCmcWithLands'] = round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgCmcWithLands'], processed_decklists)) / len(processed_decklists)), 3)
-    data[commander]['avgCmcWithoutLands'] = round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgCmcWithoutLands'], processed_decklists)) / len(processed_decklists)), 3)
-    data[commander]['minAvgCmcWithLands'] = functools.reduce(lambda x, y: float(x) if x < y else float(y), map(lambda x: x['avgCmcWithLands'], processed_decklists))
-    data[commander]['minAvgCmcWithoutLands'] = functools.reduce(lambda x, y: float(x) if x < y else float(y), map(lambda x: x['avgCmcWithoutLands'], processed_decklists))
-    data[commander]['maxAvgCmcWithLands'] = functools.reduce(lambda x, y: float(x) if x > y else float(y), map(lambda x: x['avgCmcWithLands'], processed_decklists))
-    data[commander]['maxAvgCmcWithoutLands'] = functools.reduce(lambda x, y: float(x) if x > y else float(y), map(lambda x: x['avgCmcWithoutLands'], processed_decklists))
+    data[commander]['avgCmcWithLands'] = round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgCmcWithLands'], processed_decklists), 0) / cant_processed_decklists), 3)
+    data[commander]['avgCmcWithoutLands'] = round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgCmcWithoutLands'], processed_decklists), 0) / cant_processed_decklists), 3)
+    data[commander]['minAvgCmcWithLands'] = functools.reduce(lambda x, y: float(x) if x < y else float(y), map(lambda x: x['avgCmcWithLands'], processed_decklists), 999)
+    data[commander]['minAvgCmcWithoutLands'] = functools.reduce(lambda x, y: float(x) if x < y else float(y), map(lambda x: x['avgCmcWithoutLands'], processed_decklists), 999)
+    data[commander]['maxAvgCmcWithLands'] = functools.reduce(lambda x, y: float(x) if x > y else float(y), map(lambda x: x['avgCmcWithLands'], processed_decklists), 0)
+    data[commander]['maxAvgCmcWithoutLands'] = functools.reduce(lambda x, y: float(x) if x > y else float(y), map(lambda x: x['avgCmcWithoutLands'], processed_decklists), 0)
     data[commander]['avgColorPercentages'] = {
-      'white': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['white'], processed_decklists)) / len(processed_decklists)), 3),
-      'blue': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['blue'], processed_decklists)) / len(processed_decklists)), 3),
-      'black': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['black'], processed_decklists)) / len(processed_decklists)), 3),
-      'red': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['red'], processed_decklists)) / len(processed_decklists)), 3),
-      'green': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['green'], processed_decklists)) / len(processed_decklists)), 3)
+      'white': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['white'], processed_decklists), 0) / cant_processed_decklists), 3),
+      'blue': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['blue'], processed_decklists), 0) / cant_processed_decklists), 3),
+      'black': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['black'], processed_decklists), 0) / cant_processed_decklists), 3),
+      'red': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['red'], processed_decklists), 0) / cant_processed_decklists), 3),
+      'green': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorPercentages']['green'], processed_decklists), 0) / cant_processed_decklists), 3)
     }
     data[commander]['avgColorIdentityPercentages'] = {
-      'white': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['white'], processed_decklists)) / len(processed_decklists)), 3),
-      'blue': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['blue'], processed_decklists)) / len(processed_decklists)), 3),
-      'black': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['black'], processed_decklists)) / len(processed_decklists)), 3),
-      'red': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['red'], processed_decklists)) / len(processed_decklists)), 3),
-      'green': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['green'], processed_decklists)) / len(processed_decklists)), 3)
+      'white': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['white'], processed_decklists), 0) / cant_processed_decklists), 3),
+      'blue': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['blue'], processed_decklists), 0) / cant_processed_decklists), 3),
+      'black': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['black'], processed_decklists), 0) / cant_processed_decklists), 3),
+      'red': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['red'], processed_decklists), 0) / cant_processed_decklists), 3),
+      'green': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['colorIdentityPercentages']['green'], processed_decklists), 0) / cant_processed_decklists), 3)
     }
     decksWhitStickers = len(list(filter(lambda x: x['hasStickers'], processed_decklists)))
     decksWhitCompanions = len(list(filter(lambda x: x['hasCompanion'], processed_decklists)))
     data[commander]['cantDecksWithStickers'] = decksWhitStickers
     data[commander]['cantDecksWithCompanions'] = decksWhitCompanions
-    data[commander]['percentageDecksWithStickers'] = round((decksWhitStickers / len(processed_decklists)), 3)
-    data[commander]['percentageDecksWithCompanions'] = round((decksWhitCompanions / len(processed_decklists)), 3)
-    data[commander]['allTokens'] = list(functools.reduce(lambda x, y: list(set(x + y)), map(lambda x: x['tokens'], processed_decklists)))
+    data[commander]['percentageDecksWithStickers'] = round((decksWhitStickers / cant_processed_decklists), 3)
+    data[commander]['percentageDecksWithCompanions'] = round((decksWhitCompanions / cant_processed_decklists), 3)
+    data[commander]['allTokens'] = list(functools.reduce(lambda x, y: list(set(x + y)), map(lambda x: x['tokens'], processed_decklists), []))
     use_of_lads_df = pd.DataFrame(data[commander]['sortedUseOfLands'])
     data[commander]['useOfCards'] = {}
     data[commander]['useOfCards']['minCantLands'] = use_of_lads_df.min().to_dict()[0]
@@ -188,6 +200,7 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
     data[commander]['useOfCards']['medianCantLands'] = use_of_lads_df.quantile([.5]).to_dict()[0][0.5]
     data[commander]['useOfCards']['q3CantLands'] = use_of_lads_df.quantile([.75]).to_dict()[0][0.75]
     data[commander]['useOfCards']['maxCantLands'] = use_of_lads_df.max().to_dict()[0]
+    data[commander]['isValid'] = True
   return data
 
 def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList], stats_by_commander: dict[str, StatsByCommander], decklist_hashes_by_tournament: dict[str, list[str]]) -> MetagameResume:
@@ -195,35 +208,40 @@ def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList]
   data['cantCommanders'] = len(commanders)
   data['cantLists'] = sum(map(lambda x: x['appearances'], stats_by_commander.values()))
   data['cantTournaments'] = len(decklist_hashes_by_tournament.keys())
-  data['avgCmcWithLands'] = round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgCmcWithLands'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCmcWithoutLands'] = round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgCmcWithoutLands'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['minAvgCmcWithLands'] = functools.reduce(lambda x, y: float(x) if x < y else float(y), map(lambda x: x['minAvgCmcWithLands'], stats_by_commander.values()))
-  data['minAvgCmcWithoutLands'] = functools.reduce(lambda x, y: float(x) if x < y else float(y), map(lambda x: x['minAvgCmcWithoutLands'], stats_by_commander.values()))
-  data['maxAvgCmcWithLands'] = functools.reduce(lambda x, y: float(x) if x > y else float(y), map(lambda x: x['maxAvgCmcWithLands'], stats_by_commander.values()))
-  data['maxAvgCmcWithoutLands'] = functools.reduce(lambda x, y: float(x) if x > y else float(y), map(lambda x: x['maxAvgCmcWithoutLands'], stats_by_commander.values()))
+  # Solo condensamos stats de commanders con al menos una decklists válida
+  fixed_stats_by_commander = {}
+  for commander in commanders:
+    if stats_by_commander[commander]['isValid']:
+      fixed_stats_by_commander[commander] = stats_by_commander[commander]
+  data['avgCmcWithLands'] = round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgCmcWithLands'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3)
+  data['avgCmcWithoutLands'] = round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgCmcWithoutLands'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3)
+  data['minAvgCmcWithLands'] = functools.reduce(lambda x, y: float(x) if x < y else float(y), map(lambda x: x['minAvgCmcWithLands'], fixed_stats_by_commander.values()))
+  data['minAvgCmcWithoutLands'] = functools.reduce(lambda x, y: float(x) if x < y else float(y), map(lambda x: x['minAvgCmcWithoutLands'], fixed_stats_by_commander.values()))
+  data['maxAvgCmcWithLands'] = functools.reduce(lambda x, y: float(x) if x > y else float(y), map(lambda x: x['maxAvgCmcWithLands'], fixed_stats_by_commander.values()))
+  data['maxAvgCmcWithoutLands'] = functools.reduce(lambda x, y: float(x) if x > y else float(y), map(lambda x: x['maxAvgCmcWithoutLands'], fixed_stats_by_commander.values()))
   data['avgColorPercentages'] = {
-    'white': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['white'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
-    'blue': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['blue'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
-    'black': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['black'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
-    'red': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['red'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
-    'green': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['green'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+    'white': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['white'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3),
+    'blue': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['blue'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3),
+    'black': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['black'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3),
+    'red': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['red'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3),
+    'green': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorPercentages']['green'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3)
   }
   data['avgColorIdentityPercentages'] = {
-    'white': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['white'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
-    'blue': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['blue'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
-    'black': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['black'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
-    'red': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['red'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3),
-    'green': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['green'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
+    'white': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['white'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3),
+    'blue': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['blue'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3),
+    'black': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['black'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3),
+    'red': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['red'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3),
+    'green': round((functools.reduce(lambda x, y: float(x + y), map(lambda x: x['avgColorIdentityPercentages']['green'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3)
   }
-  data['avgCantBattles'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantBattles'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCantPlaneswalkers'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantPlaneswalkers'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCantCreatures'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantCreatures'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCantSorceries'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantSorceries'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCantInstants'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantInstants'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCantArtifacts'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantArtifacts'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCantEnchantments'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantEnchantments'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['avgCantLands'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantLands'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  sorted_use_of_lands: list[int] = sorted(functools.reduce(lambda x,y: x + y, (map(lambda x: x['sortedUseOfLands'], stats_by_commander.values()))))
+  data['avgCantBattles'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantBattles'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3)
+  data['avgCantPlaneswalkers'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantPlaneswalkers'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3)
+  data['avgCantCreatures'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantCreatures'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3)
+  data['avgCantSorceries'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantSorceries'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3)
+  data['avgCantInstants'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantInstants'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3)
+  data['avgCantArtifacts'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantArtifacts'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3)
+  data['avgCantEnchantments'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantEnchantments'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3)
+  data['avgCantLands'] = round((functools.reduce(lambda x, y: x + y, map(lambda x: x['avgCantLands'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3)
+  sorted_use_of_lands: list[int] = sorted(functools.reduce(lambda x,y: x + y, (map(lambda x: x['sortedUseOfLands'], fixed_stats_by_commander.values()))))
   use_of_lads_df = pd.DataFrame(sorted_use_of_lands)
   data['useOfCards'] = {}
   data['useOfCards']['minCantLands'] = use_of_lads_df.min().to_dict()[0]
@@ -231,12 +249,12 @@ def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList]
   data['useOfCards']['medianCantLands'] = use_of_lads_df.quantile([.5]).to_dict()[0][0.5]
   data['useOfCards']['q3CantLands'] = use_of_lads_df.quantile([.75]).to_dict()[0][0.75]
   data['useOfCards']['maxCantLands'] = use_of_lads_df.max().to_dict()[0]
-  data['percentageDecksWithPartners'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['appearances'] if x['hasPartners'] else 0, stats_by_commander.values())) / data['cantLists']), 3)
-  data['cantDecksWithStickers'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantDecksWithStickers'], stats_by_commander.values()))
-  data['cantDecksWithCompanions'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantDecksWithCompanions'], stats_by_commander.values()))
-  data['percentageDecksWithStickers'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantDecksWithStickers'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['percentageDecksWithCompanions'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantDecksWithCompanions'], stats_by_commander.values())) / len(stats_by_commander.keys())), 3)
-  data['allTokens'] = list(functools.reduce(lambda x, y: list(set(x + y)), map(lambda x: x['allTokens'], stats_by_commander.values())))
+  data['percentageDecksWithPartners'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['appearances'] if x['hasPartners'] else 0, fixed_stats_by_commander.values())) / data['cantLists']), 3)
+  data['cantDecksWithStickers'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantDecksWithStickers'], fixed_stats_by_commander.values()))
+  data['cantDecksWithCompanions'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantDecksWithCompanions'], fixed_stats_by_commander.values()))
+  data['percentageDecksWithStickers'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantDecksWithStickers'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3)
+  data['percentageDecksWithCompanions'] = round((functools.reduce(lambda x, y: int(x + y), map(lambda x: x['cantDecksWithCompanions'], fixed_stats_by_commander.values())) / len(fixed_stats_by_commander.keys())), 3)
+  data['allTokens'] = list(functools.reduce(lambda x, y: list(set(x + y)), map(lambda x: x['allTokens'], fixed_stats_by_commander.values())))
 
   return data
 

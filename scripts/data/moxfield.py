@@ -17,9 +17,9 @@ def get_decklist_hashes_from_bookmark(lists):
 
 def get_decklists_data(hash: str, version=3, no_log=False):
   global decklists_data_obtained_number, VALID_DECKS
-  time.sleep(1)
+  time.sleep(2)
   raw_data = requests.get(f"https://api.moxfield.com/v{version}/decks/all/{hash}")
-  time.sleep(1)
+  time.sleep(2)
   data = json.loads(raw_data.text)
   data['url'] = f"https://www.moxfield.com/decks/{hash}"
   decklists_data_obtained_number += 1

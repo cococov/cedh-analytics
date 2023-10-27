@@ -13,6 +13,7 @@ import data.pre_processing as pre_processing
 import data.processing as processing
 import data.edhtop16 as edhtop16
 from datetime import datetime
+import utils.misc as misc
 
 DIRNAME = os.path.realpath('.')
 BASE_PATH = r'./public/data'
@@ -39,13 +40,20 @@ logs.end_log_block('Processing all printing')
 # GET DATA FROM EDHTOP16
 logs.begin_log_block('Getting decklists from EDH Top 16')
 raw_lists = edhtop16.get_metagame_top_decklists()
+all_raw_lists = edhtop16.get_metagame_top_decklists(min_wins=0, min_tournament_size=64)
 logs.end_log_block('Decklists from EDH Top 16 got')
 
 # PRE-PREPROCESS EDHTOP16 DATA
 logs.begin_log_block('Preprocessing EDH Top 16 data')
+raw_lists_by_hash = edhtop16.index_decklists_by_hash(raw_lists)
 commanders = edhtop16.get_commanders_from_data(raw_lists)
 decklist_hashes_by_commander = edhtop16.get_decklist_hashes_by_commander(raw_lists)
 decklist_hashes_by_tournament = edhtop16.get_decklist_hashes_by_tournament(raw_lists)
+
+all_raw_lists_by_hash = edhtop16.index_decklists_by_hash(all_raw_lists)
+all_commanders = edhtop16.get_commanders_from_data(all_raw_lists)
+all_decklist_hashes_by_commander = edhtop16.get_decklist_hashes_by_commander(all_raw_lists)
+all_decklist_hashes_by_tournament = edhtop16.get_decklist_hashes_by_tournament(all_raw_lists)
 logs.end_log_block('EDH Top 16 data preprocessed')
 
 # LOAD SAVED DECKLISTS
@@ -105,7 +113,7 @@ for hash in decklists_by_hash.keys():
 moxfield.VALID_DECKS = len(full_decklists)
 
 logs.end_log_block('Decklists from hashes got')
-
+"""
 # PROCESS DATA FROM EDHTOP16 AND MOXFIELD
 logs.begin_log_block('Processing data')
 condensed_commanders_data = edhtop16.get_condensed_commanders_data(commanders, raw_lists)
@@ -144,57 +152,107 @@ for commander in commanders:
   uses_by_card_types = processing.get_uses_by_card_types(decklists_by_commander[commander])
   stats_by_commander[commander]['useOfCards'] = {**stats_by_commander[commander]['useOfCards'], **uses_by_card_types}
 logs.end_log_block('Cards by commander processed!')
+"""
 
 # PROCESS TOURNAMENTS
 
 # LOAD SAVED DECKLISTS
 logs.begin_log_block('Loading saved tournaments')
-tournaments: list[edhtop16_t.Tournament] = []#files.read_json_file(METAGAME_PATH, 'tournaments.json', []) if not FORCE_UPDATE else []
+tournaments: list[edhtop16_t.Tournament] = files.read_json_file(METAGAME_PATH, 'tournaments.json', []) if not FORCE_UPDATE else []
 logs.end_log_block('Saved tournaments loaded')
 
 # GET TOURNAMENTS RESUME
 logs.begin_log_block('Getting tournaments list')
-tournaments = edhtop16.get_tournaments_resume(tournaments, list(decklist_hashes_by_tournament.keys()))
+tournaments = edhtop16.get_tournaments_resume(tournaments, list(all_decklist_hashes_by_tournament.keys()))
 logs.end_log_block('Tournaments list got!')
 
 #[X] iterar por los torneos no procesados
 #[X] obtener lista de decklists
-#[] cargar decklists guardadas que no están en el json de decklists base desde la carpeta del torneo
-#[] descargar y mezclar decklists del torneo que no están en el json de decklists base
-#[] guardar decklists que no están en el json de decklists base en carpeta de torneo (ignorar el archivo en git)
-#[] obtener get_commander_stats_by_commander para cada torneo
-#[] obtener get_metagame_resume para cada torneo
+#[X] cargar decklists guardadas que no están en el json de decklists base desde la carpeta del torneo
+#[X] descargar y mezclar decklists del torneo que no están en el json de decklists base
+#[X] guardar decklists que no están en el json de decklists base en carpeta de torneo (ignorar el archivo en git)
+#[X] obtener get_commander_stats_by_commander para cada torneo
+#[~] obtener get_metagame_resume para cada torneo -> decklist_hashes_by_tournament no tiene todos los hashes, hay que traerse los hashes de todas las listas de los torneos
 #[] obtener metagame_cards para cada torneo
 #[] No obtendremos data por comandante para cada torneo, solo la data general
 #[] Actualizar en la lista de torneos los torneos como procesados
-list_of_tournaments_to_process = [x for x in decklist_hashes_by_tournament.keys() if x not in list(map(lambda t: t['name'], tournaments))]
+list_of_tournaments_to_process = all_decklist_hashes_by_tournament.keys()
+
+logs.begin_log_block(f'Processing tournaments')
+cant_tournament_processed = 0
+commanders_by_hash = {}
+for commander in all_decklist_hashes_by_commander.keys():
+  for hash in all_decklist_hashes_by_commander[commander]:
+    commanders_by_hash[hash] = commander
+logs.loading_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% - ", 0, 0)
 for tournament in list_of_tournaments_to_process:
-  logs.begin_log_block(f'Processing tournament {tournament}')
-  decklists = []
-  for hash in decklist_hashes_by_tournament[tournament]:
-    if hash in decklists_by_hash.keys():
-      if 'status' in list(decklists_by_hash[hash].keys()): # status in response usually means error 404
+  tournament_decklists_by_hash = files.read_json_file(f"{METAGAME_PATH}/{tournament}", 'decklists.t.json') if not FORCE_UPDATE else {}
+  tournament_raw_lists = []
+  tournament_commanders = []
+  tournament_decklists_by_commander = {}
+  cant_tournament_decklists_processed = 0
+  has_changes = False
+  for hash in all_decklist_hashes_by_tournament[tournament]:
+    if hash in tournament_decklists_by_hash.keys():
+      if 'status' in list(tournament_decklists_by_hash[hash].keys()):
         continue
-      decklists.append(decklists_by_hash[hash])
+      tournament_commanders.append(commanders_by_hash[hash])
+      tournament_raw_lists.append(all_raw_lists_by_hash[hash])
+      if all_raw_lists_by_hash[hash]['commander'] not in tournament_decklists_by_commander.keys():
+        tournament_decklists_by_commander[all_raw_lists_by_hash[hash]['commander']] = []
+      tournament_decklists_by_commander[all_raw_lists_by_hash[hash]['commander']].append(tournament_decklists_by_hash[hash])
     else:
-      decklist = moxfield.get_decklists_data(hash, version=3, no_log=True)
-      if 'status' in list(decklist.keys()): # status in response usually means error 404
-        continue
-      decklists.append(decklist)
-      decklists_by_hash[hash] = decklist
-  files.create_new_file('', f"{METAGAME_PATH}/{tournament}", 'decklists.json', decklists)
+      if hash in decklists_by_hash.keys():
+        if 'status' in list(decklists_by_hash[hash].keys()): # status in response usually means error 404
+          continue
+        tournament_commanders.append(commanders_by_hash[hash])
+        tournament_raw_lists.append(all_raw_lists_by_hash[hash])
+        tournament_decklists_by_hash[hash] = decklists_by_hash[hash]
+        if all_raw_lists_by_hash[hash]['commander'] not in tournament_decklists_by_commander.keys():
+          tournament_decklists_by_commander[all_raw_lists_by_hash[hash]['commander']] = []
+        tournament_decklists_by_commander[all_raw_lists_by_hash[hash]['commander']].append(decklists_by_hash[hash])
+      else:
+        decklist = moxfield.get_decklists_data(hash, version=3, no_log=True)
+        if 'status' in list(decklist.keys()): # status in response usually means error 404
+          continue
+        tournament_commanders.append(commanders_by_hash[hash])
+        tournament_raw_lists.append(all_raw_lists_by_hash[hash])
+        if all_raw_lists_by_hash[hash]['commander'] not in tournament_decklists_by_commander.keys():
+          tournament_decklists_by_commander[all_raw_lists_by_hash[hash]['commander']] = []
+        tournament_decklists_by_commander[all_raw_lists_by_hash[hash]['commander']].append(decklist)
+        tournament_decklists_by_hash[hash] = decklist
+        decklists_by_hash[hash] = decklist
+      has_changes = True
+    logs.loading_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% - ", cant_tournament_decklists_processed, len(all_decklist_hashes_by_tournament[tournament]))
+    cant_tournament_decklists_processed += 1
+  if has_changes:
+    files.create_new_file('', f"{METAGAME_PATH}/{tournament}", 'decklists.t.json', tournament_decklists_by_hash, with_log=False)
+
+  tournament_commanders = list(set(tournament_commanders))
+
+  tournament_stats_by_commander = edhtop16.get_commander_stats_by_commander(tournament_commanders, tournament_raw_lists, tournament_decklists_by_commander)
+  tournament_metagame_resume = edhtop16.get_metagame_resume(tournament_commanders, tournament_raw_lists, tournament_stats_by_commander, dict(zip([tournament], [all_decklist_hashes_by_tournament[tournament]])))
+  cant_tournament_processed += 1
+  cant_tournament_decklists_processed += 1
+  if tournament_metagame_resume['cantLists'] < 16:
+    # Si el torneo está mal subido y no tiene ni siquiera 16 decklists válidas, lo ignoramos
+    tournaments = [x for x in tournaments if x['name'] != tournament]
+  else:
+    # Solo guardamos el torneo si tiene la suficiente cantidad de listas válidas
+    files.create_new_file('', f"{METAGAME_PATH}/{tournament}", 'metagame_resume.json', tournament_metagame_resume, with_log=False)
+logs.end_log_block('Tournaments processed!')
 
 # SAVE TOURNAMENTS
 logs.begin_log_block('Updating tournaments list')
 files.create_new_file('', METAGAME_PATH, 'tournaments.json', tournaments)
 logs.end_log_block('Tournaments list saved!')
-
+"""
 # SAVE NEW FILES
 files.create_new_file('', METAGAME_PATH, 'condensed_commanders_data.json', condensed_commanders_data)
 files.create_new_file('', METAGAME_PATH, 'stats_by_commander.json', stats_by_commander)
 files.create_new_file('', METAGAME_PATH, 'metagame_resume.json', metagame_resume)
 files.create_new_file('', METAGAME_PATH, 'metagame_cards_by_commander.json', metagame_cards_by_commander)
-
+"""
 # CLEANING
 files.clear_csv_directory()
 

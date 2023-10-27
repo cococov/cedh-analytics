@@ -105,3 +105,4 @@ dist
 
 # Big Files
 public/data/metagame/decklists.json
+public/data/metagame/**/decklists.t.json

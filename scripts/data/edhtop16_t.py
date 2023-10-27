@@ -134,6 +134,7 @@ class StatsByCommander(typing.TypedDict):
   maxAvgCmcWithLands: float
   maxAvgCmcWithoutLands: float
   useOfCards: UseOfCards
+  isValid: bool
 
 class MetagameResume(typing.TypedDict):
   cantCommanders: int
