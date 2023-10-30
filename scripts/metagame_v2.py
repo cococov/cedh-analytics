@@ -235,12 +235,15 @@ for tournament in list_of_tournaments_to_process:
   tournament_metagame_resume = edhtop16.get_metagame_resume(tournament_commanders, tournament_raw_lists, tournament_stats_by_commander, dict(zip([tournament], [all_decklist_hashes_by_tournament[tournament]])))
   cant_tournament_processed += 1
   cant_tournament_decklists_processed += 1
-  if tournament_metagame_resume['cantLists'] < 16:
-    # Si el torneo está mal subido y no tiene ni siquiera 16 decklists válidas, lo ignoramos
-    tournaments = [x for x in tournaments if x['name'] != tournament]
-  else:
+
+  tournament_obj = tournaments[[x['name'] for x in tournaments].index(tournament)] # Obtenemos el objeto del torneo para actualizar
+  # Si el torneo está mal subido y no tiene ni siquiera 16 decklists válidas, lo ignoramos
+  tournaments = [x for x in tournaments if x['name'] != tournament]
+  if tournament_metagame_resume['cantLists'] >= 16:
     # Solo guardamos el torneo si tiene la suficiente cantidad de listas válidas
     files.create_new_file('', f"{METAGAME_PATH}/{tournament}", 'metagame_resume.json', tournament_metagame_resume, with_log=False)
+    # Actualizamos el torneo como procesado
+    tournaments.append({**tournament_obj, 'processed': True})
 logs.end_log_block('Tournaments processed!')
 
 # SAVE TOURNAMENTS
