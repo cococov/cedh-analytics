@@ -39,8 +39,10 @@ logs.end_log_block('Processing all printing')
 
 # GET DATA FROM EDHTOP16
 logs.begin_log_block('Getting decklists from EDH Top 16')
-raw_lists = edhtop16.get_metagame_top_decklists()
-all_raw_lists = edhtop16.get_metagame_top_decklists(min_wins=0, min_tournament_size=64)
+# Hacemos el corte en torneos con al menos 52 jugadores y solo tomamos en cuenta a jugadores con al menos 2 wins o la data crece mucho y queda sucia.
+raw_lists = edhtop16.get_metagame_top_decklists(min_wins=2, min_tournament_size=52)
+# Para los torneos tomamos en cuenta toda la data pero igual hacemos el corte en torneos con al menos 52 jugadores.
+all_raw_lists = edhtop16.get_metagame_top_decklists(min_wins=0, min_tournament_size=52)
 logs.end_log_block('Decklists from EDH Top 16 got')
 
 # PRE-PREPROCESS EDHTOP16 DATA
@@ -113,7 +115,7 @@ for hash in decklists_by_hash.keys():
 moxfield.VALID_DECKS = len(full_decklists)
 
 logs.end_log_block('Decklists from hashes got')
-"""
+
 # PROCESS DATA FROM EDHTOP16 AND MOXFIELD
 logs.begin_log_block('Processing data')
 condensed_commanders_data = edhtop16.get_condensed_commanders_data(commanders, raw_lists)
@@ -152,7 +154,6 @@ for commander in commanders:
   uses_by_card_types = processing.get_uses_by_card_types(decklists_by_commander[commander])
   stats_by_commander[commander]['useOfCards'] = {**stats_by_commander[commander]['useOfCards'], **uses_by_card_types}
 logs.end_log_block('Cards by commander processed!')
-"""
 
 # PROCESS TOURNAMENTS
 
@@ -172,7 +173,7 @@ logs.end_log_block('Tournaments list got!')
 #[X] descargar y mezclar decklists del torneo que no están en el json de decklists base
 #[X] guardar decklists que no están en el json de decklists base en carpeta de torneo (ignorar el archivo en git)
 #[X] obtener get_commander_stats_by_commander para cada torneo
-#[~] obtener get_metagame_resume para cada torneo -> decklist_hashes_by_tournament no tiene todos los hashes, hay que traerse los hashes de todas las listas de los torneos
+#[X] obtener get_metagame_resume para cada torneo
 #[] obtener metagame_cards para cada torneo
 #[] No obtendremos data por comandante para cada torneo, solo la data general
 #[] Actualizar en la lista de torneos los torneos como procesados
@@ -246,13 +247,13 @@ logs.end_log_block('Tournaments processed!')
 logs.begin_log_block('Updating tournaments list')
 files.create_new_file('', METAGAME_PATH, 'tournaments.json', tournaments)
 logs.end_log_block('Tournaments list saved!')
-"""
+
 # SAVE NEW FILES
 files.create_new_file('', METAGAME_PATH, 'condensed_commanders_data.json', condensed_commanders_data)
 files.create_new_file('', METAGAME_PATH, 'stats_by_commander.json', stats_by_commander)
 files.create_new_file('', METAGAME_PATH, 'metagame_resume.json', metagame_resume)
 files.create_new_file('', METAGAME_PATH, 'metagame_cards_by_commander.json', metagame_cards_by_commander)
-"""
+
 # CLEANING
 files.clear_csv_directory()
 
