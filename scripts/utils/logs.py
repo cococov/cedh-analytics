@@ -4,6 +4,10 @@ def simple_log(message: str):
   """ Print a simple log message. With no formatting. """
   print(message)
 
+def ephemeral_log(message: str):
+  """ Print a log message that will be overwritten in the next call. """
+  print(f'\033[K{message}', end='\r')
+
 def begin_log_block(message: str):
   """ Print a log message for the beginning of a block.\n
   The message is followed by a '...' and is overwritten by the `end_log_block` message.

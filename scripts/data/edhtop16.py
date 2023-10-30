@@ -42,7 +42,7 @@ def get_metagame_top_decklists(min_wins=2, min_tournament_size=64) -> list[EdhTo
   }
   raw_lists = json.loads(requests.post(URL, json=data, headers=HEADERS).text)
 
-  return list(filter(lambda x: 'commander' in x.keys() and x['commander'] != 'Unknown Commander', raw_lists)) # TODO: poner filtro de commander en query
+  return list(filter(lambda x: ('commander' in x.keys() and x['commander'] != 'Unknown Commander' and x['winRate']), raw_lists)) # TODO: poner filtro de commander y winrate en query
 
 def index_decklists_by_hash(raw_lists: list[EdhTop16DeckList]) -> dict[str, EdhTop16DeckList]:
   decklists_by_hash = {}
@@ -83,8 +83,8 @@ def get_condensed_commanders_data(commanders: list[str], raw_lists: list[EdhTop1
   for commander in commanders:
     raw_data = list(filter(lambda x: x['commander'] == commander, raw_lists))
     appearances = len(raw_data)
-    wins = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['wins'], raw_data))
-    avg_win_rate = round(functools.reduce(lambda x, y: float(x + y), map(lambda x: x['winRate'], raw_data)) / appearances, 3)
+    wins = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['wins'], raw_data), 0)
+    avg_win_rate = round(functools.reduce(lambda x, y: float(x + (y if y else 0)), map(lambda x: x['winRate'], raw_data), 0) / appearances, 3)
     best_standing = functools.reduce(lambda x, y: int(x) if x < y else int(y), map(lambda x: x['standing'], raw_data))
     worst_standing = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['standing'], raw_data))
     commander_data: CondensedCommanderData = {
