@@ -8,12 +8,14 @@ import type { ResumeData } from './types';
 import styles from '../../styles/Metagame.module.css';
 
 export default async function MetagameResumePage({
+  title,
   resume,
   commandersURL,
   lastSetTop10UrlBase,
   noCommanderPage,
   fromTournament,
 }: {
+  title?: string;
   resume: ResumeData;
   commandersURL: string;
   lastSetTop10UrlBase: string;
@@ -22,6 +24,11 @@ export default async function MetagameResumePage({
 }) {
   return (
     <main className={styles.main}>
+      {fromTournament && (
+        <span className={styles.Title}>
+          <h1>{title}</h1>
+        </span>
+      )}
       <section className={styles.topResumeContainer}>
         <span className={styles.topResume}>
           <h3 className={styles.topResumeTitle}>Stats</h3>

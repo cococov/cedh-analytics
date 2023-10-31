@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+/* Vendor */
+import { replace } from 'ramda';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../../shared-metadata';
 import MetagameResumePage from '../../../components/metagameResumePage';
@@ -66,12 +68,14 @@ export default async function Metagame({
 }: {
   params: Params,
 }) {
-  const response = await fetchData({ id: decodeURI(String(params.id)) });
+  const tournamentName = replace('%40', '@', decodeURI(String(params.id)));
+  const response = await fetchData({ id: tournamentName });
 
   if (response.notFound) notFound();
 
   return (
     <MetagameResumePage
+      title={tournamentName}
       resume={response as ResumeData}
       commandersURL={`${server}/data/metagame/tournaments/${decodeURI(String(params.id))}/condensed_commanders_data.json`}
       lastSetTop10UrlBase="/metagame-cards"
