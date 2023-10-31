@@ -274,7 +274,8 @@ for tournament in list_of_tournaments_to_process:
     # Solo guardamos el torneo si tiene la suficiente cantidad de listas válidas
     files.create_new_file('', f"{METAGAME_PATH}/tournaments/{tournament}", 'metagame_resume.json', tournament_metagame_resume, with_log=False)
     files.create_new_file('', f"{METAGAME_PATH}/tournaments/{tournament}", 'condensed_commanders_data.json', tournament_condensed_commanders_data, with_log=False)
-    files.create_new_file('', f"{METAGAME_PATH}/tournaments/{tournament}", 'stats_by_commander.json', tournament_stats_by_commander, with_log=False)
+    # No guardamos los stats by commander porque es mucha data que no entrega mucho valor enfocada en un torneo
+    #files.create_new_file('', f"{METAGAME_PATH}/tournaments/{tournament}", 'stats_by_commander.json', tournament_stats_by_commander, with_log=False)
     # Actualizamos el torneo como procesado
     tournaments.append({**tournament_obj, 'processed': True})
 logs.end_log_block('Tournaments processed!')
