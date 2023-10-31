@@ -29,7 +29,7 @@ export async function generateMetadata({
           url: '/images/spike.jpg',
           width: 626,
           height: 457,
-          alt: 'Frantic Search',
+          alt: 'Spike, Tournament Grinder',
         },
       ],
     },
@@ -39,7 +39,7 @@ export async function generateMetadata({
       description: `${tournamentName} | ${twitterMetadata.description}`,
       images: {
         url: '/images/spike.jpg',
-        alt: 'Frantic Search',
+        alt: 'Spike, Tournament Grinder',
       },
     },
   }
