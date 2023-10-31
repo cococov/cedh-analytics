@@ -262,8 +262,7 @@ for tournament in list_of_tournaments_to_process:
   # USE OF CARD TYPES
   logs.ephemeral_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% Calculating use of card types...")
   tournament_uses_by_card_types = processing.get_uses_by_card_types(tournament_full_decklists)
-  tournament_metagame_resume['useOfCards'] = {**metagame_resume['useOfCards'], **uses_by_card_types}# TODO: Esto es un bug, hay que usar tournament_metagame_resume y tournament_uses_by_card_types
-
+  tournament_metagame_resume['useOfCards'] = {**tournament_metagame_resume['useOfCards'], **tournament_uses_by_card_types}
 
   logs.ephemeral_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% Saving tournament files...")
   cant_tournament_processed += 1
