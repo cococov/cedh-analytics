@@ -15,9 +15,11 @@ async function getData(commandersURL: string) {
 export default async function AsyncCommandersTable({
   title,
   commandersURL,
+  noCommanderPage,
 }: {
   title?: string,
   commandersURL: string,
+  noCommanderPage?: boolean,
 }) {
   const { commanders } = await getData(commandersURL);
   return (
@@ -25,6 +27,7 @@ export default async function AsyncCommandersTable({
       <CommandersTable
         title={title || "Commanders"}
         commanders={commanders}
+        noCommanderPage={noCommanderPage}
       />
     </span>
   );

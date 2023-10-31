@@ -46,7 +46,7 @@ export default async function Metagame() {
     <MetagameResumePage
       resume={resume}
       commandersURL={`${server}/data/metagame/condensed_commanders_data.json`}
-      LastSetTop10UrlBase="/metagame-cards"
+      lastSetTop10UrlBase="/metagame-cards"
     />
   );
 };

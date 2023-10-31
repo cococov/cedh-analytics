@@ -10,11 +10,15 @@ import styles from '../../styles/Metagame.module.css';
 export default async function MetagameResumePage({
   resume,
   commandersURL,
-  LastSetTop10UrlBase,
+  lastSetTop10UrlBase,
+  noCommanderPage,
+  fromTournament,
 }: {
   resume: ResumeData;
   commandersURL: string;
-  LastSetTop10UrlBase: string;
+  lastSetTop10UrlBase: string;
+  noCommanderPage?: boolean;
+  fromTournament?: boolean;
 }) {
   return (
     <main className={styles.main}>
@@ -23,15 +27,19 @@ export default async function MetagameResumePage({
           <h3 className={styles.topResumeTitle}>Stats</h3>
           <span className={[styles.topResumeContent, styles.topResumeContentWithSpace].join(' ')}>
             <HeadlessTable data={{
-              'No. of Commanders': resume.cantCommanders,
-              'No. of Decks': resume.cantLists,
-              'No. of Tournaments': resume.cantTournaments,
-              'Decks with partners': `${Math.round((resume.percentageDecksWithPartners + Number.EPSILON) * 10000) / 100}%`,
-              'Decks with stickers': `${Math.round((resume.percentageDecksWithStickers + Number.EPSILON) * 10000) / 100}%`,
-              'Decks with companions': `${Math.round((resume.percentageDecksWithCompanions + Number.EPSILON) * 10000) / 100}%`,
-              'Min no. of lands': Math.round(resume.useOfCards.minCantLands),
-              'Avg no. of lands': Math.round(resume.avgCantLands),
-              'Max no. of lands': Math.round(resume.useOfCards.maxCantLands),
+              ...{
+                'No. of Commanders': resume.cantCommanders,
+                'No. of Decks': resume.cantLists,
+              },
+              ...(!fromTournament ? { 'No. of Tournaments': resume.cantTournaments } : {}),
+              ...{
+                'Decks with partners': `${Math.round((resume.percentageDecksWithPartners + Number.EPSILON) * 10000) / 100}%`,
+                'Decks with stickers': `${Math.round((resume.percentageDecksWithStickers + Number.EPSILON) * 10000) / 100}%`,
+                'Decks with companions': `${Math.round((resume.percentageDecksWithCompanions + Number.EPSILON) * 10000) / 100}%`,
+                'Min no. of lands': Math.round(resume.useOfCards.minCantLands),
+                'Avg no. of lands': Math.round(resume.avgCantLands),
+                'Max no. of lands': Math.round(resume.useOfCards.maxCantLands),
+              }
             }} />
           </span>
         </span>
@@ -39,7 +47,7 @@ export default async function MetagameResumePage({
           <h3 className={styles.topResumeTitle}>Top 10 cards</h3>
           <b>{resume.lastSet}</b>
           <span className={[styles.topResumeContent, styles.topResumeContentWithSpace].join(' ')}>
-            <LastSetTop10 last_set_top_10={resume.lastSetTop10} urlBase={LastSetTop10UrlBase} />
+            <LastSetTop10 last_set_top_10={resume.lastSetTop10} urlBase={lastSetTop10UrlBase} />
           </span>
         </span>
         <span className={[styles.topResume, styles.topResumeChart].join(' ')}>
@@ -180,6 +188,7 @@ export default async function MetagameResumePage({
             <AsyncCommandersTable
               title="Metagame Commanders"
               commandersURL={commandersURL}
+              noCommanderPage={noCommanderPage}
             />
           </Suspense>
         </section>
