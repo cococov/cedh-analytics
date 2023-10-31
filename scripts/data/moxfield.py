@@ -16,16 +16,21 @@ def get_decklist_hashes_from_bookmark(lists):
   return list(map(lambda x: x['deck']['publicId'], lists['data']))
 
 def get_decklists_data(hash: str, version=3, no_log=False):
-  global decklists_data_obtained_number, VALID_DECKS
-  time.sleep(2)
-  raw_data = requests.get(f"https://api.moxfield.com/v{version}/decks/all/{hash}")
-  time.sleep(2)
-  data = json.loads(raw_data.text)
-  data['url'] = f"https://www.moxfield.com/decks/{hash}"
-  decklists_data_obtained_number += 1
-  if not no_log:
-    logs.loading_log("Getting decklists data", decklists_data_obtained_number, VALID_DECKS)
-  return data
+  try:
+    global decklists_data_obtained_number, VALID_DECKS
+    time.sleep(2)
+    raw_data = requests.get(f"https://api.moxfield.com/v{version}/decks/all/{hash}")
+    time.sleep(2)
+    data = json.loads(raw_data.text)
+    data['url'] = f"https://www.moxfield.com/decks/{hash}"
+    decklists_data_obtained_number += 1
+    if not no_log:
+      logs.loading_log("Getting decklists data", decklists_data_obtained_number, VALID_DECKS)
+    return data
+  except json.decoder.JSONDecodeError:
+    logs.error_log(f"[Version {version}] Error getting decklist data [{decklists_data_obtained_number}/{VALID_DECKS}] for {hash} (JSONDecodeError)")
+    exit(1)
+
 
 def get_decklists_data_from_hashes(hashes):
   logs.begin_log_block('Getting decklists data')

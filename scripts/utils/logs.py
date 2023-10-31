@@ -6,7 +6,7 @@ def simple_log(message: str):
 
 def ephemeral_log(message: str):
   """ Print a log message that will be overwritten in the next call. """
-  print(f'\033[K{message}', end='\r')
+  print('\033[K', message, end='\r')
 
 def begin_log_block(message: str):
   """ Print a log message for the beginning of a block.\n
