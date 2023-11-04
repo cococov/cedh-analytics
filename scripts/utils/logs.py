@@ -5,6 +5,7 @@ def simple_log(message: str):
   print(message)
 
 def ephemeral_log(message: str):
+  return
   """ Print a log message that will be overwritten in the next call. """
   print('\033[K', message, end='\r')
 

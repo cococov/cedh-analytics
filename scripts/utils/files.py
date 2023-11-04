@@ -39,6 +39,7 @@ def create_dir(FOLDER_PATH):
 def create_file(dirname, file_path, data):
   with open(os.path.join(dirname, file_path), 'w+', encoding='utf8') as f:
     json.dump(data, f, ensure_ascii=False)
+    f.close()
 
 def create_file_with_log(dirname, file_path, data, msg_begin, msg_end):
   logs.begin_log_block(msg_begin)
@@ -65,11 +66,13 @@ def update_date(DIRNAME, kind):
   update_date_path = os.path.join(DIRNAME, r'public/data/update_date.json')
   with open(update_date_path, 'r+') as f:
     update_date = json.load(f) if os.stat(update_date_path).st_size > 0 else {}
+    f.close()
 
   update_date[kind] = custom_strftime('%B {S}, %Y', datetime.today())
 
   with open(update_date_path, 'w', encoding='utf8') as f:
     json.dump(update_date, f, ensure_ascii=False)
+    f.close()
 
 def update_db_date(DIRNAME):
   logs.begin_log_block('Updating date')
@@ -77,11 +80,14 @@ def update_db_date(DIRNAME):
   logs.end_log_block('Date updated')
 
 def read_json_file(dirname, file_name, default={}):
+  json_f = default
   try:
     with open(os.path.join(dirname, file_name), 'r') as f:
-      return json.load(f)
+      json_f = json.load(f)
+      f.close()
   except:
     return default
+  return json_f
 
 def folder_names_in_directory(dirname):
   return list(filter(lambda x: os.path.isdir(os.path.join(dirname, x)), os.listdir(dirname))) # type: ignore

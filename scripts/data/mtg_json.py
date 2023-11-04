@@ -32,7 +32,7 @@ def build_get_last_set_for_card(cards_csv, sets_csv):
         return 'Game Night'
       if card_name in ['The Mightstone and Weakstone', 'Urza, Lord Protector']:
         return 'The Brothers\' War'
-      if card_name in ['Bruna, the Fading Light', 'Gisela, the Broken Blade', 'Hanweir Battlements']:
+      if card_name in ['Bruna, the Fading Light', 'Gisela, the Broken Blade', 'Hanweir Battlements', 'Hanweir Garrison']:
         return 'Eldritch Moon'
       card_printing_codes = cards_csv.loc[cards_csv['name'] == card_name].iloc[0]['printings'].split(', ')
       if 'BOT' in card_printing_codes:

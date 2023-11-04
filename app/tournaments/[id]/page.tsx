@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 /* Vendor */
 import { replace } from 'ramda';
@@ -6,6 +7,8 @@ import { replace } from 'ramda';
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../../shared-metadata';
 import MetagameResumePage from '../../../components/metagameResumePage';
 import type { ResumeData } from '../../../components/metagameResumePage/types';
+import AsyncCardsTable from '../../../components/cardsTable/async';
+import { Loading } from '../../../components';
 /* Static */
 import { server } from '../../../config';
 
@@ -74,13 +77,25 @@ export default async function Metagame({
   if (response.notFound) notFound();
 
   return (
-    <MetagameResumePage
-      title={tournamentName}
-      resume={response as ResumeData}
-      commandersURL={`${server}/data/metagame/tournaments/${decodeURI(String(params.id))}/condensed_commanders_data.json`}
-      lastSetTop10UrlBase="/metagame-cards"
-      noCommanderPage
-      fromTournament
-    />
+    <>
+      <MetagameResumePage
+        title={tournamentName}
+        resume={response as ResumeData}
+        commandersURL={`${server}/data/metagame/tournaments/${decodeURI(String(params.id))}/condensed_commanders_data.json`}
+        lastSetTop10UrlBase="/metagame-cards"
+        noCommanderPage
+        fromTournament
+      />
+      <span className="mb-3">
+        <Suspense fallback={<Loading />}>
+          <AsyncCardsTable
+            title="Cards"
+            cardsURL={`${server}/data/metagame/tournaments/${params.id}/competitiveCards.json`}
+            tagsByCardURL={`${server}/data/cards/tags.json`}
+            fromMetagame
+          />
+        </Suspense>
+      </span>
+    </>
   );
 };

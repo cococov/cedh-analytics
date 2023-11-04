@@ -167,7 +167,7 @@ logs.begin_log_block('Getting tournaments list')
 tournaments = edhtop16.get_tournaments_resume(tournaments, list(all_decklist_hashes_by_tournament.keys()))
 logs.end_log_block('Tournaments list got!')
 
-list_of_tournaments_to_process = all_decklist_hashes_by_tournament.keys()
+list_of_tournaments_to_process = list(all_decklist_hashes_by_tournament.keys())[10:]
 
 logs.begin_log_block(f'Processing tournaments')
 cant_tournament_processed = 0
@@ -178,13 +178,16 @@ for commander in all_decklist_hashes_by_commander.keys():
 
 logs.loading_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% - ", 0, 0)
 
-tournament_cant_decklists_by_hash = {}
 for tournament in list_of_tournaments_to_process:
-  tournament_decklists_by_hash = files.read_json_file(f"{METAGAME_PATH}/tournaments/{tournament}", 'decklists.t.json') if not FORCE_UPDATE else {}
+  tournament_decklists_by_hash = {}
+  #if not FORCE_UPDATE: TODO: fix bug que persiste la data del hash en cada iteración al leer el archivo
+  #  tournament_decklists_by_hash = files.read_json_file(f"{METAGAME_PATH}/tournaments/{tournament}", 'decklists.t.json')
+
   tournament_raw_lists = []
   tournament_commanders = []
   tournament_decklists_by_commander = {}
   cant_tournament_decklists_processed = 0
+  tournament_cant_decklists_by_hash = {}
   has_changes = False
   # TODO: Si torneo tiene processed en True saltarlo.
   for hash in all_decklist_hashes_by_tournament[tournament]:
@@ -266,7 +269,7 @@ for tournament in list_of_tournaments_to_process:
 
   logs.ephemeral_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% Saving tournament files...")
   cant_tournament_processed += 1
-  cant_tournament_decklists_processed += 1
+
   tournament_obj = tournaments[[x['name'] for x in tournaments].index(tournament)] # Obtenemos el objeto del torneo para actualizar
   # Si el torneo está mal subido y no tiene ni siquiera 16 decklists válidas, lo ignoramos
   tournaments = [x for x in tournaments if x['name'] != tournament]

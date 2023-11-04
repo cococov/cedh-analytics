@@ -28,7 +28,7 @@ def get_decklists_data(hash: str, version=3, no_log=False):
       logs.loading_log("Getting decklists data", decklists_data_obtained_number, VALID_DECKS)
     return data
   except json.decoder.JSONDecodeError:
-    logs.error_log(f"[Version {version}] Error getting decklist data [{decklists_data_obtained_number}/{VALID_DECKS}] for {hash} (JSONDecodeError)")
+    logs.error_log(f"[Version {version}] Error getting decklist data for {hash} (JSONDecodeError)")
     exit(1)
 
 
