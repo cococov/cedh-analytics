@@ -35,9 +35,11 @@ type CommandersData = {
 export default function CommandersTable({
   title,
   commanders,
+  noCommanderPage,
 }: {
   title?: string,
   commanders: CommandersData[],
+  noCommanderPage?: boolean,
 }) {
   const router = useRouter();
   const { toggleLoading } = useContext(AppContext);
@@ -242,8 +244,8 @@ export default function CommandersTable({
         withGrouping={false}
         rowHeight="5rem"
         title={title || 'Commanders'}
-        onRowClick={(isSmallScreen || isMediumScreen) ? handleClickRow : undefined}
-        actions={(isSmallScreen || isMediumScreen) ? [] : [
+        onRowClick={(isSmallScreen || isMediumScreen) && !noCommanderPage ? handleClickRow : undefined}
+        actions={(isSmallScreen || isMediumScreen) || noCommanderPage ? [] : [
           {
             icon: function ReadMore() { return <MaterialReadMoreIcon /> },
             tooltip: 'Go to Commander page',

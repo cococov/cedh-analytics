@@ -39,18 +39,21 @@ def create_dir(FOLDER_PATH):
 def create_file(dirname, file_path, data):
   with open(os.path.join(dirname, file_path), 'w+', encoding='utf8') as f:
     json.dump(data, f, ensure_ascii=False)
+    f.close()
 
 def create_file_with_log(dirname, file_path, data, msg_begin, msg_end):
   logs.begin_log_block(msg_begin)
   create_file(dirname, file_path, data)
   logs.end_log_block(msg_end)
 
-def create_new_file(dirname, folder_path, file_name, data):
-  logs.begin_log_block('Saving new file')
+def create_new_file(dirname, folder_path, file_name, data, with_log=True):
+  if with_log:
+    logs.begin_log_block('Saving new file')
   file_path = os.path.join(folder_path, file_name)
   create_dir(folder_path)
   create_file(dirname, file_path, data)
-  logs.end_log_block(f'{file_name} saved')
+  if with_log:
+    logs.end_log_block(f'{file_name} saved')
 
 def create_data_file(dirname, file_path, data):
   create_file_with_log(dirname, file_path, data, 'Saving new file', 'New file saved')
@@ -63,23 +66,32 @@ def update_date(DIRNAME, kind):
   update_date_path = os.path.join(DIRNAME, r'public/data/update_date.json')
   with open(update_date_path, 'r+') as f:
     update_date = json.load(f) if os.stat(update_date_path).st_size > 0 else {}
+    f.close()
 
   update_date[kind] = custom_strftime('%B {S}, %Y', datetime.today())
 
   with open(update_date_path, 'w', encoding='utf8') as f:
     json.dump(update_date, f, ensure_ascii=False)
+    f.close()
 
 def update_db_date(DIRNAME):
   logs.begin_log_block('Updating date')
   update_date(DIRNAME, 'database')
   logs.end_log_block('Date updated')
 
-def read_json_file(dirname, file_name):
+def read_json_file(dirname, file_name, default={}):
+  json_f = default
   try:
     with open(os.path.join(dirname, file_name), 'r') as f:
-      return json.load(f)
+      json_f = json.load(f)
+      f.close()
   except:
-    return {}
+    return default
+  return json_f
 
 def folder_names_in_directory(dirname):
-  return list(filter(lambda x: os.path.isdir(os.path.join(dirname, x)), os.listdir(dirname)))
+  return list(filter(lambda x: os.path.isdir(os.path.join(dirname, x)), os.listdir(dirname))) # type: ignore
+
+def file_exists(dirname: str, file_name: str) -> bool:
+  """Check if file exists in directory"""
+  return os.path.isfile(os.path.join(dirname, file_name))

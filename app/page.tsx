@@ -275,10 +275,10 @@ export default async function Home() {
               1 year of data is considered. (now - 1 year)
             </li>
             <li>
-              Only tournaments with 64 or more players are considered.
+              Only tournaments with 52 or more players are considered.
             </li>
             <li>
-              Only top 32 decks are considered.
+              Only decks with at least 2 wins are considered.
             </li>
           </ul>
         </article>

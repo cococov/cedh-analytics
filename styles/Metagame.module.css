@@ -18,6 +18,31 @@
   }
 }
 
+.Title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 12px;
+  margin: 0.5rem 1rem 0rem 1rem;
+}
+
+@media (max-width: 500px) {
+  .Title {
+    margin: 0;
+    border-radius: 0;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 1130px) and (min-width:501px) {
+  .Title {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+}
+
 .topResumeContainer {
   width: 100%;
   height: fit-content;
