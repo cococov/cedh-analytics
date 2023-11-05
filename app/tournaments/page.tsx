@@ -11,6 +11,7 @@ type Tournament = {
   name: string;
   date: string;
   size: number;
+  validLists: number;
   processed: boolean;
 };
 

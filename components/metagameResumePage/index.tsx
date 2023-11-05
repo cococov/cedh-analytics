@@ -36,8 +36,9 @@ export default async function MetagameResumePage({
             <HeadlessTable data={{
               ...{
                 'No. of Commanders': resume.cantCommanders,
-                'No. of Decks': resume.cantLists,
+                'No. of Players': resume.size,
               },
+              ...(fromTournament ? { 'No. of Valid Decks': resume.cantLists } : {}),
               ...(!fromTournament ? { 'No. of Tournaments': resume.cantTournaments } : {}),
               ...{
                 'Decks with partners': `${Math.round((resume.percentageDecksWithPartners + Number.EPSILON) * 10000) / 100}%`,

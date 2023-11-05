@@ -17,6 +17,7 @@ type Tournament = {
   name: string;
   date: string;
   size: number;
+  validLists: number;
   processed: boolean;
 };
 
@@ -55,6 +56,17 @@ export default function TournamentsTable({
       searchable: false,
     },
     {
+      title: 'Valid decklists',
+      field: 'validLists',
+      type: 'numeric',
+      align: 'center',
+      grouping: false,
+      filtering: false,
+      editable: 'never',
+      hidden: false,
+      searchable: false,
+    },
+    {
       title: 'Date',
       field: 'date',
       type: 'date',
@@ -72,18 +84,16 @@ export default function TournamentsTable({
     if (isSmallScreen) {
       setColumns((previous: any) => {
         return previous.map((current: any) => {
-          if (current.field === 'name') {
-            return { ...current, cellStyle: { minWidth: '10rem' } };
-          }
+          if (current.field === 'validLists') return { ...current, hidden: true };
+          if (current.field === 'name') return { ...current, cellStyle: { minWidth: '10rem' } };
           return current;
         });
       });
     } else {
       setColumns((previous: any) => {
         return previous.map((current: any) => {
-          if (current.field === 'name') {
-            return { ...current, cellStyle: { minWidth: '25rem' } };
-          }
+          if (current.field === 'validLists') return { ...current, hidden: false };
+          if (current.field === 'name') return { ...current, cellStyle: { minWidth: '25rem' } };
           return current;
         });
       });
