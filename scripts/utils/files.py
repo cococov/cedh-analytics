@@ -91,3 +91,7 @@ def read_json_file(dirname, file_name, default={}):
 
 def folder_names_in_directory(dirname):
   return list(filter(lambda x: os.path.isdir(os.path.join(dirname, x)), os.listdir(dirname))) # type: ignore
+
+def file_exists(dirname: str, file_name: str) -> bool:
+  """Check if file exists in directory"""
+  return os.path.isfile(os.path.join(dirname, file_name))

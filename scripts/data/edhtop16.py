@@ -30,9 +30,11 @@ def get_metagame_top_decklists(min_wins=2, min_tournament_size=64) -> list[EdhTo
     - [Default] Tournament with at least 64 players
     - [Default] At least 2 wins
     - Last year only (now - 1 year)
+    - Just Moxfield decklists are considered
   """
   data = {
     'wins': { '$gte': min_wins },
+    "decklist": {"$regex":"https://www.moxfield.com/decks/.*"},
     'tourney_filter': {
       'size': { '$gte': min_tournament_size }
     },
@@ -270,6 +272,7 @@ def get_tournaments_resume(saved_tournaments: list[Tournament], tournament_names
         'TID': result['TID'],
         'size': result['size'],
         'date': result['date'],
+        'validLists': 0,
         'processed': False
       })
 
