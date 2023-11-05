@@ -202,10 +202,10 @@ export default async function Home() {
               Only the decks exposed in the &quot;Competitive Decks&quot; section of the database are considered. (In the future it&apos;s thought to make it optional to consider the &quot;Brewer&apos;s Corner&quot; data)
             </li>
             <li>
-              Only the data of the lists that are in moxfield are processed.
+              Only the data from decklists on Moxfield is processed.
             </li>
             <li>
-              Deck lists with broken links are left out.
+              Decklists with broken links are ignored.
             </li>
           </ul>
           <p>
@@ -215,7 +215,7 @@ export default async function Home() {
               Metagame
             </Link>
             {' '}
-            section, we gathered data from
+            section, we collected data from
             {' '}
             <a
               href="https://edhtop16.com/"
@@ -225,7 +225,7 @@ export default async function Home() {
             >
               EDH Top 16
             </a>
-            {' and '}
+            {', '}
             cross-referenced it with
             {' '}
             <a
@@ -236,8 +236,8 @@ export default async function Home() {
             >
               Moxfield
             </a>
-            {' and '}
-            finally obtains specific information of each card from {' '}
+            {', and '}
+            then extracted specific card information from {' '}
             <a
               href="https://scryfall.com/"
               target="_blank"
@@ -255,20 +255,22 @@ export default async function Home() {
             >
               MTGJSON
             </a>
-            {' to '}
-            obtain the statistics and information that you can see in
+            {'. '}
+            This data was processed to provide an overview of the metagame from the past year, as you can see in
             {' '}
             <Link href="/metagame" className={styles.homeLink}>
               Metagame
+            </Link>
+            {', '}
+            <Link href="/tournaments" className={styles.homeLink}>
+              Tournaments
             </Link>
             {' and '}
             <Link href="/metagame-cards" className={styles.homeLink}>
               Metagame Cards
             </Link>
-            .
-          </p>
-          <p>
-            Metagame criteria:
+            {'. '}
+            For the above, the following criteria were taken:
           </p>
           <ul>
             <li>
@@ -278,7 +280,13 @@ export default async function Home() {
               Only tournaments with 52 or more players are considered.
             </li>
             <li>
-              Only decks with at least 2 wins are considered.
+              Only decklists with at least 2 wins are considered. (For the metagame of a specific tournament, all decks are considered)
+            </li>
+            <li>
+              Only the data from decklists on Moxfield is processed.
+            </li>
+            <li>
+              Decklists with broken links are ignored.
             </li>
           </ul>
         </article>
