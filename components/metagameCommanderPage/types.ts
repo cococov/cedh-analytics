@@ -45,7 +45,10 @@ export type Decklist = {
   url: string;
   name: string;
   wins: number;
+  losses: number;
+  draws: number;
   winRate: number;
+  drawRate: number;
   standing: number;
   hasPartners: boolean;
   tournamentName: string;
@@ -77,6 +80,7 @@ export type StatsByCommander = {
     hasPartners: boolean;
     sortedUseOfLands: number[];
     avgWinRate: number;
+    avgDrawRate: number;
     lastSet: string;
     lastSetTop10: { occurrences: number, cardName: string }[];
     bestStanding: number;

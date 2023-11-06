@@ -4,8 +4,8 @@ import CommandersTable from '../commandersTable';
 import styles from '../../styles/CardsList.module.css';
 
 async function getData(commandersURL: string) {
-  const rawCards = await fetch(commandersURL);
-  const commanders = await rawCards.json();
+  const rawCommanders = await fetch(commandersURL);
+  const commanders = await rawCommanders.json();
 
   return {
     commanders,

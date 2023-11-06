@@ -69,6 +69,7 @@ export default async function MetagameCommanderPage({
                 'Avg no. of lands': Math.round(data.metagameData.avgCantLands),
                 'Max no. of lands': Math.round(data.metagameData.maxCantLands),
                 'Avg. Win Rate': `${Math.round((data.metagameData.avgWinRate + Number.EPSILON) * 10000) / 100}%`,
+                'Avg. Draw Rate': `${Math.round((data.metagameData.avgDrawRate + Number.EPSILON) * 10000) / 100}%`,
                 'Best Standing': data.metagameData.bestStanding,
                 'Worst Standing': data.metagameData.worstStanding,
                 'Wins': data.metagameData.wins,
