@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 /* Vendor */
 import { MaterialOpenInNewIcon } from '../vendor/materialIcon';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
@@ -49,8 +48,6 @@ export default function DecklistsTable({
   title?: string,
   decklists: DecklistsData[],
 }) {
-  const router = useRouter();
-  const { toggleLoading } = useContext(AppContext);
   const [isLoaded, setLoaded] = useState(false);
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
@@ -81,6 +78,30 @@ export default function DecklistsTable({
       defaultSort: 'desc',
     },
     {
+      title: 'Draws',
+      field: 'draws',
+      type: 'numeric',
+      align: 'center',
+      grouping: false,
+      filtering: false,
+      editable: 'never',
+      hidden: false,
+      searchable: false,
+      defaultSort: 'desc',
+    },
+    {
+      title: 'Losses',
+      field: 'losses',
+      type: 'numeric',
+      align: 'center',
+      grouping: false,
+      filtering: false,
+      editable: 'never',
+      hidden: true,
+      searchable: false,
+      defaultSort: 'desc',
+    },
+    {
       title: 'Winrate',
       field: 'winRate',
       type: 'numeric',
@@ -92,6 +113,21 @@ export default function DecklistsTable({
       searchable: false,
       render: function PercentageOfUse(rowData: any, type: any) {
         const value = type === 'row' ? rowData.winRate : rowData;
+        return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
+      },
+    },
+    {
+      title: 'DrawRate',
+      field: 'drawRate',
+      type: 'numeric',
+      align: 'center',
+      grouping: false,
+      filtering: false,
+      editable: 'never',
+      hidden: false,
+      searchable: false,
+      render: function PercentageOfUse(rowData: any, type: any) {
+        const value = type === 'row' ? rowData.drawRate : rowData;
         return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
       },
     },
@@ -259,7 +295,9 @@ export default function DecklistsTable({
           if (
             current.field === 'name' ||
             current.field === 'wins' ||
+            current.field === 'draws' ||
             current.field === 'winRate' ||
+            current.field === 'drawRate' ||
             current.field === 'standing' ||
             current.field === 'tournamentName' ||
             current.field === 'avgCmcWithLands' ||

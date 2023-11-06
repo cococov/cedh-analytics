@@ -431,6 +431,20 @@ export default function CardsTable({
             return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
           },
         },
+        {
+          title: 'Avg. Drawrate',
+          field: 'avgDrawRate',
+          align: 'center',
+          grouping: false,
+          filtering: false,
+          editable: 'never',
+          hidden: true,
+          searchable: false,
+          render: function PercentageOfUse(rowData: any, type: any) {
+            const value = type === 'row' ? rowData.avgDrawRate : rowData;
+            return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
+          },
+        },
       ]
     });
   }, [fromMetagame]);

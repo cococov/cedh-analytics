@@ -28,6 +28,7 @@ type CommandersData = {
   appearances: number;
   wins: number;
   avgWinRate: number;
+  avgDrawRate: number;
   bestStanding: number;
   worstStanding: number;
 };
@@ -158,6 +159,21 @@ export default function CommandersTable({
       },
     },
     {
+      title: 'Avg Drawrate',
+      field: 'avgDrawRate',
+      type: 'numeric',
+      align: 'center',
+      grouping: false,
+      filtering: false,
+      editable: 'never',
+      hidden: false,
+      searchable: false,
+      render: function PercentageOfUse(rowData: any, type: any) {
+        const value = type === 'row' ? rowData.avgDrawRate : rowData;
+        return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
+      },
+    },
+    {
       title: 'Best Standing',
       field: 'bestStanding',
       type: 'numeric',
@@ -200,6 +216,7 @@ export default function CommandersTable({
             current.field === 'identity' ||
             current.field === 'wins' ||
             current.field === 'avgWinRate' ||
+            current.field === 'avgDrawRate' ||
             current.field === 'bestStanding' ||
             current.field === 'worstStanding'
           ) {

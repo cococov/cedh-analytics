@@ -26,6 +26,7 @@ class CondensedCommanderData(typing.TypedDict):
   appearances: int
   wins: int
   avgWinRate: float
+  avgDrawRate: float
   bestStanding: int
   worstStanding: int
 
@@ -33,7 +34,10 @@ class ProcessedDecklist(typing.TypedDict):
   url: str
   name: str
   wins: int
+  losses: int
+  draws: int
   winRate: float
+  drawRate: float
   standing: int
   hasPartners: bool
   tournamentName: str
@@ -102,11 +106,14 @@ class StatsByCommander(typing.TypedDict):
   appearances: int
   colorID: str
   wins: int
+  draws: int
+  losses: int
   lastSet: str
   lastSetTop10: list[dict[str, str | int]]
   hasPartners: bool
   sortedUseOfLands: list[int]
   avgWinRate: float
+  avgDrawRate: float
   bestStanding: int
   worstStanding: int
   processed_decklists: list[ProcessedDecklist]

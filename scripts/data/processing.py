@@ -22,8 +22,12 @@ def get_cards_winrate(cards, raw_lists):
   for card in cards:
     occurrences = card['occurrences']
     decklists_url = [url for urls in map(lambda x: map(lambda y: y['url'], x['decks']), card['decklists']) for url in urls] # Ugly python flatten
+    avg_wins = round(functools.reduce(lambda x, y: x + y, map(lambda x: x['wins'] if x['decklist'] in decklists_url else 0, raw_lists)) / occurrences, 3)
+    avg_draws = round(functools.reduce(lambda x, y: x + y, map(lambda x: x['draws'] if x['decklist'] in decklists_url else 0, raw_lists)) / occurrences, 3)
+    avg_losses = round(functools.reduce(lambda x, y: x + y, map(lambda x: x['losses'] if x['decklist'] in decklists_url else 0, raw_lists)) / occurrences, 3)
+    avg_drawrate = avg_draws / (avg_wins + avg_draws + avg_losses) if (avg_wins + avg_draws + avg_losses) > 0 else 0
     avg_winrate = round(functools.reduce(lambda x, y: x + y, map(lambda x: x['winRate'] if x['decklist'] in decklists_url else 0, raw_lists)) / occurrences, 3)
-    result.append({**card, 'avgWinRate': avg_winrate})
+    result.append({**card, 'avgWinRate': avg_winrate, 'avgDrawRate': avg_drawrate})
   return result
 
 def get_uses_by_card_types(decklists) -> edhtop16_t.UseOfCards:

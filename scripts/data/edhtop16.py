@@ -34,7 +34,7 @@ def get_metagame_top_decklists(min_wins=2, min_tournament_size=64) -> list[EdhTo
   """
   data = {
     'wins': { '$gte': min_wins },
-    "decklist": {"$regex":"https://www.moxfield.com/decks/.*"},
+    'decklist': { '$regex': 'https://www.moxfield.com/decks/.*' },
     'tourney_filter': {
       'size': { '$gte': min_tournament_size }
     },
@@ -86,6 +86,9 @@ def get_condensed_commanders_data(commanders: list[str], raw_lists: list[EdhTop1
     raw_data = list(filter(lambda x: x['commander'] == commander, raw_lists))
     appearances = len(raw_data)
     wins = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['wins'], raw_data), 0)
+    draws = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['draws'], raw_data), 0)
+    losses = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['losses'], raw_data), 0)
+    avg_draw_rate = draws / (wins + draws + losses) if (wins + draws + losses) > 0 else 0
     avg_win_rate = round(functools.reduce(lambda x, y: float(x + (y if y else 0)), map(lambda x: x['winRate'], raw_data), 0) / appearances, 3)
     best_standing = functools.reduce(lambda x, y: int(x) if x < y else int(y), map(lambda x: x['standing'], raw_data))
     worst_standing = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['standing'], raw_data))
@@ -95,6 +98,7 @@ def get_condensed_commanders_data(commanders: list[str], raw_lists: list[EdhTop1
       'appearances': appearances,
       'wins': wins,
       'avgWinRate': avg_win_rate,
+      'avgDrawRate': avg_draw_rate,
       'bestStanding': best_standing,
       'worstStanding': worst_standing
     }
@@ -110,7 +114,10 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
     data[commander]['appearances'] = len(filtered_data)
     data[commander]['colorID'] = filtered_data[0]['colorID']
     data[commander]['wins'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['wins'], filtered_data))
+    data[commander]['draws'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['draws'], filtered_data))
+    data[commander]['losses'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['losses'], filtered_data))
     data[commander]['avgWinRate'] = round(functools.reduce(lambda x, y: float(x + y), map(lambda x: (0 if not x['winRate'] else x['winRate']), filtered_data)) / data[commander]['appearances'], 3)
+    data[commander]['avgDrawRate'] = data[commander]['draws'] / (data[commander]['wins'] + data[commander]['draws'] + data[commander]['losses']) if (data[commander]['wins'] + data[commander]['draws'] + data[commander]['losses']) > 0 else 0
     data[commander]['bestStanding'] = functools.reduce(lambda x, y: int(x) if x < y else int(y), map(lambda x: x['standing'], filtered_data))
     data[commander]['worstStanding'] = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['standing'], filtered_data))
     def process_decklists(decklist: moxfield_t.DecklistV3) -> ProcessedDecklist | dict:
@@ -120,7 +127,10 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
       process_decklist_data['name'] = decklist['name']
       process_decklist_data['hasPartners'] = decklist['boards']['commanders']['count'] > 1
       process_decklist_data['wins'] = edh_top16_data['wins']
+      process_decklist_data['losses'] = edh_top16_data['losses']
+      process_decklist_data['draws'] = edh_top16_data['draws']
       process_decklist_data['winRate'] = edh_top16_data['winRate']
+      process_decklist_data['drawRate'] = edh_top16_data['draws'] / (edh_top16_data['wins'] + edh_top16_data['draws'] + edh_top16_data['losses']) if (edh_top16_data['wins'] + edh_top16_data['draws'] + edh_top16_data['losses']) > 0 else 0
       process_decklist_data['standing'] = edh_top16_data['standing']
       process_decklist_data['tournamentName'] = edh_top16_data['tournamentName']
       process_decklist_data['dateCreated'] = edh_top16_data['dateCreated']
