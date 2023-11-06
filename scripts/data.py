@@ -19,7 +19,7 @@ DIRNAME = os.path.realpath('.')
 FOLDER_PATH = r'public/data/cards'
 FILE_PATH = FOLDER_PATH + r'/competitiveCards.json'
 HOME_OVERVIEW_PATH = r'public/data/home_overview.json'
-LAST_SET = ["Wilds of Eldraine", "Wilds of Eldraine Commander"] # [base set, commander decks]
+LAST_SET = ["The Lost Caverns of Ixalan", "Lost Caverns of Ixalan Commander"] # [base set, commander decks]
 
 home_overview = {}
 
