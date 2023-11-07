@@ -7,6 +7,7 @@
 - Feat: Añadir tracking de eventos (como uso de botones y filtros)
 - Feat: crear submenu de db y metagame que contenga analysis y cards.
 - Feat: Añadir análisis de db
+- Feat: Usar Geist font
 
 - Data: Cargar torneos chilenos faltantes
 - Data: Filtrar tags para dejar solo los útiles
@@ -36,7 +37,7 @@
 - Añadir fecha de ultimo deck a comandantes
 - Añadir fecha a decklists de comandantes
 - Mejorar página de carta
-- Agregar source y estrategia a metagame
+- Agregar source y estrategia a metagame (añadir un Geist success tooltip clickeable con un icono de información)
 - Añadir flag de si carta está en las cartas de la db en metagame cards y by_commander (ojo con by_commander de tomar en cuenta al commander)
 - Añadir cantidad de cartas que están en metagame pero no en la db
 - Añadir herramienta de selector de número en página de Talion
@@ -44,10 +45,13 @@
 
 ## Tournaments V2
 
-- Perf: Paginar torneos y añadir buscador (pasarlo a tabla)
-- Feat: Hacer análisis de metagame para torneos
-- Feat: Añadir disclaimer de que si se actualizaron las listas posterior al torneo, puede haber variaciones
-- Feat: Automatizar lista de torneos en base a edhtop16 (solo torneos de >64)
+- Feat: Añadir disclaimer de que si se actualizaron las listas posterior al torneo, puede haber variaciones (añadir un Geist success tooltip clickeable con un icono de información)
+- Añadir opción de re-procesar torneo si descargar y no solo saltar el torneo por completo
+
+## Update Next 14
+
+- Fix errores y primer render
+- Verificar que nada más esté roto
 
 ## FIX
 
