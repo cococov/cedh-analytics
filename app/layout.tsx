@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Roboto } from 'next/font/google';
 import Script from 'next/script';
 /* Vendor */
@@ -18,6 +18,10 @@ import styles from '../styles/Home.module.css';
 config.autoAddCss = false;
 library.add(fab);
 
+export const viewport: Viewport = {
+  themeColor: 'white',
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.cedh-analytics.com'),
   title: {
@@ -27,7 +31,6 @@ export const metadata: Metadata = {
   description: descriptionMetadata,
   openGraph: openGraphMetadata,
   twitter: twitterMetadata,
-  themeColor: 'white',
   keywords: [
     'cedh', 'cEDH', 'Magic', 'Gathering', 'metagame', 'cedh-decklist-database',
     'MagicTheGathering', 'magicthegathering', 'cedhdb',

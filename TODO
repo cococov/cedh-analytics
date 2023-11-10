@@ -49,12 +49,10 @@
 - Feat: Añadir disclaimer de que si se actualizaron las listas posterior al torneo, puede haber variaciones (añadir un Geist success tooltip clickeable con un icono de información)
 - Añadir opción de re-procesar torneo si descargar y no solo saltar el torneo por completo
 
-## Update Next 14
-
-- Fix errores y primer render
-- Verificar que nada más esté roto
-
 ## FIX
 
 - No deformar elementos al cargar data de tablas (usar grid en vez de flex)
 - Quitar scroll horizontal innecesario de tablas de metagame por commander
+- Redondear a 3 decimales el avg draw rate de comandantes, decklists y cartas
+- Redondear a 3 decimales el win rate de decklists
+- fix valid decklists de tournaments
