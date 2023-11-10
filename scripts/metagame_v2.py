@@ -182,9 +182,9 @@ for tournament in list_of_tournaments_to_process:
   tournament_obj: edhtop16_t.Tournament = tournaments[[x['name'] for x in tournaments].index(tournament)] # Obtenemos el objeto del torneo para actualizar
 
   tournament_decklists_by_hash = {}
-  is_cached = files.file_exists(f"{METAGAME_PATH}/tournaments/{tournament}", 'decklists.t.json')
-  if (not FORCE_UPDATE) and is_cached: # TODO: fix bug que persiste la data del hash en cada iteración al leer el archivo
-    tournament_decklists_by_hash = files.read_json_file(f"{METAGAME_PATH}/tournaments/{tournament}", 'decklists.t.json')
+  #is_cached = files.file_exists(f"{METAGAME_PATH}/tournaments/{tournament}", 'decklists.t.json')
+  #if (not FORCE_UPDATE) and is_cached: # TODO: fix bug que persiste la data del hash en cada iteración al leer el archivo
+  #  tournament_decklists_by_hash = files.read_json_file(f"{METAGAME_PATH}/tournaments/{tournament}", 'decklists.t.json')
 
   tournament_raw_lists = []
   tournament_commanders = []
@@ -193,8 +193,8 @@ for tournament in list_of_tournaments_to_process:
   tournament_cant_decklists_by_hash = {}
   has_changes = False
   cant_bad_decklists = 0
-  if tournament_obj['processed'] and is_cached:
-    continue
+  #if tournament_obj['processed'] and is_cached:
+  #  continue
   for hash in all_decklist_hashes_by_tournament[tournament]:
     found = False
     # Primero verificamos si ya tenemos la lista guardad en nuestro cache del torneo
@@ -290,6 +290,7 @@ for tournament in list_of_tournaments_to_process:
     # No guardamos los stats by commander porque es mucha data que no entrega mucho valor enfocada en un torneo
     #files.create_new_file('', f"{METAGAME_PATH}/tournaments/{tournament}", 'stats_by_commander.json', tournament_stats_by_commander, with_log=False)
     # Actualizamos el torneo como procesado
+    print(len(tournament_full_decklists))
     tournaments.append({**tournament_obj, 'validLists': len(tournament_full_decklists), 'processed': True })
 # FIN iteración de torneos
 logs.end_log_block('Tournaments processed!')

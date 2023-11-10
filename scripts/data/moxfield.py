@@ -3,8 +3,10 @@ import time
 import requests
 import utils.logs as logs
 from typing import Union
+import utils.misc as misc
 
 VALID_DECKS = 0
+HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36'}
 decklists_data_obtained_number = 0
 
 def get_decklists_from_bookmark(id: str) -> dict[str, Union[int, list[dict]]]:
@@ -19,7 +21,8 @@ def get_decklists_data(hash: str, version=3, no_log=False):
   try:
     global decklists_data_obtained_number, VALID_DECKS
     time.sleep(2)
-    raw_data = requests.get(f"https://api.moxfield.com/v{version}/decks/all/{hash}")
+    raw_data = requests.get(f"https://api.moxfield.com/v{version}/decks/all/{hash}", headers=HEADERS)
+    if raw_data.status_code == 403: misc.error_and_close(f"[Version {version}] Error getting decklist data for {hash} (403)")
     time.sleep(2)
     data = json.loads(raw_data.text)
     data['url'] = f"https://www.moxfield.com/decks/{hash}"

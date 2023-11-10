@@ -323,3 +323,4 @@ class DecklistV3(typing.TypedDict):
   colorIdentityPercentages: dict[str, float]
   media: list
   url: str
+  status: typing.Optional[int]
