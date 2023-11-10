@@ -13,6 +13,19 @@ module.exports = withPWA({
   swcMinify: true,
   images: {
     minimumCacheTTL: 60 * 60 * 24, // 1 day
-    domains: ['c1.scryfall.com', 'cards.scryfall.io', 'storage.ko-fi.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'c1.scryfall.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cards.scryfall.io',
+      },
+      {
+        protocol: 'https',
+        hostname: 'storage.ko-fi.com',
+      },
+    ]
   }
 });
