@@ -58,4 +58,3 @@
 - Redondear a 3 decimales el avg draw rate de comandantes, decklists y cartas
 - Redondear a 3 decimales el win rate de decklists
 - fix valid decklists de tournaments
-- El nombre del torneo en la metadata de la pagina del metagame de un torneo esta mal interpolado
