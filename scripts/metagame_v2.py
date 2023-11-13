@@ -19,7 +19,7 @@ DIRNAME = os.path.realpath('.')
 BASE_PATH = r'./public/data'
 METAGAME_PATH = rf'{BASE_PATH}/metagame'
 FORCE_UPDATE = False
-LAST_SET = ["Wilds of Eldraine", "Wilds of Eldraine Commander"] # [base set, commander decks]
+LAST_SET = ["The Lost Caverns of Ixalan", "Lost Caverns of Ixalan Commander"] # [base set, commander decks]
 
 logs.simple_log('Beginning')
 
@@ -182,9 +182,9 @@ for tournament in list_of_tournaments_to_process:
   tournament_obj: edhtop16_t.Tournament = tournaments[[x['name'] for x in tournaments].index(tournament)] # Obtenemos el objeto del torneo para actualizar
 
   tournament_decklists_by_hash = {}
-  #is_cached = files.file_exists(f"{METAGAME_PATH}/tournaments/{tournament}", 'decklists.t.json')
-  #if (not FORCE_UPDATE) and is_cached: # TODO: fix bug que persiste la data del hash en cada iteración al leer el archivo
-  #  tournament_decklists_by_hash = files.read_json_file(f"{METAGAME_PATH}/tournaments/{tournament}", 'decklists.t.json')
+  is_cached = files.file_exists(f"{METAGAME_PATH}/tournaments/{tournament}", 'decklists.t.json')
+  if (not FORCE_UPDATE) and is_cached: # TODO: fix bug que persiste la data del hash en cada iteración al leer el archivo
+    tournament_decklists_by_hash = files.read_json_file(f"{METAGAME_PATH}/tournaments/{tournament}", 'decklists.t.json')
 
   tournament_raw_lists = []
   tournament_commanders = []
@@ -193,8 +193,8 @@ for tournament in list_of_tournaments_to_process:
   tournament_cant_decklists_by_hash = {}
   has_changes = False
   cant_bad_decklists = 0
-  #if tournament_obj['processed'] and is_cached:
-  #  continue
+  if tournament_obj['processed']:
+    continue
   for hash in all_decklist_hashes_by_tournament[tournament]:
     found = False
     # Primero verificamos si ya tenemos la lista guardad en nuestro cache del torneo
