@@ -46,6 +46,8 @@
 
 ## Tournaments V2
 
+- Feat: Añadir last set a torneos
+- Feat: Añadir date a torneos
 - Feat: Añadir disclaimer de que si se actualizaron las listas posterior al torneo, puede haber variaciones (añadir un Geist success tooltip clickeable con un icono de información)
 - Añadir opción de re-procesar torneo si descargar y no solo saltar el torneo por completo
 
@@ -56,3 +58,4 @@
 - Redondear a 3 decimales el avg draw rate de comandantes, decklists y cartas
 - Redondear a 3 decimales el win rate de decklists
 - fix valid decklists de tournaments
+- El nombre del torneo en la metadata de la pagina del metagame de un torneo esta mal interpolado
