@@ -28,7 +28,7 @@ export async function generateMetadata({
     description: `${tournamentName} | ${descriptionMetadata}`,
     openGraph: {
       ...openGraphMetadata,
-      title: '${tournamentName}  | cEDH Analytics',
+      title: `${tournamentName}  | cEDH Analytics`,
       images: [
         {
           url: '/images/spike.jpg',
