@@ -39,6 +39,8 @@ def build_get_last_set_for_card(cards_csv, sets_csv):
         return 'Transformers'
       if 'SLX' in card_printing_codes:
         return 'Universes Within'
+      if 'REX' in card_printing_codes:
+        return 'Jurassic World Collection'
       card_printing_names = sets_csv.loc[sets_csv['keyruneCode'].isin(card_printing_codes)]['name']
       return card_printing_names.iloc[0]
     except:

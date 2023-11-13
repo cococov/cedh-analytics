@@ -15,7 +15,7 @@ def pet_cards_number(data):
   return len(list(filter(lambda d: d['occurrences'] == 1, data)))
 
 def last_set_top_10(data, last_set):
-  return list(sorted(map(lambda x: {'occurrences': x['occurrences'], 'cardName': x['cardName']}, filter(lambda d: (not d['multiplePrintings']) and ((d['lastPrint'] == last_set[0]) or (d['lastPrint'] == last_set[1])), data)), key=lambda d: d['occurrences'], reverse=True))[0:10] # type: ignore
+  return list(sorted(map(lambda x: {'occurrences': x['occurrences'], 'cardName': x['cardName']}, filter(lambda d: (not d['multiplePrintings']) and ((d['lastPrint'] == last_set[0]) or (d['lastPrint'] == last_set[1]) or (len(d) == 3 and d['lastPrint'] == last_set[2])), data)), key=lambda d: d['occurrences'], reverse=True))[0:10] # type: ignore
 
 def get_cards_winrate(cards, raw_lists):
   result = []
