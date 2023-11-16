@@ -47,6 +47,7 @@
 ## Tournaments V2
 
 - Feat: Añadir last set a torneos
+- Feat: Añadir número de listas procesadas
 - Feat: Añadir date a torneos
 - Feat: Añadir disclaimer de que si se actualizaron las listas posterior al torneo, puede haber variaciones (añadir un Geist success tooltip clickeable con un icono de información)
 - Añadir opción de re-procesar torneo si descargar y no solo saltar el torneo por completo
@@ -59,3 +60,4 @@
 - Redondear a 3 decimales el win rate de decklists (Fix en generator de pdf y csv)
 - fix valid decklists de tournaments
 - Cartas como beseech the mirror y talion, o no tienen decklists o tienen pocas decklists en metagame
+- El caching de decklists actualmente solo es en base al hash, debería ser hash y fecha, para capturar el caso que en distintos torneos se use la misma decklist, pero actualizada
