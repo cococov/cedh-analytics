@@ -32,7 +32,12 @@
 }
 
 .cardsTable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex: 3;
+  min-width: 58dvw;
+  min-height: 60dvh;
 }
 
 @media (min-width: 857px) {

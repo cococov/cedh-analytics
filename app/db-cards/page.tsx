@@ -5,10 +5,6 @@ import { CardsTableWithProvider, CardInfoWithProvider, DeckListsWithProvider } f
 import DbCardsContext, { DbCardsProvider } from '../../contexts/dbCardsStore';
 /* Static */
 import styles from '../../styles/CardsList.module.css';
-import DATA from '../../public/data/cards/competitiveCards.json';
-import TAGS_BY_CARD from '../../public/data/cards/tags.json';
-
-type CardProps = any; // TODO: define type
 
 export const metadata: Metadata = {
   title: 'DB Cards',
@@ -36,26 +32,17 @@ export const metadata: Metadata = {
   },
 };
 
-const fetchData = async () => {
-  return {
-    cards: DATA as CardProps[],
-    tagsByCard: TAGS_BY_CARD,
-  };
-};
-
 export default async function Cards() {
-  const { cards, tagsByCard } = await fetchData();
   return (
     <main className={styles.main}>
-      <DbCardsProvider cards={cards}>
+      <DbCardsProvider>
         <span className={styles.leftSpan}>
           <DeckListsWithProvider size="medium" context={DbCardsContext} />
         </span>
         <span className={styles.commandersContainer}>
           <CardsTableWithProvider
             title="DB Cards"
-            cards={cards}
-            tagsByCard={tagsByCard}
+            table="db_cards"
             context={DbCardsContext}
             cardUrlBase="/db-cards"
           />

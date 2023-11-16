@@ -5,6 +5,7 @@ import { createContext, useState, useReducer, useEffect, useRef } from 'react';
 import { replace } from 'ramda';
 /* Own */
 import fetchCards from '../utils/fetch/cardData';
+import getDecklistsForCardByContext from './utils/getDecklistsForCardByContext';
 
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[];
 type Commander = { name: string, color_identity: ColorIdentity };
@@ -57,10 +58,8 @@ const DbCardsContext = createContext(DEFAULT_VALUES);
  * dbCards Provider
  */
 export function DbCardsProvider({
-  cards,
   children,
 }: {
-  cards: any[],
   children: React.ReactNode,
 }) {
   const selectedCardRef = useRef<string>('');
@@ -79,20 +78,25 @@ export function DbCardsProvider({
     isReservedList: false,
     isDoubleFace: false,
   });
-  const toggleLoadingDecklistsTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const handleChangeCard = async (cardName: string | undefined) => {
     if (selectedCardRef.current === cardName) return;
     toggleLoadingDecklists(true);
     toggleIsLoadingCard(true);
-    toggleLoadingDecklistsTimeoutRef.current = setTimeout(() => { toggleLoadingDecklists(false) }, 300);
     setSelectedCard(cardName || '');
     selectedCardRef.current = cardName || '';
-    const card = cards.find((current: any) => current['cardName'] === cardName);
-    const decklists: DeckListsByCommander[] = card?.decklists || [];
-    setOccurrencesForCard({ occurrences: card?.occurrences, percentage: card?.percentageOfUse });
-    setDecklists(decklists);
   };
+
+  useEffect(() => {
+    const updateDecklists = async () => {
+      const cardDataFetched = await getDecklistsForCardByContext(selectedCard, 'db_cards');
+      setOccurrencesForCard({ occurrences: cardDataFetched?.occurrences, percentage: cardDataFetched?.percentage });
+      setDecklists(cardDataFetched.decklists);
+      toggleLoadingDecklists(false);
+    };
+
+    !!selectedCard && updateDecklists();
+  }, [selectedCard]);
 
   useEffect(() => {
     const requestData = async () => {
@@ -109,8 +113,6 @@ export function DbCardsProvider({
         isDoubleFace: result['isDoubleFace'],
       });
       toggleIsLoadingCard(false);
-      toggleLoadingDecklists(false);
-      clearTimeout(toggleLoadingDecklistsTimeoutRef.current);
     };
 
     !!selectedCard && requestData();

@@ -1,17 +1,19 @@
 "use client";
 
-import { useState, useEffect, useCallback, useContext } from 'react';
+import { useState, useEffect, useCallback, useContext, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 /* Vendor */
-import { replace, findIndex } from 'ramda';
+import { replace, findIndex, set } from 'ramda';
 import { MaterialReadMoreIcon } from '../vendor/materialIcon';
 import { MaterialChip } from '../vendor/materialUi';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
+import TextField from '@mui/material/TextField';
+import { CircularProgress } from "@nextui-org/react";
 /* Own */
 import Table from '../table';
-import Loading from '../loading';
 import AppContext from '../../contexts/appStore';
+import getCards from './getCards';
 /* Static */
 import styles from '../../styles/CardsList.module.css';
 import B from '../../public/images/B.png';
@@ -27,19 +29,19 @@ type CardProps = any; // TODO: define type
 
 export default function CardsTable({
   title,
-  cards,
-  tagsByCard,
   handleChangeCard,
   cardUrlBase,
   fromMetagame,
+  table,
+  cards,
   noInfo,
 }: {
   title?: string,
-  cards: CardProps[],
-  tagsByCard: { [key: string]: string[] },
   handleChangeCard?: (cardName: string | undefined) => void,
   cardUrlBase: string,
   fromMetagame?: boolean,
+  table?: 'metagame_cards' | 'db_cards',
+  cards?: CardProps[],
   noInfo?: boolean,
 }) {
   const router = useRouter();
@@ -49,11 +51,11 @@ export default function CardsTable({
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [renderKey, setRenderKey] = useState(`render-${Math.random()}`);
-  const [cardsWithTags, setCardsWithTags] = useState<CardProps[]>([]);
+  const texInputChangeRef = useRef<any>(null);
   const [columns, setColumns] = useState([
     {
       title: 'Name',
-      field: 'cardName',
+      field: 'card_name',
       grouping: false,
       filtering: false,
       editable: 'never',
@@ -98,7 +100,7 @@ export default function CardsTable({
     },
     {
       title: 'Identity',
-      field: 'colorIdentity',
+      field: 'color_identity',
       align: 'center',
       grouping: false,
       filtering: true,
@@ -143,13 +145,13 @@ export default function CardsTable({
         minWidth: '5rem'
       },
       render: function Identity(rowData: any, type: any) {
-        const value = type === 'row' ? rowData.colorIdentity : rowData;
+        const value = type === 'row' ? rowData.color_identity : rowData;
         return type === 'row' ? (
           <span>
             {
               value
-                .split('')
-                .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image key={icon} src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
+                ?.split('')
+                ?.map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image key={icon} src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
             }
           </span>
         ) : value;
@@ -252,7 +254,7 @@ export default function CardsTable({
     },
     {
       title: 'Last Print',
-      field: 'lastPrint',
+      field: 'last_print',
       align: 'center',
       grouping: false,
       filtering: true,
@@ -263,10 +265,24 @@ export default function CardsTable({
       cellStyle: {
         minWidth: '13rem'
       },
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <TextField
+          variant="standard"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            if (Boolean(texInputChangeRef.current)) {
+              clearTimeout(texInputChangeRef.current);
+            }
+            texInputChangeRef.current = setTimeout(() => {
+              onFilterChanged(columnDef.tableData.id, e.target.value);
+            }, 500); // 500ms delay before filtering
+          }}
+        />
+      ),
     },
     {
       title: 'Multiple Printings',
-      field: 'multiplePrintings',
+      field: 'multiple_printings',
       align: 'center',
       grouping: false,
       filtering: true,
@@ -294,7 +310,7 @@ export default function CardsTable({
     },
     {
       title: 'in 99',
-      field: 'isIn99',
+      field: 'is_in_99',
       align: 'center',
       grouping: false,
       filtering: true,
@@ -308,7 +324,7 @@ export default function CardsTable({
     },
     {
       title: 'Commander',
-      field: 'isCommander',
+      field: 'is_commander',
       align: 'center',
       grouping: false,
       filtering: true,
@@ -322,7 +338,7 @@ export default function CardsTable({
     },
     {
       title: '% of Use',
-      field: 'percentageOfUse',
+      field: 'percentage_of_use',
       align: 'center',
       grouping: false,
       filtering: false,
@@ -330,13 +346,13 @@ export default function CardsTable({
       hidden: true,
       searchable: false,
       render: function PercentageOfUse(rowData: any, type: any) {
-        const value = type === 'row' ? rowData.percentageOfUse : rowData;
+        const value = type === 'row' ? rowData.percentage_of_use : rowData;
         return type === 'row' ? (<span>{value}%</span>) : value;
       },
     },
     {
       title: '% of Use in identity',
-      field: 'percentageOfUseByIdentity',
+      field: 'percentage_of_use_by_identity',
       align: 'center',
       grouping: false,
       filtering: false,
@@ -344,7 +360,7 @@ export default function CardsTable({
       hidden: true,
       searchable: false,
       render: function PercentageOfUseByIdentity(rowData: any, type: any) {
-        const value = type === 'row' ? rowData.percentageOfUseByIdentity : rowData;
+        const value = type === 'row' ? rowData.percentage_of_use_by_identity : rowData;
         return type === 'row' ? (<span>{value}%</span>) : value;
       },
     },
@@ -362,7 +378,11 @@ export default function CardsTable({
         minWidth: '13rem'
       },
       render: function Tags(rowData: any, type: any) {
-        const value = type === 'row' ? rowData.tags : rowData;
+        const value = type === 'row'
+          ? typeof rowData.tags === 'string'
+            ? JSON.parse(rowData.tags)
+            : rowData.tags
+          : rowData;
         return type === 'row' ? (
           <span className={styles.cardTagsWrapper}>
             {
@@ -371,20 +391,28 @@ export default function CardsTable({
           </span>
         ) : value;
       },
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <TextField
+          variant="standard"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            if (Boolean(texInputChangeRef.current)) {
+              clearTimeout(texInputChangeRef.current);
+            }
+            texInputChangeRef.current = setTimeout(() => {
+              onFilterChanged(columnDef.tableData.id, e.target.value);
+            }, 500); // 500ms delay before filtering
+          }}
+        />
+      ),
     },
   ]);
-
-  useEffect(() => {
-    setCardsWithTags(cards.map((card: any) => {
-      return { ...card, tags: tagsByCard[card.cardName] || [] };
-    }));
-  }, []);
 
   useEffect(() => {
     if (isSmallScreen) {
       setColumns((previous: any) => {
         return previous.map((current: any) => {
-          if (current.field !== 'cardName' && current.field !== 'occurrences') {
+          if (current.field !== 'card_name' && current.field !== 'occurrences') {
             return { ...current, hidden: true };
           }
           return current;
@@ -394,11 +422,11 @@ export default function CardsTable({
       setColumns((previous: any) => {
         return previous.map((current: any) => {
           if (
-            current.field === 'cardName' ||
+            current.field === 'card_name' ||
             current.field === 'occurrences' ||
             current.field === 'type' ||
-            current.field === 'colorIdentity' ||
-            current.field === 'lastPrint'
+            current.field === 'color_identity' ||
+            current.field === 'last_print'
           ) {
             return { ...current, hidden: false };
           }
@@ -411,15 +439,15 @@ export default function CardsTable({
 
   useEffect(() => {
     if (!fromMetagame) return;
-    if (findIndex(x => x.field === 'avgWinRate', columns) !== -1) return;
+    if (findIndex(x => x.field === 'avg_win_rate', columns) !== -1) return;
 
     setColumns((previous) => {
-      if (findIndex(x => x.field === 'avgWinRate', previous) !== -1) return previous;
+      if (findIndex(x => x.field === 'avg_win_rate', previous) !== -1) return previous;
       return [
         ...previous,
         {
           title: 'Avg. Winrate',
-          field: 'avgWinRate',
+          field: 'avg_win_rate',
           align: 'center',
           grouping: false,
           filtering: false,
@@ -427,13 +455,13 @@ export default function CardsTable({
           hidden: true,
           searchable: false,
           render: function PercentageOfUse(rowData: any, type: any) {
-            const value = type === 'row' ? rowData.avgWinRate : rowData;
+            const value = type === 'row' ? parseFloat(rowData.avg_win_rate) : rowData;
             return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
           },
         },
         {
           title: 'Avg. Drawrate',
-          field: 'avgDrawRate',
+          field: 'avg_draw_rate',
           align: 'center',
           grouping: false,
           filtering: false,
@@ -441,7 +469,7 @@ export default function CardsTable({
           hidden: true,
           searchable: false,
           render: function PercentageOfUse(rowData: any, type: any) {
-            const value = type === 'row' ? rowData.avgDrawRate : rowData;
+            const value = type === 'row' ? parseFloat(rowData.avg_draw_rate) : rowData;
             return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
           },
         },
@@ -460,22 +488,43 @@ export default function CardsTable({
   const handleClickRow = useCallback((_e: any, rowData: any = {}) => {
     if (isSmallScreen || isMediumScreen) {
       toggleLoading(true);
-      router.push(`${cardUrlBase}/${replace(/\//g, '%2F', rowData['cardName'])}`);
+      router.push(`${cardUrlBase}/${replace(/\//g, '%2F', rowData['card_name'])}`);
     } else {
       if (handleChangeCard !== undefined) {
-        handleChangeCard(rowData['cardName']);
+        handleChangeCard(rowData['card_name']);
       }
     }
   }, [isSmallScreen, isMediumScreen]);
 
-  if (!isLoaded) return <Loading />;
+  if (!isLoaded) return (
+    <span className={styles.cardsTable}>
+      <CircularProgress size="lg" color="secondary" aria-label="Loading..." label="Loading..." />
+    </span>
+  );
 
   return (
     <span className={styles.cardsTable}>
       <Table
         key={renderKey}
         columns={columns}
-        data={cardsWithTags}
+        // @ts-ignore
+        data={
+          Boolean(cards)
+            ? cards
+            : query => getCards(
+              table || 'metagame_cards',
+              query.page,
+              query.pageSize,
+              query.orderBy,
+              query.orderDirection,
+              query.search,
+              query?.filters?.map((q: any) => ({
+                column: q.column.field,
+                operator: q.operator,
+                value: q.value,
+              })) || [],
+            )
+        }
         defaultNumberOfRows={(isLargeVerticalScreen || isSmallScreen) ? 10 : 5}
         isLoading={false}
         isDraggable={false}
@@ -492,7 +541,7 @@ export default function CardsTable({
             tooltip: 'Go to Card Page',
             onClick: (_event, rowData: any = {}) => {
               toggleLoading(true);
-              router.push(`${cardUrlBase}/${replace(/\//g, '%2F', rowData['cardName'])}`);
+              router.push(`${cardUrlBase}/${replace(/\//g, '%2F', rowData['card_name'])}`);
             }
           }
         ]}

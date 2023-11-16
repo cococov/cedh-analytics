@@ -10,30 +10,31 @@ interface Context {
 
 export default function CardsTableWithProvider({
   title,
-  cards,
-  tagsByCard,
+  table,
   context,
   cardUrlBase,
   fromMetagame,
+  cards,
   noInfo,
 }: {
   title?: string,
-  cards: any[],
-  tagsByCard: { [key: string]: string[] },
+  table?: 'metagame_cards' | 'db_cards',
   context: any,
   cardUrlBase: string,
   fromMetagame?: boolean,
+  cards?: any[],
   noInfo?: boolean,
 }) {
   const { handleChangeCard } = useContext<Context>(context);
+
   return (
     <CardsTable
       title={title || "DB Cards"}
-      cards={cards}
-      tagsByCard={tagsByCard}
+      table={table}
       handleChangeCard={handleChangeCard}
       cardUrlBase={cardUrlBase}
       fromMetagame={fromMetagame}
+      cards={cards}
       noInfo={noInfo}
     />
   );
