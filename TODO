@@ -59,4 +59,3 @@
 - Redondear a 3 decimales el win rate de decklists (Fix en generator de pdf y csv)
 - fix valid decklists de tournaments
 - Cartas como beseech the mirror y talion, o no tienen decklists o tienen pocas decklists en metagame
-- El caching de decklists actualmente solo es en base al hash, debería ser hash y fecha, para capturar el caso que en distintos torneos se use la misma decklist, pero actualizada
