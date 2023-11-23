@@ -1,6 +1,6 @@
 import Image from 'next/image';
-/* Own */
-import Loading from '../loading';
+/* Vendor */
+import { CircularProgress } from '@nextui-org/react';
 /* Static */
 import styles from '../../styles/DeckLists.module.css';
 import B from '../../public/images/B.png';
@@ -54,7 +54,11 @@ export default function DeckLists({
         )}
       </span>
       <span className={`${styles.content} ${styles[`content${size.charAt(0).toUpperCase() + size.slice(1)}`]}`}>
-        {isLoading ? <Loading /> : (
+        {isLoading ? (
+          <span className={styles.cardTextContainerLoading}>
+            <CircularProgress size="lg" color="secondary" aria-label="Loading..." />
+          </span>
+        ) : (
           (!!decklists && decklists?.length > 0) ? (
             decklists.map(({ commanders, decks, colorIdentity }) => (
               <details key={`${commanders}-details`}>

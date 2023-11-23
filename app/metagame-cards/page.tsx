@@ -1,10 +1,11 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
+/* Vendor */
+import { CircularProgress } from '@nextui-org/react';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
 import { AsyncCardsTable, CardInfoWithProvider, DeckListsWithProvider } from '../../components';
 import MetagameCardsContext, { MetagameCardsProvider } from '../../contexts/metagameCardsStore';
-import { CircularProgress } from '@nextui-org/react';
 /* Static */
 import styles from '../../styles/CardsList.module.css';
 

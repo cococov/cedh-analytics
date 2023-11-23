@@ -26,6 +26,7 @@ export default function DeckListsWithProvider({
   context: any,
 }) {
   const { occurrencesForCard, isLoadingDeckLists, decklists } = useContext<Context>(context);
+
   return (
     <DeckLists
       occurrencesForCard={occurrencesForCard}

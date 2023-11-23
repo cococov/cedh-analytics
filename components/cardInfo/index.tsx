@@ -2,8 +2,7 @@ import Image from 'next/image';
 /* Vendor */
 import { split } from 'ramda';
 import { MaterialTooltip } from '../vendor/materialUi';
-/* Own */
-import Loading from '../loading';
+import { CircularProgress } from '@nextui-org/react';
 /* Static */
 import styles from '../../styles/CardsList.module.css';
 import CardBack from '../../public/images/mtg-back.jpg';
@@ -49,7 +48,11 @@ export default function CardInfo({
           )}
         </span>
         {
-          isLoading ? (<span className={styles.cardTextContainerLoading}><Loading /></span>) : (
+          isLoading ? (
+            <span className={styles.cardTextContainerLoading}>
+              <CircularProgress size="lg" color="secondary" aria-label="Loading..." />
+            </span>
+          ) : (
             !!selectedCard ? (
               <span className={styles.cardTextContainer}>
                 <h2 className={styles.cardName}>{selectedCard || 'Card Name'}</h2>
