@@ -7,6 +7,12 @@ import { pdfExporter, csvExporter } from '../../utils/exporters';
 
 interface RowData { [key: string]: any };
 
+type RemoteRowData = (query: any) => Promise<{
+  data: RowData[],
+  page: number,
+  totalCount: number,
+}>;
+
 export default function Table({
   columns,
   data,
@@ -23,7 +29,7 @@ export default function Table({
   onRowClick,
 }: {
   columns: object[],
-  data: RowData[],
+  data: RowData[] | RemoteRowData,
   title: string,
   defaultNumberOfRows?: number,
   rowHeight?: string,
@@ -44,7 +50,7 @@ export default function Table({
   return (
     <MaterialTable
       columns={columns}
-      data={data}
+      data={data as any}
       title={<h1>{title}</h1>}
       actions={actions}
       isLoading={isLoading}
@@ -57,6 +63,7 @@ export default function Table({
           exportFunc: (cols, datas) => csvExporter(cols, datas, title)
         }],
         pageSize: defaultNumberOfRows,
+        pageSizeOptions: [5, 10, 20, 50, 100],
         draggable: isDraggable,
         grouping: withGrouping,
         exportAllData: canExportAllData,
@@ -71,6 +78,7 @@ export default function Table({
           fontWeight: 700,
         },
         columnsButton: true,
+        searchDebounceDelay: 1000, // 1 second of delay before searching
       }}
       onRowClick={onRowClick}
     />

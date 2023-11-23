@@ -5,6 +5,7 @@ import { createContext, useState, useReducer, useEffect, useRef } from 'react';
 import { replace } from 'ramda';
 /* Own */
 import fetchCards from '../utils/fetch/cardData';
+import getDecklistsForCardByContext from './utils/getDecklistsForCardByContext';
 
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[];
 type Commander = { name: string, color_identity: ColorIdentity };
@@ -57,14 +58,11 @@ const MetagameCardsContext = createContext(DEFAULT_VALUES);
  * metagameCards Provider
  */
 export function MetagameCardsProvider({
-  cardsURL,
   children,
 }: {
-  cardsURL: string,
   children: React.ReactNode,
 }) {
   const selectedCardRef = useRef<string>('');
-  const [cards, setCards] = useState<any[]>([]); // TODO: define type
   const [isLoadingDeckLists, toggleLoadingDecklists] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
   const [isLoadingCard, toggleIsLoadingCard] = useReducer((_state: boolean, newValue: boolean) => newValue, false);
   const [occurrencesForCard, setOccurrencesForCard] = useState<occurrencesForCard>(DEFAULT_VALUES.occurrencesForCard);
@@ -80,33 +78,21 @@ export function MetagameCardsProvider({
     isReservedList: false,
     isDoubleFace: false,
   });
-  const toggleLoadingDecklistsTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
-  useEffect(() => {
-    const requestData = async (url: string) => {
-      const raw_result = await fetch(url);
-      const result = await raw_result.json();
-      setCards(result);
-    };
-
-    requestData(cardsURL);
-  }, [cardsURL]);
 
   const handleChangeCard = async (cardName: string | undefined) => {
     if (selectedCardRef.current === cardName) return;
     toggleLoadingDecklists(true);
     toggleIsLoadingCard(true);
-    toggleLoadingDecklistsTimeoutRef.current = setTimeout(() => { toggleLoadingDecklists(false) }, 300);
     setSelectedCard(cardName || '');
     selectedCardRef.current = cardName || '';
   };
 
   useEffect(() => {
     const updateDecklists = async () => {
-      const card = cards.find((current: any) => current['cardName'] === selectedCard);
-      const decklists: DeckListsByCommander[] = card?.decklists || [];
-      setOccurrencesForCard({ occurrences: card?.occurrences, percentage: card?.percentageOfUse });
-      setDecklists(decklists);
+      const cardDataFetched = await getDecklistsForCardByContext(selectedCard, 'metagame_cards');
+      setOccurrencesForCard({ occurrences: cardDataFetched?.occurrences, percentage: cardDataFetched?.percentage });
+      setDecklists(cardDataFetched.decklists);
+      toggleLoadingDecklists(false);
     };
 
     !!selectedCard && updateDecklists();
@@ -127,8 +113,6 @@ export function MetagameCardsProvider({
         isDoubleFace: result['isDoubleFace'],
       });
       toggleIsLoadingCard(false);
-      toggleLoadingDecklists(false);
-      clearTimeout(toggleLoadingDecklistsTimeoutRef.current);
     };
 
     !!selectedCard && requestData();

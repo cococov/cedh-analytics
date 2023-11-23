@@ -280,7 +280,7 @@ export default async function Home() {
               Only tournaments with 52 or more players are considered.
             </li>
             <li>
-              Only decklists with at least 2 wins are considered. (For the metagame of a specific tournament, all decks are considered)
+              Only decklists with at least 1 win are considered. (For the metagame of a specific tournament, all decks are considered)
             </li>
             <li>
               Only the data from decklists on Moxfield is processed.

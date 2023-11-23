@@ -51,6 +51,12 @@
 - Feat: Añadir disclaimer de que si se actualizaron las listas posterior al torneo, puede haber variaciones (añadir un Geist success tooltip clickeable con un icono de información)
 - Añadir opción de re-procesar torneo si descargar y no solo saltar el torneo por completo
 
+## Normalización DB
+
+- Descargar tags antes de subir, para insertar solo la diferencia y no eliminar toda la tabla cada vez que se actualiza
+- Llevar decklists a otra tabla y referenciar esta con las cartas por medio de una tabla intermedia
+- LLevar torneos y commanders a la db
+
 ## FIX
 
 - No deformar elementos al cargar data de tablas (usar grid en vez de flex)
@@ -59,3 +65,6 @@
 - Redondear a 3 decimales el win rate de decklists (Fix en generator de pdf y csv)
 - fix valid decklists de tournaments
 - Cartas como beseech the mirror y talion, o no tienen decklists o tienen pocas decklists en metagame
+- El caching de decklists actualmente solo es en base al hash, debería ser hash y fecha, para capturar el caso que en distintos torneos se use la misma decklist, pero actualizada
+- Reducir el margen de la tabla de top 10 del home para que al tener menos width de pantalla no levante scroll horizontal
+- Reemplazar loadings viejos  (<Loading />) por el nuevo

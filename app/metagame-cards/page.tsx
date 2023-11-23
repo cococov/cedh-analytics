@@ -1,12 +1,13 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
+/* Vendor */
+import { CircularProgress } from '@nextui-org/react';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
-import { AsyncCardsTable, CardInfoWithProvider, DeckListsWithProvider, Loading } from '../../components';
+import { AsyncCardsTable, CardInfoWithProvider, DeckListsWithProvider } from '../../components';
 import MetagameCardsContext, { MetagameCardsProvider } from '../../contexts/metagameCardsStore';
 /* Static */
 import styles from '../../styles/CardsList.module.css';
-import { server } from '../../config';
 
 export const metadata: Metadata = {
   title: 'Metagame Cards',
@@ -37,15 +38,14 @@ export const metadata: Metadata = {
 export default async function MetagameCards() {
   return (
     <main className={styles.main}>
-      <MetagameCardsProvider cardsURL={'/data/metagame/metagame_cards.json'}>
+      <MetagameCardsProvider>
         <span className={styles.leftSpan}>
           <DeckListsWithProvider size="medium" context={MetagameCardsContext} />
         </span>
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={<CircularProgress size="lg" color="secondary" aria-label="Loading..." label="Loading..." />}>
           <AsyncCardsTable
             title="Metagame Cards"
-            cardsURL={`${server}/data/metagame/metagame_cards.json`}
-            tagsByCardURL={`${server}/data/cards/tags.json`}
+            table="metagame_cards"
             context={MetagameCardsContext}
             fromMetagame
           />

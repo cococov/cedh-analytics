@@ -93,7 +93,6 @@ def build_reduce_deck(has_multiple_printings, get_last_set_for_card):
       'multiplePrintings': bool(has_multiple_printings(current['card']['name'])),
       'lastPrint': get_last_set_for_card(current['card']['name']),
       'multiverse_ids': current['card']['multiverse_ids'] if 'multiverse_ids' in current['card'] else [0],
-      'scrapName': current['card']['name'],
       'type': getType(current['card']['type']),
       'typeLine': current['card']['type_line'] if 'type_line' in current['card'] else '',
       'power': current['card']['power'] if 'power' in current['card'] else '',

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Roboto } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
 import Script from 'next/script';
 /* Vendor */
 import { fab } from '@fortawesome/free-brands-svg-icons';
@@ -60,19 +60,11 @@ export const metadata: Metadata = {
   authors: [{ name: 'CoCoCov', url: 'https://www.moxfield.com/users/cococov' }],
 };
 
-const roboto = Roboto({
-  weight: ['300', '400', '500', '700'],
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--display-font',
-});
-
 export default function RootLayout({ children }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={roboto.className}>
+    <html lang="en" className={GeistSans.className}>
       <body>
         <Script
           id="gtag-init"
