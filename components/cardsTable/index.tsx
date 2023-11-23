@@ -497,7 +497,7 @@ export default function CardsTable({
   }, [isSmallScreen, isMediumScreen]);
 
   if (!isLoaded) return (
-    <span className={styles.cardsTable}>
+    <span className={styles.cardsTableLoading}>
       <CircularProgress size="lg" color="secondary" aria-label="Loading..." label="Loading..." />
     </span>
   );

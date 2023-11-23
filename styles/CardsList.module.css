@@ -40,10 +40,30 @@
   min-height: 60dvh;
 }
 
+.cardsTableLoading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 3;
+  min-width: 58dvw;
+  min-height: 60dvh;
+}
+
 @media (min-width: 857px) {
   .cardsTable {
     padding-left: 5rem;
     padding-right: 5rem;
+  }
+
+  .cardsTableLoading {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+}
+
+@media (max-width: 857px) {
+  .cardsTable {
+    justify-content: flex-start;
   }
 }
 
