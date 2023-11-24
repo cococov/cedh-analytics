@@ -122,7 +122,10 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
     data[commander]['worstStanding'] = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['standing'], filtered_data))
     def process_decklists(decklist: moxfield_t.DecklistV3) -> ProcessedDecklist | dict:
       process_decklist_data: ProcessedDecklist = {} # type: ignore
-      edh_top16_data = list(filter(lambda x: x['decklist'] ==  decklist['url'], filtered_data))[0]
+      edh_top16_data_list = list(filter(lambda x: x['decklist'] ==  decklist['url'], filtered_data))
+      if len(edh_top16_data_list) == 0:
+        return {}
+      edh_top16_data = edh_top16_data_list[0]
       process_decklist_data['url'] = decklist['url']
       process_decklist_data['name'] = decklist['name']
       process_decklist_data['hasPartners'] = decklist['boards']['commanders']['count'] > 1

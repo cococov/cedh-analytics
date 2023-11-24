@@ -1,6 +1,7 @@
 import json
 import time
 import requests
+import data.moxfield_t as moxfield_t
 import utils.logs as logs
 from typing import Union
 import utils.misc as misc
@@ -17,7 +18,7 @@ def get_decklists_from_bookmark(id: str) -> dict[str, Union[int, list[dict]]]:
 def get_decklist_hashes_from_bookmark(lists):
   return list(map(lambda x: x['deck']['publicId'], lists['data']))
 
-def get_decklists_data(hash: str, version=3, no_log=False):
+def get_decklists_data(hash: str, version=3, no_log=False) -> moxfield_t.DecklistV3:
   try:
     global decklists_data_obtained_number, VALID_DECKS
     time.sleep(2)
@@ -30,10 +31,12 @@ def get_decklists_data(hash: str, version=3, no_log=False):
     if not no_log:
       logs.loading_log("Getting decklists data", decklists_data_obtained_number, VALID_DECKS)
     return data
-  except json.decoder.JSONDecodeError:
+  except json.decoder.JSONDecodeError as e:
     logs.error_log(f"[Version {version}] Error getting decklist data for {hash} (JSONDecodeError)")
-    exit(1)
-
+    raise json.decoder.JSONDecodeError(e.msg, e.doc, e.pos)
+  except Exception as e:
+    logs.error_log(f"[Version {version}] Unknown error getting decklist data for {hash} ({e.__class__.__name__})")
+    raise Exception(e)
 
 def get_decklists_data_from_hashes(hashes):
   logs.begin_log_block('Getting decklists data')

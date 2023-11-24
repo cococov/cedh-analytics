@@ -48,6 +48,7 @@
 
 - Feat: Añadir last set a torneos
 - Feat: Añadir date a torneos
+- Feat: Añadir link al torneo en página del torneo
 - Feat: Añadir disclaimer de que si se actualizaron las listas posterior al torneo, puede haber variaciones (añadir un Geist success tooltip clickeable con un icono de información)
 - Añadir opción de re-procesar torneo si descargar y no solo saltar el torneo por completo
 

@@ -85,7 +85,12 @@ for commander in commanders:
         cant_decklists_by_hash[hash] = 1
       decklists_by_commander[commander].append(decklists_by_hash[hash])
     else:
-      decklist = moxfield.get_decklists_data(hash, version=3, no_log=True)
+      decklist: moxfield_t.DecklistV3 = {} # type: ignore
+      try:
+        decklist = moxfield.get_decklists_data(hash, version=3, no_log=True)
+      except Exception:
+        cant_hashes_requested += 1
+        continue
       if 'status' in list(decklist.keys()): # status in response usually means error 404
         cant_hashes_requested += 1
         continue
@@ -219,7 +224,12 @@ for tournament in list_of_tournaments_to_process:
           found = True
       # Si no la encontramos, vamos a buscarla a moxfield
       if not found:
-        decklist = moxfield.get_decklists_data(hash, version=3, no_log=True)
+        decklist: moxfield_t.DecklistV3 = {} # type: ignore
+        try:
+          decklist = moxfield.get_decklists_data(hash, version=3, no_log=True)
+        except Exception:
+          cant_bad_decklists += 1
+          continue
         if 'status' in list(decklist.keys()): # status in response usually means error 404
           cant_bad_decklists += 1
           continue

@@ -172,13 +172,12 @@ def update_tags_by_card():
 
   cursor = connection.cursor()
   cursor.execute('BEGIN')
-  cursor.execute('DELETE FROM tags_by_card')
-  cursor.executemany('INSERT INTO tags_by_card VALUES (%(card_name)s, %(tags)s)', tags_by_card_tuples)
+  cursor.executemany('INSERT INTO tags_by_card VALUES (%(card_name)s, %(tags)s) ON CONFLICT (card_name) DO NOTHING', tags_by_card_tuples)
   cursor.execute('COMMIT')
   cursor.close()
   close_connection(connection)
   logs.end_log_block('Tags by card updated!')
 
-#update_db_cards()
-#update_metagame_cards()
+update_db_cards()
+update_metagame_cards()
 update_tags_by_card()

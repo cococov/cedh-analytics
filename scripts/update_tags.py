@@ -23,7 +23,7 @@ WITH_LOGS = len(sys.argv) == 1 or not (len(sys.argv) > 1 and sys.argv[1] == 'Tru
 
 # Load db cards json
 if WITH_LOGS: logs.begin_log_block('Loading DB cards...')
-cards: list[str] = list(map(lambda x: x['scrapName'], files.read_json_file(CARDS_PATH, 'competitiveCards.json')))
+cards: list[str] = list(map(lambda x: x['cardName'], files.read_json_file(CARDS_PATH, 'competitiveCards.json')))
 if WITH_LOGS: logs.end_log_block('DB cards loaded!')
 
 # Load tournaments card json
@@ -33,16 +33,16 @@ tournaments: list[str] = files.folder_names_in_directory(TOURNAMENTS_PATH)
 for tournament in tournaments:
   tournament_cards: list[dict] | dict = files.read_json_file(rf'{TOURNAMENTS_PATH}/{tournament}', 'competitiveCards.json')
   for card in tournament_cards:
-    if card['scrapName'] not in cards:
-      cards.append(card['scrapName'])
+    if card['cardName'] not in cards:
+      cards.append(card['cardName'])
 if WITH_LOGS: logs.end_log_block('Tournament cards loaded!')
 
 # Load metagame cards json
 if WITH_LOGS: logs.begin_log_block('Loading metagame cards...')
 metagame_cards: list[dict] | dict = files.read_json_file(METAGAME_PATH, 'metagame_cards.json')
 for card in metagame_cards:
-  if card['scrapName'] not in cards:
-    cards.append(card['scrapName'])
+  if card['cardName'] not in cards:
+    cards.append(card['cardName'])
 if WITH_LOGS: logs.end_log_block('Metagame cards loaded!')
 
 # Load json
