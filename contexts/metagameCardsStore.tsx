@@ -5,7 +5,7 @@ import { createContext, useState, useReducer, useEffect, useRef } from 'react';
 import { replace } from 'ramda';
 /* Own */
 import fetchCards from '../utils/fetch/cardData';
-import getDecklistsForCardByContext from './utils/getDecklistsForCardByContext';
+import getDecklistsForCardByContext from '../utils/fetch/getDecklistsForCardByContext';
 
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[];
 type Commander = { name: string, color_identity: ColorIdentity };
