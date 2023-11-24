@@ -6,9 +6,9 @@ import { replace } from 'ramda';
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../../shared-metadata';
 import { CardInfoPage } from '../../../components';
 import fetchCards from '../../../utils/fetch/cardData';
+import getDecklistsForCardByContext from '../../../utils/fetch/getDecklistsForCardByContext';
 /* Static */
 import styles from '../../../styles/CardsList.module.css';
-import DATA from '../../../public/data/cards/competitiveCards.json';
 
 type occurrencesForCard = { occurrences: number, percentage: number };
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[];
@@ -100,9 +100,7 @@ async function fetchData({ cardName }: Params): Promise<ResponseData> {
 
     if (result.error) throw new Error('Fetch Error');
 
-    const card = (DATA as any[]).find((current: any) => current.cardName.toLowerCase() === (String(cardName)).toLowerCase());
-    const decklists: DeckListsByCommander[] = card?.decklists || [];
-    const occurrencesForCard = { occurrences: card?.occurrences || 0, percentage: card?.percentageOfUse || 0 };
+    const { occurrences, percentage, decklists } = await getDecklistsForCardByContext(String(cardName), 'db_cards');
 
     return {
       cardName: result.cardName,
@@ -117,7 +115,7 @@ async function fetchData({ cardName }: Params): Promise<ResponseData> {
       isReservedList: result.isReservedList,
       cardImage: result.cardImage,
       cardFaces: result.cardFaces,
-      occurrencesForCard: occurrencesForCard,
+      occurrencesForCard: { occurrences, percentage },
       decklists: decklists,
       notFound: false,
     };
