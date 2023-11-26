@@ -60,7 +60,7 @@ export default async function getCards(
   table: 'metagame_cards' | 'db_cards',
   page: number,
   pageSize: number,
-  orderBy?: { field: Columns },
+  orderBy?: Columns,
   orderDirection?: 'asc' | 'desc',
   search?: string,
   filters?: { column: Columns, operator: '=', value: string }[],
@@ -71,7 +71,7 @@ export default async function getCards(
     .selectFrom(table)
     .innerJoin('cards', `${table}.card_name`, 'cards.card_name')
     .innerJoin('tags_by_card', `${table}.card_name`, 'tags_by_card.card_name')
-    .orderBy(orderBy?.field || 'occurrences', orderDirection || 'desc')
+    .orderBy(orderBy || 'occurrences', orderDirection || 'desc')
     .limit(pageSize)
     .offset(page * pageSize);
 

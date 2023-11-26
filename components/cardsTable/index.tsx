@@ -515,7 +515,7 @@ export default function CardsTable({
               table || 'metagame_cards',
               query.page,
               query.pageSize,
-              query.orderBy,
+              query.orderBy?.field,
               query.orderDirection,
               query.search,
               query?.filters?.map((q: any) => ({
