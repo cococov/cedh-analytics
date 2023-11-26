@@ -45,6 +45,7 @@ export default async function Cards() {
             table="db_cards"
             context={DbCardsContext}
             cardUrlBase="/db-cards"
+            withUrlPArams
           />
         </span>
         <CardInfoWithProvider context={DbCardsContext} />

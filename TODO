@@ -1,5 +1,6 @@
 # TODO
 
+- Feat: Añadir correo para hacer reportes o sugerencias en about y pagina de error 500 y 404
 - Feat: Mejorar filtros de tabla de cartas (mayor igual, menor igual, contiene, etc...)
 - Feat: Usar query params para filtros y columnas visibles en tabla de cartas
 - Feat: Mostrar imagen de atrás de cartas doble cara
@@ -7,21 +8,18 @@
 - Feat: Añadir tracking de eventos (como uso de botones y filtros)
 - Feat: crear submenu de db y metagame que contenga analysis y cards.
 - Feat: Añadir análisis de db
-- Feat: Usar Geist font
+- Feat: Crear análisis oculto de torneos chilenos
+- Feat: Hacer custom sort en colors para que ordene de mono colors a 5 colors
+- Feat: Hacer custom sort para que power and toughness tire siempre los guiones para el final sin importar el sort direction
 
-- Data: Cargar torneos chilenos faltantes
 - Data: Filtrar tags para dejar solo los útiles
 - Data: Dejar de guardar data vieja de db cards
 - Data: Poner flag de update a scripts, para que no siempre se actualicen y así evitar comentar el update en pruebas
 
-- Perf: Pasar loading de magic full a css
+- Perf: Reemplazar usos de loading feo por nuevo loading
 - Perf: Optimizar imágenes para no depender de vercel en ello
 - Perf: Dejar de optimizar imágenes en info de carta desde vercel una vez sean optimas
-- Perf: Usar tabla asíncrona en cards y tournaments
-- Perf: En tablas asíncronas pedir el json solo una vez en vez de en la tabla y en el store
-- Perf: Cachear jsons de tablas
 
-- Arch: Actualizar material table
 - Arch: Usar alias para los imports (con @)
 - Arch: Instalar eslint y prettier (ejemplo de buena config: https://github.com/goncy/interview-challenges/blob/main/proyectos-live/migrado-libre/.eslintrc.cjs)
 
@@ -59,6 +57,17 @@
 - LLevar torneos y commanders a la db
 - Obtener last update de database y metagame desde la db
 
+## Mejorar filtros
+
+- Hacer PR que:
+  - Quita el ultimo hardcodeo de operador en `src/material-table.js:40`
+  - Modificar el typo en `types/index.d.ts:244`
+  - Añadir defaultFilterOperator en `src/utils/data-manager.js:139` (filterOperator: columnDef.defaultFilterOperator)
+  - Añadir defaultFilterOperator a types en `types/index.d.ts:226`
+  - Añadir defaultFilterOperator a propTypes en `src/prop-types.js:43`
+- Arch: Actualizar material table a la última versión
+- Añadir =, <, y > a columnas numéricas
+
 ## FIX
 
 - No deformar elementos al cargar data de tablas (usar grid en vez de flex)
@@ -70,3 +79,5 @@
 - El caching de decklists actualmente solo es en base al hash, debería ser hash y fecha, para capturar el caso que en distintos torneos se use la misma decklist, pero actualizada
 - Reducir el margen de la tabla de top 10 del home para que al tener menos width de pantalla no levante scroll horizontal
 - Reemplazar loadings viejos  (<Loading />) por el nuevo
+- Link a cartas con doble cara está roto
+- Fuerza u resistencia de criaturas doble cara esta rota

@@ -130,5 +130,5 @@ export default async function getCards(
   const cards = await cardsQuery.execute();
   const totalCount = (await totalCountQuery.execute())[0].total;
 
-  return { data: cards, page: page, totalCount: totalCount };
+  return { data: cards, page: page, totalCount: parseInt(`${totalCount}`) };
 };

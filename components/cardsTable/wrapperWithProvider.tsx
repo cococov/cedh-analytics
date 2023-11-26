@@ -16,6 +16,7 @@ export default function CardsTableWithProvider({
   fromMetagame,
   cards,
   noInfo,
+  withUrlPArams,
 }: {
   title?: string,
   table?: 'metagame_cards' | 'db_cards',
@@ -24,6 +25,7 @@ export default function CardsTableWithProvider({
   fromMetagame?: boolean,
   cards?: any[],
   noInfo?: boolean,
+  withUrlPArams?: boolean,
 }) {
   const { handleChangeCard } = useContext<Context>(context);
 
@@ -36,6 +38,7 @@ export default function CardsTableWithProvider({
       fromMetagame={fromMetagame}
       cards={cards}
       noInfo={noInfo}
+      withUrlPArams={withUrlPArams}
     />
   );
 };
