@@ -63,7 +63,7 @@ export default async function getCards(
   orderBy?: Columns,
   orderDirection?: 'asc' | 'desc',
   search?: string,
-  filters?: { column: Columns, operator: '=', value: string }[],
+  filters?: { column: Columns, operator: '=', value: string | string[] }[],
 ) {
   const db = createKysely<Database>();
 
@@ -101,6 +101,13 @@ export default async function getCards(
     } else if (filter.column === 'tags') {
       cardsQuery = cardsQuery.where(`tags_by_card.${filter.column}`, 'ilike', `%${filter.value}%`);
       totalCountQuery = totalCountQuery.where(`tags_by_card.${filter.column}`, 'ilike', `%${filter.value}%`);
+    } else if (Array.isArray(filter.value)) {
+      cardsQuery = cardsQuery.where(eb => eb.or(
+        (filter.value as string[]).map(value => eb(filter.column, 'like', `%${value}%`))
+      ))
+      totalCountQuery = totalCountQuery.where(eb => eb.or(
+        (filter.value as string[]).map(value => eb(filter.column, 'like', `%${value}%`))
+      ))
     } else {
       cardsQuery = cardsQuery.where(filter.column, filter.operator, filter.value);
       totalCountQuery = totalCountQuery.where(filter.column, filter.operator, filter.value);
