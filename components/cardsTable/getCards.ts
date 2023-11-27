@@ -102,6 +102,7 @@ export default async function getCards(
       cardsQuery = cardsQuery.where(`tags_by_card.${filter.column}`, 'ilike', `%${filter.value}%`);
       totalCountQuery = totalCountQuery.where(`tags_by_card.${filter.column}`, 'ilike', `%${filter.value}%`);
     } else if (Array.isArray(filter.value)) {
+      if (filter.value.length === 0) return;
       cardsQuery = cardsQuery.where(eb => eb.or(
         (filter.value as string[]).map(value => eb(filter.column, 'like', `%${value}%`))
       ))
