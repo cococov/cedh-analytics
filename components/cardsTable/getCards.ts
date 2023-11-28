@@ -90,8 +90,8 @@ export default async function getCards(
     .select((eb) => eb.fn.countAll().as('total'));
 
   if (Boolean(search)) {
-    cardsQuery = cardsQuery.where('card_name', 'ilike', `%${search}%`)
-    totalCountQuery = totalCountQuery.where('card_name', 'ilike', `%${search}%`)
+    cardsQuery = cardsQuery.where(`${table}.card_name`, 'ilike', `%${search}%`)
+    totalCountQuery = totalCountQuery.where(`${table}.card_name`, 'ilike', `%${search}%`)
   }
 
   filters?.forEach((filter) => {
