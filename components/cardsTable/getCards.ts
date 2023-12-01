@@ -101,13 +101,25 @@ export default async function getCards(
     } else if (filter.column === 'tags') {
       cardsQuery = cardsQuery.where(`tags_by_card.${filter.column}`, 'ilike', `%${filter.value}%`);
       totalCountQuery = totalCountQuery.where(`tags_by_card.${filter.column}`, 'ilike', `%${filter.value}%`);
-    } else if (Array.isArray(filter.value)) {
+    } else if (Array.isArray(filter.value)) { // Selects
       if (filter.value.length === 0) return;
       cardsQuery = cardsQuery.where(eb => eb.or(
-        (filter.value as string[]).map(value => eb(filter.column, 'like', `%${value}%`))
+        (filter.value as string[]).map(value => {
+          if (value === 'true' || value === 'false') { // Selects with booleans
+            return eb(filter.column, '=', value);
+          } else {
+            return eb(filter.column, 'like', `${value}`); // Selects with strings
+          }
+        })
       ))
       totalCountQuery = totalCountQuery.where(eb => eb.or(
-        (filter.value as string[]).map(value => eb(filter.column, 'like', `%${value}%`))
+        (filter.value as string[]).map(value => {
+          if (value === 'true' || value === 'false') { // Selects with booleans
+            return eb(filter.column, '=', value);
+          } else {
+            return eb(filter.column, 'like', `${value}`); // Selects with strings
+          }
+        })
       ))
     } else {
       cardsQuery = cardsQuery.where(filter.column, filter.operator, filter.value);
