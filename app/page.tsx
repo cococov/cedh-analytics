@@ -277,7 +277,7 @@ export default async function Home() {
               1 year of data is considered. (now - 1 year)
             </li>
             <li>
-              Only tournaments with 52 or more players are considered.
+              Only tournaments with 48 or more players are considered.
             </li>
             <li>
               Only decklists with at least 1 win are considered. (For the metagame of a specific tournament, all decks are considered)

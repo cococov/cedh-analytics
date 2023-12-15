@@ -26,7 +26,7 @@ def build_get_last_set_for_card(cards_csv, sets_csv):
   @lru_cache(maxsize=None)
   def get_last_set_for_card(card_name):
     try:
-      if card_name in ['Glenn, the Voice of Calm', 'Rick, Steadfast Leader', 'Daryl, Hunter of Walkers', 'Tadeas, Juniper Ascendant']:
+      if card_name in ['Glenn, the Voice of Calm', 'Rick, Steadfast Leader', 'Daryl, Hunter of Walkers', 'Tadeas, Juniper Ascendant', 'Holga, Relentless Rager']:
         return 'Secret Lair Drop'
       if card_name in ['Rot Hulk', 'Fiendish Duo', 'Goblin Goliath']:
         return 'Game Night'
