@@ -2,8 +2,6 @@
 
 import type { Metadata } from 'next';
 import Image from "next/image";
-/* Vendor */
-import { Button } from '../components/vendor/materialUi';
 /* Static */
 import MuddleTheMixture from '../public/images/muddle-the-mixture.jpg';
 
@@ -11,10 +9,8 @@ export const metadata: Metadata = { title: 'Error!' };
 
 export default function GlobalError({
   error,
-  reset,
 }: {
   error: Error & { digest?: string }
-  reset: () => void
 }) {
   return (
     <html>
@@ -56,9 +52,16 @@ export default function GlobalError({
           }}>
             <h1>Something went wrong!</h1>
             <p>{error?.digest}</p>
-            <Button variant="contained" color="primary" onClick={reset}>
-              Try Again
-            </Button>
+            <a
+              href="mailto:report@cedh-analytics.com"
+              style={{
+                color: '#422273',
+                fontWeight: 600,
+                paddingBottom: '2rem',
+              }}
+            >
+              report@cedh-analytics.com
+            </a>
           </span>
         </main>
       </body>

@@ -4,10 +4,8 @@ import Image from "next/image";
 import { ArrowRightIcon } from '../../components/vendor/materialIcon';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
-import { ButtonLink } from '../../components';
 /* Static */
 import styles from '../../styles/About.module.css';
-import utilsStyles from '../../styles/Utils.module.css';
 import CarefulStudy from '../../public/images/careful-study.jpeg';
 import B from '../../public/images/B.png';
 import G from '../../public/images/G.png';
@@ -228,17 +226,15 @@ export default async function About() {
             </tr>
           </tbody>
         </table>
+        <span className={styles.mailContainer}>
+          <h2>Contact Us</h2>
+          <a className={styles.mail} href="mailto:contact@cedh-analytics.com">contact@cedh-analytics.com</a>
+        </span>
         <section className={styles.aboutCopyright}>
           <p>
             © 2023 Carrot Compost
           </p>
         </section>
-        <ButtonLink variant="contained" color="primary" href="/">
-          <span className={utilsStyles.leftArrow}>
-            <ArrowRightIcon fontSize="small" />
-          </span>
-          Home
-        </ButtonLink>
       </span>
     </main>
   );

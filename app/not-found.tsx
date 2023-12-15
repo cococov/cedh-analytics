@@ -28,6 +28,7 @@ export default function NotFound() {
       <span className={styles.errorText}>
         <h1>404</h1>
         <h3>Page Not Found</h3>
+        <a className={styles.mail} href="mailto:report@cedh-analytics.com">report@cedh-analytics.com</a>
         <ButtonLink variant="contained" color="primary" href="/">
           <span className={utilsStyles.leftArrow}>
             <ArrowRightIcon fontSize="small" />
