@@ -39,10 +39,10 @@ logs.end_log_block('Processing all printing')
 
 # GET DATA FROM EDHTOP16
 logs.begin_log_block('Getting decklists from EDH Top 16')
-# Hacemos el corte en torneos con al menos 52 jugadores y solo tomamos en cuenta a jugadores con al menos 2 wins o la data crece mucho y queda sucia.
-raw_lists = edhtop16.get_metagame_top_decklists(min_wins=1, min_tournament_size=52)
-# Para los torneos tomamos en cuenta toda la data pero igual hacemos el corte en torneos con al menos 52 jugadores.
-all_raw_lists = edhtop16.get_metagame_top_decklists(min_wins=0, min_tournament_size=52)
+# Hacemos el corte en torneos con al menos 48 jugadores y solo tomamos en cuenta a jugadores con al menos 2 wins o la data crece mucho y queda sucia.
+raw_lists = edhtop16.get_metagame_top_decklists(min_wins=1, min_tournament_size=48)
+# Para los torneos tomamos en cuenta toda la data pero igual hacemos el corte en torneos con al menos 48 jugadores.
+all_raw_lists = edhtop16.get_metagame_top_decklists(min_wins=0, min_tournament_size=48)
 logs.end_log_block('Decklists from EDH Top 16 got')
 
 # PRE-PREPROCESS EDHTOP16 DATA
