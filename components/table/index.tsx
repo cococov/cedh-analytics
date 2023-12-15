@@ -26,7 +26,12 @@ export default function Table({
   withGrouping,
   actions,
   isLoading,
+  minBodyHeight,
   onRowClick,
+  onOrderCollectionChange,
+  onRowsPerPageChange,
+  onChangeColumnHidden,
+  onFilterChange,
 }: {
   columns: object[],
   data: RowData[] | RemoteRowData,
@@ -40,13 +45,21 @@ export default function Table({
   withGrouping?: boolean,
   actions?: (Action<RowData> | ((rowData: RowData) => Action<RowData>))[],
   isLoading: boolean,
+  minBodyHeight?: string | number,
   onRowClick?: (
     event?: React.MouseEvent,
     rowData?: RowData,
     toggleDetailPanel?: (panelIndex?: number) => void
   ) => void,
+  onOrderCollectionChange?: (orderByCollection: {
+    orderBy: number,
+    sortOrder: number,
+    orderDirection: 'asc' | 'desc'
+  }[]) => void,
+  onRowsPerPageChange?: (pageSize: number) => void,
+  onChangeColumnHidden?: (column: any, hidden: boolean) => void,
+  onFilterChange?: (filters: { column: { field: string, tableData: { id: number } }, operator: string, value: string | number | boolean }[]) => void,
 }) {
-
   return (
     <MaterialTable
       columns={columns}
@@ -78,9 +91,16 @@ export default function Table({
           fontWeight: 700,
         },
         columnsButton: true,
+        minBodyHeight: minBodyHeight,
+        thirdSortClick: false,
         searchDebounceDelay: 1000, // 1 second of delay before searching
       }}
       onRowClick={onRowClick}
+      // @ts-ignore
+      onOrderCollectionChange={onOrderCollectionChange}
+      onRowsPerPageChange={onRowsPerPageChange}
+      onChangeColumnHidden={onChangeColumnHidden}
+      onFilterChange={onFilterChange as any}
     />
   );
 };

@@ -56,6 +56,7 @@ export default async function AsyncCardsTable({
   commander,
   fromMetagame,
   noInfo,
+  withUrlPArams,
 }: {
   title?: string,
   table?: 'metagame_cards' | 'db_cards',
@@ -65,6 +66,7 @@ export default async function AsyncCardsTable({
   commander?: string,
   fromMetagame?: boolean,
   noInfo?: boolean,
+  withUrlPArams?: boolean,
 }) {
   const { cards } = await getData(cardsURL, tagsByCardURL, commander, fromMetagame);
 
@@ -80,6 +82,7 @@ export default async function AsyncCardsTable({
             fromMetagame={fromMetagame}
             cards={cards}
             noInfo={noInfo}
+            withUrlPArams={withUrlPArams}
           />
         ) : (
           <CardsTable
@@ -89,6 +92,7 @@ export default async function AsyncCardsTable({
             fromMetagame={fromMetagame}
             cards={cards}
             noInfo={noInfo}
+            withUrlPArams={withUrlPArams}
           />
         )
       }

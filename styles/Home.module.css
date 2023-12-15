@@ -30,7 +30,21 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
-  max-height: 6rem;
+}
+
+.mail {
+  color: #422273;
+  font-weight: 500;
+}
+
+.mailContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0.5rem;
+  grid-column: 2;
 }
 
 .footer .madeWithLove {
@@ -65,6 +79,10 @@
 
   .footer .donate {
     padding-right: 0.5rem;
+  }
+
+  .footer .mailContainer {
+    grid-column-end: none;
   }
 }
 

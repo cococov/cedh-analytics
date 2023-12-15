@@ -120,7 +120,6 @@ async function fetchData({ cardName }: Params): Promise<ResponseData> {
       notFound: false,
     };
   } catch (err) {
-    console.log(err)
     return { notFound: true };
   }
 };

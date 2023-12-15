@@ -16,6 +16,9 @@ export default function Footer() {
       <span className={styles.donate}>
         <KofiButton />
       </span>
+      <span className={styles.mailContainer}>
+        <a className={styles.mail} href="mailto:suggestions@cedh-analytics.com">suggestions@cedh-analytics.com</a>
+      </span>
     </footer>
   );
 };

@@ -48,6 +48,7 @@ export default async function MetagameCards() {
             table="metagame_cards"
             context={MetagameCardsContext}
             fromMetagame
+            withUrlPArams
           />
         </Suspense>
         <CardInfoWithProvider context={MetagameCardsContext} />

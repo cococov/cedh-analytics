@@ -40,3 +40,9 @@
     width: 100%;
   }
 }
+
+.mail {
+  color: #422273;
+  font-weight: 600;
+  padding-bottom: 2rem;
+}
