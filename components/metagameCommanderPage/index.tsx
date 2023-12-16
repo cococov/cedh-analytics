@@ -6,6 +6,7 @@ import { any, equals, reduce, max } from 'ramda';
 import { RadarChart, BoxwhiskerChart, BarChart, PieChart } from '../../components/charts';
 import { HeadlessTable } from '../vendor/nextUi';
 import { LastSetTop10, AsyncCardsTable, DecklistsTable, Loading } from '../../components';
+import ErrorBoundary from '../errorBoundary';
 import type { PageData } from './types';
 /* Static */
 import styles from '../../styles/CommanderMetagame.module.css';
@@ -228,16 +229,27 @@ export default async function MetagameCommanderPage({
           />
         </section>
         <section className={styles.cardsContainer}>
-          <Suspense fallback={<Loading />}>
-            <AsyncCardsTable
-              title="Cards"
-              cardsURL={cardsURL}
-              tagsByCardURL={tagsByCardURL}
-              commander={data.rawCommanderNames}
-              fromMetagame
-              noInfo
-            />
-          </Suspense>
+          <ErrorBoundary
+            fallback={
+              <span className={styles.errorContainer}>
+                <p>Error loading {data.commanderNames[0]} cards table.</p>
+                <a href="mailto:report@cedh-analytics.com" className={styles.reportMail}>
+                  report@cedh-analytics.com
+                </a>
+              </span>
+            }
+          >
+            <Suspense fallback={<Loading />}>
+              <AsyncCardsTable
+                title="Cards"
+                cardsURL={cardsURL}
+                tagsByCardURL={tagsByCardURL}
+                commander={data.rawCommanderNames}
+                fromMetagame
+                noInfo
+              />
+            </Suspense>
+          </ErrorBoundary>
         </section>
       </span>
     </main>
