@@ -44,7 +44,7 @@ CREATE TABLE db_cards (
 
 CREATE TABLE tags_by_card (
   card_name                       varchar(128) UNIQUE,
-  tags                            varchar(640),
+  tags                            varchar(850),
   PRIMARY KEY (card_name)
 );
 

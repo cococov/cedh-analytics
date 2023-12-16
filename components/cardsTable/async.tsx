@@ -5,47 +5,51 @@ import CardsTable from '../cardsTable';
 import styles from '../../styles/CardsList.module.css';
 
 async function getData(cardsURL?: string, tagsByCardURL?: string, commander?: string, fromMetagame?: boolean) {
-  if (!cardsURL || !tagsByCardURL) return { cards: null };
+  if (!cardsURL || !tagsByCardURL) return { cards: [] };
 
-  const rawCards = await fetch(cardsURL, { cache: 'no-store' });
-  const cards = await rawCards.json();
-  const rawTagsByCard = await fetch(tagsByCardURL);
-  const tagsByCard = await rawTagsByCard.json();
+  try {
+    const rawCards = await fetch(cardsURL, { cache: 'no-store' });
+    const cards = await rawCards.json();
+    const rawTagsByCard = await fetch(tagsByCardURL);
+    const tagsByCard = await rawTagsByCard.json();
 
-  const mappedCards = (!!commander ? cards[commander] : cards).map((card: any) => {
-    const obj = {
-      card_name: card.cardName,
-      occurrences: card.occurrences,
-      type: card.type,
-      color_identity: card.colorIdentity,
-      colors: card.colors,
-      cmc: card.cmc,
-      power: card.power,
-      toughness: card.toughness,
-      last_print: card.lastPrint,
-      multiple_printings: card.multiplePrintings,
-      reserved: card.reserved,
-      is_in_99: card.isIn99,
-      is_commander: card.isCommander,
-      percentage_of_use: card.percentageOfUse,
-      percentage_of_use_by_identity: card.percentageOfUseByIdentity,
-      tags: tagsByCard[card.cardName],
+    const mappedCards = (!!commander ? cards[commander] : cards).map((card: any) => {
+      const obj = {
+        card_name: card.cardName,
+        occurrences: card.occurrences,
+        type: card.type,
+        color_identity: card.colorIdentity,
+        colors: card.colors,
+        cmc: card.cmc,
+        power: card.power,
+        toughness: card.toughness,
+        last_print: card.lastPrint,
+        multiple_printings: card.multiplePrintings,
+        reserved: card.reserved,
+        is_in_99: card.isIn99,
+        is_commander: card.isCommander,
+        percentage_of_use: card.percentageOfUse,
+        percentage_of_use_by_identity: card.percentageOfUseByIdentity,
+        tags: tagsByCard[card.cardName],
+      };
+
+      if (fromMetagame) {
+        // @ts-ignore
+        obj['avg_win_rate'] = card.avgWinRate;
+        // @ts-ignore
+        obj['avg_draw_rate'] = card.avgDrawRate;
+      }
+
+      return obj;
+    });
+
+    return {
+      cards: mappedCards,
     };
-
-    if (fromMetagame) {
-      // @ts-ignore
-      obj['avg_win_rate'] = card.avgWinRate;
-      // @ts-ignore
-      obj['avg_draw_rate'] = card.avgDrawRate;
-    }
-
-    return obj;
-  });
-
-  return {
-    cards: mappedCards,
-  };
-}
+  } catch (_err) {
+    return { cards: [] };
+  }
+};
 
 export default async function AsyncCardsTable({
   title,
