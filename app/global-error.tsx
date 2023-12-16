@@ -51,6 +51,24 @@ export default function GlobalError({
             textAlign: 'center',
           }}>
             <h1>Something went wrong!</h1>
+            <button
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#422273',
+                color: '#fff',
+                padding: '0.5rem 0.5rem',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                marginTop: '0.5rem',
+                maxWidth: '10rem',
+                alignSelf: 'center',
+              }}
+              onClick={() => location.reload()}
+            >
+              Try again
+            </button>
             <p>{error?.digest}</p>
             <a
               href="mailto:report@cedh-analytics.com"
