@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { CircularProgress } from '@nextui-org/react';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
-import { AsyncCardsTable, CardInfoWithProvider, DeckListsWithProvider } from '../../components';
+import { CardsTableWithProvider, CardInfoWithProvider, DeckListsWithProvider } from '../../components';
 import MetagameCardsContext, { MetagameCardsProvider } from '../../contexts/metagameCardsStore';
 /* Static */
 import styles from '../../styles/CardsList.module.css';
@@ -42,15 +42,14 @@ export default async function MetagameCards() {
         <span className={styles.leftSpan}>
           <DeckListsWithProvider size="medium" context={MetagameCardsContext} />
         </span>
-        <Suspense fallback={<CircularProgress size="lg" color="secondary" aria-label="Loading..." label="Loading..." />}>
-          <AsyncCardsTable
-            title="Metagame Cards"
-            table="metagame_cards"
-            context={MetagameCardsContext}
-            fromMetagame
-            withUrlPArams
-          />
-        </Suspense>
+        <CardsTableWithProvider
+          title="Metagame Cards"
+          table="metagame_cards"
+          context={MetagameCardsContext}
+          cardUrlBase="/metagame-cards"
+          fromMetagame
+          withUrlPArams
+        />
         <CardInfoWithProvider context={MetagameCardsContext} />
       </MetagameCardsProvider>
     </main>
