@@ -57,11 +57,13 @@ export default function GlobalError({
                 alignItems: 'center',
                 justifyContent: 'center',
                 backgroundColor: '#422273',
-                color: '#ccc',
+                color: '#fff',
                 padding: '0.5rem 0.5rem',
                 borderRadius: '8px',
                 fontSize: '1rem',
                 marginTop: '0.5rem',
+                maxWidth: '10rem',
+                alignSelf: 'center',
               }}
               onClick={() => location.reload()}
             >

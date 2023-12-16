@@ -7,6 +7,7 @@ import { RadarChart, BoxwhiskerChart, BarChart, PieChart } from '../../component
 import { HeadlessTable } from '../vendor/nextUi';
 import { LastSetTop10, AsyncCardsTable, DecklistsTable, Loading } from '../../components';
 import ErrorBoundary from '../errorBoundary';
+import ErrorButton from './errorButton';
 import type { PageData } from './types';
 /* Static */
 import styles from '../../styles/CommanderMetagame.module.css';
@@ -233,6 +234,7 @@ export default async function MetagameCommanderPage({
             fallback={
               <span className={styles.errorContainer}>
                 <p>Error loading {data.commanderNames[0]} cards table.</p>
+                <ErrorButton className={styles.errorButton} />
                 <a href="mailto:report@cedh-analytics.com" className={styles.reportMail}>
                   report@cedh-analytics.com
                 </a>
