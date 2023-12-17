@@ -42,16 +42,18 @@ export default async function MetagameCards() {
         <span className={styles.leftSpan}>
           <DeckListsWithProvider size="medium" context={MetagameCardsContext} />
         </span>
-        <CardsTableWithProvider
-          title="Metagame Cards"
-          table="metagame_cards"
-          context={MetagameCardsContext}
-          cardUrlBase="/metagame-cards"
-          fromMetagame
-          withUrlPArams
-        />
+        <span className={styles.commandersContainer}>
+          <CardsTableWithProvider
+            title="Metagame Cards"
+            table="metagame_cards"
+            context={MetagameCardsContext}
+            cardUrlBase="/metagame-cards"
+            fromMetagame
+            withUrlPArams
+          />
+        </span>
         <CardInfoWithProvider context={MetagameCardsContext} />
       </MetagameCardsProvider>
-    </main>
+    </main >
   );
 };
