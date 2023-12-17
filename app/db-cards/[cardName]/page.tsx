@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 /* Vendor */
-import { replace } from 'ramda';
+import { replace, pipe } from 'ramda';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../../shared-metadata';
 import { CardInfoPage } from '../../../components';
@@ -100,7 +100,14 @@ async function fetchData({ cardName }: Params): Promise<ResponseData> {
 
     if (result.error) throw new Error('Fetch Error');
 
-    const { occurrences, percentage, decklists } = await getDecklistsForCardByContext(replace(/%2F/g, '/', decodeURI(String(cardName))), 'db_cards');
+    const decodedCardName = pipe(
+      String,
+      decodeURI,
+      replace(/%2F/g, '/'),
+      replace(/%2C/, ','),
+    )(cardName);
+
+    const { occurrences, percentage, decklists } = await getDecklistsForCardByContext(decodedCardName, 'db_cards');
 
     return {
       cardName: result.cardName,
