@@ -79,7 +79,6 @@
 - El caching de decklists actualmente solo es en base al hash, debería ser hash y fecha, para capturar el caso que en distintos torneos se use la misma decklist, pero actualizada
 - Reducir el margen de la tabla de top 10 del home para que al tener menos width de pantalla no levante scroll horizontal
 - Reemplazar loadings viejos  (<Loading />) por el nuevo
-- Link a cartas con doble cara está roto
 - Fuerza u resistencia de criaturas doble cara esta rota
 - Tabla de cartas de comandantes (async) suele dar error al cargar por primera vez, luego de recargar se arregla.
 - Manejar error que se lanza cuando la URL queda vacía en las páginas de cartas

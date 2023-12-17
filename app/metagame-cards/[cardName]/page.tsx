@@ -100,7 +100,7 @@ async function fetchData({ cardName }: Params): Promise<ResponseData> {
 
     if (result.error) throw new Error('Fetch Error');
 
-    const { occurrences, percentage, decklists } = await getDecklistsForCardByContext(String(cardName), 'metagame_cards');
+    const { occurrences, percentage, decklists } = await getDecklistsForCardByContext(replace(/%2F/g, '/', decodeURI(String(cardName))), 'metagame_cards');
 
     return {
       cardName: result.cardName,
