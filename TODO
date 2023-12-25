@@ -1,22 +1,18 @@
 # TODO
 
-- Feat: Añadir correo para hacer reportes o sugerencias en about y pagina de error 500 y 404
-- Feat: Mejorar filtros de tabla de cartas (mayor igual, menor igual, contiene, etc...)
-- Feat: Usar query params para filtros y columnas visibles en tabla de cartas
 - Feat: Mostrar imagen de atrás de cartas doble cara
-- Feat: Usar skeleton loader en tabla de cartas
 - Feat: Añadir tracking de eventos (como uso de botones y filtros)
 - Feat: crear submenu de db y metagame que contenga analysis y cards.
 - Feat: Añadir análisis de db
 - Feat: Crear análisis oculto de torneos chilenos
 - Feat: Hacer custom sort en colors para que ordene de mono colors a 5 colors
 - Feat: Hacer custom sort para que power and toughness tire siempre los guiones para el final sin importar el sort direction
+- Feat: Añadir remote autocomplete a tabla de cartas (usar componente de MUI y API de scryfall)
 
 - Data: Filtrar tags para dejar solo los útiles
 - Data: Dejar de guardar data vieja de db cards
 - Data: Poner flag de update a scripts, para que no siempre se actualicen y así evitar comentar el update en pruebas
 
-- Perf: Reemplazar usos de loading feo por nuevo loading
 - Perf: Optimizar imágenes para no depender de vercel en ello
 - Perf: Dejar de optimizar imágenes en info de carta desde vercel una vez sean optimas
 
@@ -33,7 +29,7 @@
 - Add has partner to commanders table
 - Añadir tokens a comandantes
 - Añadir fecha de ultimo deck a comandantes
-- Añadir fecha a decklists de comandantes
+- Añadir fecha a decklists de comandantes y ordenar por fecha
 - Mejorar página de carta
 - Agregar source y estrategia a metagame (añadir un Geist success tooltip clickeable con un icono de información)
 - Añadir flag de si carta está en las cartas de la db en metagame cards y by_commander (ojo con by_commander de tomar en cuenta al commander)
@@ -70,12 +66,11 @@
 
 ## FIX
 
-- No deformar elementos al cargar data de tablas (usar grid en vez de flex)
+- No deformar elementos al usar un número elevado de columnas en tablas (usar grid en vez de flex)
 - Quitar scroll horizontal innecesario de tablas de metagame por commander
-- Redondear a 3 decimales el avg draw rate de comandantes, decklists y cartas (Fix en generator de pdf y csv)
-- Redondear a 3 decimales el win rate de decklists (Fix en generator de pdf y csv)
+- Redondear a 3 decimales el avg draw rate de comandantes, decklists y cartas
+- Redondear a 3 decimales el win rate de decklists
 - fix valid decklists de tournaments
-- Cartas como beseech the mirror y talion, o no tienen decklists o tienen pocas decklists en metagame
 - El caching de decklists actualmente solo es en base al hash, debería ser hash y fecha, para capturar el caso que en distintos torneos se use la misma decklist, pero actualizada
 - Reducir el margen de la tabla de top 10 del home para que al tener menos width de pantalla no levante scroll horizontal
 - Reemplazar loadings viejos  (<Loading />) por el nuevo
