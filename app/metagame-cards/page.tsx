@@ -1,7 +1,4 @@
-import { Suspense } from 'react';
 import type { Metadata } from 'next';
-/* Vendor */
-import { CircularProgress } from '@nextui-org/react';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
 import { CardsTableWithProvider, CardInfoWithProvider, DeckListsWithProvider } from '../../components';
