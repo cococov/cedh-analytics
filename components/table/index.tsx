@@ -95,9 +95,9 @@ export default function Table({
         thirdSortClick: false,
         searchDebounceDelay: 1000, // 1 second of delay before searching
       }}
-      onRowClick={onRowClick}
+      onRowClick={onRowClick as any}
       // @ts-ignore
-      onOrderCollectionChange={onOrderCollectionChange}
+      onOrderCollectionChange={onOrderCollectionChange as any}
       onRowsPerPageChange={onRowsPerPageChange}
       onChangeColumnHidden={onChangeColumnHidden}
       onFilterChange={onFilterChange as any}

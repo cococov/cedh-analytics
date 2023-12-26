@@ -111,9 +111,9 @@ export default function DecklistsTable({
       editable: 'never',
       hidden: false,
       searchable: false,
-      render: function PercentageOfUse(rowData: any, type: any) {
-        const value = type === 'row' ? rowData.winRate : rowData;
-        return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
+      render: function PercentageOfUse(rowData: any) {
+        const value = rowData.winRate;
+        return (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>);
       },
     },
     {
@@ -126,9 +126,9 @@ export default function DecklistsTable({
       editable: 'never',
       hidden: false,
       searchable: false,
-      render: function PercentageOfUse(rowData: any, type: any) {
-        const value = type === 'row' ? rowData.drawRate : rowData;
-        return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
+      render: function PercentageOfUse(rowData: any) {
+        const value = rowData.drawRate;
+        return (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>);
       },
     },
     {

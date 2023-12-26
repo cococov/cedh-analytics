@@ -107,9 +107,9 @@ export default function CommandersTable({
       cellStyle: {
         minWidth: '5rem'
       },
-      render: function Identity(rowData: any, type: any) {
-        const value = type === 'row' ? rowData.identity : rowData;
-        return type === 'row' ? (
+      render: function Identity(rowData: any) {
+        const value = rowData.identity;
+        return (
           <span>
             {
               value
@@ -117,7 +117,7 @@ export default function CommandersTable({
                 .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image key={icon} src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
             }
           </span>
-        ) : value;
+        );
       },
     },
     {
@@ -153,9 +153,9 @@ export default function CommandersTable({
       editable: 'never',
       hidden: false,
       searchable: false,
-      render: function PercentageOfUse(rowData: any, type: any) {
-        const value = type === 'row' ? rowData.avgWinRate : rowData;
-        return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
+      render: function PercentageOfUse(rowData: any) {
+        const value = rowData.avgWinRate;
+        return (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>);
       },
     },
     {
@@ -168,9 +168,9 @@ export default function CommandersTable({
       editable: 'never',
       hidden: false,
       searchable: false,
-      render: function PercentageOfUse(rowData: any, type: any) {
-        const value = type === 'row' ? rowData.avgDrawRate : rowData;
-        return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
+      render: function PercentageOfUse(rowData: any) {
+        const value = rowData.avgDrawRate;
+        return (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>);
       },
     },
     {
