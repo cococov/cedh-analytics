@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 /* Vendor */
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { find } from 'ramda';
+import { CircularProgress } from "@nextui-org/react";
 /* Own */
 import Table from '../table';
-import Loading from '../loading';
 import AppContext from '../../contexts/appStore';
 /* Static */
 import styles from '../../styles/CardsList.module.css';
@@ -115,7 +115,11 @@ export default function TournamentsTable({
     router.push(`/tournaments/${tournamentName}`);
   }, []);
 
-  if (!isLoaded) return <Loading />;
+  if (!isLoaded) return (
+    <span className={styles.cardsTableLoading}>
+      <CircularProgress size="lg" color="secondary" aria-label="Loading..." />
+    </span>
+  );
 
   return (
     <span className={styles.commandersContainer}>

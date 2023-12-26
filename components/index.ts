@@ -10,7 +10,6 @@ export { default as DeckLists } from './deckLists';
 export { default as DeckListsWithProvider } from './deckLists/wrapperWithProvider';
 export { default as CardInfoWithProvider } from './cardInfo/wrapperWithProvider';
 export { default as CardsTableWithProvider } from './cardsTable/wrapperWithProvider';
-export { default as Loading } from './loading';
 export { default as ResponsiveImageDialog } from './responsiveImageDialog';
 export { default as PriceByPlace } from './priceByPlace';
 export { default as GoogleMap } from './googleMap';

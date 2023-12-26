@@ -7,9 +7,9 @@ import Image from 'next/image';
 import { MaterialReadMoreIcon } from '../vendor/materialIcon';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { replace } from 'ramda';
+import { CircularProgress } from "@nextui-org/react";
 /* Own */
 import Table, { SelectFilter } from '../table';
-import Loading from '../loading';
 import AppContext from '../../contexts/appStore';
 /* Static */
 import styles from '../../styles/CardsList.module.css';
@@ -248,7 +248,11 @@ export default function CommandersTable({
     }
   }, [isSmallScreen, isMediumScreen]);
 
-  if (!isLoaded) return <Loading />;
+  if (!isLoaded) return (
+    <span className={styles.cardsTableLoading}>
+      <CircularProgress size="lg" color="secondary" aria-label="Loading..." />
+    </span>
+  );
 
   return (
     <span className={styles.cardsTable}>

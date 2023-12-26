@@ -4,9 +4,9 @@ import { useContext } from 'react';
 import Image from 'next/image';
 /* Vendor */
 import { GoogleMap, Marker, OverlayView } from '@react-google-maps/api';
+import { CircularProgress } from "@nextui-org/react";
 /* Own */
 import TournamentInfoContext from '../../contexts/tournamentInfoStore';
-import Loading from '../loading';
 
 export default function GoogleMapWithLoadingAndPreviewImages({
   placeCoords,
@@ -50,7 +50,7 @@ export default function GoogleMapWithLoadingAndPreviewImages({
               </div>
             </OverlayView>
           </GoogleMap>
-        ) : <Loading />
+        ) : <CircularProgress size="lg" color="secondary" aria-label="Loading..." />
       }
       {!!placePhotos && (
         <span className={placePhotosClassName}>
