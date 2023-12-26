@@ -122,8 +122,8 @@ export default async function getCards(
         })
       ))
     } else {
-      cardsQuery = cardsQuery.where(filter.column, filter.operator, filter.value);
-      totalCountQuery = totalCountQuery.where(filter.column, filter.operator, filter.value);
+      cardsQuery = cardsQuery.where(filter.column, filter.operator || '=', filter.value);
+      totalCountQuery = totalCountQuery.where(filter.column, filter.operator || '=', filter.value);
     }
   });
 
