@@ -61,7 +61,6 @@
   - Añadir defaultFilterOperator en `src/utils/data-manager.js:139` (filterOperator: columnDef.defaultFilterOperator)
   - Añadir defaultFilterOperator a types en `types/index.d.ts:226`
   - Añadir defaultFilterOperator a propTypes en `src/prop-types.js:43`
-- Arch: Actualizar material table a la última versión
 - Añadir =, <, y > a columnas numéricas
 
 ## FIX

@@ -40,7 +40,7 @@ ul {
   background-color: #422273 !important;
 }
 
-.MuiCheckbox-colorSecondary.Mui-checked {
+[class*='MuiCheckbox-colorPrimary'], [class*='Mui-checked'] svg {
   color: #422273 !important;
 }
 
@@ -69,7 +69,7 @@ ul {
 }
 
 .MuiTablePagination-input .MuiTablePagination-select {
-  margin-right: 9rem !important;
+  min-width: 16px !important;
 }
 
 @media (max-width: 600px) {

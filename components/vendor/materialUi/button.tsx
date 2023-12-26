@@ -1,7 +1,7 @@
 "use client";
 
-import type { ButtonProps } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
+import type { ButtonProps } from '@mui/material';
+import Button from '@mui/material/Button';
 
 const MaterialArrowRightAltIcon: React.FC<ButtonProps> = ({ ...props }) => {
   return (

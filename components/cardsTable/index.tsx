@@ -10,6 +10,9 @@ import { MaterialReadMoreIcon } from '../vendor/materialIcon';
 import { MaterialChip } from '../vendor/materialUi';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import TextField from '@mui/material/TextField';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
 import { CircularProgress } from "@nextui-org/react";
 import { parse as qsParse } from 'qs';
 /* Own */
@@ -25,6 +28,9 @@ import R from '../../public/images/R.png';
 import U from '../../public/images/U.png';
 import W from '../../public/images/W.png';
 import C from '../../public/images/C.png';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import ListItemText from '@mui/material/ListItemText';
 
 const IDENTITY_COLORS = { B: B, G: G, R: R, U: U, W: W, C: C };
 
@@ -131,6 +137,105 @@ function defaultFilterForColumn(
   return filters[columnNumber];
 };
 
+function TextFilter({
+  texInputChangeRef,
+  onFilterChanged,
+  columnDef,
+  type = 'text',
+}: {
+  texInputChangeRef: any,
+  onFilterChanged: any,
+  columnDef: any,
+  type?: string,
+}) {
+  const [selectedFilter, setSelectedFilter] = useState(
+    columnDef.tableData.filterValue || undefined
+  );
+
+  useEffect(() => {
+    if (Boolean(texInputChangeRef.current)) {
+      clearTimeout(texInputChangeRef.current);
+    }
+    texInputChangeRef.current = setTimeout(() => {
+      onFilterChanged(columnDef.tableData.id, selectedFilter, '=');
+    }, 500); // 500ms delay before filtering
+  }, [selectedFilter]);
+
+  return (
+    <TextField
+      variant="standard"
+      type={type}
+      value={selectedFilter}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedFilter(e.target.value);
+      }}
+    />
+  );
+};
+
+function SelectFilter({
+  columnDef,
+  onFilterChanged,
+}: {
+  columnDef: any,
+  onFilterChanged: any,
+}) {
+  const [selectedFilter, setSelectedFilter] = useState(
+    columnDef.tableData.filterValue || []
+  );
+
+  useEffect(() => {
+    setSelectedFilter(columnDef.tableData.filterValue || []);
+  }, [columnDef.tableData.filterValue]);
+
+  return (
+    <FormControl variant="standard" style={{ width: '100%' }}>
+      <InputLabel
+        htmlFor={'select-multiple-checkbox' + columnDef.tableData.id}
+        style={{ marginTop: -16 }}
+      >
+        {columnDef.filterPlaceholder}
+      </InputLabel>
+      <Select
+        multiple
+        value={selectedFilter}
+        onClose={() => {
+          if (columnDef.filterOnItemSelect !== true) {
+            onFilterChanged(columnDef.tableData.id, selectedFilter, '=');
+          }
+        }}
+        onChange={(event) => {
+          setSelectedFilter(event.target.value);
+          if (columnDef.filterOnItemSelect === true) {
+            onFilterChanged(columnDef.tableData.id, event.target.value, '=');
+          }
+        }}
+        labelId={'select-multiple-checkbox' + columnDef.tableData.id}
+        renderValue={(selectedArr) =>
+          selectedArr.map((selected: string) => columnDef.lookup[selected]).join(', ')
+        }
+        MenuProps={{
+          PaperProps: {
+            style: {
+              width: '12rem',
+              maxHeight: '20rem',
+            }
+          },
+          variant: 'menu'
+        }}
+        style={{ marginTop: 0 }}
+      >
+        {Object.keys(columnDef.lookup).map((key) => (
+          <MenuItem key={key} value={key}>
+            <Checkbox checked={selectedFilter.indexOf(key.toString()) > -1} />
+            <ListItemText primary={columnDef.lookup[key]} />
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  );
+};
+
 export default function CardsTable({
   title,
   handleChangeCard,
@@ -179,9 +284,7 @@ export default function CardsTable({
       editable: 'never',
       hidden: !isShowInUrl(queryParams, 0, !!withUrlPArams, setQueryParams),
       defaultFilter: defaultFilterForColumn(queryParams, 0, !!withUrlPArams),
-      cellStyle: {
-        minWidth: '13rem'
-      },
+      cellStyle: { minWidth: '13rem' },
       defaultSort: isSortedInUrl(queryParams, 0, !!withUrlPArams, setQueryParams),
     },
     {
@@ -220,6 +323,10 @@ export default function CardsTable({
         minWidth: '8rem'
       },
       defaultSort: isSortedInUrl(queryParams, 2, !!withUrlPArams, setQueryParams),
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <SelectFilter columnDef={columnDef} onFilterChanged={onFilterChanged} />
+      ),
     },
     {
       title: 'Identity',
@@ -268,9 +375,9 @@ export default function CardsTable({
       cellStyle: {
         minWidth: '5rem'
       },
-      render: function Identity(rowData: any, type: any) {
-        const value = type === 'row' ? rowData.color_identity : rowData;
-        return type === 'row' ? (
+      render: function Identity(rowData: any) {
+        const value = rowData.color_identity;
+        return (
           <span>
             {
               value
@@ -278,9 +385,13 @@ export default function CardsTable({
                 ?.map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image key={icon} src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
             }
           </span>
-        ) : value;
+        );
       },
       defaultSort: isSortedInUrl(queryParams, 3, !!withUrlPArams, setQueryParams),
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <SelectFilter columnDef={columnDef} onFilterChanged={onFilterChanged} />
+      ),
     },
     {
       title: 'Colors',
@@ -329,9 +440,9 @@ export default function CardsTable({
       cellStyle: {
         minWidth: '5rem'
       },
-      render: function Colors(rowData: any, type: any) {
-        const value = type === 'row' ? rowData.colors : rowData;
-        return type === 'row' ? (
+      render: function Colors(rowData: any) {
+        const value = rowData.colors;
+        return (
           <span>
             {
               value
@@ -339,9 +450,13 @@ export default function CardsTable({
                 .map((icon: 'B' | 'G' | 'R' | 'U' | 'W' | 'C') => (<Image key={icon} src={IDENTITY_COLORS[icon]} alt={icon} width={18} height={18} priority />))
             }
           </span>
-        ) : value;
+        );
       },
       defaultSort: isSortedInUrl(queryParams, 4, !!withUrlPArams, setQueryParams),
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <SelectFilter columnDef={columnDef} onFilterChanged={onFilterChanged} />
+      ),
     },
     {
       title: 'CMC',
@@ -356,6 +471,10 @@ export default function CardsTable({
       searchable: false,
       hideFilterIcon: true,
       defaultSort: isSortedInUrl(queryParams, 5, !!withUrlPArams, setQueryParams),
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <TextFilter texInputChangeRef={texInputChangeRef} columnDef={columnDef} onFilterChanged={onFilterChanged} type="number" />
+      ),
     },
     {
       title: 'Power',
@@ -371,6 +490,10 @@ export default function CardsTable({
       hideFilterIcon: true,
       emptyValue: '-',
       defaultSort: isSortedInUrl(queryParams, 6, !!withUrlPArams, setQueryParams),
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <TextFilter texInputChangeRef={texInputChangeRef} columnDef={columnDef} onFilterChanged={onFilterChanged} type="number" />
+      ),
     },
     {
       title: 'Toughness',
@@ -386,6 +509,10 @@ export default function CardsTable({
       hideFilterIcon: true,
       emptyValue: '-',
       defaultSort: isSortedInUrl(queryParams, 7, !!withUrlPArams, setQueryParams),
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <TextFilter texInputChangeRef={texInputChangeRef} columnDef={columnDef} onFilterChanged={onFilterChanged} type="number" />
+      ),
     },
     {
       title: 'Last Print',
@@ -403,17 +530,7 @@ export default function CardsTable({
       },
       // @ts-ignore
       filterComponent: ({ columnDef, onFilterChanged }) => (
-        <TextField
-          variant="standard"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            if (Boolean(texInputChangeRef.current)) {
-              clearTimeout(texInputChangeRef.current);
-            }
-            texInputChangeRef.current = setTimeout(() => {
-              onFilterChanged(columnDef.tableData.id, e.target.value);
-            }, 500); // 500ms delay before filtering
-          }}
-        />
+        <TextFilter texInputChangeRef={texInputChangeRef} columnDef={columnDef} onFilterChanged={onFilterChanged} />
       ),
       defaultSort: isSortedInUrl(queryParams, 8, !!withUrlPArams, setQueryParams),
     },
@@ -432,6 +549,10 @@ export default function CardsTable({
         'false': 'No',
       },
       defaultSort: isSortedInUrl(queryParams, 9, !!withUrlPArams, setQueryParams),
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <SelectFilter columnDef={columnDef} onFilterChanged={onFilterChanged} />
+      ),
     },
     {
       title: 'Reserved List',
@@ -448,6 +569,10 @@ export default function CardsTable({
         'false': 'No',
       },
       defaultSort: isSortedInUrl(queryParams, 10, !!withUrlPArams, setQueryParams),
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <SelectFilter columnDef={columnDef} onFilterChanged={onFilterChanged} />
+      ),
     },
     {
       title: 'in 99',
@@ -464,6 +589,10 @@ export default function CardsTable({
         'false': 'No',
       },
       defaultSort: isSortedInUrl(queryParams, 11, !!withUrlPArams, setQueryParams),
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <SelectFilter columnDef={columnDef} onFilterChanged={onFilterChanged} />
+      ),
     },
     {
       title: 'Commander',
@@ -480,6 +609,10 @@ export default function CardsTable({
         'false': 'No',
       },
       defaultSort: isSortedInUrl(queryParams, 12, !!withUrlPArams, setQueryParams),
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <SelectFilter columnDef={columnDef} onFilterChanged={onFilterChanged} />
+      ),
     },
     {
       title: '% of Use',
@@ -491,9 +624,9 @@ export default function CardsTable({
       hidden: !isShowInUrl(queryParams, 13, !!withUrlPArams, setQueryParams),
       defaultFilter: defaultFilterForColumn(queryParams, 13, !!withUrlPArams),
       searchable: false,
-      render: function PercentageOfUse(rowData: any, type: any) {
-        const value = type === 'row' ? rowData.percentage_of_use : rowData;
-        return type === 'row' ? (<span>{value}%</span>) : value;
+      render: function PercentageOfUse(rowData: any) {
+        const value = rowData.percentage_of_use;
+        return (<span>{value}%</span>);
       },
       defaultSort: isSortedInUrl(queryParams, 13, !!withUrlPArams, setQueryParams),
     },
@@ -507,9 +640,9 @@ export default function CardsTable({
       hidden: !isShowInUrl(queryParams, 14, !!withUrlPArams, setQueryParams),
       defaultFilter: defaultFilterForColumn(queryParams, 14, !!withUrlPArams),
       searchable: false,
-      render: function PercentageOfUseByIdentity(rowData: any, type: any) {
-        const value = type === 'row' ? rowData.percentage_of_use_by_identity : rowData;
-        return type === 'row' ? (<span>{value}%</span>) : value;
+      render: function PercentageOfUseByIdentity(rowData: any) {
+        const value = rowData.percentage_of_use_by_identity;
+        return (<span>{value}%</span>);
       },
       defaultSort: isSortedInUrl(queryParams, 14, !!withUrlPArams, setQueryParams),
     },
@@ -527,33 +660,19 @@ export default function CardsTable({
       cellStyle: {
         minWidth: '13rem'
       },
-      render: function Tags(rowData: any, type: any) {
-        const value = type === 'row'
-          ? typeof rowData.tags === 'string'
-            ? JSON.parse(rowData.tags)
-            : rowData.tags
-          : rowData;
-        return type === 'row' ? (
+      render: function Tags(rowData: any) {
+        const value = typeof rowData.tags === 'string' ? JSON.parse(rowData.tags) : rowData.tags;
+        return (
           <span className={styles.cardTagsWrapper}>
             {
               value.map((tag: string, _index: number) => (<MaterialChip key={tag} label={tag} size="small" className={styles.cardTag} />))
             }
           </span>
-        ) : value;
+        );
       },
       // @ts-ignore
       filterComponent: ({ columnDef, onFilterChanged }) => (
-        <TextField
-          variant="standard"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            if (Boolean(texInputChangeRef.current)) {
-              clearTimeout(texInputChangeRef.current);
-            }
-            texInputChangeRef.current = setTimeout(() => {
-              onFilterChanged(columnDef.tableData.id, e.target.value);
-            }, 500); // 500ms delay before filtering
-          }}
-        />
+        <TextFilter texInputChangeRef={texInputChangeRef} columnDef={columnDef} onFilterChanged={onFilterChanged} />
       ),
       defaultSort: isSortedInUrl(queryParams, 15, !!withUrlPArams, setQueryParams),
     },
@@ -594,9 +713,9 @@ export default function CardsTable({
           hidden: !isShowInUrl(queryParams, 16, !!withUrlPArams, setQueryParams),
           defaultFilter: defaultFilterForColumn(queryParams, 16, !!withUrlPArams),
           searchable: false,
-          render: function PercentageOfUse(rowData: any, type: any) {
-            const value = type === 'row' ? parseFloat(rowData.avg_win_rate) : rowData;
-            return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
+          render: function PercentageOfUse(rowData: any) {
+            const value = parseFloat(rowData.avg_win_rate);
+            return (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>);
           },
           defaultSort: isSortedInUrl(queryParams, 16, !!withUrlPArams, setQueryParams),
         },
@@ -610,9 +729,9 @@ export default function CardsTable({
           hidden: !isShowInUrl(queryParams, 17, !!withUrlPArams, setQueryParams),
           defaultFilter: defaultFilterForColumn(queryParams, 17, !!withUrlPArams),
           searchable: false,
-          render: function PercentageOfUse(rowData: any, type: any) {
-            const value = type === 'row' ? parseFloat(rowData.avg_draw_rate) : rowData;
-            return type === 'row' ? (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>) : value;
+          render: function PercentageOfUse(rowData: any) {
+            const value = parseFloat(rowData.avg_draw_rate);
+            return (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>);
           },
           defaultSort: isSortedInUrl(queryParams, 17, !!withUrlPArams, setQueryParams),
         },

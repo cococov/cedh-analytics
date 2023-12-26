@@ -1,6 +1,6 @@
 "use client";
 
-import type { ChipProps } from '@material-ui/core';
+import type { ChipProps } from '@mui/material';
 import Chip from '@mui/material/Chip';
 
 const MaterialChip: React.FC<ChipProps> = ({ ...props }) => {

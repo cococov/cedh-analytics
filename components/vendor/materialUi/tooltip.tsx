@@ -1,7 +1,7 @@
 "use client";
 
-import type { TooltipProps } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
+import type { TooltipProps } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 
 const MaterialTooltip: React.FC<TooltipProps> = ({ ...props }) => {
   return (
