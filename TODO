@@ -63,6 +63,11 @@
   - Añadir defaultFilterOperator a propTypes en `src/prop-types.js:43`
 - Añadir =, <, y > a columnas numéricas
 
+## Actualizar material-table
+
+- Falta actualizar inputs de tabla de comandantes
+- Falta actualizar inputs de tabla de decklists
+
 ## FIX
 
 - No deformar elementos al usar un número elevado de columnas en tablas (usar grid en vez de flex)
