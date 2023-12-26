@@ -4,16 +4,16 @@ The purpose of this web application is to have a better idea of the movement and
 
 ## Getting Started
 
-Install dependences:
+Install dependencies:
 
 ```bash
-yarn
+pnpm install
 ```
 
 Run the development server:
 
 ```bash
-yarn dev
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

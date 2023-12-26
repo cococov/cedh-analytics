@@ -1,15 +1,13 @@
 {
   "name": "cedh-analytics",
-  "version": "0.1.0",
+  "version": "2.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postbuild": "next-sitemap",
-    "deduplicate": "yarn-deduplicate",
-    "list-duplicates": "yarn-deduplicate --list --fail"
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
@@ -18,7 +16,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@material-table/core": "^6.3.1",
+    "@material-table/core": "^6.3.2",
     "@mui/icons-material": "^5.15.2",
     "@mui/material": "^5.15.2",
     "@nextui-org/react": "^2.2.9",
@@ -54,7 +52,6 @@
     "eslint-plugin-react": "7.33.2",
     "postcss": "^8.4.32",
     "tailwindcss": "^3.4.0",
-    "typescript": "5.3.3",
-    "yarn-deduplicate": "^6.0.2"
+    "typescript": "5.3.3"
   }
 }

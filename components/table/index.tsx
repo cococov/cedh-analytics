@@ -1,7 +1,15 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 /* Vendor */
 import MaterialTable, { Action } from '@material-table/core';
+import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import ListItemText from '@mui/material/ListItemText';
 /* Own */
 import { pdfExporter, csvExporter } from '../../utils/exporters';
 
@@ -12,6 +20,105 @@ type RemoteRowData = (query: any) => Promise<{
   page: number,
   totalCount: number,
 }>;
+
+export function TextFilter({
+  texInputChangeRef,
+  onFilterChanged,
+  columnDef,
+  type = 'text',
+}: {
+  texInputChangeRef: any,
+  onFilterChanged: any,
+  columnDef: any,
+  type?: string,
+}) {
+  const [selectedFilter, setSelectedFilter] = useState(
+    columnDef.tableData.filterValue || undefined
+  );
+
+  useEffect(() => {
+    if (Boolean(texInputChangeRef.current)) {
+      clearTimeout(texInputChangeRef.current);
+    }
+    texInputChangeRef.current = setTimeout(() => {
+      onFilterChanged(columnDef.tableData.id, selectedFilter, '=');
+    }, 500); // 500ms delay before filtering
+  }, [selectedFilter]);
+
+  return (
+    <TextField
+      variant="standard"
+      type={type}
+      value={selectedFilter}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedFilter(e.target.value);
+      }}
+    />
+  );
+};
+
+export function SelectFilter({
+  columnDef,
+  onFilterChanged,
+}: {
+  columnDef: any,
+  onFilterChanged: any,
+}) {
+  const [selectedFilter, setSelectedFilter] = useState(
+    columnDef.tableData.filterValue || []
+  );
+
+  useEffect(() => {
+    setSelectedFilter(columnDef.tableData.filterValue || []);
+  }, [columnDef.tableData.filterValue]);
+
+  return (
+    <FormControl variant="standard" style={{ width: '100%' }}>
+      <InputLabel
+        htmlFor={'select-multiple-checkbox' + columnDef.tableData.id}
+        style={{ marginTop: -16 }}
+      >
+        {columnDef.filterPlaceholder}
+      </InputLabel>
+      <Select
+        multiple
+        value={selectedFilter}
+        onClose={() => {
+          if (columnDef.filterOnItemSelect !== true) {
+            onFilterChanged(columnDef.tableData.id, selectedFilter, '=');
+          }
+        }}
+        onChange={(event) => {
+          setSelectedFilter(event.target.value);
+          if (columnDef.filterOnItemSelect === true) {
+            onFilterChanged(columnDef.tableData.id, event.target.value, '=');
+          }
+        }}
+        labelId={'select-multiple-checkbox' + columnDef.tableData.id}
+        renderValue={(selectedArr) =>
+          selectedArr.map((selected: string) => columnDef.lookup[selected]).join(', ')
+        }
+        MenuProps={{
+          PaperProps: {
+            style: {
+              width: '12rem',
+              maxHeight: '20rem',
+            }
+          },
+          variant: 'menu'
+        }}
+        style={{ marginTop: 0 }}
+      >
+        {Object.keys(columnDef.lookup).map((key) => (
+          <MenuItem key={key} value={key}>
+            <Checkbox checked={selectedFilter.indexOf(key.toString()) > -1} />
+            <ListItemText primary={columnDef.lookup[key]} />
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  );
+};
 
 export default function Table({
   columns,
@@ -95,9 +202,9 @@ export default function Table({
         thirdSortClick: false,
         searchDebounceDelay: 1000, // 1 second of delay before searching
       }}
-      onRowClick={onRowClick}
+      onRowClick={onRowClick as any}
       // @ts-ignore
-      onOrderCollectionChange={onOrderCollectionChange}
+      onOrderCollectionChange={onOrderCollectionChange as any}
       onRowsPerPageChange={onRowsPerPageChange}
       onChangeColumnHidden={onChangeColumnHidden}
       onFilterChange={onFilterChange as any}
