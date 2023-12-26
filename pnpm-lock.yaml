@@ -24,8 +24,8 @@ dependencies:
     specifier: ^0.2.0
     version: 0.2.0(@fortawesome/fontawesome-svg-core@6.5.1)(react@18.2.0)
   '@material-table/core':
-    specifier: ^6.3.1
-    version: 6.3.1(@mui/system@5.15.2)(@types/react-dom@18.2.18)(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^6.3.2
+    version: 6.3.2(@mui/system@5.15.2)(@types/react-dom@18.2.18)(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0)
   '@mui/icons-material':
     specifier: ^5.15.2
     version: 5.15.2(@mui/material@5.15.2)(@types/react@18.2.45)(react@18.2.0)
@@ -1972,8 +1972,8 @@ packages:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  /@material-table/core@6.3.1(@mui/system@5.15.2)(@types/react-dom@18.2.18)(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Z3SLhWmVSZUDZrRKY4CagLBeOawN9EZVQ1y2RYTKJdzu0Cwt2eEJ0E7pUHreOlNjSw65/UKAhyd5peYi1YIpkA==}
+  /@material-table/core@6.3.2(@mui/system@5.15.2)(@types/react-dom@18.2.18)(@types/react@18.2.45)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-mz5FSGryYv7BUFecck6tEBII/WGhndj/4uPCBhaFHeXUS440Kqn/3i5mQ+XbTxKUVkXqXQVYca6OSW2E+AfWjA==}
     peerDependencies:
       '@mui/system': '>=5.10.7'
       react: '>=18.0.0'
