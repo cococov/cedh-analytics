@@ -9,14 +9,10 @@ import { replace, findIndex, includes, filter, isNotNil, not, equals, has, isNil
 import { MaterialReadMoreIcon } from '../vendor/materialIcon';
 import { MaterialChip } from '../vendor/materialUi';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
-import TextField from '@mui/material/TextField';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import Checkbox from '@mui/material/Checkbox';
 import { CircularProgress } from "@nextui-org/react";
 import { parse as qsParse } from 'qs';
 /* Own */
-import Table from '../table';
+import Table, { TextFilter, SelectFilter } from '../table';
 import AppContext from '../../contexts/appStore';
 import getCards from './getCards';
 import useQueryParams from '../../hooks/useQueryParams';
@@ -28,9 +24,6 @@ import R from '../../public/images/R.png';
 import U from '../../public/images/U.png';
 import W from '../../public/images/W.png';
 import C from '../../public/images/C.png';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import ListItemText from '@mui/material/ListItemText';
 
 const IDENTITY_COLORS = { B: B, G: G, R: R, U: U, W: W, C: C };
 
@@ -135,105 +128,6 @@ function defaultFilterForColumn(
   const filters = qsParse(queryParams.get('f') || '') as { [key: number]: string | string[] };
 
   return filters[columnNumber];
-};
-
-function TextFilter({
-  texInputChangeRef,
-  onFilterChanged,
-  columnDef,
-  type = 'text',
-}: {
-  texInputChangeRef: any,
-  onFilterChanged: any,
-  columnDef: any,
-  type?: string,
-}) {
-  const [selectedFilter, setSelectedFilter] = useState(
-    columnDef.tableData.filterValue || undefined
-  );
-
-  useEffect(() => {
-    if (Boolean(texInputChangeRef.current)) {
-      clearTimeout(texInputChangeRef.current);
-    }
-    texInputChangeRef.current = setTimeout(() => {
-      onFilterChanged(columnDef.tableData.id, selectedFilter, '=');
-    }, 500); // 500ms delay before filtering
-  }, [selectedFilter]);
-
-  return (
-    <TextField
-      variant="standard"
-      type={type}
-      value={selectedFilter}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedFilter(e.target.value);
-      }}
-    />
-  );
-};
-
-function SelectFilter({
-  columnDef,
-  onFilterChanged,
-}: {
-  columnDef: any,
-  onFilterChanged: any,
-}) {
-  const [selectedFilter, setSelectedFilter] = useState(
-    columnDef.tableData.filterValue || []
-  );
-
-  useEffect(() => {
-    setSelectedFilter(columnDef.tableData.filterValue || []);
-  }, [columnDef.tableData.filterValue]);
-
-  return (
-    <FormControl variant="standard" style={{ width: '100%' }}>
-      <InputLabel
-        htmlFor={'select-multiple-checkbox' + columnDef.tableData.id}
-        style={{ marginTop: -16 }}
-      >
-        {columnDef.filterPlaceholder}
-      </InputLabel>
-      <Select
-        multiple
-        value={selectedFilter}
-        onClose={() => {
-          if (columnDef.filterOnItemSelect !== true) {
-            onFilterChanged(columnDef.tableData.id, selectedFilter, '=');
-          }
-        }}
-        onChange={(event) => {
-          setSelectedFilter(event.target.value);
-          if (columnDef.filterOnItemSelect === true) {
-            onFilterChanged(columnDef.tableData.id, event.target.value, '=');
-          }
-        }}
-        labelId={'select-multiple-checkbox' + columnDef.tableData.id}
-        renderValue={(selectedArr) =>
-          selectedArr.map((selected: string) => columnDef.lookup[selected]).join(', ')
-        }
-        MenuProps={{
-          PaperProps: {
-            style: {
-              width: '12rem',
-              maxHeight: '20rem',
-            }
-          },
-          variant: 'menu'
-        }}
-        style={{ marginTop: 0 }}
-      >
-        {Object.keys(columnDef.lookup).map((key) => (
-          <MenuItem key={key} value={key}>
-            <Checkbox checked={selectedFilter.indexOf(key.toString()) > -1} />
-            <ListItemText primary={columnDef.lookup[key]} />
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
-  );
 };
 
 export default function CardsTable({

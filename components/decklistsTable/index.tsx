@@ -1,15 +1,13 @@
 "use client";
 
-import { useState, useEffect, useCallback, useContext } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, useCallback, useRef } from 'react';
 /* Vendor */
 import { MaterialOpenInNewIcon } from '../vendor/materialIcon';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { find } from 'ramda';
 /* Own */
-import Table from '../table';
+import Table, { TextFilter, SelectFilter } from '../table';
 import Loading from '../loading';
-import AppContext from '../../contexts/appStore';
 /* Static */
 import styles from '../../styles/CardsList.module.css';
 
@@ -53,6 +51,7 @@ export default function DecklistsTable({
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [renderKey, setRenderKey] = useState(`render-${Math.random()}`);
+  const texInputChangeRef = useRef<any>(null);
   const [columns, setColumns] = useState([
     {
       title: 'Decklist',
@@ -151,6 +150,10 @@ export default function DecklistsTable({
       hidden: false,
       searchable: false,
       hideFilterIcon: true,
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <TextFilter texInputChangeRef={texInputChangeRef} columnDef={columnDef} onFilterChanged={onFilterChanged} />
+      ),
     },
     {
       title: 'Avg CMC W/L',
@@ -186,6 +189,10 @@ export default function DecklistsTable({
         'true': 'Yes',
         'false': 'No',
       },
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <SelectFilter columnDef={columnDef} onFilterChanged={onFilterChanged} />
+      ),
     },
     {
       title: 'Has Stickers',
@@ -199,6 +206,10 @@ export default function DecklistsTable({
         'true': 'Yes',
         'false': 'No',
       },
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <SelectFilter columnDef={columnDef} onFilterChanged={onFilterChanged} />
+      ),
     },
     {
       title: 'Lands',
