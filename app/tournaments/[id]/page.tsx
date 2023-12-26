@@ -3,12 +3,12 @@ import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 /* Vendor */
 import { replace } from 'ramda';
+import { CircularProgress } from "@nextui-org/react";
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../../shared-metadata';
 import MetagameResumePage from '../../../components/metagameResumePage';
 import type { ResumeData } from '../../../components/metagameResumePage/types';
 import AsyncCardsTable from '../../../components/cardsTable/async';
-import { Loading } from '../../../components';
 /* Static */
 import { server } from '../../../config';
 
@@ -87,7 +87,7 @@ export default async function Metagame({
         fromTournament
       />
       <span className="mb-3">
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={<CircularProgress size="lg" color="secondary" aria-label="Loading..." />}>
           <AsyncCardsTable
             title="Cards"
             cardsURL={`${server}/data/metagame/tournaments/${params.id}/competitiveCards.json`}

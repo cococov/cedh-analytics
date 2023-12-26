@@ -1,8 +1,10 @@
 import { Suspense } from 'react';
+/* Vendor */
+import { CircularProgress } from "@nextui-org/react";
 /* Own */
 import { RadarChart, BoxwhiskerChart, BarChart } from '../charts';
 import { HeadlessTable } from '../vendor/nextUi';
-import { LastSetTop10, AsyncCommandersTable, Loading } from '..';
+import { LastSetTop10, AsyncCommandersTable } from '..';
 import type { ResumeData } from './types';
 /* Static */
 import styles from '../../styles/Metagame.module.css';
@@ -197,7 +199,7 @@ export default async function MetagameResumePage({
       </span>
       <span>
         <section className={styles.commandersContainer}>
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<CircularProgress size="lg" color="secondary" aria-label="Loading..." />}>
             <AsyncCommandersTable
               title="Metagame Commanders"
               commandersURL={commandersURL}

@@ -2,10 +2,11 @@ import { Suspense } from 'react';
 import Image from 'next/image';
 /* Vendor */
 import { any, equals, reduce, max } from 'ramda';
+import { CircularProgress } from "@nextui-org/react";
 /* Own */
 import { RadarChart, BoxwhiskerChart, BarChart, PieChart } from '../../components/charts';
 import { HeadlessTable } from '../vendor/nextUi';
-import { LastSetTop10, AsyncCardsTable, DecklistsTable, Loading } from '../../components';
+import { LastSetTop10, AsyncCardsTable, DecklistsTable } from '../../components';
 import ErrorBoundary from '../errorBoundary';
 import ErrorButton from './errorButton';
 import type { PageData } from './types';
@@ -241,7 +242,7 @@ export default async function MetagameCommanderPage({
               </span>
             }
           >
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<CircularProgress size="lg" color="secondary" aria-label="Loading..." />}>
               <AsyncCardsTable
                 title="Cards"
                 cardsURL={cardsURL}

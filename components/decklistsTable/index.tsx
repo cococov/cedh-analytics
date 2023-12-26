@@ -5,9 +5,9 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { MaterialOpenInNewIcon } from '../vendor/materialIcon';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { find } from 'ramda';
+import { CircularProgress } from "@nextui-org/react";
 /* Own */
 import Table, { TextFilter, SelectFilter } from '../table';
-import Loading from '../loading';
 /* Static */
 import styles from '../../styles/CardsList.module.css';
 
@@ -338,7 +338,11 @@ export default function DecklistsTable({
     }
   }, [isSmallScreen, isMediumScreen]);
 
-  if (!isLoaded) return <Loading />;
+  if (!isLoaded) return (
+    <span className={styles.cardsTableLoading}>
+      <CircularProgress size="lg" color="secondary" aria-label="Loading..." />
+    </span>
+  );
 
   return (
     <span className={styles.commandersContainer}>
