@@ -182,7 +182,7 @@ export default async function MetagameCommanderPage({
                 data.metagameData.useOfCards.maxCantTutor,
               ],
               [
-                'Counters',
+                'Counterspell',
                 data.metagameData.useOfCards.minCantCounter,
                 data.metagameData.useOfCards.q1CantCounter,
                 data.metagameData.useOfCards.medianCantCounter,

@@ -155,7 +155,7 @@ export default async function MetagameResumePage({
               resume.useOfCards.maxCantTutor,
             ],
             [
-              'Counters',
+              'Counterspell',
               resume.useOfCards.minCantCounter,
               resume.useOfCards.q1CantCounter,
               resume.useOfCards.medianCantCounter,
