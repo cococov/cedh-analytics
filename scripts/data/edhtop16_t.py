@@ -18,7 +18,7 @@ class EdhTop16DeckList(typing.TypedDict):
   colorID: str
   commander: str
   tournamentName: str
-  dateCreated: str
+  dateCreated: int
 
 class CondensedCommanderData(typing.TypedDict):
   identity: str
@@ -41,7 +41,7 @@ class ProcessedDecklist(typing.TypedDict):
   standing: int
   hasPartners: bool
   tournamentName: str
-  dateCreated: str
+  dateCreated: int
   hasCompanion: bool
   companions: list[str]
   hasStickers: bool

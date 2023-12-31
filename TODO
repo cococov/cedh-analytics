@@ -43,15 +43,13 @@
 - Feat: Añadir date a torneos
 - Feat: Añadir link al torneo en página del torneo
 - Feat: Añadir disclaimer de que si se actualizaron las listas posterior al torneo, puede haber variaciones (añadir un Geist success tooltip clickeable con un icono de información)
-- Añadir opción de re-procesar torneo si descargar y no solo saltar el torneo por completo
+- Añadir opción de re-procesar torneo sin descargar y no solo saltar el torneo por completo
 
 ## Normalización DB
 
-- Descargar tags antes de subir, para insertar solo la diferencia y no eliminar toda la tabla cada vez que se actualiza
 - Llevar decklists a otra tabla y referenciar esta con las cartas por medio de una tabla intermedia
 - LLevar torneos y commanders a la db
 - Obtener last update de database y metagame desde la db
-- Antes de subir cualquier data y guardar los json, cargar el json nuevamente para ver la diferencia entre la data nueva y vieja y solo subir a la db la diferencia, eliminando lo que haya que eliminar y agregando lo que haya que agregar
 
 ## Mejorar filtros
 
@@ -67,12 +65,9 @@
 
 - No deformar elementos al usar un número elevado de columnas en tablas (usar grid en vez de flex)
 - Quitar scroll horizontal innecesario de tablas de metagame por commander
-- Redondear a 3 decimales el avg draw rate de comandantes, decklists y cartas
-- Redondear a 3 decimales el win rate de decklists
 - fix valid decklists de tournaments
 - El caching de decklists actualmente solo es en base al hash, debería ser hash y fecha, para capturar el caso que en distintos torneos se use la misma decklist, pero actualizada
 - Reducir el margen de la tabla de top 10 del home para que al tener menos width de pantalla no levante scroll horizontal
-- Fuerza u resistencia de criaturas doble cara esta rota
 - Tabla de cartas de comandantes (async) suele dar error al cargar por primera vez, luego de recargar se arregla.
 - Manejar error que se lanza cuando la URL queda vacía en las páginas de cartas
 - Que hamburguesa de navbar en mobile no sea un link

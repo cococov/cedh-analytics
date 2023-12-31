@@ -117,7 +117,7 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
     data[commander]['draws'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['draws'], filtered_data))
     data[commander]['losses'] = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['losses'], filtered_data))
     data[commander]['avgWinRate'] = round(functools.reduce(lambda x, y: float(x + y), map(lambda x: (0 if not x['winRate'] else x['winRate']), filtered_data)) / data[commander]['appearances'], 3)
-    data[commander]['avgDrawRate'] = data[commander]['draws'] / (data[commander]['wins'] + data[commander]['draws'] + data[commander]['losses']) if (data[commander]['wins'] + data[commander]['draws'] + data[commander]['losses']) > 0 else 0
+    data[commander]['avgDrawRate'] = round(data[commander]['draws'] / (data[commander]['wins'] + data[commander]['draws'] + data[commander]['losses']) if (data[commander]['wins'] + data[commander]['draws'] + data[commander]['losses']) > 0 else 0, 3)
     data[commander]['bestStanding'] = functools.reduce(lambda x, y: int(x) if x < y else int(y), map(lambda x: x['standing'], filtered_data))
     data[commander]['worstStanding'] = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['standing'], filtered_data))
     def process_decklists(decklist: moxfield_t.DecklistV3) -> ProcessedDecklist | dict:
@@ -132,8 +132,8 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
       process_decklist_data['wins'] = edh_top16_data['wins']
       process_decklist_data['losses'] = edh_top16_data['losses']
       process_decklist_data['draws'] = edh_top16_data['draws']
-      process_decklist_data['winRate'] = edh_top16_data['winRate']
-      process_decklist_data['drawRate'] = edh_top16_data['draws'] / (edh_top16_data['wins'] + edh_top16_data['draws'] + edh_top16_data['losses']) if (edh_top16_data['wins'] + edh_top16_data['draws'] + edh_top16_data['losses']) > 0 else 0
+      process_decklist_data['winRate'] = round(edh_top16_data['winRate'], 3)
+      process_decklist_data['drawRate'] = round(edh_top16_data['draws'] / (edh_top16_data['wins'] + edh_top16_data['draws'] + edh_top16_data['losses']) if (edh_top16_data['wins'] + edh_top16_data['draws'] + edh_top16_data['losses']) > 0 else 0, 3)
       process_decklist_data['standing'] = edh_top16_data['standing']
       process_decklist_data['tournamentName'] = edh_top16_data['tournamentName']
       process_decklist_data['dateCreated'] = edh_top16_data['dateCreated']
