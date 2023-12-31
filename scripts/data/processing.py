@@ -25,7 +25,7 @@ def get_cards_winrate(cards, raw_lists):
     avg_wins = round(functools.reduce(lambda x, y: x + y, map(lambda x: x['wins'] if x['decklist'] in decklists_url else 0, raw_lists)) / occurrences, 3)
     avg_draws = round(functools.reduce(lambda x, y: x + y, map(lambda x: x['draws'] if x['decklist'] in decklists_url else 0, raw_lists)) / occurrences, 3)
     avg_losses = round(functools.reduce(lambda x, y: x + y, map(lambda x: x['losses'] if x['decklist'] in decklists_url else 0, raw_lists)) / occurrences, 3)
-    avg_drawrate = avg_draws / (avg_wins + avg_draws + avg_losses) if (avg_wins + avg_draws + avg_losses) > 0 else 0
+    avg_drawrate = round(avg_draws / (avg_wins + avg_draws + avg_losses) if (avg_wins + avg_draws + avg_losses) > 0 else 0, 3)
     avg_winrate = round(functools.reduce(lambda x, y: x + y, map(lambda x: x['winRate'] if x['decklist'] in decklists_url else 0, raw_lists)) / occurrences, 3)
     result.append({**card, 'avgWinRate': avg_winrate, 'avgDrawRate': avg_drawrate})
   return result

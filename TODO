@@ -65,12 +65,9 @@
 
 - No deformar elementos al usar un número elevado de columnas en tablas (usar grid en vez de flex)
 - Quitar scroll horizontal innecesario de tablas de metagame por commander
-- Redondear a 3 decimales el avg draw rate de comandantes, decklists y cartas
-- Redondear a 3 decimales el win rate de decklists
 - fix valid decklists de tournaments
 - El caching de decklists actualmente solo es en base al hash, debería ser hash y fecha, para capturar el caso que en distintos torneos se use la misma decklist, pero actualizada
 - Reducir el margen de la tabla de top 10 del home para que al tener menos width de pantalla no levante scroll horizontal
-- Fuerza u resistencia de criaturas doble cara esta rota
 - Tabla de cartas de comandantes (async) suele dar error al cargar por primera vez, luego de recargar se arregla.
 - Manejar error que se lanza cuando la URL queda vacía en las páginas de cartas
 - Que hamburguesa de navbar en mobile no sea un link
