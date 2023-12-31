@@ -95,8 +95,8 @@ def build_reduce_deck(has_multiple_printings, get_last_set_for_card):
       'multiverse_ids': current['card']['multiverse_ids'] if 'multiverse_ids' in current['card'] else [0],
       'type': getType(current['card']['type']),
       'typeLine': current['card']['type_line'] if 'type_line' in current['card'] else '',
-      'power': current['card']['power'] if 'power' in current['card'] else current['card']['card_faces'][0]['power'] if len(current['card']['card_faces']) > 0 else '',
-      'toughness': current['card']['toughness'] if 'toughness' in current['card'] else current['card']['card_faces'][0]['toughness'] if len(current['card']['card_faces']) > 0 else '',
+      'power': current['card']['power'] if 'power' in current['card'] else current['card']['card_faces'][0]['power'] if len(current['card']['card_faces']) > 0 and 'power' in current['card']['card_faces'][0] else '',
+      'toughness': current['card']['toughness'] if 'toughness' in current['card'] else current['card']['card_faces'][0]['toughness'] if len(current['card']['card_faces']) > 0 and 'toughness' in current['card']['card_faces'][0] else '',
       "isCommander": isCommander(current['card'], current['deck']),
       "isIn99": not isCommander(current['card'], current['deck']),
     }
