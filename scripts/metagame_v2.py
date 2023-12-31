@@ -13,7 +13,7 @@ import data.pre_processing as pre_processing
 import data.processing as processing
 import data.edhtop16 as edhtop16
 from datetime import datetime
-import utils.misc as misc
+import db.update as update_db
 
 DIRNAME = os.path.realpath('.')
 BASE_PATH = r'./public/data'
@@ -335,3 +335,6 @@ print('\033[KDate updated \033[92mDone!\033[0m')
 
 # GIT
 git.update_to_new_branch('chore: update Metagame', 'chore/update_metagame')
+
+# UPDATE DB
+update_db.update_metagame_cards()

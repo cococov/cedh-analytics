@@ -1,50 +1,10 @@
 import os
 import json
-import typing
 import psycopg2
 import utils.logs as logs
 import utils.files as files
 from dotenv import load_dotenv
-
-class CardTuple(typing.TypedDict):
-  card_name: str
-  card_faces: str
-  color_identity: str
-  colors: str
-  cmc: int
-  prices: str
-  reserved: bool
-  multiple_printings: bool
-  last_print: str
-  multiverse_ids: str
-  type: str
-  type_line: str
-  power: typing.Optional[int]
-  toughness: typing.Optional[int]
-
-class MetagameCardTuple(CardTuple):
-  occurrences: int
-  card_name: str
-  decklists: str
-  is_commander: bool
-  is_in_99: bool
-  percentage_of_use: float
-  percentage_of_use_by_identity: float
-  avg_win_rate: float
-  avg_draw_rate: float
-
-class DbCardTuple(CardTuple):
-  occurrences: int
-  card_name: str
-  decklists: str
-  is_commander: bool
-  is_in_99: bool
-  percentage_of_use: float
-  percentage_of_use_by_identity: float
-
-class TagsByCardTuple(typing.TypedDict):
-  card_name: str
-  tags: str
+from db.update_t import CardTuple, MetagameCardTuple, DbCardTuple, TagsByCardTuple
 
 def open_connection():
   load_dotenv()
@@ -156,10 +116,9 @@ def update_db_cards():
   close_connection(connection)
   logs.end_log_block('Db cards updated!')
 
-def update_tags_by_card():
+def update_tags_by_card(tags_by_card: dict[str, list[str]]):
   logs.begin_log_block('Updating tags by card')
   connection = open_connection()
-  tags_by_card: dict[str, list[str]] = files.read_json_file(r'./public/data/cards', 'tags.json')
 
   tags_by_card_tuples: list[TagsByCardTuple] = []
 
@@ -177,7 +136,3 @@ def update_tags_by_card():
   cursor.close()
   close_connection(connection)
   logs.end_log_block('Tags by card updated!')
-
-update_db_cards()
-update_metagame_cards()
-update_tags_by_card()

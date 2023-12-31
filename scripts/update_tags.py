@@ -3,6 +3,7 @@ import time
 import utils.logs as logs
 import utils.files as files
 import data.scryfall as scryfall
+import db.update as update_db
 
 """ Update tags script.
 Get tags by card and save them in a json file.
@@ -55,9 +56,12 @@ if WITH_LOGS: logs.begin_log_block('Getting tags...')
 total_cards = len(cards)
 cards_processed = 0
 
+tags_to_update = {}
+
 for card in cards:
   if card not in tags or FORCE_UPDATE:
     tags[card] = scryfall.get_tags_from_card(card)
+    tags_to_update[card] = tags[card]
     time.sleep(0.2)
   cards_processed += 1
   logs.loading_log("Getting card tags", cards_processed, total_cards)
@@ -68,3 +72,6 @@ if WITH_LOGS:
   files.create_file_with_log(CARDS_PATH, 'tags.json', tags, 'Saving tags...', 'Tags saved!')
 else:
   files.create_file(CARDS_PATH, 'tags.json', tags)
+
+# Update DB
+update_db.update_tags_by_card(tags_to_update)

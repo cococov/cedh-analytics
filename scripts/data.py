@@ -9,6 +9,7 @@ import data.mtg_json as mtg_json
 import data.cedh_db as cedh_db
 import data.pre_processing as pre_processing
 import data.processing as processing
+import db.update as update_db
 
 """ DB data script.
 Get all the cards from the cEDH DB lists and process them to get the data for the website, using sources like Moxfield and Scryfall.
@@ -87,3 +88,6 @@ subprocess.Popen(['python3', 'scripts/update_tags.py']).wait()
 
 # GIT
 git.update_to_new_branch('chore: update DB', 'chore/update_db')
+
+# UPDATE DB
+update_db.update_db_cards()

@@ -47,11 +47,9 @@
 
 ## Normalización DB
 
-- Descargar tags antes de subir, para insertar solo la diferencia y no eliminar toda la tabla cada vez que se actualiza
 - Llevar decklists a otra tabla y referenciar esta con las cartas por medio de una tabla intermedia
 - LLevar torneos y commanders a la db
 - Obtener last update de database y metagame desde la db
-- Antes de subir cualquier data y guardar los json, cargar el json nuevamente para ver la diferencia entre la data nueva y vieja y solo subir a la db la diferencia, eliminando lo que haya que eliminar y agregando lo que haya que agregar
 
 ## Mejorar filtros
 
