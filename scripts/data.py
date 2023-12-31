@@ -84,7 +84,7 @@ files.update_db_date(DIRNAME)
 files.clear_csv_directory()
 
 # Update tags
-subprocess.Popen(['python3', 'scripts/update_tags.py']).wait()
+subprocess.Popen(['python', 'scripts/update_tags.py']).wait()
 
 # GIT
 git.update_to_new_branch('chore: update DB', 'chore/update_db')
