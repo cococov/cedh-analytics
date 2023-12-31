@@ -116,9 +116,10 @@ def update_db_cards():
   close_connection(connection)
   logs.end_log_block('Db cards updated!')
 
-def update_tags_by_card(tags_by_card: dict[str, list[str]]):
+def update_tags_by_card(tags_by_card_to_update: dict[str, list[str]], force=False):
   logs.begin_log_block('Updating tags by card')
   connection = open_connection()
+  tags_by_card: dict[str, list[str]] = files.read_json_file(r'./public/data/cards', 'tags.json') if force else tags_by_card_to_update
 
   tags_by_card_tuples: list[TagsByCardTuple] = []
 

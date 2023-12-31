@@ -140,7 +140,7 @@ logs.end_log_block('Cards processed!')
 files.create_new_file('', METAGAME_PATH, 'metagame_cards.json', metagame_cards)
 
 # UPDATE TAGS
-subprocess.Popen(['python3', 'scripts/update_tags.py']).wait()
+subprocess.Popen(['python', 'scripts/update_tags.py']).wait()
 
 # USE OF CARD TYPES
 logs.begin_log_block('Calculating use of card types')
@@ -281,7 +281,7 @@ for tournament in list_of_tournaments_to_process:
 
   logs.ephemeral_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% Getting tags...")
   # UPDATE TAGS FOR TOURNAMENT
-  subprocess.Popen(['python3', 'scripts/update_tags.py', 'True']).wait()
+  subprocess.Popen(['python', 'scripts/update_tags.py', 'True']).wait()
 
   # USE OF CARD TYPES
   logs.ephemeral_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% Calculating use of card types...")
