@@ -88,7 +88,7 @@ def get_condensed_commanders_data(commanders: list[str], raw_lists: list[EdhTop1
     wins = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['wins'], raw_data), 0)
     draws = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['draws'], raw_data), 0)
     losses = functools.reduce(lambda x, y: int(x + y), map(lambda x: x['losses'], raw_data), 0)
-    avg_draw_rate = draws / (wins + draws + losses) if (wins + draws + losses) > 0 else 0
+    avg_draw_rate = round(draws / (wins + draws + losses) if (wins + draws + losses) > 0 else 0, 3)
     avg_win_rate = round(functools.reduce(lambda x, y: float(x + (y if y else 0)), map(lambda x: x['winRate'], raw_data), 0) / appearances, 3)
     best_standing = functools.reduce(lambda x, y: int(x) if x < y else int(y), map(lambda x: x['standing'], raw_data))
     worst_standing = functools.reduce(lambda x, y: int(x) if x > y else int(y), map(lambda x: x['standing'], raw_data))
