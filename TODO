@@ -71,3 +71,4 @@
 - Tabla de cartas de comandantes (async) suele dar error al cargar por primera vez, luego de recargar se arregla.
 - Manejar error que se lanza cuando la URL queda vacía en las páginas de cartas
 - Que hamburguesa de navbar en mobile no sea un link
+- Hacer trim (eliminar espacio final) de torneos antes de guardar su nombre en lista de torneos y carpeta del torneo
