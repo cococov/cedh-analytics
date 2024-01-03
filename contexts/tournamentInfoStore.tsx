@@ -1,12 +1,12 @@
 "use client";
 
-import { createContext, useState, useReducer, useEffect, useRef } from 'react';
+import { createContext, useReducer } from 'react';
 /* Vendor */
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { useLoadScript } from '@react-google-maps/api';
 /* Own */
-import type { InfoProps, ImageDialogState, ImageDialogPayload, EventInfo, EventData, ServerSideParams, ServerSideAnswer } from '../app/tournaments/[id]/info/TournamentInfo';
+import type { ImageDialogState, ImageDialogPayload } from '../app/tournaments/[id]/info/TournamentInfo';
 
 /**
  * Default Values

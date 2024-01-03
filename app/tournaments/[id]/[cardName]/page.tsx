@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 /* Own */
-import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../../../shared-metadata';
-import { CardInfoPage } from '../../../../components';
-import fetchCards from '../../../../utils/fetch/cardData';
+import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
+import CardInfoPage from '@components/cardInfoPage';
+import fetchCards from '@utils/fetch/cardData';
 /* Static */
-import styles from '../../../../styles/CardsList.module.css';
-import { server } from '../../../../config';
+import styles from '@styles/CardsList.module.css';
+import { server } from '@config';
 
 type occurrencesForCard = { occurrences: number, percentage: number };
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[];

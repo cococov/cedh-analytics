@@ -2,7 +2,7 @@
 import Snackbar from '@mui/material/Snackbar';
 import { CircularProgress } from "@nextui-org/react";
 /* Static */
-import styles from '../../styles/SnackbarLoading.module.css';
+import styles from '@styles/SnackbarLoading.module.css';
 
 export default function SnackBarLoading({
   isOpen

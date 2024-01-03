@@ -22,7 +22,19 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@components/*": ["components/*"],
+      "@hooks/*": ["hooks/*"],
+      "@styles/*": ["styles/*"],
+      "@utils/*": ["utils/*"],
+      "@contexts/*": ["contexts/*"],
+      "@public/*": ["public/*"],
+      "@shared-metadata": ["app/shared-metadata.ts"],
+      "@config": ["config/index.ts"],
+    }
   },
   "include": [
     "next-env.d.ts",

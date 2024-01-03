@@ -1,8 +1,8 @@
 import Image from 'next/image';
 /* Own */
-import KofiButton from '../kofiButton';
+import KofiButton from '@components/kofiButton';
 /* Static */
-import styles from '../../styles/Home.module.css';
+import styles from '@styles/Home.module.css';
 
 export default function Footer() {
   return (

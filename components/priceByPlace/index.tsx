@@ -1,12 +1,14 @@
 "use client";
 
 import { useContext } from 'react';
+/* Vendor */
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-import TournamentInfoContext from '../../contexts/tournamentInfoStore';
+/* Own */
+import TournamentInfoContext from '@contexts/tournamentInfoStore';
 
 export default function PriceByPlace({
   image,

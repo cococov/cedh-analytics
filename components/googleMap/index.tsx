@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { GoogleMap, Marker, OverlayView } from '@react-google-maps/api';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
-import TournamentInfoContext from '../../contexts/tournamentInfoStore';
+import TournamentInfoContext from '@contexts/tournamentInfoStore';
 
 export default function GoogleMapWithLoadingAndPreviewImages({
   placeCoords,

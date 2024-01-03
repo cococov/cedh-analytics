@@ -2,7 +2,7 @@
 
 import { useContext } from 'react';
 /* Own */
-import CardsTable from '../cardsTable';
+import CardsTable from './index';
 
 interface Context {
   handleChangeCard: (_cardName: string | undefined) => {},

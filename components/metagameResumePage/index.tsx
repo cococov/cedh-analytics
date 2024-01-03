@@ -2,12 +2,13 @@ import { Suspense } from 'react';
 /* Vendor */
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
-import { RadarChart, BoxwhiskerChart, BarChart } from '../charts';
-import { HeadlessTable } from '../vendor/nextUi';
-import { LastSetTop10, AsyncCommandersTable } from '..';
+import { RadarChart, BoxwhiskerChart, BarChart } from '@components/charts';
+import { HeadlessTable } from '@components/vendor/nextUi';
+import LastSetTop10 from '@components/lastSetTop10';
+import AsyncCommandersTable from '@components/commandersTable/async';
 import type { ResumeData } from './types';
 /* Static */
-import styles from '../../styles/Metagame.module.css';
+import styles from '@styles/Metagame.module.css';
 
 export default async function MetagameResumePage({
   title,

@@ -4,9 +4,9 @@ import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 /* Vendor */
 import { replace } from 'ramda';
-import { Table } from '../vendor/nextUi';
+import { Table } from '@components/vendor/nextUi';
 /* Own */
-import AppContext from '../../contexts/appStore';
+import AppContext from '@contexts/appStore';
 
 export default function LastSetTop10({
   last_set_top_10,

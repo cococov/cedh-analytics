@@ -1,8 +1,8 @@
 import Link from 'next/link';
 /* Vendor */
-import { MenuOpenIcon, MenuClosedIcon } from '../vendor/materialIcon';
+import { MenuOpenIcon, MenuClosedIcon } from '@components/vendor/materialIcon';
 /* Static */
-import styles from '../../styles/Home.module.css';
+import styles from '@styles/Home.module.css';
 
 export default function PhoneNavBar({
   isOpen,

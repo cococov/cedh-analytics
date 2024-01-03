@@ -2,7 +2,7 @@
 
 import { useContext } from 'react';
 /* Own */
-import CardInfo from '../cardInfo';
+import CardInfo from './index';
 
 interface Context {
   selectedCard: string;
@@ -17,7 +17,7 @@ interface Context {
     isReservedList: boolean;
     isDoubleFace: boolean;
   };
-}
+};
 
 export default function CardInfoWithProvider({
   context,
@@ -25,6 +25,7 @@ export default function CardInfoWithProvider({
   context: any,
 }) {
   const { selectedCard, isLoadingCard, cardData } = useContext<Context>(context);
+
   return (
     <CardInfo
       selectedCard={selectedCard}

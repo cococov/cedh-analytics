@@ -2,7 +2,7 @@
 
 import { useContext } from 'react';
 /* Own */
-import DeckLists from '../deckLists';
+import DeckLists from './index';
 
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[];
 type Commander = { name: string, color_identity: ColorIdentity };

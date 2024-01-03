@@ -1,5 +1,5 @@
 /* Own */
-import EChartBase from "../base";
+import EChartBase from '@components/charts/base';
 
 export default function RadarChart({ options }: {
   options: {
