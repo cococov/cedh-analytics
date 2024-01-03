@@ -1,7 +1,7 @@
 /* Vendor */
 import { replace } from 'ramda';
 /* Own */
-import EChartBase from "../base";
+import EChartBase from '@components/charts/base';
 
 type DataWithStyle = { value: number, itemStyle: { color: string } }
 type DataWithSubCategory = { [key: string]: (number | DataWithStyle) };

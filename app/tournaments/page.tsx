@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 /* Own */
-import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
-import TournamentsTable from '../../components/tournamentsTable';
+import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
+import TournamentsTable from '@components/tournamentsTable';
 /* Static */
-import styles from '../../styles/Tournaments.module.css';
-import TOURNAMENTS from '../../public/data/metagame/tournaments.json';
+import styles from '@styles/Tournaments.module.css';
+import TOURNAMENTS from '@public/data/metagame/tournaments.json';
 
 type Tournament = {
   TID: string;

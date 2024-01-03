@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 /* Own */
-import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../shared-metadata';
-import MetagameResumePage from '../../components/metagameResumePage';
-import type { ResumeData } from '../../components/metagameResumePage/types';
+import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
+import MetagameResumePage from '@components/metagameResumePage';
+import type { ResumeData } from '@components/metagameResumePage/types';
 /* Static */
-import RESUME from '../../public/data/metagame/metagame_resume.json';
-import { server } from '../../config';
+import RESUME from '@public/data/metagame/metagame_resume.json';
+import { server } from '@config';
 
 export const metadata: Metadata = {
   title: 'cEDH Metagame',

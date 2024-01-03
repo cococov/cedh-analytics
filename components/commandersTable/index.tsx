@@ -4,21 +4,21 @@ import { useState, useEffect, useCallback, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 /* Vendor */
-import { MaterialReadMoreIcon } from '../vendor/materialIcon';
-import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { MaterialReadMoreIcon } from '@components/vendor/materialIcon';
+import { useMediaQuery } from '@hooks/useMediaQuery';
 import { replace } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
-import Table, { SelectFilter } from '../table';
-import AppContext from '../../contexts/appStore';
+import Table, { SelectFilter } from '@components/table';
+import AppContext from '@contexts/appStore';
 /* Static */
-import styles from '../../styles/CardsList.module.css';
-import B from '../../public/images/B.png';
-import G from '../../public/images/G.png';
-import R from '../../public/images/R.png';
-import U from '../../public/images/U.png';
-import W from '../../public/images/W.png';
-import C from '../../public/images/C.png';
+import styles from '@styles/CardsList.module.css';
+import B from '@public/images/B.png';
+import G from '@public/images/G.png';
+import R from '@public/images/R.png';
+import U from '@public/images/U.png';
+import W from '@public/images/W.png';
+import C from '@public/images/C.png';
 
 const IDENTITY_COLORS = { B: B, G: G, R: R, U: U, W: W, C: C };
 

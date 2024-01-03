@@ -3,13 +3,13 @@ import { notFound } from 'next/navigation';
 /* Vendor */
 import { replace, split, pipe, any, pluck, flatten } from 'ramda';
 /* Own */
-import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../../shared-metadata';
-import MetagameCommanderPage from '../../../components/metagameCommanderPage';
-import type { PageData, ResponseData, StatsByCommander } from '../../../components/metagameCommanderPage/types';
-import fetchCards from '../../../utils/fetch/cardData';
+import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
+import MetagameCommanderPage from '@components/metagameCommanderPage';
+import type { PageData, ResponseData, StatsByCommander } from '@components/metagameCommanderPage/types';
+import fetchCards from '@utils/fetch/cardData';
 /* Static */
-import STATS_BY_COMMANDER from '../../../public/data/metagame/stats_by_commander.json';
-import { server } from '../../../config';
+import STATS_BY_COMMANDER from '@public/data/metagame/stats_by_commander.json';
+import { server } from '@config';
 
 type Params = { commanderName: string | string[] | undefined };
 

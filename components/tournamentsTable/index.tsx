@@ -3,14 +3,14 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 /* Vendor */
-import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { find } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
-import Table from '../table';
-import AppContext from '../../contexts/appStore';
+import Table from '@components/table';
+import AppContext from '@contexts/appStore';
+import { useMediaQuery } from '@hooks/useMediaQuery';
 /* Static */
-import styles from '../../styles/CardsList.module.css';
+import styles from '@styles/CardsList.module.css';
 
 type Tournament = {
   TID: string;

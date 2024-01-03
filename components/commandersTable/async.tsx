@@ -1,7 +1,7 @@
 /* Own */
-import CommandersTable from '../commandersTable';
+import CommandersTable from './index';
 /* Static */
-import styles from '../../styles/CardsList.module.css';
+import styles from '@styles/CardsList.module.css';
 
 async function getData(commandersURL: string) {
   const rawCommanders = await fetch(commandersURL);
@@ -22,6 +22,7 @@ export default async function AsyncCommandersTable({
   noCommanderPage?: boolean,
 }) {
   const { commanders } = await getData(commandersURL);
+
   return (
     <span className={styles.commandersContainer}>
       <CommandersTable

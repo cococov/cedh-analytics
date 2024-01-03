@@ -1,14 +1,16 @@
 "use client";
 
 import { Dispatch, useContext } from 'react';
+import Image from 'next/image';
+/* Vendor */
 import Dialog from '@mui/material/Dialog';
 import { styled } from '@mui/material/styles';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Image from 'next/image';
-import TournamentInfoContext from '../../contexts/tournamentInfoStore';
+/* Own */
+import TournamentInfoContext from '@contexts/tournamentInfoStore';
 
 type ImageDialogPayload = { isOpen: boolean; image?: string, label?: string };
 

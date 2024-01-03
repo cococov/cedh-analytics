@@ -2,14 +2,14 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 /* Vendor */
-import { MaterialOpenInNewIcon } from '../vendor/materialIcon';
-import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { MaterialOpenInNewIcon } from '@components/vendor/materialIcon';
+import { useMediaQuery } from '@hooks/useMediaQuery';
 import { find } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
-import Table, { TextFilter, SelectFilter } from '../table';
+import Table, { TextFilter, SelectFilter } from '@components/table';
 /* Static */
-import styles from '../../styles/CardsList.module.css';
+import styles from '@styles/CardsList.module.css';
 
 type DecklistsData = {
   url: string

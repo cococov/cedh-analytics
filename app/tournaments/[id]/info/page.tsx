@@ -7,15 +7,17 @@ import { mergeAll, find, propEq } from 'ramda';
 import { green } from '@mui/material/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 /* Own */
-import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '../../../shared-metadata';
-import { GoogleMap, PriceByPlace, ResponsiveImageDialog } from '../../../../components';
-import { MaterialWhatsAppIcon, MaterialEmailIcon } from '../../../../components/vendor/materialIcon';
-import { TournamentInfoProvider } from '../../../../contexts/tournamentInfoStore';
+import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
+import GoogleMap from '@components/googleMap';
+import PriceByPlace from '@components/priceByPlace';
+import ResponsiveImageDialog from '@components/responsiveImageDialog';
+import { MaterialWhatsAppIcon, MaterialEmailIcon } from '@components/vendor/materialIcon';
+import { TournamentInfoProvider } from '@contexts/tournamentInfoStore';
 import type { EventInfo, EventData } from './TournamentInfo';
 /* Static */
-import TOURNAMENTS_LIST from '../../../../public/data/tournaments/list.json';
-import styles from '../../../../styles/TournamentInfo.module.css';
-import { server } from '../../../../config';
+import TOURNAMENTS_LIST from '@public/data/tournaments/list.json';
+import styles from '@styles/TournamentInfo.module.css';
+import { server } from '@config';
 
 type PageData = {
   tournamentInfo: EventData & EventInfo,

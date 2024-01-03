@@ -11,7 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import ListItemText from '@mui/material/ListItemText';
 /* Own */
-import { pdfExporter, csvExporter } from '../../utils/exporters';
+import { pdfExporter, csvExporter } from '@utils/exporters';
 
 interface RowData { [key: string]: any };
 
