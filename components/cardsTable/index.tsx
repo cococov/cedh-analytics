@@ -6,13 +6,13 @@ import Image from 'next/image';
 import type { ReadonlyURLSearchParams } from 'next/navigation';
 /* Vendor */
 import { replace, findIndex, includes, filter, isNotNil, not, equals, has, isNil } from 'ramda';
-import { MaterialReadMoreIcon } from '@components/vendor/materialIcon';
-import { MaterialChip } from '@components/vendor/materialUi';
+import { MaterialReadMoreIcon } from '@/components/vendor/materialIcon';
+import { MaterialChip } from '@/components/vendor/materialUi';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { CircularProgress } from "@nextui-org/react";
 import { parse as qsParse } from 'qs';
 /* Own */
-import Table, { TextFilter, SelectFilter } from '@components/table';
+import Table, { TextFilter, SelectFilter } from '@/components/table';
 import AppContext from '@contexts/appStore';
 import getCards from './getCards';
 import useQueryParams from '@hooks/useQueryParams';

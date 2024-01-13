@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import Image from "next/image";
 /* Vendor */
-import { ArrowRightIcon } from '@components/vendor/materialIcon';
+import { ArrowRightIcon } from '@/components/vendor/materialIcon';
 /* Own */
-import ButtonLink from '@components/buttonLink';
+import ButtonLink from '@/components/buttonLink';
 /* Static */
 import utilsStyles from '@styles/Utils.module.css';
 import styles from '@styles/Error.module.css';

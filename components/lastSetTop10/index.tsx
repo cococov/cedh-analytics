@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 /* Vendor */
 import { replace } from 'ramda';
-import { Table } from '@components/vendor/nextUi';
+import { Table } from '@/components/vendor/nextUi';
 /* Own */
 import AppContext from '@contexts/appStore';
 

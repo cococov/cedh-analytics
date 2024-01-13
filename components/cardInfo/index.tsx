@@ -1,7 +1,7 @@
 import Image from 'next/image';
 /* Vendor */
 import { split } from 'ramda';
-import { MaterialTooltip } from '@components/vendor/materialUi';
+import { MaterialTooltip } from '@/components/vendor/materialUi';
 import { CircularProgress } from '@nextui-org/react';
 /* Static */
 import styles from '@styles/CardsList.module.css';

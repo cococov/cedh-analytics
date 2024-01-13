@@ -1,6 +1,6 @@
 import Link from 'next/link';
 /* Vendor */
-import { MenuOpenIcon, MenuClosedIcon } from '@components/vendor/materialIcon';
+import { MenuOpenIcon, MenuClosedIcon } from '@/components/vendor/materialIcon';
 /* Static */
 import styles from '@styles/Home.module.css';
 

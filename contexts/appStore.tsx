@@ -3,7 +3,7 @@
 import { createContext, useState, useReducer, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 /* Own */
-import SnackBarLoading from '@components/snackBarLoading';
+import SnackBarLoading from '@/components/snackBarLoading';
 
 /**
  * Default Values

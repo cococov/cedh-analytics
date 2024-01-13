@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { find } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
-import Table from '@components/table';
+import Table from '@/components/table';
 import AppContext from '@contexts/appStore';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 /* Static */

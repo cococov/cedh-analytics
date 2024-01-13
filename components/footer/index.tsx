@@ -1,6 +1,6 @@
 import Image from 'next/image';
 /* Own */
-import KofiButton from '@components/kofiButton';
+import KofiButton from '@/components/kofiButton';
 /* Static */
 import styles from '@styles/Home.module.css';
 

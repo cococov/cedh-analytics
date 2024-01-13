@@ -4,12 +4,12 @@ import { useState, useEffect, useCallback, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 /* Vendor */
-import { MaterialReadMoreIcon } from '@components/vendor/materialIcon';
+import { MaterialReadMoreIcon } from '@/components/vendor/materialIcon';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { replace } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
-import Table, { SelectFilter } from '@components/table';
+import Table, { SelectFilter } from '@/components/table';
 import AppContext from '@contexts/appStore';
 /* Static */
 import styles from '@styles/CardsList.module.css';

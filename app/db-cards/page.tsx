@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
-import CardsTableWithProvider from '@components/cardsTable/wrapperWithProvider';
-import CardInfoWithProvider from '@components/cardInfo/wrapperWithProvider';
-import DeckListsWithProvider from '@components/deckLists/wrapperWithProvider';
+import CardsTableWithProvider from '@/components/cardsTable/wrapperWithProvider';
+import CardInfoWithProvider from '@/components/cardInfo/wrapperWithProvider';
+import DeckListsWithProvider from '@/components/deckLists/wrapperWithProvider';
 import DbCardsContext, { DbCardsProvider } from '@contexts/dbCardsStore';
 /* Static */
 import styles from '@styles/CardsList.module.css';

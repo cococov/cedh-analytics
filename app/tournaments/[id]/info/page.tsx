@@ -8,10 +8,10 @@ import { green } from '@mui/material/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
-import GoogleMap from '@components/googleMap';
-import PriceByPlace from '@components/priceByPlace';
-import ResponsiveImageDialog from '@components/responsiveImageDialog';
-import { MaterialWhatsAppIcon, MaterialEmailIcon } from '@components/vendor/materialIcon';
+import GoogleMap from '@/components/googleMap';
+import PriceByPlace from '@/components/priceByPlace';
+import ResponsiveImageDialog from '@/components/responsiveImageDialog';
+import { MaterialWhatsAppIcon, MaterialEmailIcon } from '@/components/vendor/materialIcon';
 import { TournamentInfoProvider } from '@contexts/tournamentInfoStore';
 import type { EventInfo, EventData } from './TournamentInfo';
 /* Static */
