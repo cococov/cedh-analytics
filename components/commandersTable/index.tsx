@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 /* Vendor */
 import { MaterialReadMoreIcon } from '@/components/vendor/materialIcon';
-import { useMediaQuery } from '@hooks/useMediaQuery';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { replace } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */

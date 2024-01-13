@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 /* Vendor */
 import { MaterialOpenInNewIcon } from '@/components/vendor/materialIcon';
-import { useMediaQuery } from '@hooks/useMediaQuery';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { find } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
