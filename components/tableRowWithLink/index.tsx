@@ -3,7 +3,7 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/navigation';
 /* Own */
-import AppContext from '@contexts/appStore';
+import AppContext from '@/contexts/appStore';
 
 export default function TableRowWithLink({
   key,

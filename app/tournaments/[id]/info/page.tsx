@@ -12,7 +12,7 @@ import GoogleMap from '@/components/googleMap';
 import PriceByPlace from '@/components/priceByPlace';
 import ResponsiveImageDialog from '@/components/responsiveImageDialog';
 import { MaterialWhatsAppIcon, MaterialEmailIcon } from '@/components/vendor/materialIcon';
-import { TournamentInfoProvider } from '@contexts/tournamentInfoStore';
+import { TournamentInfoProvider } from '@/contexts/tournamentInfoStore';
 import type { EventInfo, EventData } from './TournamentInfo';
 /* Static */
 import TOURNAMENTS_LIST from '@public/data/tournaments/list.json';

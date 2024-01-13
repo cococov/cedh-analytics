@@ -13,7 +13,7 @@ import { CircularProgress } from "@nextui-org/react";
 import { parse as qsParse } from 'qs';
 /* Own */
 import Table, { TextFilter, SelectFilter } from '@/components/table';
-import AppContext from '@contexts/appStore';
+import AppContext from '@/contexts/appStore';
 import getCards from './getCards';
 import useQueryParams from '@/hooks/useQueryParams';
 /* Static */

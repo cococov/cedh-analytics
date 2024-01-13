@@ -4,7 +4,7 @@ import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared
 import CardsTableWithProvider from '@/components/cardsTable/wrapperWithProvider';
 import CardInfoWithProvider from '@/components/cardInfo/wrapperWithProvider';
 import DeckListsWithProvider from '@/components/deckLists/wrapperWithProvider';
-import MetagameCardsContext, { MetagameCardsProvider } from '@contexts/metagameCardsStore';
+import MetagameCardsContext, { MetagameCardsProvider } from '@/contexts/metagameCardsStore';
 /* Static */
 import styles from '@/styles/CardsList.module.css';
 
