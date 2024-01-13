@@ -26,7 +26,6 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@utils/*": ["utils/*"],
       "@contexts/*": ["contexts/*"],
       "@public/*": ["public/*"],
       "@shared-metadata": ["app/shared-metadata.ts"],

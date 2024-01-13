@@ -6,7 +6,7 @@ import { replace, split, pipe, any, pluck, flatten } from 'ramda';
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
 import MetagameCommanderPage from '@/components/metagameCommanderPage';
 import type { PageData, ResponseData, StatsByCommander } from '@/components/metagameCommanderPage/types';
-import fetchCards from '@utils/fetch/cardData';
+import fetchCards from '@/utils/fetch/cardData';
 /* Static */
 import STATS_BY_COMMANDER from '@public/data/metagame/stats_by_commander.json';
 import { server } from '@config';
