@@ -3,7 +3,7 @@
 import type { Metadata } from 'next';
 import Image from "next/image";
 /* Static */
-import MuddleTheMixture from '@public/images/muddle-the-mixture.jpg';
+import MuddleTheMixture from '@/public/images/muddle-the-mixture.jpg';
 
 export const metadata: Metadata = { title: 'Error!' };
 

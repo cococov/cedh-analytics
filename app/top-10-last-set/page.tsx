@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
-import LastSetTop10 from '@components/lastSetTop10';
+import LastSetTop10 from '@/components/lastSetTop10';
 /* Static */
-import styles from '@styles/Top10LastSet.module.css';
+import styles from '@/styles/Top10LastSet.module.css';
 import { server } from '@config';
 
 type Data = {

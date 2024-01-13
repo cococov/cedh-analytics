@@ -6,24 +6,24 @@ import Image from 'next/image';
 import type { ReadonlyURLSearchParams } from 'next/navigation';
 /* Vendor */
 import { replace, findIndex, includes, filter, isNotNil, not, equals, has, isNil } from 'ramda';
-import { MaterialReadMoreIcon } from '@components/vendor/materialIcon';
-import { MaterialChip } from '@components/vendor/materialUi';
-import { useMediaQuery } from '@hooks/useMediaQuery';
+import { MaterialReadMoreIcon } from '@/components/vendor/materialIcon';
+import { MaterialChip } from '@/components/vendor/materialUi';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { CircularProgress } from "@nextui-org/react";
 import { parse as qsParse } from 'qs';
 /* Own */
-import Table, { TextFilter, SelectFilter } from '@components/table';
-import AppContext from '@contexts/appStore';
+import Table, { TextFilter, SelectFilter } from '@/components/table';
+import AppContext from '@/contexts/appStore';
 import getCards from './getCards';
-import useQueryParams from '@hooks/useQueryParams';
+import useQueryParams from '@/hooks/useQueryParams';
 /* Static */
-import styles from '@styles/CardsList.module.css';
-import B from '@public/images/B.png';
-import G from '@public/images/G.png';
-import R from '@public/images/R.png';
-import U from '@public/images/U.png';
-import W from '@public/images/W.png';
-import C from '@public/images/C.png';
+import styles from '@/styles/CardsList.module.css';
+import B from '@/public/images/B.png';
+import G from '@/public/images/G.png';
+import R from '@/public/images/R.png';
+import U from '@/public/images/U.png';
+import W from '@/public/images/W.png';
+import C from '@/public/images/C.png';
 
 const IDENTITY_COLORS = { B: B, G: G, R: R, U: U, W: W, C: C };
 

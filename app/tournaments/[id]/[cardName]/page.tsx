@@ -2,10 +2,10 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
-import CardInfoPage from '@components/cardInfoPage';
-import fetchCards from '@utils/fetch/cardData';
+import CardInfoPage from '@/components/cardInfoPage';
+import fetchCards from '@/utils/fetch/cardData';
 /* Static */
-import styles from '@styles/CardsList.module.css';
+import styles from '@/styles/CardsList.module.css';
 import { server } from '@config';
 
 type occurrencesForCard = { occurrences: number, percentage: number };

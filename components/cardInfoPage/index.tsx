@@ -2,10 +2,10 @@ import Image from 'next/image';
 /* Vendor */
 import { split } from 'ramda';
 /* Own */
-import ButtonLink from '@components/buttonLink';
-import DeckLists from '@components/deckLists';
+import ButtonLink from '@/components/buttonLink';
+import DeckLists from '@/components/deckLists';
 /* Static */
-import styles from '@styles/CardPage.module.css';
+import styles from '@/styles/CardPage.module.css';
 
 type occurrencesForCard = { occurrences: number, percentage: number };
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]

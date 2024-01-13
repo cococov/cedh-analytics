@@ -4,16 +4,16 @@ import Image from 'next/image';
 import { any, equals, reduce, max } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
-import { RadarChart, BoxwhiskerChart, BarChart, PieChart } from '@components/charts';
-import { HeadlessTable } from '@components/vendor/nextUi';
-import LastSetTop10 from '@components/lastSetTop10';
-import AsyncCardsTable from '@components/cardsTable/async';
-import DecklistsTable from '@components/decklistsTable';
-import ErrorBoundary from '@components/errorBoundary';
+import { RadarChart, BoxwhiskerChart, BarChart, PieChart } from '@/components/charts';
+import { HeadlessTable } from '@/components/vendor/nextUi';
+import LastSetTop10 from '@/components/lastSetTop10';
+import AsyncCardsTable from '@/components/cardsTable/async';
+import DecklistsTable from '@/components/decklistsTable';
+import ErrorBoundary from '@/components/errorBoundary';
 import ErrorButton from './errorButton';
 import type { PageData } from './types';
 /* Static */
-import styles from '@styles/CommanderMetagame.module.css';
+import styles from '@/styles/CommanderMetagame.module.css';
 
 export default async function MetagameCommanderPage({
   data,

@@ -4,11 +4,11 @@ import { notFound } from 'next/navigation';
 import { replace, pipe } from 'ramda';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
-import CardInfoPage from '@components/cardInfoPage';
-import fetchCards from '@utils/fetch/cardData';
-import getDecklistsForCardByContext from '@utils/fetch/getDecklistsForCardByContext';
+import CardInfoPage from '@/components/cardInfoPage';
+import fetchCards from '@/utils/fetch/cardData';
+import getDecklistsForCardByContext from '@/utils/fetch/getDecklistsForCardByContext';
 /* Static */
-import styles from '@styles/CardsList.module.css';
+import styles from '@/styles/CardsList.module.css';
 
 type occurrencesForCard = { occurrences: number, percentage: number };
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[];

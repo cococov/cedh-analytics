@@ -4,7 +4,7 @@ import { createContext, useState, useReducer, useEffect, useRef } from 'react';
 /* Vendor */
 import { replace } from 'ramda';
 /* Own */
-import fetchCards from '@utils/fetch/cardData';
+import fetchCards from '@/utils/fetch/cardData';
 
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[];
 type Commander = { name: string, color_identity: ColorIdentity };

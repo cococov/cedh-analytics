@@ -6,9 +6,9 @@ import { replace } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
-import MetagameResumePage from '@components/metagameResumePage';
-import type { ResumeData } from '@components/metagameResumePage/types';
-import AsyncCardsTable from '@components/cardsTable/async';
+import MetagameResumePage from '@/components/metagameResumePage';
+import type { ResumeData } from '@/components/metagameResumePage/types';
+import AsyncCardsTable from '@/components/cardsTable/async';
 /* Static */
 import { server } from '@config';
 

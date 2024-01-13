@@ -3,13 +3,13 @@ import Image from "next/image";
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
 /* Static */
-import styles from '@styles/About.module.css';
-import CarefulStudy from '@public/images/careful-study.jpeg';
-import B from '@public/images/B.png';
-import G from '@public/images/G.png';
-import R from '@public/images/R.png';
-import U from '@public/images/U.png';
-import W from '@public/images/W.png';
+import styles from '@/styles/About.module.css';
+import CarefulStudy from '@/public/images/careful-study.jpeg';
+import B from '@/public/images/B.png';
+import G from '@/public/images/G.png';
+import R from '@/public/images/R.png';
+import U from '@/public/images/U.png';
+import W from '@/public/images/W.png';
 import { server } from '@config';
 
 type UpdateDates = {

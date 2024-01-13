@@ -2,7 +2,7 @@
 import CardsTableWithProvider from './wrapperWithProvider';
 import CardsTable from './index';
 /* Static */
-import styles from '@styles/CardsList.module.css';
+import styles from '@/styles/CardsList.module.css';
 
 async function getData(cardsURL?: string, tagsByCardURL?: string, commander?: string, fromMetagame?: boolean) {
   if (!cardsURL || !tagsByCardURL) return { cards: [] };

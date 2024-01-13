@@ -8,7 +8,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 /* Own */
-import TournamentInfoContext from '@contexts/tournamentInfoStore';
+import TournamentInfoContext from '@/contexts/tournamentInfoStore';
 
 export default function PriceByPlace({
   image,

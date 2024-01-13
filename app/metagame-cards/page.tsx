@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
-import CardsTableWithProvider from '@components/cardsTable/wrapperWithProvider';
-import CardInfoWithProvider from '@components/cardInfo/wrapperWithProvider';
-import DeckListsWithProvider from '@components/deckLists/wrapperWithProvider';
-import MetagameCardsContext, { MetagameCardsProvider } from '@contexts/metagameCardsStore';
+import CardsTableWithProvider from '@/components/cardsTable/wrapperWithProvider';
+import CardInfoWithProvider from '@/components/cardInfo/wrapperWithProvider';
+import DeckListsWithProvider from '@/components/deckLists/wrapperWithProvider';
+import MetagameCardsContext, { MetagameCardsProvider } from '@/contexts/metagameCardsStore';
 /* Static */
-import styles from '@styles/CardsList.module.css';
+import styles from '@/styles/CardsList.module.css';
 
 export const metadata: Metadata = {
   title: 'Metagame Cards',

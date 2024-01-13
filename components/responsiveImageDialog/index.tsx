@@ -10,7 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 /* Own */
-import TournamentInfoContext from '@contexts/tournamentInfoStore';
+import TournamentInfoContext from '@/contexts/tournamentInfoStore';
 
 type ImageDialogPayload = { isOpen: boolean; image?: string, label?: string };
 
