@@ -10,7 +10,7 @@ import Table from '@/components/table';
 import AppContext from '@contexts/appStore';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 /* Static */
-import styles from '@styles/CardsList.module.css';
+import styles from '@/styles/CardsList.module.css';
 
 type Tournament = {
   TID: string;

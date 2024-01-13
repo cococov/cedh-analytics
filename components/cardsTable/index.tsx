@@ -17,7 +17,7 @@ import AppContext from '@contexts/appStore';
 import getCards from './getCards';
 import useQueryParams from '@/hooks/useQueryParams';
 /* Static */
-import styles from '@styles/CardsList.module.css';
+import styles from '@/styles/CardsList.module.css';
 import B from '@public/images/B.png';
 import G from '@public/images/G.png';
 import R from '@public/images/R.png';

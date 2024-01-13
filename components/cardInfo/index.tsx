@@ -4,7 +4,7 @@ import { split } from 'ramda';
 import { MaterialTooltip } from '@/components/vendor/materialUi';
 import { CircularProgress } from '@nextui-org/react';
 /* Static */
-import styles from '@styles/CardsList.module.css';
+import styles from '@/styles/CardsList.module.css';
 import CardBack from '@public/images/mtg-back.jpg';
 
 

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 /* Static */
-import styles from '@styles/Home.module.css';
+import styles from '@/styles/Home.module.css';
 
 export default function BaseNavBar() {
   return (

@@ -5,7 +5,7 @@ import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared
 import CardInfoPage from '@/components/cardInfoPage';
 import fetchCards from '@utils/fetch/cardData';
 /* Static */
-import styles from '@styles/CardsList.module.css';
+import styles from '@/styles/CardsList.module.css';
 import { server } from '@config';
 
 type occurrencesForCard = { occurrences: number, percentage: number };

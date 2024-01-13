@@ -12,9 +12,9 @@ import NavBar from '@/components/navBar';
 import Footer from '@/components/footer';
 import Providers from './providers';
 /* Static */
-import '@styles/globals.css';
+import '@/styles/globals.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import styles from '@styles/Home.module.css';
+import styles from '@/styles/Home.module.css';
 
 config.autoAddCss = false;
 library.add(fab);

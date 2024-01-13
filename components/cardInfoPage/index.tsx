@@ -5,7 +5,7 @@ import { split } from 'ramda';
 import ButtonLink from '@/components/buttonLink';
 import DeckLists from '@/components/deckLists';
 /* Static */
-import styles from '@styles/CardPage.module.css';
+import styles from '@/styles/CardPage.module.css';
 
 type occurrencesForCard = { occurrences: number, percentage: number };
 type ColorIdentity = ('G' | 'B' | 'R' | 'U' | 'W' | 'C')[]

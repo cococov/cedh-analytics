@@ -13,7 +13,7 @@ import ErrorBoundary from '@/components/errorBoundary';
 import ErrorButton from './errorButton';
 import type { PageData } from './types';
 /* Static */
-import styles from '@styles/CommanderMetagame.module.css';
+import styles from '@/styles/CommanderMetagame.module.css';
 
 export default async function MetagameCommanderPage({
   data,

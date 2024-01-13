@@ -9,7 +9,7 @@ import { CircularProgress } from "@nextui-org/react";
 /* Own */
 import Table, { TextFilter, SelectFilter } from '@/components/table';
 /* Static */
-import styles from '@styles/CardsList.module.css';
+import styles from '@/styles/CardsList.module.css';
 
 type DecklistsData = {
   url: string

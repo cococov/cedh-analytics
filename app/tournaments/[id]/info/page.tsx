@@ -16,7 +16,7 @@ import { TournamentInfoProvider } from '@contexts/tournamentInfoStore';
 import type { EventInfo, EventData } from './TournamentInfo';
 /* Static */
 import TOURNAMENTS_LIST from '@public/data/tournaments/list.json';
-import styles from '@styles/TournamentInfo.module.css';
+import styles from '@/styles/TournamentInfo.module.css';
 import { server } from '@config';
 
 type PageData = {

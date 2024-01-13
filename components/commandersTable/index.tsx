@@ -12,7 +12,7 @@ import { CircularProgress } from "@nextui-org/react";
 import Table, { SelectFilter } from '@/components/table';
 import AppContext from '@contexts/appStore';
 /* Static */
-import styles from '@styles/CardsList.module.css';
+import styles from '@/styles/CardsList.module.css';
 import B from '@public/images/B.png';
 import G from '@public/images/G.png';
 import R from '@public/images/R.png';

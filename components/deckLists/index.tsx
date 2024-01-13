@@ -2,7 +2,7 @@ import Image from 'next/image';
 /* Vendor */
 import { CircularProgress } from '@nextui-org/react';
 /* Static */
-import styles from '@styles/DeckLists.module.css';
+import styles from '@/styles/DeckLists.module.css';
 import B from '@public/images/B.png';
 import G from '@public/images/G.png';
 import R from '@public/images/R.png';

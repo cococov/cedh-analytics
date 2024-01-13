@@ -8,7 +8,7 @@ import LastSetTop10 from '@/components/lastSetTop10';
 import AsyncCommandersTable from '@/components/commandersTable/async';
 import type { ResumeData } from './types';
 /* Static */
-import styles from '@styles/Metagame.module.css';
+import styles from '@/styles/Metagame.module.css';
 
 export default async function MetagameResumePage({
   title,

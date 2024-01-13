@@ -5,8 +5,8 @@ import { ArrowRightIcon } from '@/components/vendor/materialIcon';
 /* Own */
 import ButtonLink from '@/components/buttonLink';
 /* Static */
-import utilsStyles from '@styles/Utils.module.css';
-import styles from '@styles/Error.module.css';
+import utilsStyles from '@/styles/Utils.module.css';
+import styles from '@/styles/Error.module.css';
 import Fblthp from '@public/images/fblthp.jpg';
 
 export const metadata: Metadata = { title: 'Page Not Found | cEDH Analytics' };
