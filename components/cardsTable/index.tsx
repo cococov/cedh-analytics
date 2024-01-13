@@ -18,12 +18,12 @@ import getCards from './getCards';
 import useQueryParams from '@/hooks/useQueryParams';
 /* Static */
 import styles from '@/styles/CardsList.module.css';
-import B from '@public/images/B.png';
-import G from '@public/images/G.png';
-import R from '@public/images/R.png';
-import U from '@public/images/U.png';
-import W from '@public/images/W.png';
-import C from '@public/images/C.png';
+import B from '@/public/images/B.png';
+import G from '@/public/images/G.png';
+import R from '@/public/images/R.png';
+import U from '@/public/images/U.png';
+import W from '@/public/images/W.png';
+import C from '@/public/images/C.png';
 
 const IDENTITY_COLORS = { B: B, G: G, R: R, U: U, W: W, C: C };
 

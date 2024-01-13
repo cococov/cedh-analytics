@@ -15,7 +15,7 @@ import { MaterialWhatsAppIcon, MaterialEmailIcon } from '@/components/vendor/mat
 import { TournamentInfoProvider } from '@/contexts/tournamentInfoStore';
 import type { EventInfo, EventData } from './TournamentInfo';
 /* Static */
-import TOURNAMENTS_LIST from '@public/data/tournaments/list.json';
+import TOURNAMENTS_LIST from '@/public/data/tournaments/list.json';
 import styles from '@/styles/TournamentInfo.module.css';
 import { server } from '@config';
 

@@ -4,7 +4,7 @@ import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared
 import TournamentsTable from '@/components/tournamentsTable';
 /* Static */
 import styles from '@/styles/Tournaments.module.css';
-import TOURNAMENTS from '@public/data/metagame/tournaments.json';
+import TOURNAMENTS from '@/public/data/metagame/tournaments.json';
 
 type Tournament = {
   TID: string;

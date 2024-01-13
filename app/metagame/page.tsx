@@ -4,7 +4,7 @@ import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared
 import MetagameResumePage from '@/components/metagameResumePage';
 import type { ResumeData } from '@/components/metagameResumePage/types';
 /* Static */
-import RESUME from '@public/data/metagame/metagame_resume.json';
+import RESUME from '@/public/data/metagame/metagame_resume.json';
 import { server } from '@config';
 
 export const metadata: Metadata = {

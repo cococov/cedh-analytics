@@ -7,8 +7,8 @@ import { ArrowRightIcon } from '@/components/vendor/materialIcon';
 import LastSetTop10 from '@/components/lastSetTop10';
 /* Static */
 import styles from '@/styles/Home.module.css';
-import SylvanLibrary from '@public/images/sylvan_library.jpg';
-import DATA from '@public/data/home_overview.json';
+import SylvanLibrary from '@/public/images/sylvan_library.jpg';
+import DATA from '@/public/data/home_overview.json';
 
 export const metadata: Metadata = { title: 'cEDH Analytics' };
 
