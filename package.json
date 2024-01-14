@@ -17,8 +17,8 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@material-table/core": "^6.3.2",
-    "@mui/icons-material": "^5.15.2",
-    "@mui/material": "^5.15.2",
+    "@mui/icons-material": "^5.15.4",
+    "@mui/material": "^5.15.4",
     "@nextui-org/react": "^2.2.9",
     "@react-google-maps/api": "^2.19.2",
     "@vercel/analytics": "^1.1.1",
@@ -26,8 +26,8 @@
     "@vercel/postgres-kysely": "^0.6.0",
     "echarts": "^5.4.3",
     "filefy": "^0.1.11",
-    "framer-motion": "^10.16.16",
-    "geist": "^1.2.0",
+    "framer-motion": "^10.18.0",
+    "geist": "^1.2.1",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.1",
     "kysely": "^0.26.3",
@@ -38,7 +38,7 @@
     "ramda": "^0.29.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sharp": "^0.33.1"
+    "sharp": "^0.33.2"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
