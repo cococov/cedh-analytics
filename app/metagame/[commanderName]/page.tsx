@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 /* Vendor */
-import { replace, split, pipe, any, pluck, flatten } from 'ramda';
+import { replace, split, pipe, any, pluck, flatten, has } from 'ramda';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
 import MetagameCommanderPage from '@/components/metagameCommanderPage';
@@ -79,6 +79,7 @@ async function fetchData({ commanderName }: Params): Promise<ResponseData> {
     }).join(' '));
 
     if (any(x => x.error, commandersData)) throw new Error('Fetch Error');
+    if (!has('processed_decklists', (STATS_BY_COMMANDER as any)[decodedCommanderName])) throw new Error('Invalid commander stats');
 
     const commandersMetagameData = (STATS_BY_COMMANDER as StatsByCommander)[decodedCommanderName];
 
