@@ -26,8 +26,8 @@ export default async function MetagameResumePage({
   lastSetTop10UrlBase: string;
   noCommanderPage?: boolean;
   fromTournament?: boolean;
-  fromDate: string;
-  toDate: string;
+  fromDate?: string;
+  toDate?: string;
 }) {
   return (
     <main className={styles.main}>
@@ -61,7 +61,7 @@ export default async function MetagameResumePage({
                 'Max no. of lands': Math.round(resume.useOfCards.maxCantLands),
               }
             }} />
-            <p className="text-center text-xs">From {fromDate} to {toDate}</p>
+            {(!!fromDate && !!toDate) ? <p className="text-center text-xs">From {fromDate} to {toDate}</p> : null}
           </span>
         </span>
         <span className={styles.topResume}>
