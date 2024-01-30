@@ -152,6 +152,9 @@ logs.end_log_block('Use of card types calculated!')
 logs.begin_log_block('Processing cards by commander')
 metagame_cards_by_commander = {}
 for commander in commanders:
+  # Nos saltamos commanders sin listas válidas
+  if not stats_by_commander[commander]['isValid']:
+    continue
   metagame_cards_by_commander[commander] = pre_processing.process_cards(pre_processing.reduce_decks_to_cards(pre_processing.get_decklists_data(decklists_by_commander[commander]), has_multiple_printings, get_last_set_for_card))
   metagame_cards_by_commander[commander] = processing.get_cards_winrate(metagame_cards_by_commander[commander], raw_lists)
   stats_by_commander[commander]['lastSet'] = LAST_SET[0]

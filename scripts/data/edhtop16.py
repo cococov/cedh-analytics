@@ -278,7 +278,7 @@ def get_tournaments_resume(saved_tournaments: list[Tournament], tournament_names
   saved_tournaments_names = list(map(lambda x: x['name'], saved_tournaments))
   for tournament_name in tournament_names:
     if tournament_name not in saved_tournaments_names:
-      data = {'tournamentName': {'$regex': rf'^{tournament_name}$'}}
+      data = {'tournamentName': rf'{tournament_name}'}
       result = list(json.loads(requests.post(TOURNAMENTS_URL, json=data, headers=HEADERS).text)).pop()
       new_tournaments.append({
         'name': tournament_name,
