@@ -10,12 +10,10 @@ import MetagameResumePage from '@/components/metagameResumePage';
 import type { ResumeData } from '@/components/metagameResumePage/types';
 import AsyncCardsTable from '@/components/cardsTable/async';
 /* Static */
-import UPDATE_DATES from '@/public/data/update_date.json';
 import { server } from '@config';
 
 type ErrorData = { notFound: boolean };
-type UpdateDates = { metagame: string; database: string; };
-type ResponseData = { resume: ResumeData; from: string; to: string; };
+type ResponseData = { resume: ResumeData };
 type ResponseDataWithError = ResponseData & ErrorData | ErrorData;
 type Params = { id: string | string[] | undefined };
 
@@ -59,13 +57,9 @@ async function fetchData({ id }: Params): Promise<ResponseDataWithError> {
   try {
     const rawData = await fetch(`${server}/data/metagame/tournaments/${id}/metagame_resume.json`);
     const resume: ResumeData = await rawData.json();
-    const to = (UPDATE_DATES as UpdateDates).metagame;
-    const from = [to.split(', ')[0], (parseInt(to.split(', ')[1]) - 1)].join(', ');
 
     return {
       resume,
-      from,
-      to,
       notFound: false,
     };
   } catch (err) {
@@ -92,8 +86,6 @@ export default async function Metagame({
         resume={data.resume}
         commandersURL={`${server}/data/metagame/tournaments/${decodeURI(String(params.id))}/condensed_commanders_data.json`}
         lastSetTop10UrlBase="/metagame-cards"
-        fromDate={data.from}
-        toDate={data.to}
         noCommanderPage
         fromTournament
       />
