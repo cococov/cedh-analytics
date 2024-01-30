@@ -17,6 +17,8 @@ export default async function MetagameResumePage({
   lastSetTop10UrlBase,
   noCommanderPage,
   fromTournament,
+  fromDate,
+  toDate,
 }: {
   title?: string;
   resume: ResumeData;
@@ -24,6 +26,8 @@ export default async function MetagameResumePage({
   lastSetTop10UrlBase: string;
   noCommanderPage?: boolean;
   fromTournament?: boolean;
+  fromDate: string;
+  toDate: string;
 }) {
   return (
     <main className={styles.main}>
@@ -57,6 +61,7 @@ export default async function MetagameResumePage({
                 'Max no. of lands': Math.round(resume.useOfCards.maxCantLands),
               }
             }} />
+            <p className="text-center text-xs">From {fromDate} to {toDate}</p>
           </span>
         </span>
         <span className={styles.topResume}>
