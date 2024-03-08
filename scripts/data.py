@@ -20,7 +20,7 @@ DIRNAME = os.path.realpath('.')
 FOLDER_PATH = r'public/data/cards'
 FILE_PATH = FOLDER_PATH + r'/competitiveCards.json'
 HOME_OVERVIEW_PATH = r'public/data/home_overview.json'
-LAST_SET = ["Murders at Karlov Manor", "Murders at Karlov Manor Commander"] # [base set, commander decks, optional 3rd set]
+LAST_SET = ["Fallout", "Fallout Commander"] # [base set, commander decks, optional 3rd set]
 
 home_overview = {}
 
