@@ -19,7 +19,7 @@ DIRNAME = os.path.realpath('.')
 BASE_PATH = r'./public/data'
 METAGAME_PATH = rf'{BASE_PATH}/metagame'
 FORCE_UPDATE = False
-LAST_SET = ["Murders at Karlov Manor", "Murders at Karlov Manor Commander"] # [base set, commander decks, optional 3rd set]
+LAST_SET = ["Fallout", "Fallout Commander"] # [base set, commander decks, optional 3rd set]
 
 logs.simple_log('Beginning')
 
