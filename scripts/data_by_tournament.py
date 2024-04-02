@@ -119,7 +119,7 @@ else:
 files.clear_csv_directory()
 
 # Update tags
-subprocess.Popen(['python3.12', 'scripts/update_tags.py']).wait()
+subprocess.Popen(['python3', 'scripts/update_tags.py']).wait()
 
 # GIT
 if ALL_TOURNAMENTS:
