@@ -30,7 +30,7 @@ def build_get_last_set_for_card(cards_csv, sets_csv):
         return 'Secret Lair Drop'
       if card_name in ['Rot Hulk', 'Fiendish Duo', 'Goblin Goliath']:
         return 'Game Night'
-      if card_name in ['The Mightstone and Weakstone', 'Urza, Lord Protector']:
+      if card_name in ['The Mightstone and Weakstone', 'Urza, Lord Protector', 'Phyrexian Dragon Engine']:
         return 'The Brothers\' War'
       if card_name in ['Bruna, the Fading Light', 'Gisela, the Broken Blade', 'Hanweir Battlements', 'Hanweir Garrison']:
         return 'Eldritch Moon'
@@ -41,6 +41,10 @@ def build_get_last_set_for_card(cards_csv, sets_csv):
         return 'Universes Within'
       if 'REX' in card_printing_codes:
         return 'Jurassic World Collection'
+      if 'MKM':
+        return 'Murders at Karlov Manor'
+      if 'GNT':
+        return 'Game Night'
       card_printing_names = sets_csv.loc[sets_csv['keyruneCode'].isin(card_printing_codes)]['name']
       return card_printing_names.iloc[0]
     except:

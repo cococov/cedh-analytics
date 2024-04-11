@@ -70,5 +70,5 @@ export type ResumeData = {
   minAvgCmcWithoutLands: number;
   maxAvgCmcWithLands: number;
   maxAvgCmcWithoutLands: number;
-  size: number;
+  size?: number;
 };
