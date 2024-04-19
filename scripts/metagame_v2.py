@@ -19,7 +19,7 @@ DIRNAME = os.path.realpath('.')
 BASE_PATH = r'./public/data'
 METAGAME_PATH = rf'{BASE_PATH}/metagame'
 FORCE_UPDATE = False
-LAST_SET = ["Fallout", "Fallout Commander"] # [base set, commander decks, optional 3rd set]
+LAST_SET = ["Outlaws of Thunder Junction", "Outlaws of Thunder Junction Commander", "The Big Score"] # [base set, commander decks, optional 3rd set]
 
 logs.simple_log('Beginning')
 
