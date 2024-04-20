@@ -294,5 +294,4 @@ print('\033[KDate updated \033[92mDone!\033[0m')
 git.update_to_new_branch('chore: update Metagame', 'chore/update_metagame')
 
 # UPDATE DB
-# TODO: Uncomment this line to update the DB
-#update_db.update_metagame_cards()
+update_db.update_metagame_cards()
