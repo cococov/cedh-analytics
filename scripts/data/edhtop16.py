@@ -44,7 +44,7 @@ def get_metagame_top_decklists(min_wins=2, min_tournament_size=64) -> list[EdhTo
   }
   raw_lists = json.loads(requests.post(URL, json=data, headers=HEADERS).text)
 
-  return list(filter(lambda x: ('commander' in x.keys() and x['commander'] != 'Unknown Commander' and x['winRate']), raw_lists)) # TODO: poner filtro de commander y winrate en query
+  return list(filter(lambda x: ('commander' in x.keys() and x['commander'] != 'Unknown Commander' and x['winRate'] is not None), raw_lists)) # TODO: poner filtro de commander y winrate en query
 
 def index_decklists_by_hash(raw_lists: list[EdhTop16DeckList]) -> dict[str, EdhTop16DeckList]:
   decklists_by_hash = {}

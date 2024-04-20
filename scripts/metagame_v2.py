@@ -40,9 +40,7 @@ logs.end_log_block('Processing all printing')
 # GET DATA FROM EDHTOP16
 logs.begin_log_block('Getting decklists from EDH Top 16')
 # Hacemos el corte en torneos con al menos 48 jugadores y solo tomamos en cuenta a jugadores con al menos 2 wins o la data crece mucho y queda sucia.
-raw_lists = edhtop16.get_metagame_top_decklists(min_wins=1, min_tournament_size=48)
-# Para los torneos tomamos en cuenta toda la data pero igual hacemos el corte en torneos con al menos 48 jugadores.
-all_raw_lists = edhtop16.get_metagame_top_decklists(min_wins=0, min_tournament_size=48)
+raw_lists = edhtop16.get_metagame_top_decklists(min_wins=0, min_tournament_size=48)
 logs.end_log_block('Decklists from EDH Top 16 got')
 
 # PRE-PREPROCESS EDHTOP16 DATA
@@ -51,11 +49,6 @@ raw_lists_by_hash = edhtop16.index_decklists_by_hash(raw_lists)
 commanders = edhtop16.get_commanders_from_data(raw_lists)
 decklist_hashes_by_commander = edhtop16.get_decklist_hashes_by_commander(raw_lists)
 decklist_hashes_by_tournament = edhtop16.get_decklist_hashes_by_tournament(raw_lists)
-
-all_raw_lists_by_hash = edhtop16.index_decklists_by_hash(all_raw_lists)
-all_commanders = edhtop16.get_commanders_from_data(all_raw_lists)
-all_decklist_hashes_by_commander = edhtop16.get_decklist_hashes_by_commander(all_raw_lists)
-all_decklist_hashes_by_tournament = edhtop16.get_decklist_hashes_by_tournament(all_raw_lists)
 logs.end_log_block('EDH Top 16 data preprocessed')
 
 # LOAD SAVED DECKLISTS
@@ -172,16 +165,16 @@ logs.end_log_block('Saved tournaments loaded')
 
 # GET TOURNAMENTS RESUME
 logs.begin_log_block('Getting tournaments list')
-tournaments = edhtop16.get_tournaments_resume(tournaments, list(all_decklist_hashes_by_tournament.keys()))
+tournaments = edhtop16.get_tournaments_resume(tournaments, list(decklist_hashes_by_tournament.keys()))
 logs.end_log_block('Tournaments list got!')
 
-list_of_tournaments_to_process = list(all_decklist_hashes_by_tournament.keys())
+list_of_tournaments_to_process = list(decklist_hashes_by_tournament.keys())
 
 logs.begin_log_block(f'Processing tournaments')
 cant_tournament_processed = 0
 commanders_by_hash = {}
-for commander in all_decklist_hashes_by_commander.keys():
-  for hash in all_decklist_hashes_by_commander[commander]:
+for commander in decklist_hashes_by_commander.keys():
+  for hash in decklist_hashes_by_commander[commander]:
     commanders_by_hash[hash] = commander
 
 logs.loading_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% - ", 0, 0)
@@ -203,27 +196,27 @@ for tournament in list_of_tournaments_to_process:
   cant_bad_decklists = 0
   if tournament_obj['processed']:
     continue
-  for hash in all_decklist_hashes_by_tournament[tournament]:
+  for hash in decklist_hashes_by_tournament[tournament]:
     found = False
     # Primero verificamos si ya tenemos la lista guardad en nuestro cache del torneo
     if hash in tournament_decklists_by_hash.keys() and not found:
       if not 'status' in list(tournament_decklists_by_hash[hash].keys()): # status in response usually means error 404
         tournament_commanders.append(commanders_by_hash[hash])
-        tournament_raw_lists.append(all_raw_lists_by_hash[hash])
-        if all_raw_lists_by_hash[hash]['commander'] not in tournament_decklists_by_commander.keys():
-          tournament_decklists_by_commander[all_raw_lists_by_hash[hash]['commander']] = []
-        tournament_decklists_by_commander[all_raw_lists_by_hash[hash]['commander']].append(tournament_decklists_by_hash[hash])
+        tournament_raw_lists.append(raw_lists_by_hash[hash])
+        if raw_lists_by_hash[hash]['commander'] not in tournament_decklists_by_commander.keys():
+          tournament_decklists_by_commander[raw_lists_by_hash[hash]['commander']] = []
+        tournament_decklists_by_commander[raw_lists_by_hash[hash]['commander']].append(tournament_decklists_by_hash[hash])
         found = True
     if not found:
       # Si no se tiene cacheada, vamos a buscarla a la lista de decks que usamos en el metagame (debería tener gran parte de los decks)
       if hash in decklists_by_hash.keys():
         if not 'status' in list(decklists_by_hash[hash].keys()): # status in response usually means error 404
           tournament_commanders.append(commanders_by_hash[hash])
-          tournament_raw_lists.append(all_raw_lists_by_hash[hash])
+          tournament_raw_lists.append(raw_lists_by_hash[hash])
           tournament_decklists_by_hash[hash] = decklists_by_hash[hash]
-          if all_raw_lists_by_hash[hash]['commander'] not in tournament_decklists_by_commander.keys():
-            tournament_decklists_by_commander[all_raw_lists_by_hash[hash]['commander']] = []
-          tournament_decklists_by_commander[all_raw_lists_by_hash[hash]['commander']].append(decklists_by_hash[hash])
+          if raw_lists_by_hash[hash]['commander'] not in tournament_decklists_by_commander.keys():
+            tournament_decklists_by_commander[raw_lists_by_hash[hash]['commander']] = []
+          tournament_decklists_by_commander[raw_lists_by_hash[hash]['commander']].append(decklists_by_hash[hash])
           found = True
       # Si no la encontramos, vamos a buscarla a moxfield
       if not found:
@@ -237,10 +230,10 @@ for tournament in list_of_tournaments_to_process:
           cant_bad_decklists += 1
           continue
         tournament_commanders.append(commanders_by_hash[hash])
-        tournament_raw_lists.append(all_raw_lists_by_hash[hash])
-        if all_raw_lists_by_hash[hash]['commander'] not in tournament_decklists_by_commander.keys():
-          tournament_decklists_by_commander[all_raw_lists_by_hash[hash]['commander']] = []
-        tournament_decklists_by_commander[all_raw_lists_by_hash[hash]['commander']].append(decklist)
+        tournament_raw_lists.append(raw_lists_by_hash[hash])
+        if raw_lists_by_hash[hash]['commander'] not in tournament_decklists_by_commander.keys():
+          tournament_decklists_by_commander[raw_lists_by_hash[hash]['commander']] = []
+        tournament_decklists_by_commander[raw_lists_by_hash[hash]['commander']].append(decklist)
         tournament_decklists_by_hash[hash] = decklist
         decklists_by_hash[hash] = decklist
       has_changes = True
@@ -250,7 +243,7 @@ for tournament in list_of_tournaments_to_process:
     else:
       tournament_cant_decklists_by_hash[hash] = 1
 
-    logs.loading_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% - ", cant_tournament_decklists_processed, len(all_decklist_hashes_by_tournament[tournament]), end=f" - Bad decklists: {cant_bad_decklists}\r")
+    logs.loading_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% - ", cant_tournament_decklists_processed, len(decklist_hashes_by_tournament[tournament]), end=f" - Bad decklists: {cant_bad_decklists}\r")
     cant_tournament_decklists_processed += 1
     # FIN iteración de decklists
   if has_changes:
@@ -261,7 +254,7 @@ for tournament in list_of_tournaments_to_process:
   tournament_commanders = list(set(tournament_commanders))
   tournament_condensed_commanders_data = edhtop16.get_condensed_commanders_data(tournament_commanders, tournament_raw_lists)
   tournament_stats_by_commander = edhtop16.get_commander_stats_by_commander(tournament_commanders, tournament_raw_lists, tournament_decklists_by_commander)
-  tournament_metagame_resume = edhtop16.get_metagame_resume(tournament_commanders, tournament_raw_lists, tournament_stats_by_commander, dict(zip([tournament], [all_decklist_hashes_by_tournament[tournament]])))
+  tournament_metagame_resume = edhtop16.get_metagame_resume(tournament_commanders, tournament_raw_lists, tournament_stats_by_commander, dict(zip([tournament], [decklist_hashes_by_tournament[tournament]])))
 
   logs.ephemeral_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% Processing cards...")
   tournament_full_decklists = []
