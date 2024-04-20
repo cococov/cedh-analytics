@@ -41,9 +41,9 @@ def build_get_last_set_for_card(cards_csv, sets_csv):
         return 'Universes Within'
       if 'REX' in card_printing_codes:
         return 'Jurassic World Collection'
-      if 'MKM':
+      if 'MKM' in card_printing_codes:
         return 'Murders at Karlov Manor'
-      if 'GNT':
+      if 'GNT' in card_printing_codes:
         return 'Game Night'
       card_printing_names = sets_csv.loc[sets_csv['keyruneCode'].isin(card_printing_codes)]['name']
       return card_printing_names.iloc[0]
