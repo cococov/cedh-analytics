@@ -26,7 +26,7 @@ def build_get_last_set_for_card(cards_csv, sets_csv):
   @lru_cache(maxsize=None)
   def get_last_set_for_card(card_name):
     try:
-      if card_name in ['Glenn, the Voice of Calm', 'Rick, Steadfast Leader', 'Daryl, Hunter of Walkers', 'Tadeas, Juniper Ascendant', 'Holga, Relentless Rager']:
+      if card_name in ['Glenn, the Voice of Calm', 'Rick, Steadfast Leader', 'Daryl, Hunter of Walkers', 'Tadeas, Juniper Ascendant', 'Holga, Relentless Rager', 'Themberchaud']:
         return 'Secret Lair Drop'
       if card_name in ['Rot Hulk', 'Fiendish Duo', 'Goblin Goliath']:
         return 'Game Night'
@@ -34,6 +34,8 @@ def build_get_last_set_for_card(cards_csv, sets_csv):
         return 'The Brothers\' War'
       if card_name in ['Bruna, the Fading Light', 'Gisela, the Broken Blade', 'Hanweir Battlements', 'Hanweir Garrison']:
         return 'Eldritch Moon'
+      if card_name in ['Pick Your Poison']:
+        return 'Murders at Karlov Manor'
       card_printing_codes = cards_csv.loc[cards_csv['name'] == card_name].iloc[0]['printings'].split(', ')
       if 'BOT' in card_printing_codes:
         return 'Transformers'
