@@ -183,72 +183,33 @@ for tournament in list_of_tournaments_to_process:
   tournament_obj: edhtop16_t.Tournament = tournaments[[x['name'] for x in tournaments].index(tournament)] # Obtenemos el objeto del torneo para actualizar
 
   tournament_decklists_by_hash = {}
-  #is_cached = files.file_exists(f"{METAGAME_PATH}/tournaments/{tournament}", 'decklists.t.json')
-  #if (not FORCE_UPDATE) and is_cached: # TODO: fix bug que persiste la data del hash en cada iteración al leer el archivo
-  #  tournament_decklists_by_hash = files.read_json_file(f"{METAGAME_PATH}/tournaments/{tournament}", 'decklists.t.json')
 
   tournament_raw_lists = []
   tournament_commanders = []
   tournament_decklists_by_commander = {}
   cant_tournament_decklists_processed = 0
   tournament_cant_decklists_by_hash = {}
-  has_changes = False
-  cant_bad_decklists = 0
   if tournament_obj['processed']:
     continue
   for hash in decklist_hashes_by_tournament[tournament]:
-    found = False
-    # Primero verificamos si ya tenemos la lista guardad en nuestro cache del torneo
-    if hash in tournament_decklists_by_hash.keys() and not found:
-      if not 'status' in list(tournament_decklists_by_hash[hash].keys()): # status in response usually means error 404
+    # Si no se tiene cacheada, vamos a buscarla a la lista de decks que usamos en el metagame (debería tener gran parte de los decks)
+    if hash in decklists_by_hash.keys():
+      if not 'status' in list(decklists_by_hash[hash].keys()): # status in response usually means error 404
         tournament_commanders.append(commanders_by_hash[hash])
         tournament_raw_lists.append(raw_lists_by_hash[hash])
+        tournament_decklists_by_hash[hash] = decklists_by_hash[hash]
         if raw_lists_by_hash[hash]['commander'] not in tournament_decklists_by_commander.keys():
           tournament_decklists_by_commander[raw_lists_by_hash[hash]['commander']] = []
-        tournament_decklists_by_commander[raw_lists_by_hash[hash]['commander']].append(tournament_decklists_by_hash[hash])
-        found = True
-    if not found:
-      # Si no se tiene cacheada, vamos a buscarla a la lista de decks que usamos en el metagame (debería tener gran parte de los decks)
-      if hash in decklists_by_hash.keys():
-        if not 'status' in list(decklists_by_hash[hash].keys()): # status in response usually means error 404
-          tournament_commanders.append(commanders_by_hash[hash])
-          tournament_raw_lists.append(raw_lists_by_hash[hash])
-          tournament_decklists_by_hash[hash] = decklists_by_hash[hash]
-          if raw_lists_by_hash[hash]['commander'] not in tournament_decklists_by_commander.keys():
-            tournament_decklists_by_commander[raw_lists_by_hash[hash]['commander']] = []
-          tournament_decklists_by_commander[raw_lists_by_hash[hash]['commander']].append(decklists_by_hash[hash])
-          found = True
-      # Si no la encontramos, vamos a buscarla a moxfield
-      if not found:
-        decklist: moxfield_t.DecklistV3 = {} # type: ignore
-        try:
-          decklist = moxfield.get_decklists_data(hash, version=3, no_log=True)
-        except Exception:
-          cant_bad_decklists += 1
-          continue
-        if 'status' in list(decklist.keys()): # status in response usually means error 404
-          cant_bad_decklists += 1
-          continue
-        tournament_commanders.append(commanders_by_hash[hash])
-        tournament_raw_lists.append(raw_lists_by_hash[hash])
-        if raw_lists_by_hash[hash]['commander'] not in tournament_decklists_by_commander.keys():
-          tournament_decklists_by_commander[raw_lists_by_hash[hash]['commander']] = []
-        tournament_decklists_by_commander[raw_lists_by_hash[hash]['commander']].append(decklist)
-        tournament_decklists_by_hash[hash] = decklist
-        decklists_by_hash[hash] = decklist
-      has_changes = True
+        tournament_decklists_by_commander[raw_lists_by_hash[hash]['commander']].append(decklists_by_hash[hash])
 
     if hash in tournament_cant_decklists_by_hash.keys():
       tournament_cant_decklists_by_hash[hash] += 1
     else:
       tournament_cant_decklists_by_hash[hash] = 1
 
-    logs.loading_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% - ", cant_tournament_decklists_processed, len(decklist_hashes_by_tournament[tournament]), end=f" - Bad decklists: {cant_bad_decklists}\r")
+    logs.loading_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% - ", cant_tournament_decklists_processed, len(decklist_hashes_by_tournament[tournament]), end=f"\r")
     cant_tournament_decklists_processed += 1
     # FIN iteración de decklists
-  if has_changes:
-    logs.ephemeral_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% Saving tournament cache...")
-    files.create_new_file('', f"{METAGAME_PATH}/tournaments/{tournament}", 'decklists.t.json', tournament_decklists_by_hash, with_log=False)
 
   logs.ephemeral_log(f"Getting decklists from tournaments [{cant_tournament_processed}/{len(list_of_tournaments_to_process)}] {round((cant_tournament_processed/len(list_of_tournaments_to_process))*100, 2)}% processing metagame resume...")
   tournament_commanders = list(set(tournament_commanders))
