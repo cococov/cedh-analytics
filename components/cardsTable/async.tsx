@@ -4,7 +4,7 @@ import CardsTable from './index';
 /* Static */
 import styles from '@/styles/CardsList.module.css';
 
-async function getData(cardsURL?: string, tagsByCardURL?: string, commander?: string, fromMetagame?: boolean) {
+async function getData(cardsURL?: string, tagsByCardURL?: string, fromMetagame?: boolean) {
   if (!cardsURL || !tagsByCardURL) return { cards: [] };
 
   try {
@@ -13,7 +13,7 @@ async function getData(cardsURL?: string, tagsByCardURL?: string, commander?: st
     const rawTagsByCard = await fetch(tagsByCardURL);
     const tagsByCard = await rawTagsByCard.json();
 
-    const mappedCards = (!!commander ? cards[commander] : cards).map((card: any) => {
+    const mappedCards = cards.map((card: any) => {
       const obj = {
         card_name: card.cardName,
         occurrences: card.occurrences,
@@ -57,7 +57,6 @@ export default async function AsyncCardsTable({
   cardsURL,
   tagsByCardURL,
   context,
-  commander,
   fromMetagame,
   noInfo,
   withUrlPArams,
@@ -67,12 +66,11 @@ export default async function AsyncCardsTable({
   cardsURL?: string,
   tagsByCardURL?: string,
   context?: any,
-  commander?: string,
   fromMetagame?: boolean,
   noInfo?: boolean,
   withUrlPArams?: boolean,
 }) {
-  const { cards } = await getData(cardsURL, tagsByCardURL, commander, fromMetagame);
+  const { cards } = await getData(cardsURL, tagsByCardURL, fromMetagame);
 
   return (
     <span className={styles.commandersContainer}>

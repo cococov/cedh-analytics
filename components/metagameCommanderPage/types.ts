@@ -127,6 +127,7 @@ export type ErrorData = { notFound: boolean };
 
 export type PageData = {
   rawCommanderNames: string;
+  rawCommanderNamesBase64: string;
   commanderNumber: number;
   commanderNames: string[];
   commandersIdentity: string[];

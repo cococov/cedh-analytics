@@ -249,7 +249,6 @@ export default async function MetagameCommanderPage({
                 title="Cards"
                 cardsURL={cardsURL}
                 tagsByCardURL={tagsByCardURL}
-                commander={data.rawCommanderNames}
                 fromMetagame
                 noInfo
               />
