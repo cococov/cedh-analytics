@@ -86,6 +86,7 @@ async function fetchData({ commanderName }: Params): Promise<ResponseData> {
     return {
       commanderNumber,
       rawCommanderNames: decodedCommanderName,
+      rawCommanderNamesBase64: btoa(decodedCommanderName),
       commandersIdentity: flatten(pluck('colorIdentity', commandersData)),
       commanderNames: capitalizedCommanderNames,
       cardImages: pluck('cardImage', commandersData),
@@ -124,7 +125,7 @@ export default async function MetagameCommander({
     <MetagameCommanderPage
       data={data}
       LastSetTop10UrlBase="/metagame-cards"
-      cardsURL={`${server}/data/metagame/metagame_cards_by_commander.json`}
+      cardsURL={`${server}/data/metagame/commanders_cards/${data.rawCommanderNamesBase64}.json`}
       tagsByCardURL={`${server}/data/cards/tags.json`}
     />
   );

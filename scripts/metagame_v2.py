@@ -273,6 +273,9 @@ files.create_new_file('', METAGAME_PATH, 'stats_by_commander.json', stats_by_com
 files.create_new_file('', METAGAME_PATH, 'metagame_resume.json', metagame_resume)
 files.create_new_file('', METAGAME_PATH, 'metagame_cards_by_commander.json', metagame_cards_by_commander)
 
+# SPLIT CARDS BY COMMANDER
+subprocess.Popen(['python3', 'scripts/split_commander_cards.py']).wait()
+
 # CLEANING
 files.clear_csv_directory()
 

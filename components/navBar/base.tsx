@@ -8,9 +8,6 @@ export default function BaseNavBar() {
       <Link href="/">
         Home
       </Link>
-      <Link href="/db-cards">
-        DB Cards
-      </Link>
       <Link href="/metagame">
         Metagame
       </Link>
@@ -19,6 +16,9 @@ export default function BaseNavBar() {
       </Link>
       <Link href="/tournaments">
         Tournaments
+      </Link>
+      <Link href="/db-cards">
+        DB Cards
       </Link>
       <Link href="/glossary">
         Glossary
