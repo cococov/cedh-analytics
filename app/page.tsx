@@ -9,6 +9,8 @@ import LastSetTop10 from '@/components/lastSetTop10';
 import styles from '@/styles/Home.module.css';
 import SylvanLibrary from '@/public/images/sylvan_library.jpg';
 import DATA from '@/public/data/home_overview.json';
+import METAGAME_DATA from '@/public/data/metagame/metagame_resume.json';
+import UPDATE_DATE from '@/public/data/update_date.json';
 
 export const metadata: Metadata = { title: 'cEDH Analytics' };
 
@@ -31,22 +33,21 @@ export default async function Home() {
       <section className={styles.homeStatsHiddenSection}>
         <span className={styles.homeStatsHiddenSectionTop}>
           <span className={styles.homeStatHidden}>
-            <h3>Total Decks</h3>
-            <p>{data.decks}</p>
+            <h4>Commanders</h4>
+            <p>{METAGAME_DATA.cantCommanders.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
           </span>
           <span className={styles.homeStatHidden}>
-            <h3>Total Cards</h3>
-            <p>{data.cards}</p>
+            <h4>Decklists</h4>
+            <p>{METAGAME_DATA.cantLists.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
           </span>
           <span className={styles.homeStatHidden}>
-            <h3>Total Staples</h3>
-            <span className={styles.homeStatDisclaimer}>(More than 10 occurrences)</span>
-            <p>{data.staples}</p>
+            <h4>Tournaments</h4>
+            <p>{METAGAME_DATA.cantTournaments.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
           </span>
           <Link href="/top-10-last-set">
             <span className={styles.hiddenButtonTop10Tablet}>
               <span className={styles.hiddenButtonTop10TabletLeft}>
-                <h3>Top 10 cards</h3>
+                <h3>Top 10 cards (DB)</h3>
                 <span>{data.last_set}</span>
               </span>
               <span className={styles.hiddenButtonTop10TabletRight}>
@@ -57,7 +58,7 @@ export default async function Home() {
         </span>
         <Link href="/top-10-last-set" className={styles.hiddenButtonTop10}>
           <>
-            <span>Top 10 cards of the last set</span>
+            <span>Top 10 cards of the last set (DB)</span>
             <ArrowRightIcon fontSize="medium" />
           </>
         </Link>
@@ -156,60 +157,7 @@ export default async function Home() {
         <article className={styles.homeArticle}>
           <h2>The data</h2>
           <p>
-            This page automatically and periodically obtains the list of decks exposed by {' '}
-            <a
-              href="https://cedh-decklist-database.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.homeLink}
-            >
-              The cEDH Database
-            </a>
-            , obtains the data of each deck in {' '}
-            <a
-              href="https://www.moxfield.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.homeLink}
-            >
-              Moxfield
-            </a>
-            {' '}
-            and finally obtains specific information of each card from {' '}
-            <a
-              href="https://scryfall.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.homeLink}
-            >
-              Scryfall
-            </a>
-            {' and '}
-            <a
-              href="https://mtgjson.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.homeLink}
-            >
-              MTGJSON
-            </a>
-            .
-
-            For the above, the following criteria were taken:
-          </p>
-          <ul>
-            <li>
-              Only the decks exposed in the &quot;Competitive Decks&quot; section of the database are considered. (In the future it&apos;s thought to make it optional to consider the &quot;Brewer&apos;s Corner&quot; data)
-            </li>
-            <li>
-              Only the data from decklists on Moxfield is processed.
-            </li>
-            <li>
-              Decklists with broken links are ignored.
-            </li>
-          </ul>
-          <p>
-            In the
+            For the
             {' '}
             <Link href="/metagame" className={styles.homeLink}>
               Metagame
@@ -286,6 +234,45 @@ export default async function Home() {
               Decklists with broken links (or no links) are ignored.
             </li>
           </ul>
+
+          <p>
+            We also process the decklists exposed by the {' '}
+            <a
+              href="https://cedh-decklist-database.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.homeLink}
+            >
+              cEDH Database
+            </a>
+            {' '}
+            for the
+            {' '}
+            <Link href="/db-cards" className={styles.homeLink}>
+              DB Cards
+            </Link>
+            {' section, '}
+            with the following criteria:
+          </p>
+          <ul>
+            <li>
+              Only the decks exposed in the &quot;Competitive Decks&quot; section of the database are considered. (In the future it&apos;s thought to make it optional to consider the &quot;Brewer&apos;s Corner&quot; data)
+            </li>
+            <li>
+              Only the data from decklists on Moxfield is processed.
+            </li>
+            <li>
+              Decklists with broken links are ignored.
+            </li>
+          </ul>
+        </article>
+
+        <article className={styles.homeArticle}>
+          <h3>Last update</h3>
+          <ul>
+            <li><b>Tournaments:</b> {UPDATE_DATE.metagame}</li>
+            <li><b>DB:</b> {UPDATE_DATE.database}</li>
+          </ul>
         </article>
 
         <article className={styles.homeLegal}>
@@ -308,26 +295,27 @@ export default async function Home() {
       </section>
       <section className={styles.homeStatsSection}>
         <span className={styles.homeStat}>
-          <h2>Total Decks</h2>
-          <p>{data.decks}</p>
+          <h2>Commanders</h2>
+          <p>{METAGAME_DATA.cantCommanders.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
         </span>
         <span className={styles.homeStat}>
-          <h2>Total Cards</h2>
-          <p>{data.cards}</p>
+          <h2>Decklists</h2>
+          <p>{METAGAME_DATA.cantLists.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
         </span>
         <span className={styles.homeStat}>
-          <h2>Total Staples</h2>
-          <span className={styles.homeStatDisclaimer}>(More than 10 occurrences)</span>
-          <p>{data.staples}</p>
-        </span>
-        <span className={styles.homeStat}>
-          <h2>Total Niche Cards</h2>
-          <span className={styles.homeStatDisclaimer}>(1 occurrence)</span>
-          <p>{data.pet}</p>
+          <h2>Tournaments</h2>
+          <p>{METAGAME_DATA.cantTournaments.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
         </span>
         <span className={styles.homeStatTable}>
           <section className={styles.homeStatTableTitle}>
-            <h2>Top 10 cards</h2>
+            <h2>Top 10 cards tournaments</h2>
+            <h3>{METAGAME_DATA.lastSet}</h3>
+          </section>
+          <LastSetTop10 last_set_top_10={METAGAME_DATA.lastSetTop10} urlBase='/metagame-cards' />
+        </span>
+        <span className={styles.homeStatTable}>
+          <section className={styles.homeStatTableTitle}>
+            <h2>Top 10 cards DB</h2>
             <h3>{data.last_set}</h3>
           </section>
           <LastSetTop10 last_set_top_10={data.last_set_top_10} urlBase='/db-cards' />
