@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 /* Vendor */
-import { replace } from 'ramda';
+import { replace, pipe } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
@@ -72,7 +72,16 @@ export default async function Metagame({
 }: {
   params: Params,
 }) {
-  const tournamentName = replace('%40', '@', decodeURI(String(params.id)));
+  const tournamentName = pipe(
+    replace('%40', '@'),
+    replace('%2B', '+'),
+    replace('%2F', '/'),
+    replace('%3A', ':'),
+    replace('%23', '#'),
+    replace('%3F', '?'),
+    replace('%3D', '='),
+    replace('%24', '$'),
+  )(decodeURI(String(params.id)));
   const response = await fetchData({ id: tournamentName });
 
   if (response.notFound) notFound();
