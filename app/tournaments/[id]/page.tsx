@@ -71,9 +71,7 @@ async function fetchData({ id }: Params): Promise<ResponseDataWithError> {
   if (!id) return { notFound: true };
 
   try {
-    const path = process.env.NODE_ENV === 'development'
-      ? `${process.cwd()}/public/data/metagame/tournaments/${id}/metagame_resume.json`
-      : `${process.cwd()}/data/metagame/tournaments/${id}/metagame_resume.json`;
+    const path = `${process.cwd()}/public/data/metagame/tournaments/${id}/metagame_resume.json`;
     const file = await fs.readFile(path, 'utf8');
     const resume: ResumeData = JSON.parse(file);
 
