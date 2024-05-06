@@ -22,6 +22,7 @@
 
 - Ref: Deduplicar lista de navbar para en un mismo origen para evitar tener problemas de homologación
 - Ref: Refactorizar, tipar y ordenar scripts procesadores de cartas
+- Ref: Eliminar torneos viejos
 
 - Chore: Eliminar componentes y estilos tabla vieja de top 10
 
@@ -44,7 +45,6 @@
 - Feat: Añadir link al torneo en página del torneo
 - Feat: Añadir disclaimer de que si se actualizaron las listas posterior al torneo, puede haber variaciones (añadir un Geist success tooltip clickeable con un icono de información)
 - Añadir opción de re-procesar torneo sin descargar y no solo saltar el torneo por completo
-- Fix: decode de nombre cuando tiene 2 puntos (:)
 
 ## Normalización DB
 
@@ -71,3 +71,4 @@
 - Que hamburguesa de navbar en mobile no sea un link
 - Hacer trim (eliminar espacio final) de torneos antes de guardar su nombre en lista de torneos y carpeta del torneo
 - Siempre que se corre el script de metagame se guarda en stats_by_commander el comandante Prime Speaker Zegana que no tiene data
+- Ocultar % de uso en identidad para tabla de cartas de comandantes
