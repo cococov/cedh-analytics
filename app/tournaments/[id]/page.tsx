@@ -22,7 +22,22 @@ export async function generateMetadata({
 }: {
   params: Params,
 }): Promise<Metadata> {
-  const tournamentName = decodeURI(String(params.id));
+  const tournamentName = pipe(
+    String,
+    decodeURI,
+    replace(/%40/g, '@'),
+    replace(/%2B/g, '+'),
+    replace(/%2F/g, '/'),
+    replace(/%3A/g, ':'),
+    replace(/%23/g, '#'),
+    replace(/%3F/g, '?'),
+    replace(/%3D/g, '='),
+    replace(/%24/g, '$'),
+    replace(/%21/g, '!'),
+    replace(/%2C/g, ','),
+    replace(/%28/g, '('),
+    replace(/%29/g, ')'),
+  )(params.id);
 
   return {
     title: tournamentName,
@@ -63,6 +78,7 @@ async function fetchData({ id }: Params): Promise<ResponseDataWithError> {
       notFound: false,
     };
   } catch (err) {
+    console.warn(err);
     return { notFound: true };
   }
 };
@@ -85,6 +101,8 @@ export default async function Metagame({
     replace(/%24/g, '$'),
     replace(/%21/g, '!'),
     replace(/%2C/g, ','),
+    replace(/%28/g, '('),
+    replace(/%29/g, ')'),
   )(params.id);
   const response = await fetchData({ id: tournamentName });
 

@@ -23,6 +23,7 @@
 - Ref: Deduplicar lista de navbar para en un mismo origen para evitar tener problemas de homologación
 - Ref: Refactorizar, tipar y ordenar scripts procesadores de cartas
 - Ref: Eliminar torneos viejos
+- Ref: Dejar parseo de nombres de torneos y cartas de URL en un método
 
 - Chore: Eliminar componentes y estilos tabla vieja de top 10
 
