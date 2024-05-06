@@ -70,3 +70,4 @@
 - Reducir el margen de la tabla de top 10 del home para que al tener menos width de pantalla no levante scroll horizontal
 - Que hamburguesa de navbar en mobile no sea un link
 - Hacer trim (eliminar espacio final) de torneos antes de guardar su nombre en lista de torneos y carpeta del torneo
+- Siempre que se corre el script de metagame se guarda en stats_by_commander el comandante Prime Speaker Zegana que no tiene data
