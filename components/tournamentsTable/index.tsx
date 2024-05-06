@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 /* Vendor */
-import { find } from 'ramda';
+import { find, pipe, replace } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
 import Table from '@/components/table';
@@ -112,7 +112,14 @@ export default function TournamentsTable({
   const handleClickRow = useCallback((_e: any, rowData: any = {}) => {
     toggleLoading(true);
     const tournamentName = find(d => d.name === rowData.name, tournaments)?.name;
-    router.push(`/tournaments/${encodeURIComponent(String(tournamentName))}`);
+    const encodedTournamentName = pipe(
+      String,
+      encodeURIComponent,
+      replace(/!/g, '%21'),
+      replace(/\(/g, '%28'),
+      replace(/\)/g, '%29'),
+    )(tournamentName);
+    router.push(`/tournaments/${encodedTournamentName}`);
   }, []);
 
   if (!isLoaded) return (
