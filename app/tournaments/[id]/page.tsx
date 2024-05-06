@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
+import { promises as fs } from 'fs';
 /* Vendor */
 import { replace, pipe } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
@@ -70,8 +71,8 @@ async function fetchData({ id }: Params): Promise<ResponseDataWithError> {
   if (!id) return { notFound: true };
 
   try {
-    const rawData = await fetch(`${server}/data/metagame/tournaments/${id}/metagame_resume.json`);
-    const resume: ResumeData = await rawData.json();
+    const file = await fs.readFile(`${process.cwd()}/public/data/metagame/tournaments/${id}/metagame_resume.json`, 'utf8');
+    const resume: ResumeData = JSON.parse(file);
 
     return {
       resume,
