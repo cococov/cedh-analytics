@@ -112,7 +112,7 @@ export default function TournamentsTable({
   const handleClickRow = useCallback((_e: any, rowData: any = {}) => {
     toggleLoading(true);
     const tournamentName = find(d => d.name === rowData.name, tournaments)?.name;
-    router.push(`/tournaments/${tournamentName}`);
+    router.push(`/tournaments/${encodeURIComponent(String(tournamentName))}`);
   }, []);
 
   if (!isLoaded) return (
