@@ -73,15 +73,19 @@ export default async function Metagame({
   params: Params,
 }) {
   const tournamentName = pipe(
-    replace('%40', '@'),
-    replace('%2B', '+'),
-    replace('%2F', '/'),
-    replace('%3A', ':'),
-    replace('%23', '#'),
-    replace('%3F', '?'),
-    replace('%3D', '='),
-    replace('%24', '$'),
-  )(decodeURI(String(params.id)));
+    String,
+    decodeURI,
+    replace(/%40/g, '@'),
+    replace(/%2B/g, '+'),
+    replace(/%2F/g, '/'),
+    replace(/%3A/g, ':'),
+    replace(/%23/g, '#'),
+    replace(/%3F/g, '?'),
+    replace(/%3D/g, '='),
+    replace(/%24/g, '$'),
+    replace(/%21/g, '!'),
+    replace(/%2C/g, ','),
+  )(params.id);
   const response = await fetchData({ id: tournamentName });
 
   if (response.notFound) notFound();
