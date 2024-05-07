@@ -222,7 +222,7 @@ export default async function Home() {
           </p>
           <ul>
             <li>
-              <b>Timeframe:</b>1 year of data, looking back from the present day.
+              <b>Timeframe:</b> 1 year of data, looking back from the present day.
             </li>
             <li>
               <b>Tournament Size:</b> Only tournaments with at least 48 players are included.
@@ -256,7 +256,7 @@ export default async function Home() {
             <b>Timeframe:</b> Available data at the moment of update.
             </li>
             <li>
-              <b>Decklist Considered:</b> Only the decks exposed in the &quot;Competitive Decks&quot; section of the database are considered. (In the future we may consider adding the &quot;Brewer&apos;s Corner&quot; data)
+              <b>Decklist Considered:</b> Only the decks exposed in the &quot;Competitive Decks&quot; section of the database are considered.
             </li>
             <li>
               <b>Decklist Source:</b> Similarly to the tournament section, decklist data is processed solely from Moxfield. Decklists with broken or missing links are excluded.
