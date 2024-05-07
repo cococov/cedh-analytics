@@ -13,6 +13,7 @@
 - Data: Filtrar tags para dejar solo los útiles
 - Data: Dejar de guardar data vieja de db cards
 - Data: Poner flag de update a scripts, para que no siempre se actualicen y así evitar comentar el update en pruebas
+- Data: Eliminar metagame_cards_by_commander, competitiveCards y metagame_cards al terminar de ejecutar el los scripts
 
 - Perf: Optimizar imágenes para no depender de vercel en ello
 - Perf: Dejar de optimizar imágenes en info de carta desde vercel una vez sean optimas
@@ -52,6 +53,7 @@
 - Llevar decklists a otra tabla y referenciar esta con las cartas por medio de una tabla intermedia
 - Llevar torneos y commanders a la db
 - Obtener last update de database y metagame desde la db
+- Usar tags desde la DB en vez de json en los lados que queda
 
 ## Mejorar filtros
 
