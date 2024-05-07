@@ -18,7 +18,7 @@ export default function BaseNavBar() {
         Tournaments
       </Link>
       <Link href="/db-cards">
-        DB Cards
+        DDB Cards
       </Link>
       <Link href="/glossary">
         Glossary

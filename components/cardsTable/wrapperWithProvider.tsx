@@ -31,7 +31,7 @@ export default function CardsTableWithProvider({
 
   return (
     <CardsTable
-      title={title || "DB Cards"}
+      title={title || "DDB Cards"}
       table={table}
       handleChangeCard={handleChangeCard}
       cardUrlBase={cardUrlBase}
