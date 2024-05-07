@@ -213,7 +213,7 @@ export default async function About() {
         <table className={styles.aboutUpdateDates}>
           <thead>
             <tr>
-              <th>Last DB Update</th>
+              <th>Last DDB Update</th>
               <th>Last Metagame Update</th>
             </tr>
           </thead>

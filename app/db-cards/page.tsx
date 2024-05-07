@@ -9,11 +9,11 @@ import DbCardsContext, { DbCardsProvider } from '@/contexts/dbCardsStore';
 import styles from '@/styles/CardsList.module.css';
 
 export const metadata: Metadata = {
-  title: 'DB Cards',
+  title: 'DDB Cards',
   description: `Cards used in cEDH database's decklists. | ${descriptionMetadata}`,
   openGraph: {
     ...openGraphMetadata,
-    title: 'DB Cards | cEDH Analytics',
+    title: 'DDB Cards | cEDH Analytics',
     images: [
       {
         url: '/images/frantic_search_og.jpg',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     ...twitterMetadata,
-    title: `DB Cards | ${twitterMetadata.title}`,
+    title: `DDB Cards | ${twitterMetadata.title}`,
     description: `Cards used in cEDH database's decklists. | ${twitterMetadata.description}`,
     images: {
       url: '/images/frantic_search_og.jpg',
@@ -43,7 +43,7 @@ export default async function Cards() {
         </span>
         <span className={styles.commandersContainer}>
           <CardsTableWithProvider
-            title="DB Cards"
+            title="DDB Cards"
             table="db_cards"
             context={DbCardsContext}
             cardUrlBase="/db-cards"

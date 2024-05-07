@@ -222,16 +222,13 @@ export default async function Home() {
           </p>
           <ul>
             <li>
-              1 year of data is considered. (now - 1 year)
+              <b>Timeframe:</b> 1 year of data, looking back from the present day.
             </li>
             <li>
-              Only tournaments with 48 or more players are considered.
+              <b>Tournament Size:</b> Only tournaments with at least 48 players are included.
             </li>
             <li>
-              Only the data from decklists on Moxfield is processed.
-            </li>
-            <li>
-              Decklists with broken links (or no links) are ignored.
+              <b>Decklist Source:</b> Decklist data is processed solely from Moxfield. Decklists with broken or missing links are excluded.
             </li>
           </ul>
 
@@ -249,20 +246,20 @@ export default async function Home() {
             for the
             {' '}
             <Link href="/db-cards" className={styles.homeLink}>
-              DB Cards
+              DDB Cards
             </Link>
             {' section, '}
             with the following criteria:
           </p>
           <ul>
             <li>
-              Only the decks exposed in the &quot;Competitive Decks&quot; section of the database are considered. (In the future it&apos;s thought to make it optional to consider the &quot;Brewer&apos;s Corner&quot; data)
+            <b>Timeframe:</b> Available data at the moment of update.
             </li>
             <li>
-              Only the data from decklists on Moxfield is processed.
+              <b>Decklist Considered:</b> Only the decks exposed in the &quot;Competitive Decks&quot; section of the database are considered.
             </li>
             <li>
-              Decklists with broken links are ignored.
+              <b>Decklist Source:</b> Similarly to the tournament section, decklist data is processed solely from Moxfield. Decklists with broken or missing links are excluded.
             </li>
           </ul>
         </article>
@@ -271,7 +268,7 @@ export default async function Home() {
           <h3>Last update</h3>
           <ul>
             <li><b>Tournaments:</b> {UPDATE_DATE.metagame}</li>
-            <li><b>DB:</b> {UPDATE_DATE.database}</li>
+            <li><b>DDB:</b> {UPDATE_DATE.database}</li>
           </ul>
         </article>
 
@@ -315,7 +312,7 @@ export default async function Home() {
         </span>
         <span className={styles.homeStatTable}>
           <section className={styles.homeStatTableTitle}>
-            <h2>Top 10 cards DB</h2>
+            <h2>Top 10 cards DDB</h2>
             <h3>{data.last_set}</h3>
           </section>
           <LastSetTop10 last_set_top_10={data.last_set_top_10} urlBase='/db-cards' />
