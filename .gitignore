@@ -114,4 +114,7 @@ public/data/metagame/metagame_cards.json
 public/data/metagame/decklists.json
 public/data/metagame/**/decklists.t.json
 
+csv/
+.csv
+
 .vercel
