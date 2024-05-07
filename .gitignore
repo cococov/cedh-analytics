@@ -108,6 +108,8 @@ dist
 .tern-port
 
 # Big Files
+public/data/cards/competitiveCards.json
+public/data/metagame/metagame_cards.json
 public/data/metagame/decklists.json
 public/data/metagame/**/decklists.t.json
 
