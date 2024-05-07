@@ -68,9 +68,6 @@ home_overview['last_set'] = LAST_SET[0]
 home_overview['last_set_top_10'] = processing.last_set_top_10(reduced_data, LAST_SET)
 logs.end_log_block('Processing decklists data')
 
-# SAVE BACKUP
-files.backup_file(FILE_PATH, DIRNAME, FOLDER_PATH)
-
 # SAVE NEW FILE
 files.create_data_file(DIRNAME, FILE_PATH, reduced_data)
 
