@@ -1,2 +1,0 @@
-public/data/metagame/**/*.json filter=lfs diff=lfs merge=lfs -text
-public/data/cards/**/*.json filter=lfs diff=lfs merge=lfs -text
