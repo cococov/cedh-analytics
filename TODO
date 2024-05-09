@@ -8,22 +8,20 @@
 - Feat: Hacer custom sort en colors para que ordene de mono colors a 5 colors
 - Feat: Hacer custom sort para que power and toughness tire siempre los guiones para el final sin importar el sort direction
 - Feat: Añadir remote autocomplete a tabla de cartas (usar componente de MUI y API de scryfall)
-- Feat: Mejorar texto del home
+- Feat: Agregar tipo de criatura a tabla de cartas
+- Feat: Que error 500 de la opción de ir al home
 
 - Data: Filtrar tags para dejar solo los útiles
 - Data: Dejar de guardar data vieja de db cards
 - Data: Poner flag de update a scripts, para que no siempre se actualicen y así evitar comentar el update en pruebas
 - Data: Eliminar metagame_cards_by_commander, competitiveCards y metagame_cards al terminar de ejecutar el los scripts
 
-- Perf: Optimizar imágenes para no depender de vercel en ello
-- Perf: Dejar de optimizar imágenes en info de carta desde vercel una vez sean optimas
 - Perf: Obtener tags de cartas desde la db en vez del json en tablas async de torneos y comandantes
 
 - Arch: Instalar eslint y prettier (ejemplo de buena config: <https://github.com/goncy/interview-challenges/blob/main/proyectos-live/migrado-libre/.eslintrc.cjs>)
 
 - Ref: Deduplicar lista de navbar para en un mismo origen para evitar tener problemas de homologación
 - Ref: Refactorizar, tipar y ordenar scripts procesadores de cartas
-- Ref: Eliminar torneos viejos
 - Ref: Dejar parseo de nombres de torneos y cartas de URL en un método
 
 - Chore: Eliminar componentes y estilos tabla vieja de top 10
