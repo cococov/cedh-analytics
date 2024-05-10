@@ -17,6 +17,13 @@ def clear_csv_directory():
   logs.end_log_block('Csv directory cleaned')
   time.sleep(1)
 
+def delete_file(file_path):
+  logs.begin_log_block(f'Deleting file {file_path}')
+  if os.path.exists(file_path):
+    os.remove(file_path)
+  logs.end_log_block(f'File {file_path} deleted')
+  time.sleep(1)
+
 def download_file(url, folder):
   check_call(['wget', url, '-P', folder], stdout=DEVNULL, stderr=STDOUT)
 
