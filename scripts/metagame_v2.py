@@ -279,6 +279,8 @@ subprocess.Popen(['python3', 'scripts/split_commander_cards.py']).wait()
 
 # CLEANING
 files.clear_csv_directory()
+files.delete_file('public/data/metagame/metagame_cards_by_commander.json')
+files.delete_file('public/data/metagame/metagame_cards.json')
 
 print('Updating date...', end='\r')
 
