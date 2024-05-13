@@ -277,11 +277,6 @@ files.create_new_file('', METAGAME_PATH, 'metagame_cards_by_commander.json', met
 # SPLIT CARDS BY COMMANDER
 subprocess.Popen(['python3', 'scripts/split_commander_cards.py']).wait()
 
-# CLEANING
-files.clear_csv_directory()
-files.delete_file('public/data/metagame/metagame_cards_by_commander.json')
-files.delete_file('public/data/metagame/metagame_cards.json')
-
 print('Updating date...', end='\r')
 
 update_date = {}
@@ -296,8 +291,13 @@ with open(update_date_path, 'w', encoding='utf8') as f:
 
 print('\033[KDate updated \033[92mDone!\033[0m')
 
-# GIT
-git.update_to_new_branch('chore: update Metagame', 'chore/update_metagame')
-
 # UPDATE DB
 update_db.update_metagame_cards()
+
+# CLEANING
+files.clear_csv_directory()
+files.delete_file('public/data/metagame/metagame_cards_by_commander.json')
+files.delete_file('public/data/metagame/metagame_cards.json')
+
+# GIT
+git.update_to_new_branch('chore: update Metagame', 'chore/update_metagame')
