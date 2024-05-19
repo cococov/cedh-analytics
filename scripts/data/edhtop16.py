@@ -70,9 +70,9 @@ def get_decklist_hashes_by_commander(raw_lists: list[EdhTop16DeckList]) -> dict[
 def get_decklist_hashes_by_tournament(raw_lists: list[EdhTop16DeckList]) -> dict[str, list[str]]:
   tournaments = {}
   for list in raw_lists:
-    if list['tournamentName'] not in tournaments.keys():
-      tournaments[list['tournamentName']] = []
-    tournaments[list['tournamentName']].append(list['decklist'].split('/')[-1])
+    if list['tournamentName'].strip() not in tournaments.keys():
+      tournaments[list['tournamentName'].strip()] = []
+    tournaments[list['tournamentName'].strip()].append(list['decklist'].split('/')[-1])
   return tournaments
 
 def sort_identity_str(identity):
