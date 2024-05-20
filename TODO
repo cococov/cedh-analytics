@@ -10,6 +10,7 @@
 - Feat: Añadir remote autocomplete a tabla de cartas (usar componente de MUI y API de scryfall)
 - Feat: Agregar tipo de criatura a tabla de cartas
 - Feat: Que error 500 de la opción de ir al home
+- Feat: Usar imagen de torneo carrot compost en about
 
 - Data: Filtrar tags para dejar solo los útiles
 - Data: Dejar de guardar data vieja de db cards
