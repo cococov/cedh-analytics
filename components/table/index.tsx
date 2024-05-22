@@ -172,7 +172,7 @@ export default function Table({
       columns={columns}
       data={data as any}
       title={<h1>{title}</h1>}
-      actions={actions}
+      actions={actions || []}
       isLoading={isLoading}
       options={{
         exportMenu: [{
