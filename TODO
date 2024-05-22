@@ -3,7 +3,6 @@
 - Feat: Mostrar imagen de atrás de cartas doble cara
 - Feat: Añadir tracking de eventos (como uso de botones y filtros)
 - Feat: crear submenu de db y metagame que contenga analysis y cards.
-- Feat: Añadir análisis de db
 - Feat: Crear análisis oculto de torneos chilenos
 - Feat: Hacer custom sort en colors para que ordene de mono colors a 5 colors
 - Feat: Hacer custom sort para que power and toughness tire siempre los guiones para el final sin importar el sort direction
@@ -16,8 +15,6 @@
 - Data: Dejar de guardar data vieja de db cards
 - Data: Poner flag de update a scripts, para que no siempre se actualicen y así evitar comentar el update en pruebas
 - Data: Eliminar metagame_cards_by_commander, competitiveCards y metagame_cards al terminar de ejecutar el los scripts
-
-- Perf: Obtener tags de cartas desde la db en vez del json en tablas async de torneos y comandantes
 
 - Arch: Instalar eslint y prettier (ejemplo de buena config: <https://github.com/goncy/interview-challenges/blob/main/proyectos-live/migrado-libre/.eslintrc.cjs>)
 
@@ -52,17 +49,12 @@
 - Llevar decklists a otra tabla y referenciar esta con las cartas por medio de una tabla intermedia
 - Llevar torneos y commanders a la db
 - Obtener last update de database y metagame desde la db
-- Usar tags desde la DB en vez de json en los lados que queda
+- Perf: Usar tags desde la DB en vez de json en los lados que queda (torneos y comandantes)
 
 ## Mejorar filtros
 
-- Hacer PR que:
-  - Quita el ultimo hardcodeo de operador en `src/material-table.js:40`
-  - Modificar el typo en `types/index.d.ts:244`
-  - Añadir defaultFilterOperator en `src/utils/data-manager.js:139` (filterOperator: columnDef.defaultFilterOperator)
-  - Añadir defaultFilterOperator a types en `types/index.d.ts:226`
-  - Añadir defaultFilterOperator a propTypes en `src/prop-types.js:43`
 - Añadir =, <, y > a columnas numéricas
+- Añadir filtro de rango de fechas
 
 ## FIX
 
@@ -71,7 +63,6 @@
 - El caching de decklists actualmente solo es en base al hash, debería ser hash y fecha, para capturar el caso que en distintos torneos se use la misma decklist, pero actualizada
 - Reducir el margen de la tabla de top 10 del home para que al tener menos width de pantalla no levante scroll horizontal
 - Que hamburguesa de navbar en mobile no sea un link
-- Hacer trim (eliminar espacio final) de torneos antes de guardar su nombre en lista de torneos y carpeta del torneo
 - Siempre que se corre el script de metagame se guarda en stats_by_commander el comandante Prime Speaker Zegana que no tiene data
 - Ocultar % de uso en identidad para tabla de cartas de comandantes
 - Dejar el fondo de los comandantes con el mismo gris que el resto del sitio
