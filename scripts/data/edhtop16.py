@@ -31,6 +31,7 @@ import data.moxfield_t as moxfield_t
 import pandas as pd
 from data.edhtop16_t import EdhTop16DeckList, CondensedCommanderData, StatsByCommander, ProcessedDecklist, MetagameResume, Tournament
 from datetime import datetime, timedelta
+import utils.logs as logs
 import utils.misc as misc
 
 URL = "https://edhtop16.com/api/req"
@@ -156,7 +157,7 @@ def get_commander_stats_by_commander(commanders: list[str], raw_lists: list[EdhT
       process_decklist_data['winRate'] = round(edh_top16_data['winRate'], 3)
       process_decklist_data['drawRate'] = round(edh_top16_data['draws'] / (edh_top16_data['wins'] + edh_top16_data['draws'] + edh_top16_data['losses']) if (edh_top16_data['wins'] + edh_top16_data['draws'] + edh_top16_data['losses']) > 0 else 0, 3)
       process_decklist_data['standing'] = edh_top16_data['standing']
-      process_decklist_data['tournamentName'] = edh_top16_data['tournamentName']
+      process_decklist_data['tournamentName'] = edh_top16_data['tournamentName'].strip()
       process_decklist_data['dateCreated'] = edh_top16_data['dateCreated']
       process_decklist_data['hasCompanion'] = decklist['boards']['companions']['count'] > 0
       process_decklist_data['companions'] = list(map(lambda x: x['card']['name'], decklist['boards']['companions']['cards'].values()))
@@ -294,13 +295,21 @@ def get_metagame_resume(commanders: list[str], raw_lists: list[EdhTop16DeckList]
 
   return data
 
-def get_tournaments_resume(saved_tournaments: list[Tournament], tournament_names: list[str]) -> list[Tournament]:
+def get_tournaments_resume(saved_tournaments: list[Tournament], tournament_names: list[str], mapped_tournament_names: dict[str, str]) -> list[Tournament]:
   new_tournaments: list[Tournament] = saved_tournaments
   saved_tournaments_names = list(map(lambda x: x['name'], saved_tournaments))
   for tournament_name in tournament_names:
     if tournament_name not in saved_tournaments_names:
-      data = {'tournamentName': rf'{tournament_name}'}
-      result = list(json.loads(requests.post(TOURNAMENTS_URL, json=data, headers=HEADERS).text)).pop()
+      if mapped_tournament_names[tournament_name].strip() != tournament_name:
+        logs.error_log(f'Tournament {tournament_name} is not the same as {mapped_tournament_names[tournament_name]}')
+        exit(1)
+      data = {'tournamentName': rf'{mapped_tournament_names[tournament_name]}'}
+      raw_result = requests.post(TOURNAMENTS_URL, json=data, headers=HEADERS).text
+      json_result = list(json.loads(raw_result))
+      result = json_result.pop() if len(json_result) > 0 else {}
+      if 'TID' not in result.keys():
+        logs.warning_log(f'Tournament {tournament_name} not found in EDH Top 16')
+        continue
       new_tournaments.append({
         'name': tournament_name,
         'TID': result['TID'],
