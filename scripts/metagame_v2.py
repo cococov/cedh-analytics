@@ -68,7 +68,7 @@ logs.end_log_block('Decklists from EDH Top 16 got')
 
 # PRE-PREPROCESS EDHTOP16 DATA
 logs.begin_log_block('Preprocessing EDH Top 16 data')
-raw_lists_by_hash = edhtop16.index_decklists_by_hash(raw_lists)
+raw_lists_by_hash = edhtop16.index_decklists_by_hash(raw_lists) # TODO: Manejar el caso de que una lista esté en más de un torneo
 commanders = edhtop16.get_commanders_from_data(raw_lists)
 decklist_hashes_by_commander = edhtop16.get_decklist_hashes_by_commander(raw_lists)
 decklist_hashes_by_tournament = edhtop16.get_decklist_hashes_by_tournament(raw_lists)
@@ -189,10 +189,14 @@ logs.end_log_block('Saved tournaments loaded')
 
 # GET TOURNAMENTS RESUME
 logs.begin_log_block('Getting tournaments list')
-tournaments = edhtop16.get_tournaments_resume(tournaments, list(decklist_hashes_by_tournament.keys()))
-logs.end_log_block('Tournaments list got!')
-
 list_of_tournaments_to_process = list(decklist_hashes_by_tournament.keys())
+mapped_tournament_names = {}
+for tournament in list_of_tournaments_to_process:
+  # Algunos torneos tienen espacios al final del nombre y por ello le hacemos un trim
+  # Pero para poder hacer los request a la API de EDH Top 16 necesitamos el nombre sin trim
+  mapped_tournament_names[tournament] = raw_lists_by_hash[decklist_hashes_by_tournament[tournament][0]]['tournamentName']
+tournaments = edhtop16.get_tournaments_resume(tournaments, list_of_tournaments_to_process, mapped_tournament_names)
+logs.end_log_block('Tournaments list got!')
 
 logs.begin_log_block(f'Processing tournaments')
 cant_tournament_processed = 0
