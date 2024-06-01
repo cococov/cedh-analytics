@@ -61,6 +61,7 @@ export async function generateMetadata({
     replace(/%2C/g, ','),
     replace(/%28/g, '('),
     replace(/%29/g, ')'),
+    replace(/%26/g, '&'),
   )(params.id);
 
   return {
@@ -128,6 +129,7 @@ export default async function Metagame({
     replace(/%2C/g, ','),
     replace(/%28/g, '('),
     replace(/%29/g, ')'),
+    replace(/%26/g, '&'),
   )(params.id);
   const response = await fetchData({ id: tournamentName });
 
