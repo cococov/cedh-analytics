@@ -49,7 +49,7 @@ export default function useQueryParams<T>() {
             // @ts-ignore
             if (is(Object, value_obj[key]) && has('v', value_obj[key]) && (isNil(value_obj[key].v) || isEmpty(value_obj[key].v))) return acc;
             // @ts-ignore
-            if (is(Object, value_obj[key]) && has('v', value_obj[key])) return { ...acc, [key]: value_obj[key].v };
+            if (is(Object, value_obj[key]) && has('v', value_obj[key]) && has('o', value_obj[key])) return { ...acc, [`${key}v`]: value_obj[key].v, [`${key}o`]: value_obj[key].o };
             return { ...acc, [key]: value_obj[key] };
           }, {} as Record<string, string | unknown[] | Record<string, unknown>>);
           if (isEmpty(filteredValue)) return urlSearchParams.delete(key);

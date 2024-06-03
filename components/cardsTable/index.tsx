@@ -148,9 +148,22 @@ function defaultFilterForColumn(
 ): string | string[] | undefined {
   if (!withUrlPArams) return undefined;
 
-  const filters = qsParse(queryParams.get('f') || '') as { [key: number]: string | string[] };
+  const filters = qsParse(queryParams.get('f') || '') as { [key: string]: string | string[] };
 
-  return filters[columnNumber];
+  return filters[`${columnNumber}v`];
+};
+
+function defaultFilterOperatorForColumn(
+  queryParams: ReadonlyURLSearchParams,
+  columnNumber: number,
+  withUrlPArams: boolean,
+  defaultValue: string,
+): string | string[] | undefined {
+  if (!withUrlPArams) return defaultValue;
+
+  const filters = qsParse(queryParams.get('f') || '') as { [key: string]: string | string[] };
+
+  return filters[`${columnNumber}o`] || defaultValue;
 };
 
 export default function CardsTable({
