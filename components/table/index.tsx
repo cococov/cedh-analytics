@@ -148,21 +148,32 @@ export function SelectFilter({
 
 export function NumberFilterWithOperator({
   columnDef,
-  onFilterChanged
+  onFilterChanged,
+  texInputChangeRef,
 }: {
   columnDef: any,
   onFilterChanged: any,
+  texInputChangeRef: any,
 }) {
   const [operator, setOperator] = useState(
     columnDef.tableData.filterOperator
   );
-  const [value, setValue] = useState(columnDef.defaultFilter);
+  const [value, setValue] = useState(columnDef.tableData.filterValue || undefined);
   const operatorRef = useRef(operator);
   const valueRef = useRef(value);
 
   useEffect(() => {
     if (operatorRef.current !== operator || valueRef.current !== value) {
-      onFilterChanged(columnDef.tableData.id, value, operator);
+      if (valueRef.current !== value) {
+        if (Boolean(texInputChangeRef.current)) {
+          clearTimeout(texInputChangeRef.current);
+        }
+        texInputChangeRef.current = setTimeout(() => {
+          onFilterChanged(columnDef.tableData.id, value, operator);
+        }, 500); // 500ms debounce before filtering
+      } else {
+        onFilterChanged(columnDef.tableData.id, value, operator);
+      }
       operatorRef.current = operator;
       valueRef.current = value;
     }
