@@ -23,7 +23,8 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import type { ChangeEvent } from 'react';
 /* Vendor */
 import MaterialTable, { Action } from '@material-table/core';
 import TextField from '@mui/material/TextField';
@@ -33,6 +34,8 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import ListItemText from '@mui/material/ListItemText';
+import InputAdornment from '@mui/material/InputAdornment';
+import type { SelectChangeEvent } from '@mui/material/Select';
 /* Own */
 import { pdfExporter, csvExporter } from '@/utils/exporters';
 
@@ -142,6 +145,78 @@ export function SelectFilter({
     </FormControl>
   );
 };
+
+export function NumberFilterWithOperator({
+  columnDef,
+  onFilterChanged
+}: {
+  columnDef: any,
+  onFilterChanged: any,
+}) {
+  const [operator, setOperator] = useState(
+    columnDef.tableData.filterOperator
+  );
+  const [value, setValue] = useState(columnDef.defaultFilter);
+  const operatorRef = useRef(operator);
+  const valueRef = useRef(value);
+
+  useEffect(() => {
+    if (operatorRef.current !== operator || valueRef.current !== value) {
+      onFilterChanged(columnDef.tableData.id, value, operator);
+      operatorRef.current = operator;
+      valueRef.current = value;
+    }
+  }, [operator, value]);
+
+  return (
+    <span className="flex">
+      <TextField
+        variant="standard"
+        value={value}
+        size="small"
+        type='number'
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Select
+                labelId={`select-operator-${columnDef.tableData.id}-label`}
+                id={`select-operator-${columnDef.tableData.id}`}
+                variant="standard"
+                value={operator}
+                sx={{
+                  width: '2rem',
+                  '&:before': {
+                    borderBottom: 'none',
+                  },
+                  '&:after': {
+                    borderBottom: 'none',
+                  },
+                  '&:hover:not(.Mui-disabled, .Mui-error):before': {
+                    borderBottom: 'none',
+                  },
+                  '& > .MuiSelect-select.MuiSelect-standard.MuiInputBase-input.MuiInput-input': {
+                    padding: '2px',
+                  }
+                }}
+                onChange={(event: SelectChangeEvent<HTMLInputElement>) => {
+                  setOperator(event.target.value)
+                }}
+              >
+                <MenuItem value={'='}>=</MenuItem>
+                <MenuItem value={'>'}>&gt;</MenuItem>
+                <MenuItem value={'<'}>&lt;</MenuItem>
+              </Select>
+            </InputAdornment>
+          ),
+        }}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+          setValue(event.target.value)
+        }}
+        fullWidth
+      />
+    </span>
+  );
+}
 
 export default function Table({
   columns,
