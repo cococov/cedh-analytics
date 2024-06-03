@@ -180,52 +180,50 @@ export function NumberFilterWithOperator({
   }, [operator, value]);
 
   return (
-    <span className="flex">
-      <TextField
-        variant="standard"
-        value={value}
-        size="small"
-        type='number'
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Select
-                labelId={`select-operator-${columnDef.tableData.id}-label`}
-                id={`select-operator-${columnDef.tableData.id}`}
-                variant="standard"
-                value={operator}
-                sx={{
-                  width: '2rem',
-                  '&:before': {
-                    borderBottom: 'none',
-                  },
-                  '&:after': {
-                    borderBottom: 'none',
-                  },
-                  '&:hover:not(.Mui-disabled, .Mui-error):before': {
-                    borderBottom: 'none',
-                  },
-                  '& > .MuiSelect-select.MuiSelect-standard.MuiInputBase-input.MuiInput-input': {
-                    padding: '2px',
-                  }
-                }}
-                onChange={(event: SelectChangeEvent<HTMLInputElement>) => {
-                  setOperator(event.target.value)
-                }}
-              >
-                <MenuItem value={'='}>=</MenuItem>
-                <MenuItem value={'>'}>&gt;</MenuItem>
-                <MenuItem value={'<'}>&lt;</MenuItem>
-              </Select>
-            </InputAdornment>
-          ),
-        }}
-        onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          setValue(event.target.value)
-        }}
-        fullWidth
-      />
-    </span>
+    <TextField
+      variant="standard"
+      value={value}
+      size="small"
+      type='number'
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <Select
+              labelId={`select-operator-${columnDef.tableData.id}-label`}
+              id={`select-operator-${columnDef.tableData.id}`}
+              variant="standard"
+              value={operator}
+              sx={{
+                width: '2rem',
+                '&:before': {
+                  borderBottom: 'none',
+                },
+                '&:after': {
+                  borderBottom: 'none',
+                },
+                '&:hover:not(.Mui-disabled, .Mui-error):before': {
+                  borderBottom: 'none',
+                },
+                '& > .MuiSelect-select.MuiSelect-standard.MuiInputBase-input.MuiInput-input': {
+                  padding: '2px',
+                }
+              }}
+              onChange={(event: SelectChangeEvent<HTMLInputElement>) => {
+                setOperator(event.target.value)
+              }}
+            >
+              <MenuItem value={'='}>=</MenuItem>
+              <MenuItem value={'>'}>&gt;</MenuItem>
+              <MenuItem value={'<'}>&lt;</MenuItem>
+            </Select>
+          </InputAdornment>
+        ),
+      }}
+      onChange={(event: ChangeEvent<HTMLInputElement>) => {
+        setValue(event.target.value)
+      }}
+      fullWidth
+    />
   );
 }
 
