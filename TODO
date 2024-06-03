@@ -53,8 +53,12 @@
 
 ## Mejorar filtros
 
-- Añadir =, <, y > a columnas numéricas
 - Añadir filtro de rango de fechas
+- Filtrar datos de tablas que no usan la DB cuando se cambia el operador
+- Añadir filtros a torneos
+- Usar grid para que no se deforme la pagina al usar muchos filtros
+- Añadir fecha a decklists de metagame, torneos y commanders
+- Añadir limite máximo para integers en filtro antes de hacer el filtrado
 
 ## API2 Moxfield
 
