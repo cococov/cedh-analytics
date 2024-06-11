@@ -91,7 +91,7 @@ export default async function getLocalCards(
       } else if (is(Array, value)) { // Selects
         if (value.length === 0) return true;
         return includes(`${card[column]}`, value);
-      } else { // Números
+      } else { // Numbers
         switch (operator) {
           case '=':
             return (card[column] as number) === Number.parseInt(value);
