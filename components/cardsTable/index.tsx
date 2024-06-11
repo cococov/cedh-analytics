@@ -749,7 +749,7 @@ export default function CardsTable({
     }
   }, [isSmallScreen, isMediumScreen]);
 
-  const getCardsMultiplexer = useCallback((query: any) => {
+  const getCardsMultiplexer = useCallback((query: any): any => {
     const method = Boolean(cards) ? getLocalCards : getCards;
     return method(
       // @ts-ignore

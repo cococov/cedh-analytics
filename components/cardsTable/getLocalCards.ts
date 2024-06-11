@@ -37,7 +37,7 @@ type Card = {
   'avg_draw_rate': number;
   'is_commander': boolean;
   'is_in_99': boolean;
-  'tags': string;
+  'tags': string[];
   'decklists': any[];
   'cmc': number;
   'type_line': string;
@@ -83,10 +83,15 @@ export default async function getLocalCards(
     ? filter(card => reduce((acc, curr) => {
       if (!acc) return false;
       const { column, operator, value } = curr;
-      if (includes(column, ['last_print', 'tags'])) { // Strings
+      if (includes(column, ['last_print'])) { // Strings
         return includes(
           (value as string).toLowerCase(),
-          card.card_name.toLowerCase(),
+          (card[column] as string).toLowerCase(),
+        );
+      } else if (includes(column, ['tags'])) { // String Arrays
+        return includes(
+          (value as string).toLowerCase(),
+          `${card[column]}`.toLowerCase(),
         );
       } else if (is(Array, value)) { // Selects
         if (value.length === 0) return true;
