@@ -56,6 +56,10 @@
 - Añadir =, <, y > a columnas numéricas
 - Añadir filtro de rango de fechas
 
+## API2 Moxfield
+
+- Usar api2 en vez de api para obtener data de moxfield
+
 ## FIX
 
 - No deformar elementos al usar un número elevado de columnas en tablas (usar grid en vez de flex)
