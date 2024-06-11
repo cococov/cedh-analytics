@@ -53,7 +53,6 @@
 
 ## Mejorar filtros
 
-- Añadir filtros a torneos
 - Añadir filtro de rango de fechas
 - Añadir filtros a comandantes
 - Añadir filtros a decklists
@@ -61,6 +60,8 @@
 - Añadir fecha a decklists de metagame, torneos y commanders
 - Cachear resultado de getCards() en backend, para no hacer la consulta sql en cada request
 - Añadir ad sense
+- Añadir Patreon
+- Añadir estado en query params para torneos
 
 ## API2 Moxfield
 
