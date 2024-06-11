@@ -23,14 +23,15 @@
 
 "use client";
 
-import { useState, useEffect, useCallback, useContext } from 'react';
+import { useState, useEffect, useCallback, useContext, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 /* Vendor */
-import { find, pipe, replace } from 'ramda';
+import { find, pipe, replace, filter, has } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
-import Table from '@/components/table';
+import Table, { NumberFilterWithOperator } from '@/components/table';
 import AppContext from '@/contexts/appStore';
+import getLocalTournaments from './getLocalTournaments';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 /* Static */
 import styles from '@/styles/CardsList.module.css';
@@ -44,6 +45,13 @@ type Tournament = {
   processed: boolean;
 };
 
+const COLUMNS_INDEXED = {
+  0: 'name',
+  1: 'size',
+  2: 'validLists',
+  3: 'date',
+};
+
 export default function TournamentsTable({
   tournaments,
 }: {
@@ -55,6 +63,7 @@ export default function TournamentsTable({
   const isLargeVerticalScreen = useMediaQuery('(min-height: 1300px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [renderKey, setRenderKey] = useState(`render-${Math.random()}`);
+  const texInputChangeRef = useRef<any>(null);
   const [columns, setColumns] = useState([
     {
       title: 'Name',
@@ -73,10 +82,20 @@ export default function TournamentsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Valid decklists',
@@ -84,10 +103,20 @@ export default function TournamentsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Date',
@@ -95,7 +124,7 @@ export default function TournamentsTable({
       type: 'date',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
@@ -157,12 +186,25 @@ export default function TournamentsTable({
         <Table
           key={renderKey}
           columns={columns}
-          data={tournaments}
+          data={query => getLocalTournaments(
+            tournaments,
+            query.page,
+            query.pageSize,
+            // @ts-ignore
+            COLUMNS_INDEXED[filter(has('sortOrder'), query.orderByCollection || [])[0]?.orderBy] || 'date',
+            filter(has('sortOrder'), query.orderByCollection || [])[0]?.orderDirection,
+            query.search,
+            query?.filters?.map((q: any) => ({
+              column: q.column.field,
+              operator: q.operator,
+              value: q.value,
+            })) || [],
+          )}
           defaultNumberOfRows={(isLargeVerticalScreen || isSmallScreen) ? 10 : 5}
           isLoading={false}
           isDraggable={false}
           canExportAllData={true}
-          canFilter={false}
+          canFilter={true}
           canSearch={true}
           withGrouping={false}
           rowHeight="5rem"
