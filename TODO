@@ -53,12 +53,14 @@
 
 ## Mejorar filtros
 
-- Añadir filtro de rango de fechas
-- Filtrar datos de tablas que no usan la DB cuando se cambia el operador
 - Añadir filtros a torneos
+- Añadir filtro de rango de fechas
+- Añadir filtros a comandantes
+- Añadir filtros a decklists
 - Usar grid para que no se deforme la pagina al usar muchos filtros
 - Añadir fecha a decklists de metagame, torneos y commanders
-- Añadir limite máximo para integers en filtro antes de hacer el filtrado
+- Cachear resultado de getCards() en backend, para no hacer la consulta sql en cada request
+- Añadir ad sense
 
 ## API2 Moxfield
 
