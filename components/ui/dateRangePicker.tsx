@@ -31,9 +31,9 @@ export function DatePickerWithRange({
         <PopoverTrigger asChild>
           <Button
             id="date"
-            variant={"outline"}
+            variant={"ghost"}
             className={cn(
-              "w-[300px] justify-start text-left font-normal",
+              "w-[300px] h-[29px] justify-start text-left font-normal border-b-[1px] hover:border-b-[2px] border-solid border-black rounded-b-none border-opacity-40 hover:border-opacity-80",
               !date && "text-muted-foreground"
             )}
           >
@@ -59,7 +59,7 @@ export function DatePickerWithRange({
             defaultMonth={date?.from}
             selected={date}
             onSelect={setDate}
-            numberOfMonths={2}
+            numberOfMonths={1}
           />
         </PopoverContent>
       </Popover>
