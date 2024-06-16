@@ -36,8 +36,11 @@ import InputLabel from '@mui/material/InputLabel';
 import ListItemText from '@mui/material/ListItemText';
 import InputAdornment from '@mui/material/InputAdornment';
 import type { SelectChangeEvent } from '@mui/material/Select';
+import { DateRange } from "react-day-picker";
+import { isNotNil } from 'ramda';
 /* Own */
 import { pdfExporter, csvExporter } from '@/utils/exporters';
+import { DatePickerWithRange } from '@/components/ui/dateRangePicker';
 
 interface RowData { [key: string]: any };
 
@@ -225,7 +228,38 @@ export function NumberFilterWithOperator({
       fullWidth
     />
   );
-}
+};
+
+export function DateRangeFilter({
+  columnDef,
+  onFilterChanged,
+}: {
+  columnDef: any,
+  onFilterChanged: any,
+}) {
+  const [date, setDate] = useState<DateRange | undefined>(() => {
+    return isNotNil(columnDef.tableData.filterValue) ? {
+      from: new Date(columnDef.tableData.filterValue[0]),
+      to: new Date(columnDef.tableData.filterValue[1]),
+    } : undefined;
+  });
+  const fromRef = useRef(date?.from?.toLocaleString('en-US', { dateStyle: 'short' }));
+  const toRef = useRef(date?.to?.toLocaleString('en-US', { dateStyle: 'short' }));
+
+  useEffect(() => {
+    if (fromRef.current !== date?.from || toRef.current !== date?.to) {
+      const from = date?.from?.toLocaleString('en-US', { dateStyle: 'short' });
+      const to = date?.to?.toLocaleString('en-US', { dateStyle: 'short' });
+      onFilterChanged(columnDef.tableData.id, [from, to], '<->');
+      fromRef.current = from;
+      toRef.current = to;
+    }
+  }, [date]);
+
+  return (
+    <DatePickerWithRange date={date} setDate={setDate} />
+  );
+};
 
 export default function Table({
   columns,

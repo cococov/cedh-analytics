@@ -18,13 +18,14 @@ import {
 import styles from '@/styles/Shadcn.module.css';
 
 export function DatePickerWithRange({
+  date,
+  setDate,
   className,
-}: React.HTMLAttributes<HTMLDivElement>) {
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(2022, 0, 20),
-    to: addDays(new Date(2022, 0, 20), 20),
-  });
-
+}: {
+  date: DateRange | undefined,
+  setDate: React.Dispatch<React.SetStateAction<DateRange | undefined>>,
+  className?: string,
+}) {
   return (
     <div className={cn(styles.shadcnComponent, "grid gap-2", className)}>
       <Popover>
@@ -48,7 +49,7 @@ export function DatePickerWithRange({
                 format(date.from, "LLL dd, y")
               )
             ) : (
-              <span>Pick a date</span>
+              <span>Pick a date range</span>
             )}
           </Button>
         </PopoverTrigger>
