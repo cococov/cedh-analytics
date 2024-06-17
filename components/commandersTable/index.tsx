@@ -23,16 +23,17 @@
 
 "use client";
 
-import { useState, useEffect, useCallback, useContext } from 'react';
+import { useState, useEffect, useCallback, useContext, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 /* Vendor */
 import { MaterialReadMoreIcon } from '@/components/vendor/materialIcon';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { replace } from 'ramda';
+import { replace, filter, has } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
-import Table, { SelectFilter } from '@/components/table';
+import Table, { SelectFilter, NumberFilterWithOperator } from '@/components/table';
+import getLocalCommanders from './getLocalCommanders';
 import AppContext from '@/contexts/appStore';
 /* Static */
 import styles from '@/styles/CardsList.module.css';
@@ -56,6 +57,17 @@ type CommandersData = {
   worstStanding: number;
 };
 
+const COLUMNS_INDEXED = {
+  0: 'commander',
+  1: 'identity',
+  2: 'appearances',
+  3: 'wins',
+  4: 'avgWinRate',
+  5: 'avgDrawRate',
+  6: 'bestStanding',
+  7: 'worstStanding',
+};
+
 export default function CommandersTable({
   title,
   commanders,
@@ -72,6 +84,7 @@ export default function CommandersTable({
   const isMediumScreen = useMediaQuery('(max-width: 1080px) and (min-width: 601px)');
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
   const [renderKey, setRenderKey] = useState(`render-${Math.random()}`);
+  const texInputChangeRef = useRef<any>(null);
   const [columns, setColumns] = useState([
     {
       title: 'Commander/s',
@@ -153,11 +166,21 @@ export default function CommandersTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
       defaultSort: 'desc',
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Wins',
@@ -165,10 +188,20 @@ export default function CommandersTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Avg Winrate',
@@ -176,10 +209,20 @@ export default function CommandersTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
       render: function PercentageOfUse(rowData: any) {
         const value = rowData.avgWinRate;
         return (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>);
@@ -191,10 +234,20 @@ export default function CommandersTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
       render: function PercentageOfUse(rowData: any) {
         const value = rowData.avgDrawRate;
         return (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>);
@@ -206,10 +259,20 @@ export default function CommandersTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Worst Standing',
@@ -217,10 +280,20 @@ export default function CommandersTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
   ]);
 
@@ -282,7 +355,20 @@ export default function CommandersTable({
       <Table
         key={renderKey}
         columns={columns}
-        data={commanders}
+        data={query => getLocalCommanders(
+          commanders,
+          query.page,
+          query.pageSize,
+          // @ts-ignore
+          COLUMNS_INDEXED[filter(has('sortOrder'), query.orderByCollection || [])[0]?.orderBy] || 'appearances',
+          filter(has('sortOrder'), query.orderByCollection || [])[0]?.orderDirection,
+          query.search,
+          query?.filters?.map((q: any) => ({
+            column: q.column.field,
+            operator: q.operator,
+            value: q.value,
+          })) || [],
+        )}
         defaultNumberOfRows={(isLargeVerticalScreen || isSmallScreen) ? 10 : 5}
         isLoading={false}
         isDraggable={false}
