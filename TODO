@@ -10,6 +10,7 @@
 - Feat: Agregar tipo de criatura a tabla de cartas
 - Feat: Que error 500 de la opción de ir al home
 - Feat: Usar imagen de torneo carrot compost en about
+- Feat: Añadir opción descargar pagina actual y descargar todo (que descargue toda la data luego de aplicar filtros, búsqueda y orden)
 
 - Data: Filtrar tags para dejar solo los útiles
 - Data: Dejar de guardar data vieja de db cards
@@ -77,3 +78,4 @@
 - Ocultar % de uso en identidad para tabla de cartas de comandantes
 - Dejar el fondo de los comandantes con el mismo gris que el resto del sitio
 - Dejar el mismo ancho de tabla que el resto de los componentes de la página en comandantes y Metagame.
+- El % de uso en identidad se está calculando mal en torneos
