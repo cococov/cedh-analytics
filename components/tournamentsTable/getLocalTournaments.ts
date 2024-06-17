@@ -24,7 +24,7 @@
 "use client";
 
 /* Vendor */
-import { sort, filter, includes, isNotNil, isEmpty, reduce, map } from 'ramda';
+import { sort, filter, includes, isNotNil, isEmpty, reduce, map, isNil } from 'ramda';
 
 type Tournament = {
   TID: string;
@@ -48,7 +48,7 @@ export default async function getLocalTournaments(
   orderBy?: Columns,
   orderDirection?: 'asc' | 'desc',
   search?: string,
-  filters?: { column: Columns, operator: '=' | '>' | '<', value: string | string[] }[],
+  filters?: { column: Columns, operator: '=' | '>' | '<' | '<->', value: string | string[] }[],
 ) {
   // Validations and fixes
   const fixedFilters = isNotNil(filters) && !isEmpty(filters)
@@ -72,6 +72,19 @@ export default async function getLocalTournaments(
           return (tournament[column] as number) > Number.parseInt(`${value}`);
         case '<':
           return (tournament[column] as number) < Number.parseInt(`${value}`);
+        case '<->': // Date Range
+          const [min, max] = value as string[];
+          if (isNil(min) && isNil(max)) return true; // don't filter if both are null
+          const minDate = new Date(min);
+          const maxDate = new Date(max);
+          const valueDate = new Date(tournament[column] as string);
+          if (valueDate.toString() === 'Invalid Date') return false; // don't consider current value if it's not a valid date
+          if (minDate.toString() !== 'Invalid Date') minDate.setUTCHours(0, 0, 0, 0);
+          if (maxDate.toString() !== 'Invalid Date') maxDate.setUTCHours(0, 0, 0, 0);
+          valueDate.setUTCHours(0, 0, 0, 0);
+          if (isNil(min)) return valueDate <= maxDate;
+          if (isNil(max)) return valueDate >= minDate;
+          return valueDate >= minDate && valueDate <= maxDate;
         default:
           return false;
       }

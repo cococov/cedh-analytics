@@ -29,7 +29,7 @@ import { useRouter } from 'next/navigation';
 import { find, pipe, replace, filter, has } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
-import Table, { NumberFilterWithOperator } from '@/components/table';
+import Table, { NumberFilterWithOperator, DateRangeFilter } from '@/components/table';
 import AppContext from '@/contexts/appStore';
 import getLocalTournaments from './getLocalTournaments';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
@@ -129,6 +129,13 @@ export default function TournamentsTable({
       hidden: false,
       searchable: false,
       defaultSort: 'desc',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <DateRangeFilter
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+        />
+      ),
     },
   ]);
 
