@@ -252,7 +252,11 @@ export default async function MetagameCommanderPage({
         <section className={styles.decklistsContainer}>
           <DecklistsTable
             title='Decklists'
-            decklists={data.metagameData.processed_decklists}
+            decklists={data.metagameData.processed_decklists.map(decklist => {
+              const date = new Date(0);
+              date.setUTCSeconds(decklist.dateCreated);
+              return { ...decklist, dateCreated: date };
+            })}
           />
         </section>
         <section className={styles.cardsContainer}>

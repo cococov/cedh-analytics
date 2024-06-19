@@ -30,7 +30,7 @@ import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { find } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
-import Table, { TextFilter, SelectFilter } from '@/components/table';
+import Table, { TextFilter, SelectFilter, DateRangeFilter } from '@/components/table';
 /* Static */
 import styles from '@/styles/CardsList.module.css';
 
@@ -42,7 +42,7 @@ type DecklistsData = {
   standing: number
   hasPartners: boolean
   tournamentName: string
-  dateCreated: number
+  dateCreated: object
   hasCompanion: boolean
   companions: string[]
   hasStickers: boolean
@@ -310,6 +310,25 @@ export default function DecklistsTable({
       editable: 'never',
       hidden: true,
       searchable: false,
+    },
+    {
+      title: 'Date',
+      field: 'dateCreated',
+      type: 'date',
+      align: 'center',
+      grouping: false,
+      filtering: true,
+      editable: 'never',
+      hidden: false,
+      searchable: false,
+      defaultSort: 'desc',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <DateRangeFilter
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+        />
+      ),
     },
   ]);
 

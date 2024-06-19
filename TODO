@@ -40,6 +40,7 @@
 
 ## Tournaments V2
 
+- Añadir lista de decklists
 - Feat: Añadir last set a torneos
 - Feat: Añadir date a torneos
 - Feat: Añadir link al torneo en página del torneo
@@ -57,7 +58,6 @@
 
 - Añadir filtros a decklists
 - Usar grid para que no se deforme la pagina al usar muchos filtros
-- Añadir fecha a decklists de metagame, torneos y commanders
 - Cachear resultado de getCards() en backend, para no hacer la consulta sql en cada request
 - Añadir ad sense
 - Añadir Patreon
