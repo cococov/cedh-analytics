@@ -69,7 +69,6 @@
 
 ## FIX
 
-- No deformar elementos al usar un número elevado de columnas en tablas (usar grid en vez de flex)
 - Quitar scroll horizontal innecesario de tablas de metagame por commander
 - El caching de decklists actualmente solo es en base al hash, debería ser hash y fecha, para capturar el caso que en distintos torneos se use la misma decklist, pero actualizada
 - Reducir el margen de la tabla de top 10 del home para que al tener menos width de pantalla no levante scroll horizontal
@@ -78,4 +77,8 @@
 - Ocultar % de uso en identidad para tabla de cartas de comandantes
 - Dejar el fondo de los comandantes con el mismo gris que el resto del sitio
 - Dejar el mismo ancho de tabla que el resto de los componentes de la página en comandantes y Metagame.
+
+### Fix Critico
+- No deformar elementos al usar un número elevado de columnas en tablas (usar grid en vez de flex)
 - El % de uso en identidad se está calculando mal en torneos
+- Metagame está considerando torneos de hace más de un año. Hay que filtrar las listas que tenemos cachaeadas.
