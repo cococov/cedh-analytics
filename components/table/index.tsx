@@ -243,13 +243,13 @@ export function DateRangeFilter({
       to: new Date(columnDef.tableData.filterValue[1]),
     } : undefined;
   });
-  const fromRef = useRef(date?.from?.toLocaleString('en-US', { dateStyle: 'short' }));
-  const toRef = useRef(date?.to?.toLocaleString('en-US', { dateStyle: 'short' }));
+  const fromRef = useRef(date?.from?.toLocaleDateString('en-US'));
+  const toRef = useRef(date?.to?.toLocaleDateString('en-US'));
 
   useEffect(() => {
     if (fromRef.current !== date?.from || toRef.current !== date?.to) {
-      const from = date?.from?.toLocaleString('en-US', { dateStyle: 'short' });
-      const to = date?.to?.toLocaleString('en-US', { dateStyle: 'short' });
+      const from = date?.from?.toLocaleDateString('en-US');
+      const to = date?.to?.toLocaleDateString('en-US');
       onFilterChanged(columnDef.tableData.id, [from, to], '<->');
       fromRef.current = from;
       toRef.current = to;
