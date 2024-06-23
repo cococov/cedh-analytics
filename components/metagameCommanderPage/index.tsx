@@ -255,7 +255,7 @@ export default async function MetagameCommanderPage({
             decklists={data.metagameData.processed_decklists.map(decklist => {
               const date = new Date(0);
               date.setUTCSeconds(decklist.dateCreated);
-              return { ...decklist, dateCreated: date };
+              return { ...decklist, dateCreated: date.toISOString() };
             })}
           />
         </section>

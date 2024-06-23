@@ -57,7 +57,6 @@
 
 ## Mejorar filtros
 
-- Añadir filtros a decklists
 - Cachear resultado de getCards() en backend, para no hacer la consulta sql en cada request
 - Añadir ad sense
 - Añadir Patreon
