@@ -64,7 +64,7 @@ export default async function Cards() {
         <span className={styles.leftSpan}>
           <DeckListsWithProvider size="medium" context={DbCardsContext} />
         </span>
-        <span className={styles.commandersContainer}>
+        <span className={styles.cardsContainerWithAsideElements}>
           <CardsTableWithProvider
             title="DDB Cards"
             table="db_cards"

@@ -387,7 +387,7 @@ export default function DecklistsTable({
   );
 
   return (
-    <span className={styles.commandersContainer}>
+    <span className={styles.decklistsContainer}>
       <span className={styles.cardsTable}>
         <Table
           key={renderKey}

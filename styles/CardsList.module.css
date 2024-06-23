@@ -38,6 +38,7 @@
 @media (max-width: 767px) {
   .main {
     display: flex;
+    padding: 0;
   }
 }
 
@@ -55,10 +56,6 @@
 }
 
 .cardsTable {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 3;
   min-width: 58dvw;
   min-height: 60dvh;
 }
@@ -67,7 +64,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 3;
   min-width: 58dvw;
   min-height: 60dvh;
 }
@@ -79,6 +75,9 @@
   }
 
   .cardsTableLoading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding-left: 5rem;
     padding-right: 5rem;
   }
@@ -218,8 +217,37 @@
   overflow-x: auto;
 }
 
-@media (max-width: 1080px) {
+.decklistsContainer {
+  display: flex;
+  overflow-x: auto;
+}
+
+.cardsContainer {
+  display: flex;
+  overflow-x: auto;
+}
+
+.cardsContainerWithAsideElements {
+  display: flex;
+  overflow-x: auto;
+  width: 60%;
+}
+
+@media (max-width: 1430px) {
   .commandersContainer {
     display: block;
+  }
+
+  .decklistsContainer {
+    display: block;
+  }
+
+  .cardsContainer {
+    display: block;
+  }
+
+  .cardsContainerWithAsideElements {
+    display: block;
+    width: 100%;
   }
 }

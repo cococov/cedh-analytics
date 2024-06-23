@@ -64,7 +64,7 @@ export default async function MetagameCards() {
         <span className={styles.leftSpan}>
           <DeckListsWithProvider size="medium" context={MetagameCardsContext} />
         </span>
-        <span className={styles.commandersContainer}>
+        <span className={styles.cardsContainerWithAsideElements}>
           <CardsTableWithProvider
             title="Metagame Cards"
             table="metagame_cards"

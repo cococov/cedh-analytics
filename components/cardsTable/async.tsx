@@ -96,7 +96,7 @@ export default async function AsyncCardsTable({
   const { cards } = await getData(cardsURL, tagsByCardURL, fromMetagame);
 
   return (
-    <span className={styles.commandersContainer}>
+    <span className={styles.cardsContainer}>
       {
         context ? (
           <CardsTableWithProvider
