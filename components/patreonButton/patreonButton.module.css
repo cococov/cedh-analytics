@@ -2,7 +2,7 @@
  *  cEDH Analytics - A website that analyzes and cross-references several
  *  EDH (Magic: The Gathering format) community's resources to give insights
  *  on the competitive metagame.
- *  Copyright (C) 2023-present CoCoCov
+ *  Copyright (C) 2024-present CoCoCov
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,20 +21,19 @@
  *  https://www.cedh-analytics.com/
  */
 
-import Link from 'next/link';
-import Image from 'next/image';
-/* Vendor */
-import { Tooltip } from "@nextui-org/tooltip";
-/* Static */
-import styles from './kofiButton.module.css'
+.patreonButton {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #422273;
+  color: #cccccc;
+  padding: 0.5rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  width: 110px;
+}
 
-export default function KofiButton() {
-  return (
-    <Tooltip content="Ko-Fi">
-      <Link href="https://ko-fi.com/carrotcompost" target="_blank" className={styles.kofiButton}>
-        <Image src="https://storage.ko-fi.com/cdn/nav-logo-stroke.png" alt="Ko-fi logo" width={32} height={22} />
-        Support
-      </Link>
-    </Tooltip>
-  );
-};
+.patreonButton img {
+  margin-right: calc(0.3rem + 8px);
+  margin-left: 4px;
+}

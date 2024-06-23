@@ -57,7 +57,6 @@
 
 ## Mejorar filtros
 
-- Añadir Patreon
 - Cachear resultado de getCards() en backend, para no hacer la consulta sql en cada request
 - Añadir estado en query params para torneos
 - Deuda técnica: Unificar archivos getLocalSomething o crear métodos utilitarios para no repetir código

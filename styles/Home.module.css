@@ -81,13 +81,15 @@
 
 .footer .donate {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
   text-align: center;
   margin: 0.5rem;
   grid-column: 3;
   padding-right: 2rem;
+  height: 80%;
+  margin-top: 2rem;
 }
 
 .logo {
