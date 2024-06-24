@@ -21,30 +21,28 @@
  *  https://www.cedh-analytics.com/
  */
 
-.patreonButton {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  background-color: #422273;
-  color: #ececec;
-  padding: 0.5rem 0.6rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  width: 110px;
-}
+import Link from 'next/link';
+import Image from 'next/image';
+/* Static */
+import patreonLogo from '@/public/images/PATREON_SYMBOL_1_WHITE_RGB.svg';
+import patreonText from '@/public/images/PATREON_WORDMARK_1_WHITE_RGB.svg';
+import styles from './patreonButton.module.css'
 
-.patreonButton img {
-  margin-right: calc(0.3rem + 8px);
-  margin-left: 4px;
-}
-
-.patreonButtonBig {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #fc293d;
-  color: #ffffff;
-  padding: 2rem 1rem;
-  border-radius: 8px;
-}
+export default function PatreonButtonBig() {
+  return (
+    <Link href="https://patreon.com/cEDHAnalytics" target="_blank" className={styles.patreonButtonBig}>
+      <div className={styles.logo}>
+        <Image src={patreonLogo} alt="Patreon logo" width={82} height={90} />
+      </div>
+      <div className={styles.patreonName}>
+        <Image src={patreonText} alt="Patreon text" width={150} />
+      </div>
+      <div className={styles.helpUs}>
+        <p>Help us keep the site running for as little as $1 a month.</p>
+      </div>
+      <div className={styles.clickToSee}>
+        <p>Click to see our tiers</p>
+      </div>
+    </Link>
+  );
+};

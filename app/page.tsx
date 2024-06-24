@@ -295,6 +295,10 @@ export default async function Home() {
           </ul>
         </article>
 
+        <section className={styles.homePatreon}>
+          <PatreonBigButton />
+        </section>
+
         <article className={styles.homeLegal}>
           <p className={styles.homeLegalText}>
             Wizards of the Coast, Magic: The Gathering, and their logos are trademarks of Wizards of the Coast LLC in the United States and other countries. © 1993-2024 Wizards. All Rights Reserved.

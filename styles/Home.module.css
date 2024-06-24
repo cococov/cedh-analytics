@@ -515,6 +515,10 @@
   font-weight: 600;
 }
 
+.homePatreon {
+  width: 60%;
+}
+
 @media (max-width: 1259px) {
   .homeMain {
     flex-direction: column;
@@ -559,6 +563,10 @@
   }
 
   .homeArticle {
+    width: 90%;
+  }
+
+  .homePatreon {
     width: 90%;
   }
 }
