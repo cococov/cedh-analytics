@@ -26,10 +26,10 @@ import Image from 'next/image';
 /* Vendor */
 import { Tooltip } from "@nextui-org/tooltip";
 /* Static */
-import patreonLogo from '@/public/images/PATREON_SYMBOL_1_BLACK_RGB.png';
+import patreonLogo from '@/public/images/PATREON_SYMBOL_1_BLACK_RGB.svg';
 import styles from './patreonButton.module.css'
 
-export default function KofiButton() {
+export default function PatreonButton() {
   return (
     <Tooltip content="Patreon">
       <Link href="https://patreon.com/cEDHAnalytics" target="_blank" className={styles.patreonButton}>
