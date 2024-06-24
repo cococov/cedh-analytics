@@ -28,9 +28,10 @@ import Link from 'next/link';
 import { ArrowRightIcon } from '@/components/vendor/materialIcon';
 /* Own */
 import LastSetTop10 from '@/components/lastSetTop10';
+import PatreonBigButton from '@/components/patreonButton/big';
 /* Static */
 import styles from '@/styles/Home.module.css';
-import SylvanLibrary from '@/public/images/sylvan_library.jpg';
+import CarrotCompostPlaymat from '@/public/images/carrot_compost_playmat_crop.jpeg';
 import DATA from '@/public/data/home_overview.json';
 import METAGAME_DATA from '@/public/data/metagame/metagame_resume.json';
 import UPDATE_DATE from '@/public/data/update_date.json';
@@ -44,8 +45,8 @@ export default async function Home() {
     <main className={styles.homeMain} >
       <span className={styles.homeImageHiddenContainer}>
         <Image
-          src={SylvanLibrary}
-          alt="SylvanLibrary"
+          src={CarrotCompostPlaymat}
+          alt="Carrot Compost Playmat"
           className={styles.homeImageHidden}
           placeholder="blur"
           width={600}
@@ -70,7 +71,7 @@ export default async function Home() {
           <Link href="/top-10-last-set">
             <span className={styles.hiddenButtonTop10Tablet}>
               <span className={styles.hiddenButtonTop10TabletLeft}>
-                <h3>Top 10 cards (DB)</h3>
+                <h3>Top 10 cards (DDB)</h3>
                 <span>{data.last_set}</span>
               </span>
               <span className={styles.hiddenButtonTop10TabletRight}>
@@ -81,7 +82,7 @@ export default async function Home() {
         </span>
         <Link href="/top-10-last-set" className={styles.hiddenButtonTop10}>
           <>
-            <span>Top 10 cards of the last set (DB)</span>
+            <span>Top 10 cards of the last set (DDB)</span>
             <ArrowRightIcon fontSize="medium" />
           </>
         </Link>
@@ -89,17 +90,26 @@ export default async function Home() {
       <section className={styles.homeTextSection}>
         <span className={styles.homeImageContainer}>
           <Image
-            src={SylvanLibrary}
+            src={CarrotCompostPlaymat}
             className={styles.homeImage}
-            alt="SylvanLibrary"
+            alt="Carrot Compost Playmat"
             placeholder="blur"
             priority
           />
         </span>
-        <h1>cEDH Analytics</h1>
-        <p className={styles.homeResume}>
-          cEDH Analytics is a website that analyzes and cross-references several EDH community&apos;s resources to give insights on the competitive metagame.
-        </p>
+        <span className={styles.homeTextHeaderContainer}>
+          <h1>cEDH Analytics</h1>
+          <p className={styles.homeResume}>
+            cEDH Analytics is a website that analyzes and cross-references several EDH community&apos;s resources to give insights on the competitive metagame.
+          </p>
+        </span>
+        <span className={styles.homeTextHeaderHiddenContainer}>
+          <h1>cEDH Analytics</h1>
+          <p className={styles.homeResume}>
+            cEDH Analytics is a website that analyzes and cross-references several EDH community&apos;s resources to give insights on the competitive metagame.
+          </p>
+        </span>
+        <div className={styles.homeHeaderDiv}></div>
         <article className={styles.homeArticle}>
           <h2>Credits</h2>
           <p>
@@ -276,7 +286,7 @@ export default async function Home() {
           </p>
           <ul>
             <li>
-            <b>Timeframe:</b> Available data at the moment of update.
+              <b>Timeframe:</b> Available data at the moment of update.
             </li>
             <li>
               <b>Decklist Considered:</b> Only the decks exposed in the &quot;Competitive Decks&quot; section of the database are considered.

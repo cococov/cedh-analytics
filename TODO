@@ -24,6 +24,7 @@
 - Ref: Refactorizar y ordenar estilos, usar tailwind si se puede
 - Ref: Dejar parseo de nombres de torneos y cartas de URL en un método
 - Ref: Unificar de forma agnóstica el filtrado/fetching local de tablas
+- Ref: Dividir y componer home en diferentes componentes
 
 - Chore: Eliminar componentes y estilos tabla vieja de top 10
 
@@ -57,6 +58,8 @@
 
 ## Mejorar filtros
 
+- Terminar discord y patreon
+---
 - Cachear resultado de getCards() en backend, para no hacer la consulta sql en cada request
 - Añadir estado en query params para torneos
 - Deuda técnica: Unificar archivos getLocalSomething o crear métodos utilitarios para no repetir código
