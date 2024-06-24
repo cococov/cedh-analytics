@@ -558,6 +558,7 @@
 
 .homePatreon {
   width: 60%;
+  margin-top: 2rem;
 }
 
 @media (max-width: 1259px) {
