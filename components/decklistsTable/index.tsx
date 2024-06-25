@@ -27,10 +27,11 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 /* Vendor */
 import { MaterialOpenInNewIcon } from '@/components/vendor/materialIcon';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { find } from 'ramda';
+import { find, filter, has } from 'ramda';
 import { CircularProgress } from "@nextui-org/react";
 /* Own */
-import Table, { TextFilter, SelectFilter } from '@/components/table';
+import Table, { TextFilter, SelectFilter, DateRangeFilter, NumberFilterWithOperator } from '@/components/table';
+import getLocalDecklists from './getLocalDecklists';
 /* Static */
 import styles from '@/styles/CardsList.module.css';
 
@@ -42,7 +43,7 @@ type DecklistsData = {
   standing: number
   hasPartners: boolean
   tournamentName: string
-  dateCreated: number
+  dateCreated: string
   hasCompanion: boolean
   companions: string[]
   hasStickers: boolean
@@ -60,6 +61,29 @@ type DecklistsData = {
   cantLands: number
   avgCmcWithLands: number
   avgCmcWithoutLands: number
+};
+
+const COLUMNS_INDEXED = {
+  0: 'name',
+  1: 'wins',
+  2: 'draws',
+  3: 'losses',
+  4: 'winRate',
+  5: 'drawRate',
+  6: 'standing',
+  7: 'tournamentName',
+  8: 'avgCmcWithLands',
+  9: 'avgCmcWithoutLands',
+  10: 'hasCompanion',
+  11: 'hasStickers',
+  12: 'cantLands',
+  13: 'cantCreatures',
+  14: 'cantPlaneswalkers',
+  15: 'cantSorceries',
+  16: 'cantInstants',
+  17: 'cantArtifacts',
+  18: 'cantEnchantments',
+  19: 'dateCreated',
 };
 
 export default function DecklistsTable({
@@ -93,11 +117,21 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
       defaultSort: 'desc',
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Draws',
@@ -105,11 +139,21 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
       defaultSort: 'desc',
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Losses',
@@ -117,11 +161,21 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: true,
       searchable: false,
       defaultSort: 'desc',
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Winrate',
@@ -129,10 +183,20 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
       render: function PercentageOfUse(rowData: any) {
         const value = rowData.winRate;
         return (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>);
@@ -144,10 +208,20 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
       render: function PercentageOfUse(rowData: any) {
         const value = rowData.drawRate;
         return (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>);
@@ -159,10 +233,20 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Tournament',
@@ -184,10 +268,20 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Avg CMC Wo/L',
@@ -195,10 +289,20 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Has Companion',
@@ -240,10 +344,20 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Creatures',
@@ -251,10 +365,20 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Planeswalkers',
@@ -262,10 +386,20 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: false,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Sorceries',
@@ -273,10 +407,20 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: true,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Instants',
@@ -284,10 +428,20 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: true,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Artifacts',
@@ -295,10 +449,20 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: true,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Enchantments',
@@ -306,10 +470,39 @@ export default function DecklistsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: true,
       searchable: false,
+      defaultFilter: undefined,
+      defaultFilterOperator: '=',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
+    },
+    {
+      title: 'Date',
+      field: 'dateCreated',
+      type: 'date',
+      align: 'center',
+      grouping: false,
+      filtering: true,
+      editable: 'never',
+      hidden: false,
+      searchable: false,
+      defaultSort: 'desc',
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <DateRangeFilter
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+        />
+      ),
     },
   ]);
 
@@ -368,12 +561,25 @@ export default function DecklistsTable({
   );
 
   return (
-    <span className={styles.commandersContainer}>
+    <span className={styles.decklistsContainer}>
       <span className={styles.cardsTable}>
         <Table
           key={renderKey}
           columns={columns}
-          data={decklists}
+          data={query => getLocalDecklists(
+            decklists,
+            query.page,
+            query.pageSize,
+            // @ts-ignore
+            COLUMNS_INDEXED[filter(has('sortOrder'), query.orderByCollection || [])[0]?.orderBy] || 'wins',
+            filter(has('sortOrder'), query.orderByCollection || [])[0]?.orderDirection,
+            query.search,
+            query?.filters?.map((q: any) => ({
+              column: q.column.field,
+              operator: q.operator,
+              value: q.value,
+            })) || [],
+          )}
           defaultNumberOfRows={(isLargeVerticalScreen || isSmallScreen) ? 10 : 5}
           isLoading={false}
           isDraggable={false}

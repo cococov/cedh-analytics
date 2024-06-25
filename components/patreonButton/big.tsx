@@ -2,7 +2,7 @@
  *  cEDH Analytics - A website that analyzes and cross-references several
  *  EDH (Magic: The Gathering format) community's resources to give insights
  *  on the competitive metagame.
- *  Copyright (C) 2023-present CoCoCov
+ *  Copyright (C) 2024-present CoCoCov
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,18 +23,26 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-/* Vendor */
-import { Tooltip } from "@nextui-org/tooltip";
 /* Static */
-import styles from './kofiButton.module.css'
+import patreonLogo from '@/public/images/PATREON_SYMBOL_1_WHITE_RGB.svg';
+import patreonText from '@/public/images/PATREON_WORDMARK_1_WHITE_RGB.svg';
+import styles from './patreonButton.module.css'
 
-export default function KofiButton() {
+export default function PatreonButtonBig() {
   return (
-    <Tooltip content="Ko-Fi">
-      <Link href="https://ko-fi.com/carrotcompost" target="_blank" className={styles.kofiButton}>
-        <Image src="https://storage.ko-fi.com/cdn/nav-logo-stroke.png" alt="Ko-fi logo" width={32} height={22} />
-        Support
-      </Link>
-    </Tooltip>
+    <Link href="https://patreon.com/cEDHAnalytics" target="_blank" className={styles.patreonButtonBig}>
+      <div className={styles.logo}>
+        <Image src={patreonLogo} alt="Patreon logo" width={82} height={90} />
+      </div>
+      <div className={styles.patreonName}>
+        <Image src={patreonText} alt="Patreon text" width={150} />
+      </div>
+      <div className={styles.helpUs}>
+        <p>Help us keep the site running for as little as $1 a month.</p>
+      </div>
+      <div className={styles.clickToSee}>
+        <p>Click to see our tiers</p>
+      </div>
+    </Link>
   );
 };

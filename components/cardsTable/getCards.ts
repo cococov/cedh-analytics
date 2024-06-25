@@ -23,6 +23,7 @@
 
 "use server";
 import { createKysely } from "@vercel/postgres-kysely";
+import { isNotNil, isEmpty, map } from 'ramda';
 
 export interface CardsTable {
   card_name: string;
@@ -79,6 +80,10 @@ interface Database {
   tags_by_card: TagsByCommander;
 };
 
+function isNumeric(str: string) {
+  return !isNaN(parseFloat(str))
+};
+
 export default async function getCards(
   table: 'metagame_cards' | 'db_cards',
   page: number,
@@ -86,8 +91,18 @@ export default async function getCards(
   orderBy?: Columns,
   orderDirection?: 'asc' | 'desc',
   search?: string,
-  filters?: { column: Columns, operator: '=', value: string | string[] }[],
+  filters?: { column: Columns, operator: '=' | '>' | '<', value: string | string[] }[],
 ) {
+  // Validations and fixes
+  const fixedFilters = isNotNil(filters) && !isEmpty(filters)
+    ? map(filter => {
+      if (isNumeric(`${filter.value}`) && Number.parseInt(`${filter.value}`) >= 2147483647) {
+        return { ...filter, value: '2147483647' };
+      }
+      return filter;
+    }, filters)
+    : filters;
+
   const db = createKysely<Database>();
 
   let cardsQuery = db
@@ -117,7 +132,7 @@ export default async function getCards(
     totalCountQuery = totalCountQuery.where(`${table}.card_name`, 'ilike', `%${search}%`)
   }
 
-  filters?.forEach((filter) => {
+  fixedFilters?.forEach((filter) => {
     if (filter.column === 'last_print') {
       cardsQuery = cardsQuery.where(filter.column, 'ilike', `%${filter.value}%`);
       totalCountQuery = totalCountQuery.where(filter.column, 'ilike', `%${filter.value}%`);

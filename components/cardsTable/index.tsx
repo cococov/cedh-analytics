@@ -35,9 +35,10 @@ import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { CircularProgress } from "@nextui-org/react";
 import { parse as qsParse } from 'qs';
 /* Own */
-import Table, { TextFilter, SelectFilter } from '@/components/table';
+import Table, { TextFilter, SelectFilter, NumberFilterWithOperator } from '@/components/table';
 import AppContext from '@/contexts/appStore';
 import getCards from './getCards';
+import getLocalCards from './getLocalCards';
 import useQueryParams from '@/hooks/useQueryParams';
 /* Static */
 import styles from '@/styles/CardsList.module.css';
@@ -148,9 +149,22 @@ function defaultFilterForColumn(
 ): string | string[] | undefined {
   if (!withUrlPArams) return undefined;
 
-  const filters = qsParse(queryParams.get('f') || '') as { [key: number]: string | string[] };
+  const filters = qsParse(queryParams.get('f') || '') as { [key: string]: string | string[] };
 
-  return filters[columnNumber];
+  return filters[`${columnNumber}v`];
+};
+
+function defaultFilterOperatorForColumn(
+  queryParams: ReadonlyURLSearchParams,
+  columnNumber: number,
+  withUrlPArams: boolean,
+  defaultValue: string,
+): string | string[] | undefined {
+  if (!withUrlPArams) return defaultValue;
+
+  const filters = qsParse(queryParams.get('f') || '') as { [key: string]: string | string[] };
+
+  return filters[`${columnNumber}o`] || defaultValue;
 };
 
 export default function CardsTable({
@@ -158,7 +172,7 @@ export default function CardsTable({
   handleChangeCard,
   cardUrlBase,
   fromMetagame,
-  table,
+  table = 'metagame_cards',
   cards,
   noInfo,
   withUrlPArams,
@@ -210,12 +224,21 @@ export default function CardsTable({
       type: 'numeric',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: !isShowInUrl(queryParams, 1, !!withUrlPArams, setQueryParams),
       defaultFilter: defaultFilterForColumn(queryParams, 1, !!withUrlPArams),
       searchable: false,
       defaultSort: isSortedInUrl(queryParams, 1, !!withUrlPArams, setQueryParams),
+      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Type',
@@ -388,9 +411,14 @@ export default function CardsTable({
       searchable: false,
       hideFilterIcon: true,
       defaultSort: isSortedInUrl(queryParams, 5, !!withUrlPArams, setQueryParams),
+      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
       // @ts-ignore
       filterComponent: ({ columnDef, onFilterChanged }) => (
-        <TextFilter texInputChangeRef={texInputChangeRef} columnDef={columnDef} onFilterChanged={onFilterChanged} type="number" />
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
       ),
     },
     {
@@ -407,9 +435,14 @@ export default function CardsTable({
       hideFilterIcon: true,
       emptyValue: '-',
       defaultSort: isSortedInUrl(queryParams, 6, !!withUrlPArams, setQueryParams),
+      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
       // @ts-ignore
       filterComponent: ({ columnDef, onFilterChanged }) => (
-        <TextFilter texInputChangeRef={texInputChangeRef} columnDef={columnDef} onFilterChanged={onFilterChanged} type="number" />
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
       ),
     },
     {
@@ -426,9 +459,14 @@ export default function CardsTable({
       hideFilterIcon: true,
       emptyValue: '-',
       defaultSort: isSortedInUrl(queryParams, 7, !!withUrlPArams, setQueryParams),
+      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
       // @ts-ignore
       filterComponent: ({ columnDef, onFilterChanged }) => (
-        <TextFilter texInputChangeRef={texInputChangeRef} columnDef={columnDef} onFilterChanged={onFilterChanged} type="number" />
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
       ),
     },
     {
@@ -536,7 +574,7 @@ export default function CardsTable({
       field: 'percentage_of_use',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: !isShowInUrl(queryParams, 13, !!withUrlPArams, setQueryParams),
       defaultFilter: defaultFilterForColumn(queryParams, 13, !!withUrlPArams),
@@ -546,13 +584,22 @@ export default function CardsTable({
         return (<span>{value}%</span>);
       },
       defaultSort: isSortedInUrl(queryParams, 13, !!withUrlPArams, setQueryParams),
+      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: '% of Use in identity',
       field: 'percentage_of_use_by_identity',
       align: 'center',
       grouping: false,
-      filtering: false,
+      filtering: true,
       editable: 'never',
       hidden: !isShowInUrl(queryParams, 14, !!withUrlPArams, setQueryParams),
       defaultFilter: defaultFilterForColumn(queryParams, 14, !!withUrlPArams),
@@ -562,6 +609,15 @@ export default function CardsTable({
         return (<span>{value}%</span>);
       },
       defaultSort: isSortedInUrl(queryParams, 14, !!withUrlPArams, setQueryParams),
+      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <NumberFilterWithOperator
+          columnDef={columnDef}
+          onFilterChanged={onFilterChanged}
+          texInputChangeRef={texInputChangeRef}
+        />
+      ),
     },
     {
       title: 'Tags',
@@ -625,7 +681,7 @@ export default function CardsTable({
           field: 'avg_win_rate',
           align: 'center',
           grouping: false,
-          filtering: false,
+          filtering: true,
           editable: 'never',
           hidden: !isShowInUrl(queryParams, 16, !!withUrlPArams, setQueryParams),
           defaultFilter: defaultFilterForColumn(queryParams, 16, !!withUrlPArams),
@@ -635,13 +691,22 @@ export default function CardsTable({
             return (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>);
           },
           defaultSort: isSortedInUrl(queryParams, 16, !!withUrlPArams, setQueryParams),
+          defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
+          // @ts-ignore
+          filterComponent: ({ columnDef, onFilterChanged }) => (
+            <NumberFilterWithOperator
+              columnDef={columnDef}
+              onFilterChanged={onFilterChanged}
+              texInputChangeRef={texInputChangeRef}
+            />
+          ),
         },
         {
           title: 'Avg. Drawrate',
           field: 'avg_draw_rate',
           align: 'center',
           grouping: false,
-          filtering: false,
+          filtering: true,
           editable: 'never',
           hidden: !isShowInUrl(queryParams, 17, !!withUrlPArams, setQueryParams),
           defaultFilter: defaultFilterForColumn(queryParams, 17, !!withUrlPArams),
@@ -651,6 +716,15 @@ export default function CardsTable({
             return (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>);
           },
           defaultSort: isSortedInUrl(queryParams, 17, !!withUrlPArams, setQueryParams),
+          defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
+          // @ts-ignore
+          filterComponent: ({ columnDef, onFilterChanged }) => (
+            <NumberFilterWithOperator
+              columnDef={columnDef}
+              onFilterChanged={onFilterChanged}
+              texInputChangeRef={texInputChangeRef}
+            />
+          ),
         },
       ]
     });
@@ -675,6 +749,25 @@ export default function CardsTable({
     }
   }, [isSmallScreen, isMediumScreen]);
 
+  const getCardsMultiplexer = useCallback((query: any): any => {
+    const method = Boolean(cards) ? getLocalCards : getCards;
+    return method(
+      // @ts-ignore
+      Boolean(cards) ? cards : table,
+      query.page,
+      query.pageSize,
+      // @ts-ignore
+      COLUMNS_INDEXED[filter(has('sortOrder'), query.orderByCollection || [])[0]?.orderBy] || 'occurrences', // Sólo permitimos ordenar por una columna
+      filter(has('sortOrder'), query.orderByCollection || [])[0]?.orderDirection, // Sólo permitimos ordenar por una columna
+      query.search,
+      query?.filters?.map((q: any) => ({
+        column: q.column.field,
+        operator: q.operator,
+        value: q.value,
+      })) || [],
+    );
+  }, []);
+
   if (!isLoaded) return (
     <span className={styles.cardsTableLoading}>
       <CircularProgress size="lg" color="secondary" aria-label="Loading..." />
@@ -686,25 +779,7 @@ export default function CardsTable({
       <Table
         key={renderKey}
         columns={columns}
-        // @ts-ignore
-        data={
-          Boolean(cards)
-            ? cards
-            : query => getCards(
-              table || 'metagame_cards',
-              query.page,
-              query.pageSize,
-              // @ts-ignore
-              COLUMNS_INDEXED[filter(has('sortOrder'), query.orderByCollection || [])[0]?.orderBy] || 'occurrences', // Sólo permitimos ordenar por una columna
-              filter(has('sortOrder'), query.orderByCollection || [])[0]?.orderDirection, // Sólo permitimos ordenar por una columna
-              query.search,
-              query?.filters?.map((q: any) => ({
-                column: q.column.field,
-                operator: q.operator,
-                value: q.value,
-              })) || [],
-            )
-        }
+        data={getCardsMultiplexer}
         defaultNumberOfRows={getPageSize(queryParams, !!withUrlPArams, (isLargeVerticalScreen || isSmallScreen), setQueryParams)}
         isLoading={false}
         isDraggable={false}

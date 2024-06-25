@@ -35,6 +35,7 @@ import type { ResumeData } from '@/components/metagameResumePage/types';
 import AsyncCardsTable from '@/components/cardsTable/async';
 /* Static */
 import { server } from '@config';
+import styles from '@/styles/Metagame.module.css';
 
 type ErrorData = { notFound: boolean };
 type ResponseData = { resume: ResumeData };
@@ -147,7 +148,7 @@ export default async function Metagame({
         noCommanderPage
         fromTournament
       />
-      <span className="mb-3">
+      <span className={styles.cardsContainer}>
         <Suspense fallback={<CircularProgress size="lg" color="secondary" aria-label="Loading..." />}>
           <AsyncCardsTable
             title="Cards"

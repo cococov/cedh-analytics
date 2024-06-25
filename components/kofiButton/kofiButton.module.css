@@ -24,12 +24,13 @@
 .kofiButton {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background-color: #422273;
-  color: #cccccc;
+  color: #ececec;
   padding: 0.5rem 0.6rem;
   border-radius: 8px;
   font-size: 0.9rem;
+  width: 110px;
 }
 
 .kofiButton img {

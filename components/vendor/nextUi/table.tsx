@@ -36,10 +36,10 @@ export default function NextUITable({
 }) {
   return (
     <Table isStriped aria-label="Table">
-      <TableHeader style={{ backgroundColor: '#422273' }}>
+      <TableHeader className="bg-carrotPurple">
         {
           header.map((column, index) => (
-            <TableColumn key={index} style={{ backgroundColor: '#422273', color: '#ececec', fontSize: '0.9rem' }}>{column}</TableColumn>
+            <TableColumn key={index} className="bg-carrotPurple text-carrotGray text-sm">{column}</TableColumn>
           ))
         }
       </TableHeader>

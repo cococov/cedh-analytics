@@ -24,6 +24,7 @@
 import Image from 'next/image';
 /* Own */
 import KofiButton from '@/components/kofiButton';
+import PatreonButton from '@/components/patreonButton';
 /* Static */
 import styles from '@/styles/Home.module.css';
 
@@ -37,6 +38,7 @@ export default function Footer() {
         </span>
       </span>
       <span className={styles.donate}>
+        <PatreonButton />
         <KofiButton />
       </span>
       <span className={styles.mailContainer}>

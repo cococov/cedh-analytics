@@ -1,0 +1,271 @@
+/**
+ *  cEDH Analytics - A website that analyzes and cross-references several
+ *  EDH (Magic: The Gathering format) community's resources to give insights
+ *  on the competitive metagame.
+ *  Copyright (C) 2024-present CoCoCov
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  Original Repo: https://github.com/cococov/cedh-analytics
+ *  https://www.cedh-analytics.com/
+ */
+
+/* shadcnComponent.css */
+.shadcnComponent *,
+.shadcnComponent ::before,
+.shadcnComponent ::after {
+  box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: #e5e7eb; /* 2 */
+}
+
+.shadcnComponent ::before,
+.shadcnComponent ::after {
+  --tw-content: '';
+}
+
+.shadcnComponent html,
+.shadcnComponent :host {
+  line-height: 1.5; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  -moz-tab-size: 4; /* 3 */
+  -o-tab-size: 4;
+     tab-size: 4; /* 3 */
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+  font-feature-settings: normal; /* 5 */
+  font-variation-settings: normal; /* 6 */
+  -webkit-tap-highlight-color: transparent; /* 7 */
+}
+
+.shadcnComponent body {
+  margin: 0; /* 1 */
+  line-height: inherit; /* 2 */
+}
+
+.shadcnComponent hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+  border-top-width: 1px; /* 3 */
+}
+
+.shadcnComponent abbr:where([title]) {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+.shadcnComponent h1,
+.shadcnComponent h2,
+.shadcnComponent h3,
+.shadcnComponent h4,
+.shadcnComponent h5,
+.shadcnComponent h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.shadcnComponent a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.shadcnComponent b,
+.shadcnComponent strong {
+  font-weight: bolder;
+}
+
+.shadcnComponent code,
+.shadcnComponent kbd,
+.shadcnComponent samp,
+.shadcnComponent pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* 1 */
+  font-feature-settings: normal; /* 2 */
+  font-variation-settings: normal; /* 3 */
+  font-size: 1em; /* 4 */
+}
+
+.shadcnComponent small {
+  font-size: 80%;
+}
+
+.shadcnComponent sub,
+.shadcnComponent sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.shadcnComponent sub {
+  bottom: -0.25em;
+}
+
+.shadcnComponent sup {
+  top: -0.5em;
+}
+
+.shadcnComponent table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+  border-collapse: collapse; /* 3 */
+}
+
+.shadcnComponent button,
+.shadcnComponent input,
+.shadcnComponent optgroup,
+.shadcnComponent select,
+.shadcnComponent textarea {
+  font-family: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  font-weight: inherit; /* 1 */
+  line-height: inherit; /* 1 */
+  color: inherit; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0; /* 3 */
+}
+
+.shadcnComponent button,
+.shadcnComponent select {
+  text-transform: none;
+}
+
+.shadcnComponent button,
+.shadcnComponent [type='button'],
+.shadcnComponent [type='reset'],
+.shadcnComponent [type='submit'] {
+  -webkit-appearance: button; /* 1 */
+  background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+}
+
+.shadcnComponent :-moz-focusring {
+  outline: auto;
+}
+
+.shadcnComponent :-moz-ui-invalid {
+  box-shadow: none;
+}
+
+.shadcnComponent progress {
+  vertical-align: baseline;
+}
+
+.shadcnComponent ::-webkit-inner-spin-button,
+.shadcnComponent ::-webkit-outer-spin-button {
+  height: auto;
+}
+
+.shadcnComponent [type='search'] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+.shadcnComponent ::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+.shadcnComponent ::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+.shadcnComponent summary {
+  display: list-item;
+}
+
+.shadcnComponent blockquote,
+.shadcnComponent dl,
+.shadcnComponent dd,
+.shadcnComponent h1,
+.shadcnComponent h2,
+.shadcnComponent h3,
+.shadcnComponent h4,
+.shadcnComponent h5,
+.shadcnComponent h6,
+.shadcnComponent hr,
+.shadcnComponent figure,
+.shadcnComponent p,
+.shadcnComponent pre {
+  margin: 0;
+}
+
+.shadcnComponent fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+.shadcnComponent legend {
+  padding: 0;
+}
+
+.shadcnComponent ol,
+.shadcnComponent ul,
+.shadcnComponent menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.shadcnComponent dialog {
+  padding: 0;
+}
+
+.shadcnComponent textarea {
+  resize: vertical;
+}
+
+.shadcnComponent input::-moz-placeholder,
+.shadcnComponent textarea::-moz-placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+.shadcnComponent input::placeholder,
+.shadcnComponent textarea::placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+.shadcnComponent button,
+.shadcnComponent [role="button"] {
+  cursor: pointer;
+}
+
+.shadcnComponent :disabled {
+  cursor: default;
+}
+
+.shadcnComponent img,
+.shadcnComponent svg,
+.shadcnComponent video,
+.shadcnComponent canvas,
+.shadcnComponent audio,
+.shadcnComponent iframe,
+.shadcnComponent embed,
+.shadcnComponent object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+
+.shadcnComponent img,
+.shadcnComponent video {
+  max-width: 100%;
+  height: auto;
+}
+
+.shadcnComponent [hidden] {
+  display: none;
+}

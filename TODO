@@ -10,6 +10,7 @@
 - Feat: Agregar tipo de criatura a tabla de cartas
 - Feat: Que error 500 de la opción de ir al home
 - Feat: Usar imagen de torneo carrot compost en about
+- Feat: Añadir opción descargar pagina actual y descargar todo (que descargue toda la data luego de aplicar filtros, búsqueda y orden)
 
 - Data: Filtrar tags para dejar solo los útiles
 - Data: Dejar de guardar data vieja de db cards
@@ -20,7 +21,10 @@
 
 - Ref: Deduplicar lista de navbar para en un mismo origen para evitar tener problemas de homologación
 - Ref: Refactorizar, tipar y ordenar scripts procesadores de cartas
+- Ref: Refactorizar y ordenar estilos, usar tailwind si se puede
 - Ref: Dejar parseo de nombres de torneos y cartas de URL en un método
+- Ref: Unificar de forma agnóstica el filtrado/fetching local de tablas
+- Ref: Dividir y componer home en diferentes componentes
 
 - Chore: Eliminar componentes y estilos tabla vieja de top 10
 
@@ -38,6 +42,7 @@
 
 ## Tournaments V2
 
+- Añadir lista de decklists
 - Feat: Añadir last set a torneos
 - Feat: Añadir date a torneos
 - Feat: Añadir link al torneo en página del torneo
@@ -53,8 +58,9 @@
 
 ## Mejorar filtros
 
-- Añadir =, <, y > a columnas numéricas
-- Añadir filtro de rango de fechas
+- Cachear resultado de getCards() en backend, para no hacer la consulta sql en cada request
+- Añadir estado en query params para torneos
+- Deuda técnica: Unificar archivos getLocalSomething o crear métodos utilitarios para no repetir código
 
 ## API2 Moxfield
 
@@ -62,8 +68,6 @@
 
 ## FIX
 
-- No deformar elementos al usar un número elevado de columnas en tablas (usar grid en vez de flex)
-- Quitar scroll horizontal innecesario de tablas de metagame por commander
 - El caching de decklists actualmente solo es en base al hash, debería ser hash y fecha, para capturar el caso que en distintos torneos se use la misma decklist, pero actualizada
 - Reducir el margen de la tabla de top 10 del home para que al tener menos width de pantalla no levante scroll horizontal
 - Que hamburguesa de navbar en mobile no sea un link
@@ -71,3 +75,7 @@
 - Ocultar % de uso en identidad para tabla de cartas de comandantes
 - Dejar el fondo de los comandantes con el mismo gris que el resto del sitio
 - Dejar el mismo ancho de tabla que el resto de los componentes de la página en comandantes y Metagame.
+
+### Fix Critico
+- Metagame está considerando torneos de hace más de un año. Hay que filtrar las LISTAS Y TORNEOS (verificar si estamos trayendo los torneos en un rango de fechas correcto).
+- El % de uso en identidad se está calculando mal en torneos y comandantes

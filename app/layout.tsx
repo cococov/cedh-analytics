@@ -110,6 +110,11 @@ export default function RootLayout({ children }: {
             });
           `}
         </Script>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1605287259025910"
+          crossOrigin="anonymous"
+        />
         <Providers>
           <span className={styles.container}>
             <NavBar />

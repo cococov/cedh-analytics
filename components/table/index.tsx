@@ -23,7 +23,8 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import type { ChangeEvent } from 'react';
 /* Vendor */
 import MaterialTable, { Action } from '@material-table/core';
 import TextField from '@mui/material/TextField';
@@ -33,8 +34,13 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import ListItemText from '@mui/material/ListItemText';
+import InputAdornment from '@mui/material/InputAdornment';
+import type { SelectChangeEvent } from '@mui/material/Select';
+import { DateRange } from "react-day-picker";
+import { isNotNil } from 'ramda';
 /* Own */
 import { pdfExporter, csvExporter } from '@/utils/exporters';
+import { DatePickerWithRange } from '@/components/ui/dateRangePicker';
 
 interface RowData { [key: string]: any };
 
@@ -140,6 +146,118 @@ export function SelectFilter({
         ))}
       </Select>
     </FormControl>
+  );
+};
+
+export function NumberFilterWithOperator({
+  columnDef,
+  onFilterChanged,
+  texInputChangeRef,
+}: {
+  columnDef: any,
+  onFilterChanged: any,
+  texInputChangeRef: any,
+}) {
+  const [operator, setOperator] = useState(
+    columnDef.tableData.filterOperator
+  );
+  const [value, setValue] = useState(columnDef.tableData.filterValue || undefined);
+  const operatorRef = useRef(operator);
+  const valueRef = useRef(value);
+
+  useEffect(() => {
+    if (operatorRef.current !== operator || valueRef.current !== value) {
+      if (valueRef.current !== value) {
+        if (Boolean(texInputChangeRef.current)) {
+          clearTimeout(texInputChangeRef.current);
+        }
+        texInputChangeRef.current = setTimeout(() => {
+          onFilterChanged(columnDef.tableData.id, value, operator);
+        }, 500); // 500ms debounce before filtering
+      } else {
+        onFilterChanged(columnDef.tableData.id, value, operator);
+      }
+      operatorRef.current = operator;
+      valueRef.current = value;
+    }
+  }, [operator, value]);
+
+  return (
+    <TextField
+      variant="standard"
+      value={value}
+      size="small"
+      type='number'
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <Select
+              labelId={`select-operator-${columnDef.tableData.id}-label`}
+              id={`select-operator-${columnDef.tableData.id}`}
+              variant="standard"
+              value={operator}
+              sx={{
+                width: '2rem',
+                '&:before': {
+                  borderBottom: 'none',
+                },
+                '&:after': {
+                  borderBottom: 'none',
+                },
+                '&:hover:not(.Mui-disabled, .Mui-error):before': {
+                  borderBottom: 'none',
+                },
+                '& > .MuiSelect-select.MuiSelect-standard.MuiInputBase-input.MuiInput-input': {
+                  padding: '2px',
+                }
+              }}
+              onChange={(event: SelectChangeEvent<HTMLInputElement>) => {
+                setOperator(event.target.value)
+              }}
+            >
+              <MenuItem value={'='}>=</MenuItem>
+              <MenuItem value={'>'}>&gt;</MenuItem>
+              <MenuItem value={'<'}>&lt;</MenuItem>
+            </Select>
+          </InputAdornment>
+        ),
+      }}
+      onChange={(event: ChangeEvent<HTMLInputElement>) => {
+        setValue(event.target.value)
+      }}
+      fullWidth
+    />
+  );
+};
+
+export function DateRangeFilter({
+  columnDef,
+  onFilterChanged,
+}: {
+  columnDef: any,
+  onFilterChanged: any,
+}) {
+  const [date, setDate] = useState<DateRange | undefined>(() => {
+    return isNotNil(columnDef.tableData.filterValue) ? {
+      from: new Date(columnDef.tableData.filterValue[0]),
+      to: new Date(columnDef.tableData.filterValue[1]),
+    } : undefined;
+  });
+  const fromRef = useRef(date?.from?.toLocaleDateString('en-US'));
+  const toRef = useRef(date?.to?.toLocaleDateString('en-US'));
+
+  useEffect(() => {
+    if (fromRef.current !== date?.from || toRef.current !== date?.to) {
+      const from = date?.from?.toLocaleDateString('en-US');
+      const to = date?.to?.toLocaleDateString('en-US');
+      onFilterChanged(columnDef.tableData.id, [from, to], '<->');
+      fromRef.current = from;
+      toRef.current = to;
+    }
+  }, [date]);
+
+  return (
+    <DatePickerWithRange date={date} setDate={setDate} />
   );
 };
 
