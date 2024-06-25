@@ -97,6 +97,7 @@ class CardType(Enum):
   ARTIFACT = '6'
   ENCHANTMENT = '7'
   LAND = '8'
+  STICKER = '11'
 
 # Version 2
 
