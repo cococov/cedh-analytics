@@ -22,6 +22,7 @@ https://www.cedh-analytics.com/
 """
 
 import data.moxfield
+import data.moxfield_t
 from functools import reduce
 
 number_of_decks_by_identities = {}
@@ -78,6 +79,10 @@ def process_cards(cards):
 
 ########## DECKS ##########
 
+def is_a_valid_card(card):
+  is_not_sticker = card['card']['type'] is not data.moxfield_t.CardType.STICKER
+  return is_not_sticker
+
 def map_decklists_data(decklist_data):
   result = {}
   result['deck'] = { 'name': decklist_data['name'], 'url': decklist_data['url'], 'commanders': list(map(lambda x : { 'name': x['card']['name'], 'color_identity': x['card']['color_identity'] }, decklist_data['boards']['commanders']['cards'].values()))}
@@ -89,7 +94,7 @@ def map_decklists_data(decklist_data):
   else:
     number_of_decks_by_identities[joined_identity] = 1
   cards = decklist_data['boards']['mainboard']['cards'] | decklist_data['boards']['companions']['cards'] | decklist_data['boards']['commanders']['cards']
-  result['cards'] = list(cards.values())
+  result['cards'] = list(filter(is_a_valid_card, cards.values()))
   return result
 
 def get_decklists_data(decklists_data):

@@ -76,7 +76,7 @@ logs.end_log_block('EDH Top 16 data preprocessed')
 
 # LOAD SAVED DECKLISTS
 logs.begin_log_block('Loading saved decklists')
-decklists_by_hash: dict[str, moxfield_t.DecklistV3] = files.read_json_file(METAGAME_PATH, 'decklists.json') if not FORCE_UPDATE else {}
+saved_decklists_by_hash: dict[str, moxfield_t.DecklistV3] = files.read_json_file(METAGAME_PATH, 'decklists.json') if not FORCE_UPDATE else {}
 logs.end_log_block('Saved decklists loaded')
 
 # GET DECKLISTS FROM HASHES (NOT SAVED)
@@ -87,18 +87,20 @@ cant_hashes_requested = 0
 no_new_data = True
 to_delete = []
 cant_decklists_by_hash = {}
+decklists_by_hash = {}
 for commander in commanders:
   decklists_by_commander[commander] = []
   for hash in decklist_hashes_by_commander[commander]:
     logs.loading_log("Getting decklists from hashes", cant_hashes_requested, total_lists)
-    if hash in decklists_by_hash.keys():
-      if 'status' in list(decklists_by_hash[hash].keys()): # status in response usually means error 404
+    if hash in saved_decklists_by_hash.keys():
+      if 'status' in list(saved_decklists_by_hash[hash].keys()): # status in response usually means error 404
         cant_hashes_requested += 1
         continue
       if hash in cant_decklists_by_hash.keys():
         cant_decklists_by_hash[hash] += 1
       else:
         cant_decklists_by_hash[hash] = 1
+      decklists_by_hash[hash] = saved_decklists_by_hash[hash] # Save the decklists in a new hash to avoid process old ones
       decklists_by_commander[commander].append(decklists_by_hash[hash])
     else:
       decklist: moxfield_t.DecklistV3 = {} # type: ignore
@@ -125,6 +127,8 @@ for commander in to_delete:
 
 # SAVE DECKLISTS
 if not no_new_data:
+  # Replace old decklists with new ones to avoid process old versions of decklists
+  # DO NOT PROCESS OLD TOURNAMENTS OR DECKLISTS COULD CHANGE!
   files.create_file_with_log(METAGAME_PATH, 'decklists.json', decklists_by_hash, 'Saving decklists', 'Decklists saved!')
 
 full_decklists = []
