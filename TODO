@@ -58,8 +58,6 @@
 
 ## Mejorar filtros
 
-- Terminar discord y patreon
----
 - Cachear resultado de getCards() en backend, para no hacer la consulta sql en cada request
 - Añadir estado en query params para torneos
 - Deuda técnica: Unificar archivos getLocalSomething o crear métodos utilitarios para no repetir código
@@ -79,5 +77,5 @@
 - Dejar el mismo ancho de tabla que el resto de los componentes de la página en comandantes y Metagame.
 
 ### Fix Critico
+- Metagame está considerando torneos de hace más de un año. Hay que filtrar las LISTAS Y TORNEOS (verificar si estamos trayendo los torneos en un rango de fechas correcto).
 - El % de uso en identidad se está calculando mal en torneos y comandantes
-- Metagame está considerando torneos de hace más de un año. Hay que filtrar las listas que tenemos cachaeadas.
