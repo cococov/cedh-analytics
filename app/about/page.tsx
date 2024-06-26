@@ -27,7 +27,7 @@ import Image from "next/image";
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
 /* Static */
 import styles from '@/styles/About.module.css';
-import CarefulStudy from '@/public/images/careful-study.jpeg';
+import CarrotCompostPlaymat from '@/public/images/carrot_compost_playmat.jpeg';
 import B from '@/public/images/B.png';
 import G from '@/public/images/G.png';
 import R from '@/public/images/R.png';
@@ -48,10 +48,10 @@ export const metadata: Metadata = {
     title: 'About | cEDH Analytics',
     images: [
       {
-        url: '/images/careful-study.jpeg',
+        url: '/images/carrot_compost_playmat.jpeg',
         width: 788,
-        height: 788,
-        alt: 'Careful Study',
+        height: 443,
+        alt: 'Carrot Compost Playmat',
       },
     ],
   },
@@ -60,8 +60,8 @@ export const metadata: Metadata = {
     title: `About | ${twitterMetadata.title}`,
     description: `About cEDH Analytics and us | ${twitterMetadata.description}`,
     images: {
-      url: '/images/careful-study.jpeg',
-      alt: 'Careful Study',
+      url: '/images/carrot_compost_playmat.jpeg',
+      alt: 'Carrot Compost Playmat',
     },
   },
 };
@@ -78,17 +78,17 @@ export default async function About() {
     <main className={styles.about}>
       <span className={styles.aboutImageContainer}>
         <Image
-          src={CarefulStudy}
+          src={CarrotCompostPlaymat}
           className={styles.aboutImage}
-          alt="Careful Study"
-          width={600}
-          height={490}
+          alt="Carrot Compost Playmat"
+          width={800}
+          height={450}
           placeholder="blur"
           priority
         />
       </span>
       <span className={styles.aboutText}>
-        <h1>About</h1>
+        <h1>cEDH Analytics</h1>
         <section>
           cEDH Analytics is a website that analyzes and cross-references several EDH community&apos;s resources to give insights on the competitive metagame. Using the DDB, Moxfield, Metagame information from the community and other resources to compile the “cEDH card pool” as well as several statistics regarding card choices, preferred commanders, strategies, and color combinations. As we grow in content, we hope to be another resource in the cEDH player toolkit to brew and develop new cEDH decks.
         </section>
@@ -233,20 +233,6 @@ export default async function About() {
             .
           </p>
         </section>
-        <table className={styles.aboutUpdateDates}>
-          <thead>
-            <tr>
-              <th>Last DDB Update</th>
-              <th>Last Metagame Update</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{update_dates.database}</td>
-              <td>{update_dates.metagame}</td>
-            </tr>
-          </tbody>
-        </table>
         <span className={styles.mailContainer}>
           <h2>Contact Us</h2>
           <a className={styles.mail} href="mailto:contact@cedh-analytics.com">contact@cedh-analytics.com</a>
