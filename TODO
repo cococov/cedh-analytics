@@ -9,13 +9,12 @@
 - Feat: Añadir remote autocomplete a tabla de cartas (usar componente de MUI y API de scryfall)
 - Feat: Agregar tipo de criatura a tabla de cartas
 - Feat: Que error 500 de la opción de ir al home
-- Feat: Usar imagen de torneo carrot compost en about
 - Feat: Añadir opción descargar pagina actual y descargar todo (que descargue toda la data luego de aplicar filtros, búsqueda y orden)
 
 - Data: Filtrar tags para dejar solo los útiles
 - Data: Dejar de guardar data vieja de db cards
 - Data: Poner flag de update a scripts, para que no siempre se actualicen y así evitar comentar el update en pruebas
-- Data: Eliminar metagame_cards_by_commander, competitiveCards y metagame_cards al terminar de ejecutar el los scripts
+- Data: Eliminar competitiveCards al terminar de ejecutar el script
 
 - Arch: Instalar eslint y prettier (ejemplo de buena config: <https://github.com/goncy/interview-challenges/blob/main/proyectos-live/migrado-libre/.eslintrc.cjs>)
 
@@ -77,5 +76,6 @@
 - Dejar el mismo ancho de tabla que el resto de los componentes de la página en comandantes y Metagame.
 
 ### Fix Critico
+
 - Metagame está considerando torneos de hace más de un año. Hay que filtrar las LISTAS Y TORNEOS (verificar si estamos trayendo los torneos en un rango de fechas correcto).
 - El % de uso en identidad se está calculando mal en torneos y comandantes

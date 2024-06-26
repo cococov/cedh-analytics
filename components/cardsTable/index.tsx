@@ -411,7 +411,7 @@ export default function CardsTable({
       searchable: false,
       hideFilterIcon: true,
       defaultSort: isSortedInUrl(queryParams, 5, !!withUrlPArams, setQueryParams),
-      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
+      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 5, !!withUrlPArams, '='),
       // @ts-ignore
       filterComponent: ({ columnDef, onFilterChanged }) => (
         <NumberFilterWithOperator
@@ -435,7 +435,7 @@ export default function CardsTable({
       hideFilterIcon: true,
       emptyValue: '-',
       defaultSort: isSortedInUrl(queryParams, 6, !!withUrlPArams, setQueryParams),
-      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
+      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 6, !!withUrlPArams, '='),
       // @ts-ignore
       filterComponent: ({ columnDef, onFilterChanged }) => (
         <NumberFilterWithOperator
@@ -459,7 +459,7 @@ export default function CardsTable({
       hideFilterIcon: true,
       emptyValue: '-',
       defaultSort: isSortedInUrl(queryParams, 7, !!withUrlPArams, setQueryParams),
-      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
+      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 7, !!withUrlPArams, '='),
       // @ts-ignore
       filterComponent: ({ columnDef, onFilterChanged }) => (
         <NumberFilterWithOperator
@@ -584,7 +584,7 @@ export default function CardsTable({
         return (<span>{value}%</span>);
       },
       defaultSort: isSortedInUrl(queryParams, 13, !!withUrlPArams, setQueryParams),
-      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
+      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 13, !!withUrlPArams, '='),
       // @ts-ignore
       filterComponent: ({ columnDef, onFilterChanged }) => (
         <NumberFilterWithOperator
@@ -609,7 +609,7 @@ export default function CardsTable({
         return (<span>{value}%</span>);
       },
       defaultSort: isSortedInUrl(queryParams, 14, !!withUrlPArams, setQueryParams),
-      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
+      defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 14, !!withUrlPArams, '='),
       // @ts-ignore
       filterComponent: ({ columnDef, onFilterChanged }) => (
         <NumberFilterWithOperator
@@ -691,7 +691,7 @@ export default function CardsTable({
             return (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>);
           },
           defaultSort: isSortedInUrl(queryParams, 16, !!withUrlPArams, setQueryParams),
-          defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
+          defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 16, !!withUrlPArams, '='),
           // @ts-ignore
           filterComponent: ({ columnDef, onFilterChanged }) => (
             <NumberFilterWithOperator
@@ -716,7 +716,7 @@ export default function CardsTable({
             return (<span>{Math.round((value + Number.EPSILON) * 10000) / 100}%</span>);
           },
           defaultSort: isSortedInUrl(queryParams, 17, !!withUrlPArams, setQueryParams),
-          defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 1, !!withUrlPArams, '='),
+          defaultFilterOperator: defaultFilterOperatorForColumn(queryParams, 17, !!withUrlPArams, '='),
           // @ts-ignore
           filterComponent: ({ columnDef, onFilterChanged }) => (
             <NumberFilterWithOperator
