@@ -45,6 +45,7 @@
 - Feat: Añadir last set a torneos
 - Feat: Añadir date a torneos
 - Feat: Añadir link al torneo en página del torneo
+- Feat: Añadir columna de fecha de torneo a decklists de comandantes
 - Feat: Añadir disclaimer de que si se actualizaron las listas posterior al torneo, puede haber variaciones (añadir un Geist success tooltip clickeable con un icono de información)
 - Añadir opción de re-procesar torneo sin descargar y no solo saltar el torneo por completo
 
@@ -60,6 +61,14 @@
 - Cachear resultado de getCards() en backend, para no hacer la consulta sql en cada request
 - Añadir estado en query params para torneos
 - Deuda técnica: Unificar archivos getLocalSomething o crear métodos utilitarios para no repetir código
+
+## Filtro rango de fechas para datos
+
+- TO DEFINE
+
+## Filtro standing para datos
+
+- TO DEFINE
 
 ## API2 Moxfield
 
