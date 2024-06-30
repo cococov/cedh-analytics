@@ -2,7 +2,7 @@
  *  cEDH Analytics - A website that analyzes and cross-references several
  *  EDH (Magic: The Gathering format) community's resources to give insights
  *  on the competitive metagame.
- *  Copyright (C) 2023-present CoCoCov
+ *  Copyright (C) 2024-present CoCoCov
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,16 +30,16 @@ import styles from '@/styles/Top10LastSet.module.css';
 import { server } from '@config';
 
 type Data = {
-  last_set: string,
-  last_set_top_10: { occurrences: number, cardName: string }[],
+  lastSet: string,
+  lastSetTop10: { occurrences: number, cardName: string }[],
 };
 
 export const metadata: Metadata = {
-  title: 'Top 10 Last Set - DDB',
-  description: `List of most used cards of the last set in the DDB decklists. | ${descriptionMetadata}`,
+  title: 'Top 10 Last Set - Tournaments',
+  description: `List of most used cards of the last set in the last tournaments. | ${descriptionMetadata}`,
   openGraph: {
     ...openGraphMetadata,
-    title: 'Top 10 Last Set - DDB | cEDH Analytics',
+    title: 'Top 10 Last Set - Tournaments | cEDH Analytics',
     images: [
       {
         url: '/images/last_set_image.jpg',
@@ -51,8 +51,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     ...twitterMetadata,
-    title: `Top 10 Last Set - DDB | ${twitterMetadata.title}`,
-    description: `List of most used cards of the last set in the DDB decklists. | ${twitterMetadata.description}`,
+    title: `Top 10 Last Set - Tournaments | ${twitterMetadata.title}`,
+    description: `List of most used cards of the last set. | ${twitterMetadata.description}`,
     images: {
       url: '/images/last_set_image.jpg',
       alt: 'Last Set Image',
@@ -61,9 +61,9 @@ export const metadata: Metadata = {
 };
 
 const fetchData = async () => {
-  const rawResult = await fetch(`${server}/data/home_overview.json`);
+  const rawResult = await fetch(`${server}/data/metagame/metagame_resume.json`);
   const result: Data = await rawResult.json();
-  return { last_set: result['last_set'], last_set_top_10: result['last_set_top_10'] };
+  return { last_set: result['lastSet'], last_set_top_10: result['lastSetTop10'] };
 };
 
 export default async function Top10LastSet() {
@@ -72,7 +72,7 @@ export default async function Top10LastSet() {
     <main className={styles.main} >
       <span className={styles.statTable}>
         <section className={styles.statTableTitle}>
-          <h1>Top 10 cards (DDB)</h1>
+          <h1>Top 10 cards (Tournaments)</h1>
           <h2>{data.last_set}</h2>
         </section>
         <section className={styles.statTableContent}>

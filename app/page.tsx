@@ -80,9 +80,15 @@ export default async function Home() {
             </span>
           </Link>
         </span>
+        <Link href="/top-10-last-set-tournaments" className={styles.hiddenButtonTop10}>
+          <>
+            <span>Top 10 cards last set (Tournaments)</span>
+            <ArrowRightIcon fontSize="medium" />
+          </>
+        </Link>
         <Link href="/top-10-last-set" className={styles.hiddenButtonTop10}>
           <>
-            <span>Top 10 cards of the last set (DDB)</span>
+            <span>Top 10 cards last set (DDB)</span>
             <ArrowRightIcon fontSize="medium" />
           </>
         </Link>

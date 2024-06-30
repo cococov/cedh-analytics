@@ -42,6 +42,7 @@ DIRNAME = os.path.realpath('.')
 BASE_PATH = r'./public/data'
 METAGAME_PATH = rf'{BASE_PATH}/metagame'
 FORCE_UPDATE = False
+# Remember to update /images/last_set_image.jpg
 LAST_SET = ["Modern Horizons 3", "Modern Horizons 3 Commander"] # [base set, commander decks, optional 3rd set]
 
 logs.simple_log('Beginning')
