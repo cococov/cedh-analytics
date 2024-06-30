@@ -43,6 +43,7 @@ DIRNAME = os.path.realpath('.')
 FOLDER_PATH = r'public/data/cards'
 FILE_PATH = FOLDER_PATH + r'/competitiveCards.json'
 HOME_OVERVIEW_PATH = r'public/data/home_overview.json'
+# Remember to update /images/last_set_image.jpg
 LAST_SET = ["Modern Horizons 3", "Modern Horizons 3 Commander"] # [base set, commander decks, optional 3rd set]
 
 home_overview = {}
