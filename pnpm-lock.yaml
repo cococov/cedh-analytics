@@ -52,7 +52,7 @@ importers:
         version: 0.9.0
       '@vercel/postgres-kysely':
         specifier: ^0.9.0
-        version: 0.9.0(kysely@0.26.3)
+        version: 0.9.0(kysely@0.27.3)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -81,8 +81,8 @@ importers:
         specifier: ^3.8.1
         version: 3.8.1(jspdf@2.5.1)
       kysely:
-        specifier: ^0.26.3
-        version: 0.26.3
+        specifier: ^0.27.3
+        version: 0.27.3
       lucide-react:
         specifier: ^0.399.0
         version: 0.399.0(react@18.3.1)
@@ -3795,8 +3795,8 @@ packages:
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
-  kysely@0.26.3:
-    resolution: {integrity: sha512-yWSgGi9bY13b/W06DD2OCDDHQmq1kwTGYlQ4wpZkMOJqMGCstVCFIvxCCVG4KfY1/3G0MhDAcZsip/Lw8/vJWw==}
+  kysely@0.27.3:
+    resolution: {integrity: sha512-lG03Ru+XyOJFsjH3OMY6R/9U38IjDPfnOfDgO3ynhbDr+Dz8fak+X6L62vqu3iybQnj+lG84OttBuU9KY3L9kA==}
     engines: {node: '>=14.0.0'}
 
   language-subtag-registry@0.3.22:
@@ -8337,10 +8337,10 @@ snapshots:
       next: 14.2.4(@babel/core@7.23.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
 
-  '@vercel/postgres-kysely@0.9.0(kysely@0.26.3)':
+  '@vercel/postgres-kysely@0.9.0(kysely@0.27.3)':
     dependencies:
       '@vercel/postgres': 0.9.0
-      kysely: 0.26.3
+      kysely: 0.27.3
 
   '@vercel/postgres@0.9.0':
     dependencies:
@@ -9903,7 +9903,7 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
-  kysely@0.26.3: {}
+  kysely@0.27.3: {}
 
   language-subtag-registry@0.3.22: {}
 
