@@ -78,8 +78,8 @@ importers:
         specifier: ^2.5.1
         version: 2.5.1
       jspdf-autotable:
-        specifier: ^3.8.1
-        version: 3.8.1(jspdf@2.5.1)
+        specifier: ^3.8.2
+        version: 3.8.2(jspdf@2.5.1)
       kysely:
         specifier: ^0.27.3
         version: 0.27.3
@@ -3825,8 +3825,8 @@ packages:
     resolution: {integrity: sha512-p/nXbhSEcu3pZRdkW1OfJhpsVtW1gd4Wa1fnQc9YLiTfAjn0312eMKimbdIQzuZl9aa9xUGaRlP9T/CJE/ditQ==}
     engines: {node: '>=0.10.0'}
 
-  jspdf-autotable@3.8.1:
-    resolution: {integrity: sha512-UjJqo80Z3/WUzDi4JipTGp0pAvNvR3Gsm38inJ5ZnwsJH0Lw4pEbssRSH6zMWAhR1ZkTrsDpQo5p6rZk987/AQ==}
+  jspdf-autotable@3.8.2:
+    resolution: {integrity: sha512-zW1ix99/mtR4MbIni7IqvrpfHmuTaICl6iv6wqjRN86Nxtwaw/QtOeDbpXqYSzHIJK9JvgtLM283sc5x+ipkJg==}
     peerDependencies:
       jspdf: ^2.5.1
 
@@ -10006,7 +10006,7 @@ snapshots:
 
   jsonpointer@5.0.1: {}
 
-  jspdf-autotable@3.8.1(jspdf@2.5.1):
+  jspdf-autotable@3.8.2(jspdf@2.5.1):
     dependencies:
       jspdf: 2.5.1
 
