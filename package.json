@@ -28,7 +28,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
-    "echarts": "^5.4.3",
+    "echarts": "^5.5.1",
     "filefy": "^0.1.11",
     "framer-motion": "^11.2.12",
     "geist": "^1.3.0",
