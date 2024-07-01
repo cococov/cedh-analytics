@@ -43,7 +43,7 @@ export default function useQueryParams<T>() {
           if (isEmpty(value)) return urlSearchParams.delete(key);
           urlSearchParams.set(key, String(value));
         } else if (is(Object, value)) {
-          const value_obj = value as Record<string, string | unknown[] | Record<string, unknown>>;
+          const value_obj = value as Record<string, string | unknown | unknown[] | Record<string, unknown>>;
           const filteredValue = Object.keys(value).reduce((acc, key) => {
             if (isNil(value_obj[key]) || isEmpty(value_obj[key])) return acc;
             // @ts-ignore
@@ -51,7 +51,7 @@ export default function useQueryParams<T>() {
             // @ts-ignore
             if (is(Object, value_obj[key]) && has('v', value_obj[key]) && has('o', value_obj[key])) return { ...acc, [`${key}v`]: value_obj[key].v, [`${key}o`]: value_obj[key].o };
             return { ...acc, [key]: value_obj[key] };
-          }, {} as Record<string, string | unknown[] | Record<string, unknown>>);
+          }, {} as Record<string, string | unknown | unknown[] | Record<string, unknown>>);
           if (isEmpty(filteredValue)) return urlSearchParams.delete(key);
           urlSearchParams.set(key, qsStringify(filteredValue, { encode: false }));
         } else {
