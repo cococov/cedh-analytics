@@ -90,3 +90,4 @@
 
 - Metagame está considerando torneos de hace más de un año. Hay que filtrar las LISTAS Y TORNEOS (verificar si estamos trayendo los torneos en un rango de fechas correcto).
 - El % de uso en identidad se está calculando mal en torneos y comandantes
+- Que al hacer click en las acciones de la tabla, se permita abrir el link en otra pestaña
