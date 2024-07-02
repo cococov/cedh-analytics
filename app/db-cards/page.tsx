@@ -21,6 +21,7 @@
  *  https://www.cedh-analytics.com/
  */
 
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
@@ -65,13 +66,15 @@ export default async function Cards() {
           <DeckListsWithProvider size="medium" context={DbCardsContext} />
         </span>
         <span className={styles.cardsContainerWithAsideElements}>
-          <CardsTableWithProvider
-            title="DDB Cards"
-            table="db_cards"
-            context={DbCardsContext}
-            cardUrlBase="/db-cards"
-            withUrlPArams
-          />
+          <Suspense>
+            <CardsTableWithProvider
+              title="DDB Cards"
+              table="db_cards"
+              context={DbCardsContext}
+              cardUrlBase="/db-cards"
+              withUrlPArams
+            />
+          </Suspense>
         </span>
         <CardInfoWithProvider context={DbCardsContext} />
       </DbCardsProvider>
