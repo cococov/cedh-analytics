@@ -11,6 +11,7 @@
 - Feat: Que error 500 de la opción de ir al home
 - Feat: Añadir opción descargar pagina actual y descargar todo (que descargue toda la data luego de aplicar filtros, búsqueda y orden)
 - Feat: Añadir acceso a top 10 de torneos en vista responsiva de tablet
+- Feat: Lista de los últimos 3 torneos añadidos en home
 
 - Data: Filtrar tags para dejar solo los útiles
 - Data: Dejar de guardar data vieja de db cards
