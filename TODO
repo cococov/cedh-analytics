@@ -12,6 +12,7 @@
 - Feat: Añadir opción descargar pagina actual y descargar todo (que descargue toda la data luego de aplicar filtros, búsqueda y orden)
 - Feat: Añadir acceso a top 10 de torneos en vista responsiva de tablet
 - Feat: Lista de los últimos 3 torneos añadidos en home
+- Feat: Añadir "X" para borrar contenido a filtros de texto
 
 - Data: Filtrar tags para dejar solo los útiles
 - Data: Dejar de guardar data vieja de db cards
@@ -85,8 +86,10 @@
 - Ocultar % de uso en identidad para tabla de cartas de comandantes
 - Dejar el fondo de los comandantes con el mismo gris que el resto del sitio
 - Dejar el mismo ancho de tabla que el resto de los componentes de la página en comandantes y Metagame.
+- Style: adaptar estilo de glosario a estilo de about (Como se muestra la imagen)
 
 ### Fix Critico
 
 - Metagame está considerando torneos de hace más de un año. Hay que filtrar las LISTAS Y TORNEOS (verificar si estamos trayendo los torneos en un rango de fechas correcto).
 - El % de uso en identidad se está calculando mal en torneos y comandantes
+- Que al hacer click en las acciones de la tabla, se permita abrir el link en otra pestaña
