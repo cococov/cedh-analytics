@@ -13,6 +13,7 @@
 - Feat: Añadir acceso a top 10 de torneos en vista responsiva de tablet
 - Feat: Lista de los últimos 3 torneos añadidos en home
 - Feat: Añadir "X" para borrar contenido a filtros de texto
+- Feat: Usar logos en "Sources" en vez de lista de About. (Similar a como se ponen los "usado por" de algunas bibliotecas)
 
 - Data: Filtrar tags para dejar solo los útiles
 - Data: Dejar de guardar data vieja de db cards
