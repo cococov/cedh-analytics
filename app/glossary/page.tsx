@@ -62,10 +62,10 @@ export default async function Glossary() {
       <span className={styles.glossaryImageContainer}>
         <Image
           src={FranticSearch}
-          alt="Frantic Search"
           className={styles.glossaryImage}
-          width={600}
-          height={441}
+          alt="Frantic Search"
+          width={800}
+          height={588}
           placeholder="blur"
           priority
         />
