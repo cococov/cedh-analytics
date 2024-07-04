@@ -33,12 +33,6 @@ import G from '@/public/images/G.png';
 import R from '@/public/images/R.png';
 import U from '@/public/images/U.png';
 import W from '@/public/images/W.png';
-import { server } from '@config';
-
-type UpdateDates = {
-  metagame: `${number}-${number}-${number}`,
-  database: `${number}-${number}-${number}`,
-};
 
 export const metadata: Metadata = {
   title: 'About',
@@ -66,14 +60,7 @@ export const metadata: Metadata = {
   },
 };
 
-const fetchLastUpdateDate = async () => {
-  const rawResult = await fetch(`${server}/data/update_date.json`);
-  const result: UpdateDates = await rawResult.json();
-  return result;
-};
-
 export default async function About() {
-  const update_dates = await fetchLastUpdateDate();
   return (
     <main className={styles.about}>
       <span className={styles.aboutImageContainer}>
