@@ -33,25 +33,23 @@
   width: 100%;
 }
 
+.glossaryMain h1 {
+  font-size: 2.5rem;
+}
+
 .glossaryImageContainer {
   display: flex;
   flex-direction: column;
   flex: 1;
   justify-content: center;
   align-items: center;
-  margin: 2rem -0.5rem;
+  clip-path: inset(168px 0px 80px 1px);
+  margin-top: -168px;
+  margin-bottom: -80px;
 }
 
 .glossaryImage {
   height: auto;
-  width: 100%;
-}
-
-@media (max-width: 767px) {
-  .glossaryImageContainer {
-    margin-top: 0;
-    width: 100%;
-  }
 }
 
 .glossarySection {
@@ -59,6 +57,23 @@
   flex-direction: column;
   width: 100%;
   padding-top: 2.5rem;
+}
+
+@media (max-width: 767px) {
+  .glossaryImageContainer {
+    width: 100%;
+    clip-path: inset(80px 0px 90px 1px);
+    margin-top: -80px;
+    margin-bottom: -90px;
+  }
+
+  .glossaryImage {
+    width: 100%;
+  }
+
+  .glossarySection {
+    padding-top: 0;
+  }
 }
 
 .glossaryText {
