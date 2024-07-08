@@ -178,6 +178,10 @@ ul {
   .MuiTablePagination-selectRoot {
     padding-right: 1rem !important;
   }
+
+  .MuiTablePagination-selectLabel {
+    display: none;
+  }
 }
 
 /* Scroll */
