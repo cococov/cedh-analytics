@@ -41,8 +41,18 @@ export default function Footer() {
         <PatreonButton />
         <KofiButton />
       </span>
-      <span className={styles.mailContainer}>
-        <a className={styles.mail} href="mailto:suggestions@cedh-analytics.com">suggestions@cedh-analytics.com</a>
+      <span className={styles.final}>
+        <p className={styles.cc}>
+          © 2024 cEDH Analytics
+        </p>
+        <p className={styles.separator}>-</p>
+        <span className={styles.mailContainer}>
+          <a className={styles.mail} href="mailto:suggestions@cedh-analytics.com">suggestions@cedh-analytics.com</a>
+        </span>
+        <p className={styles.separator}>-</p>
+        <span className={styles.privacy}>
+          <a className={styles.privacyLink} href="/privacy">Privacy Policy</a>
+        </span>
       </span>
     </footer>
   );
