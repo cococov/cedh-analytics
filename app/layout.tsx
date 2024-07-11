@@ -48,7 +48,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.cedh-analytics.com'),
-  robots: 'index, follow',
+  robots: { index: true, follow: true },
   title: {
     template: '%s | cEDH Analytics',
     default: 'cEDH Analytics'

@@ -42,7 +42,7 @@
 .footer {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   width: 100%;
   height: fit-content;
   border-top: 1px solid #eaeaea;
@@ -76,7 +76,8 @@
   align-items: center;
   text-align: center;
   margin: 0.5rem;
-  grid-column: 2;
+  grid-row: 1;
+  grid-column: 2 / -2;
 }
 
 .footer .donate {
@@ -86,10 +87,38 @@
   align-items: flex-end;
   text-align: center;
   margin: 0.5rem;
-  grid-column: 3;
+  grid-column: 5 / -1;
+  grid-row: 1;
   padding-right: 2rem;
   height: 80%;
   margin-top: 2rem;
+}
+
+.footer .final {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: small;
+  width: 100%;
+}
+
+.footer .separator {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer .cc {
+  margin: 0.5rem;
+}
+
+.footer .privacy {
+  margin: 0.5rem;
+}
+
+.footer .privacy .privacyLink {
+  color: #422273;
+  font-weight: 500;
 }
 
 .logo {
@@ -99,10 +128,25 @@
 @media (max-width: 767px) {
   .footer {
     grid-template-columns: 0fr 2fr 1fr;
+    grid-template-rows: 1fr 0.5fr;
+  }
+
+  .footer .madeWithLove {
+    grid-column: 2;
+    grid-row: 1;
   }
 
   .footer .donate {
+    grid-column: 3;
+    grid-row: 1;
     padding-right: 0.5rem;
+  }
+
+  .footer .final {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    height: 100%;
+    font-size: 0.6rem;
   }
 
   .footer .mailContainer {
