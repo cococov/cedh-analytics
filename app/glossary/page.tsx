@@ -83,7 +83,7 @@ export default async function Glossary() {
         <section id='Spite Play' className={styles.glossarySection}>
           <h2>Spite Play</h2>
           <p>
-            Any play that doesn&apos;t benefit you, but hurts your opponents. For example, using <Link className={styles.glossaryLink} href='/db-cards/swords%20to%20plowshares'>Sword to Plowshares</Link> on a creature of one of your opponents before you die by drawing a card with an empty library.
+            Any play that doesn&apos;t benefit you, but hurts your opponents. For example, using <Link className={styles.glossaryLink} href='/db-cards/Swords%20to%20Plowshares'>Sword to Plowshares</Link> on a creature of one of your opponents before you die by drawing a card with an empty library.
           </p>
         </section>
 
