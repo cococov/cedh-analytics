@@ -78,6 +78,11 @@
 
 - Usar api2 en vez de api para obtener data de moxfield
 
+# ADS
+
+- Añadir config de google ads como env
+- Pintar background de ads para que sean visibles en env development
+
 ## FIX
 
 - El caching de decklists actualmente solo es en base al hash, debería ser hash y fecha, para capturar el caso que en distintos torneos se use la misma decklist, pero actualizada

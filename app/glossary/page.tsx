@@ -26,6 +26,7 @@ import Link from 'next/link';
 import Image from "next/image";
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
+import VerticalAdUnit from '@/components/googleAds/verticalAdUnit';
 /* Static */
 import styles from '@/styles/Glossary.module.css';
 import FranticSearch from '@/public/images/frantic_search.jpg';
@@ -58,70 +59,82 @@ export const metadata: Metadata = {
 
 export default async function Glossary() {
   return (
-    <main className={styles.glossaryMain} >
-      <span className={styles.glossaryImageContainer}>
-        <Image
-          src={FranticSearch}
-          className={styles.glossaryImage}
-          alt="Frantic Search"
-          width={800}
-          height={588}
-          placeholder="blur"
-          priority
-        />
+    <span className={styles.mainWrapper}>
+      <span className="d-flex flex-col">
+        <VerticalAdUnit />
+        <VerticalAdUnit />
+        <VerticalAdUnit />
       </span>
-      <span className={styles.glossaryText}>
-        <h1>Glossary</h1>
+      <main className={styles.glossaryMain} >
+        <span className={styles.glossaryImageContainer}>
+          <Image
+            src={FranticSearch}
+            className={styles.glossaryImage}
+            alt="Frantic Search"
+            width={800}
+            height={588}
+            placeholder="blur"
+            priority
+          />
+        </span>
+        <span className={styles.glossaryText}>
+          <h1>Glossary</h1>
 
-        <section id='cEDH' className={styles.glossarySection}>
-          <h2>cEDH</h2>
-          <p>
-            Competitive Elder Dragon Highlander, a format where the goal is to win as fast as possible with the most powerful cards available.
-          </p>
-        </section>
+          <section id='cEDH' className={styles.glossarySection}>
+            <h2>cEDH</h2>
+            <p>
+              Competitive Elder Dragon Highlander, a format where the goal is to win as fast as possible with the most powerful cards available.
+            </p>
+          </section>
 
-        <section id='Spite Play' className={styles.glossarySection}>
-          <h2>Spite Play</h2>
-          <p>
-            Any play that doesn&apos;t benefit you, but hurts your opponents. For example, using <Link className={styles.glossaryLink} href='/db-cards/Swords%20to%20Plowshares'>Sword to Plowshares</Link> on a creature of one of your opponents before you die by drawing a card with an empty library.
-          </p>
-        </section>
+          <section id='Spite Play' className={styles.glossarySection}>
+            <h2>Spite Play</h2>
+            <p>
+              Any play that doesn&apos;t benefit you, but hurts your opponents. For example, using <Link className={styles.glossaryLink} href='/db-cards/Swords%20to%20Plowshares'>Sword to Plowshares</Link> on a creature of one of your opponents before you die by drawing a card with an empty library.
+            </p>
+          </section>
 
-        <section id='King Making' className={styles.glossarySection}>
-          <h2>King Making</h2>
-          <p>
-            Do something that favors one of your opponents without this presenting a benefit to you. Sometimes causing one of your opponents to win the game. For example allowing your opponent to draw a lot of cards with his <Link className={styles.glossaryLink} href='/db-cards/rhystic%20study'>Rhystic Study</Link>.
-          </p>
-        </section>
+          <section id='King Making' className={styles.glossarySection}>
+            <h2>King Making</h2>
+            <p>
+              Do something that favors one of your opponents without this presenting a benefit to you. Sometimes causing one of your opponents to win the game. For example allowing your opponent to draw a lot of cards with his <Link className={styles.glossaryLink} href='/db-cards/rhystic%20study'>Rhystic Study</Link>.
+            </p>
+          </section>
 
-        <section id='Combo' className={styles.glossarySection}>
-          <h2>Combo</h2>
-          <p>
-            A sequence of cards that allows you to win the game, directly or indirectly.
-          </p>
-        </section>
+          <section id='Combo' className={styles.glossarySection}>
+            <h2>Combo</h2>
+            <p>
+              A sequence of cards that allows you to win the game, directly or indirectly.
+            </p>
+          </section>
 
-        <section id='Stax' className={styles.glossarySection}>
-          <h2>Stax</h2>
-          <p>
-            A strategy that aims to slow down the game by using cards that prevent your opponents from playing their cards.
-          </p>
-        </section>
+          <section id='Stax' className={styles.glossarySection}>
+            <h2>Stax</h2>
+            <p>
+              A strategy that aims to slow down the game by using cards that prevent your opponents from playing their cards.
+            </p>
+          </section>
 
-        <section id='Ramp' className={styles.glossarySection}>
-          <h2>Ramp</h2>
-          <p>
-            A strategy that aims to speed up the game by using cards that allow you to play more mana.
-          </p>
-        </section>
+          <section id='Ramp' className={styles.glossarySection}>
+            <h2>Ramp</h2>
+            <p>
+              A strategy that aims to speed up the game by using cards that allow you to play more mana.
+            </p>
+          </section>
 
-        <section id='Mana Rock' className={styles.glossarySection}>
-          <h2>Mana Rock</h2>
-          <p>
-            An artifact that has the ability to produce mana.
-          </p>
-        </section>
+          <section id='Mana Rock' className={styles.glossarySection}>
+            <h2>Mana Rock</h2>
+            <p>
+              An artifact that has the ability to produce mana.
+            </p>
+          </section>
+        </span>
+      </main>
+      <span className="d-flex flex-col">
+        <VerticalAdUnit />
+        <VerticalAdUnit />
+        <VerticalAdUnit />
       </span>
-    </main>
+    </span>
   );
 };

@@ -21,6 +21,14 @@
  *  https://www.cedh-analytics.com/
  */
 
+.mainWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: white;
+  width: 100%;
+}
+
 .glossaryMain {
   display: flex;
   flex-direction: column;
@@ -92,7 +100,7 @@
   font-weight: 700;
 }
 
-@media (max-width: 857px) {
+@media (max-width: 1929px) {
   .glossaryText {
     max-width: 90%;
   }
