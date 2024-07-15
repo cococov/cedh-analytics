@@ -60,7 +60,11 @@ export const metadata: Metadata = {
 export default async function Glossary() {
   return (
     <span className={styles.mainWrapper}>
-      <VerticalAdUnit />
+      <span className="d-flex flex-col">
+        <VerticalAdUnit />
+        <VerticalAdUnit />
+        <VerticalAdUnit />
+      </span>
       <main className={styles.glossaryMain} >
         <span className={styles.glossaryImageContainer}>
           <Image
@@ -126,7 +130,11 @@ export default async function Glossary() {
           </section>
         </span>
       </main>
-      <VerticalAdUnit />
+      <span className="d-flex flex-col">
+        <VerticalAdUnit />
+        <VerticalAdUnit />
+        <VerticalAdUnit />
+      </span>
     </span>
   );
 };

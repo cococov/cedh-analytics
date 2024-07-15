@@ -100,19 +100,9 @@
   font-weight: 700;
 }
 
-@media (max-width: 857px) {
+@media (max-width: 1929px) {
   .glossaryText {
     max-width: 90%;
-  }
-}
-
-@media (min-width: 1500px) {
-  .glossaryMain {
-    max-width: 80%;
-  }
-
-  .glossaryText {
-    max-width: 70%;
   }
 }
 
