@@ -13,7 +13,7 @@ const initAd = () => {
   }
 };
 
-export default function ResponsiveHorizontalAdUnit() {
+export default function ResponsiveHorizontalAdUnitMobile() {
 
   useEffect(() => {
     initAd();
@@ -22,7 +22,7 @@ export default function ResponsiveHorizontalAdUnit() {
   return (
     <span
       className={concat(
-        'block w-full min-h-1 mb-2 self-center',
+        'block md:hidden min-w-32 min-h-1 self-center',
         isDevEnv ? ' bg-orange-300' : ''
       )}
     >
