@@ -48,13 +48,6 @@
   flex: 3;
 }
 
-@media (max-width: 1600px) {
-  .leftSpan {
-    flex: none;
-    display: none;
-  }
-}
-
 .cardsTable {
   min-width: 58dvw;
   min-height: 60dvh;
@@ -70,16 +63,16 @@
 
 @media (min-width: 857px) {
   .cardsTable {
-    padding-left: 5rem;
-    padding-right: 5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .cardsTableLoading {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 5rem;
-    padding-right: 5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
@@ -232,6 +225,17 @@
   flex-direction: column;
   overflow-x: auto;
   width: 60%;
+}
+
+@media (max-width: 1600px) {
+  .leftSpan {
+    flex: none;
+    display: none;
+  }
+
+  .cardsContainerWithAsideElements {
+    width: 70%;
+  }
 }
 
 @media (max-width: 1430px) {

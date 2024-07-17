@@ -48,13 +48,13 @@ export default function PhoneNavBar({
             <Link href="/metagame">
               Metagame
             </Link>
-            <Link href="/metagame-cards">
+            <Link href="/metagame-cards?cs=0%2C1%2C2%2C3%2C8&so=desc&ob=1&ps=5">
               Metagame Cards
             </Link>
             <Link href="/tournaments">
               Tournaments
             </Link>
-            <Link href="/db-cards">
+            <Link href="/db-cards?cs=0%2C1%2C2%2C3%2C8&so=desc&ob=1&ps=5">
               DDB Cards
             </Link>
             <Link href="/glossary">

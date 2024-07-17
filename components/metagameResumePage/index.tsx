@@ -30,6 +30,7 @@ import { HeadlessTable } from '@/components/vendor/nextUi';
 import LastSetTop10 from '@/components/lastSetTop10';
 import AsyncCommandersTable from '@/components/commandersTable/async';
 import type { ResumeData } from './types';
+import ResponsiveHorizontalAdUnit from '@/components/googleAds/responsiveHorizontalAdUnit';
 /* Static */
 import styles from '@/styles/Metagame.module.css';
 
@@ -154,6 +155,9 @@ export default async function MetagameResumePage({
           </span>
         </span>
       </section>
+      <span className="flex items-center justify-center w-full mt-2 ml-0 md:ml-4 md:mt-0">
+        <ResponsiveHorizontalAdUnit />
+      </span>
       <span className={styles.boxwhiskerChart}>
         <h3 className={styles.topResumeTitle}>Use of Cards</h3>
         <BoxwhiskerChart options={{

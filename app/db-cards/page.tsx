@@ -30,7 +30,7 @@ import CardInfoWithProvider from '@/components/cardInfo/wrapperWithProvider';
 import DeckListsWithProvider from '@/components/deckLists/wrapperWithProvider';
 import DbCardsContext, { DbCardsProvider } from '@/contexts/dbCardsStore';
 import HorizontalAdUnit from '@/components/googleAds/horizontalAdUnit';
-import ResponsiveHorizontalAdUnit from '@/components/googleAds/responsiveHorizontalAdUnit';
+import ResponsiveHorizontalAdUnitMobile from '@/components/googleAds/responsiveHorizontalAdUnitMobile';
 /* Static */
 import styles from '@/styles/CardsList.module.css';
 
@@ -68,7 +68,7 @@ export default async function Cards() {
           <DeckListsWithProvider size="medium" context={DbCardsContext} />
         </span>
         <span className={styles.cardsContainerWithAsideElements}>
-          <ResponsiveHorizontalAdUnit />
+          <ResponsiveHorizontalAdUnitMobile />
           <HorizontalAdUnit />
           <Suspense>
             <CardsTableWithProvider
