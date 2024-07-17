@@ -25,6 +25,7 @@ import type { Metadata } from 'next';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
 import TournamentsTable from '@/components/tournamentsTable';
+import VerticalAdUnit from '@/components/googleAds/verticalAdUnit';
 /* Static */
 import styles from '@/styles/Tournaments.module.css';
 import TOURNAMENTS from '@/public/data/metagame/tournaments.json';
@@ -74,7 +75,13 @@ export default async function Tournaments() {
 
   return (
     <main className={styles.main}>
+      <span className="hidden 4xl:block mr-4">
+        <VerticalAdUnit />
+      </span>
       <TournamentsTable tournaments={tournaments} />
+      <span className="hidden 3xl:block ml-4">
+        <VerticalAdUnit />
+      </span>
     </main>
   );
 };

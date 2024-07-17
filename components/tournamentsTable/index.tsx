@@ -33,6 +33,7 @@ import Table, { NumberFilterWithOperator, DateRangeFilter } from '@/components/t
 import AppContext from '@/contexts/appStore';
 import getLocalTournaments from './getLocalTournaments';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import ResponsiveHorizontalAdUnitMobile from '@/components/googleAds/responsiveHorizontalAdUnitMobile';
 /* Static */
 import styles from '@/styles/CardsList.module.css';
 
@@ -189,6 +190,7 @@ export default function TournamentsTable({
 
   return (
     <span className={styles.commandersContainer}>
+      <ResponsiveHorizontalAdUnitMobile />
       <span className={styles.cardsTable}>
         <Table
           key={renderKey}
