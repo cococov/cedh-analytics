@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useEffect } from 'react';
+import { concat } from 'ramda';
+
+const isDevEnv = process.env.NODE_ENV !== 'production';
 
 const initAd = () => {
   try {
@@ -17,7 +20,12 @@ export default function VerticalAdUnit() {
   });
 
   return (
-    <span className="hidden md:block min-w-64 mt-2 mb-2">
+    <span
+      className={concat(
+        'hidden md:block min-w-64 mt-2 mb-2',
+        isDevEnv ? ' bg-orange-300' : ''
+      )}
+    >
       <ins className="adsbygoogle"
         style={{ display: 'block' }}
         data-ad-client="ca-pub-1605287259025910"

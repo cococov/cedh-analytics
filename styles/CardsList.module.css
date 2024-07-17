@@ -24,7 +24,7 @@
 /* Base */
 
 .main {
-  padding: 1rem 0.5rem;
+  padding: 0.2rem 0.5rem 1rem 0.5rem;
   width: 100%;
   flex: 1;
   display: flex;
@@ -229,6 +229,7 @@
 
 .cardsContainerWithAsideElements {
   display: flex;
+  flex-direction: column;
   overflow-x: auto;
   width: 60%;
 }
