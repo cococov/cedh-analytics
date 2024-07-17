@@ -29,6 +29,8 @@ import CardsTableWithProvider from '@/components/cardsTable/wrapperWithProvider'
 import CardInfoWithProvider from '@/components/cardInfo/wrapperWithProvider';
 import DeckListsWithProvider from '@/components/deckLists/wrapperWithProvider';
 import MetagameCardsContext, { MetagameCardsProvider } from '@/contexts/metagameCardsStore';
+import HorizontalAdUnit from '@/components/googleAds/horizontalAdUnit';
+import ResponsiveHorizontalAdUnit from '@/components/googleAds/responsiveHorizontalAdUnit';
 /* Static */
 import styles from '@/styles/CardsList.module.css';
 
@@ -66,6 +68,8 @@ export default async function MetagameCards() {
           <DeckListsWithProvider size="medium" context={MetagameCardsContext} />
         </span>
         <span className={styles.cardsContainerWithAsideElements}>
+          <ResponsiveHorizontalAdUnit />
+          <HorizontalAdUnit />
           <Suspense>
             <CardsTableWithProvider
               title="Metagame Cards"
