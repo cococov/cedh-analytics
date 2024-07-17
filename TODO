@@ -79,10 +79,9 @@
 
 - Usar api2 en vez de api para obtener data de moxfield
 
-# ADS
+## ADS
 
 - Añadir config de google ads como env
-- Pintar background de ads para que sean visibles en env development
 
 ## FIX
 
