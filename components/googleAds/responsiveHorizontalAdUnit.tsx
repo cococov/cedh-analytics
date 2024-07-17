@@ -50,7 +50,7 @@ export default function ResponsiveHorizontalAdUnit() {
       )}
     >
       <ins className="adsbygoogle"
-        style={{ display: 'block' }}
+        style={{ display: 'block', textAlign: 'center' }}
         data-ad-client="ca-pub-1605287259025910"
         data-ad-slot="5519668683"
         data-ad-format="auto"
