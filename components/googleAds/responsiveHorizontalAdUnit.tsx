@@ -22,12 +22,12 @@ export default function HorizontalAdUnit() {
   return (
     <span
       className={concat(
-        'block md:hidden min-w-32 mb-2 self-center',
+        'block md:hidden min-w-32 min-h-1 mb-2 self-center',
         isDevEnv ? ' bg-orange-300' : ''
       )}
     >
       <ins className="adsbygoogle"
-        style={{ display: 'block', height: '90px', width: '728px' }}
+        style={{ display: 'block' }}
         data-ad-client="ca-pub-1605287259025910"
         data-ad-slot="5519668683"
         data-ad-format="auto"
