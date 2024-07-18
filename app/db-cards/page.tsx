@@ -68,7 +68,7 @@ export default async function Cards() {
           <DeckListsWithProvider size="medium" context={DbCardsContext} />
         </span>
         <span className={styles.cardsContainerWithAsideElements}>
-          <ResponsiveHorizontalAdUnitMobile />
+          <ResponsiveHorizontalAdUnitMobile slot={7777402028} />
           <HorizontalAdUnit slot={6460482742} />
           <Suspense>
             <CardsTableWithProvider

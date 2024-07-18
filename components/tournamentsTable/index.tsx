@@ -190,7 +190,7 @@ export default function TournamentsTable({
 
   return (
     <span className={styles.commandersContainer}>
-      <ResponsiveHorizontalAdUnitMobile />
+      <ResponsiveHorizontalAdUnitMobile slot={6099705880} />
       <span className={styles.cardsTable}>
         <Table
           key={renderKey}

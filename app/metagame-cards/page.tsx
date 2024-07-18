@@ -68,7 +68,7 @@ export default async function MetagameCards() {
           <DeckListsWithProvider size="medium" context={MetagameCardsContext} />
         </span>
         <span className={styles.cardsContainerWithAsideElements}>
-          <ResponsiveHorizontalAdUnitMobile />
+          <ResponsiveHorizontalAdUnitMobile slot={5151238686} />
           <HorizontalAdUnit slot={3665114232} />
           <Suspense>
             <CardsTableWithProvider
