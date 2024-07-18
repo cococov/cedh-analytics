@@ -179,7 +179,7 @@ export default async function MetagameCommanderPage({
           </span>
         </section>
         <span className="flex items-center justify-center w-full mt-2 ml-0 md:ml-4 md:mt-0">
-          <ResponsiveHorizontalAdUnit />
+          <ResponsiveHorizontalAdUnit slot={8982704306} />
         </span>
         <span className={styles.boxwhiskerChart}>
           <h3 className={styles.topResumeTitle}>Use of Cards</h3>
