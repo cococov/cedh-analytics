@@ -112,7 +112,6 @@ body {
   overflow-x: hidden;
   overflow-y: auto !important;
   max-height: 100dvh;
-  box-shadow: inset 0px -66px #ccc;
 }
 
 a {
