@@ -69,7 +69,7 @@ export default async function Cards() {
         </span>
         <span className={styles.cardsContainerWithAsideElements}>
           <ResponsiveHorizontalAdUnitMobile />
-          <HorizontalAdUnit />
+          <HorizontalAdUnit slot={6460482742} />
           <Suspense>
             <CardsTableWithProvider
               title="DDB Cards"

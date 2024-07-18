@@ -56,7 +56,7 @@ export default function VerticalAdUnit({
       <ins className="adsbygoogle"
         style={{ display: 'block' }}
         data-ad-client="ca-pub-1605287259025910"
-        data-ad-slot={slot}
+        data-ad-slot={String(slot)}
         data-ad-format="auto"
         data-full-width-responsive="true"></ins>
     </span>

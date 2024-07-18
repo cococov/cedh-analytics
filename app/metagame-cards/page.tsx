@@ -69,7 +69,7 @@ export default async function MetagameCards() {
         </span>
         <span className={styles.cardsContainerWithAsideElements}>
           <ResponsiveHorizontalAdUnitMobile />
-          <HorizontalAdUnit />
+          <HorizontalAdUnit slot={3665114232} />
           <Suspense>
             <CardsTableWithProvider
               title="Metagame Cards"

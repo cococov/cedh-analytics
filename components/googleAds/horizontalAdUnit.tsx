@@ -36,7 +36,11 @@ const initAd = () => {
   }
 };
 
-export default function HorizontalAdUnit() {
+export default function HorizontalAdUnit({
+  slot
+}: {
+  slot: number
+}) {
 
   useEffect(() => {
     initAd();
@@ -52,7 +56,7 @@ export default function HorizontalAdUnit() {
       <ins className="adsbygoogle"
         style={{ display: 'block', height: '90px', width: '728px' }}
         data-ad-client="ca-pub-1605287259025910"
-        data-ad-slot="7191665390"
+        data-ad-slot={String(slot)}
         data-full-width-responsive="true"></ins>
     </span>
   );
