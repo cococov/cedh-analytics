@@ -61,9 +61,9 @@ export default async function Glossary() {
   return (
     <span className={styles.mainWrapper}>
       <span className="d-flex flex-col">
-        <VerticalAdUnit />
-        <VerticalAdUnit />
-        <VerticalAdUnit />
+        <VerticalAdUnit slot={5534382060} />
+        <VerticalAdUnit slot={4705883102} />
+        <VerticalAdUnit slot={7795930931} />
       </span>
       <main className={styles.glossaryMain} >
         <span className={styles.glossaryImageContainer}>
@@ -131,9 +131,9 @@ export default async function Glossary() {
         </span>
       </main>
       <span className="d-flex flex-col">
-        <VerticalAdUnit />
-        <VerticalAdUnit />
-        <VerticalAdUnit />
+        <VerticalAdUnit slot={7861194326} />
+        <VerticalAdUnit slot={7075243188} />
+        <VerticalAdUnit slot={6548112657} />
       </span>
     </span>
   );

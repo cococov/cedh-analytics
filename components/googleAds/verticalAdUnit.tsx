@@ -36,7 +36,11 @@ const initAd = () => {
   }
 };
 
-export default function VerticalAdUnit() {
+export default function VerticalAdUnit({
+  slot
+}: {
+  slot: number
+}) {
 
   useEffect(() => {
     initAd();
@@ -52,7 +56,7 @@ export default function VerticalAdUnit() {
       <ins className="adsbygoogle"
         style={{ display: 'block' }}
         data-ad-client="ca-pub-1605287259025910"
-        data-ad-slot="4002395278"
+        data-ad-slot={slot}
         data-ad-format="auto"
         data-full-width-responsive="true"></ins>
     </span>

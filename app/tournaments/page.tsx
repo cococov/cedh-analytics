@@ -76,11 +76,11 @@ export default async function Tournaments() {
   return (
     <main className={styles.main}>
       <span className="hidden 4xl:block mr-4">
-        <VerticalAdUnit />
+        <VerticalAdUnit slot={8456090696} />
       </span>
       <TournamentsTable tournaments={tournaments} />
       <span className="hidden 3xl:block ml-4">
-        <VerticalAdUnit />
+        <VerticalAdUnit slot={9766638091} />
       </span>
     </main>
   );
