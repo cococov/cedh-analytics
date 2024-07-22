@@ -44,7 +44,7 @@ FOLDER_PATH = r'public/data/cards'
 FILE_PATH = FOLDER_PATH + r'/competitiveCards.json'
 HOME_OVERVIEW_PATH = r'public/data/home_overview.json'
 # Remember to update /images/last_set_image.jpg
-LAST_SET = ["Assassin's Creed", "Assassin's Creed Commander"] # [base set, commander decks, optional 3rd set]
+LAST_SET = ["Bloomburrow", "Bloomburrow Commander"] # [base set, commander decks, optional 3rd set]
 
 home_overview = {}
 
