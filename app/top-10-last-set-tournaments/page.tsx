@@ -25,6 +25,8 @@ import type { Metadata } from 'next';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
 import LastSetTop10 from '@/components/lastSetTop10';
+import VerticalAdUnit from '@/components/googleAds/verticalAdUnit';
+import ResponsiveHorizontalAdUnitMobile from '@/components/googleAds/responsiveHorizontalAdUnitMobile';
 /* Static */
 import styles from '@/styles/Top10LastSet.module.css';
 import { server } from '@config';
@@ -70,7 +72,11 @@ export default async function Top10LastSet() {
   const data = await fetchData();
   return (
     <main className={styles.main} >
+      <span className="hidden lg:block mr-4">
+        <VerticalAdUnit slot={6713921156} />
+      </span>
       <span className={styles.statTable}>
+        <ResponsiveHorizontalAdUnitMobile slot={2363612603} />
         <section className={styles.statTableTitle}>
           <h1>Top 10 cards (Tournaments)</h1>
           <h2>{data.last_set}</h2>
@@ -78,6 +84,9 @@ export default async function Top10LastSet() {
         <section className={styles.statTableContent}>
           <LastSetTop10 last_set_top_10={data.last_set_top_10} urlBase='/metagame-cards' />
         </section>
+      </span>
+      <span className="hidden lg:block ml-4">
+        <VerticalAdUnit slot={5418416704} />
       </span>
     </main>
   );

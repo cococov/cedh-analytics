@@ -25,11 +25,12 @@
   width: 100%;
   flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
   justify-content: center;
   overflow-x: hidden;
   background-color: white;
+  min-height: 78.7dvh;
 }
 
 .dummyTd {
@@ -41,7 +42,23 @@
   border-spacing: 0;
 }
 
-@media (min-width: 1080px) {
+@media (max-width: 767px) {
+  .main {
+    min-height: 75.5dvh;
+  }
+
+  .statTableContent {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .statTableContent {
+    width: 70%;
+  }
+}
+
+@media (min-width: 1000px) {
   .statTableContent {
     width: 40rem;
   }
@@ -54,7 +71,6 @@
   justify-content: flex-start;
   flex-grow: 1;
   text-align: center;
-  min-width: 100%;
   max-width: 100%;
   padding: 1rem;
 }
