@@ -76,7 +76,9 @@ export default async function Top10LastSet() {
         <VerticalAdUnit slot={8737449267} />
       </span>
       <span className={styles.statTable}>
-        <ResponsiveHorizontalAdUnitMobile slot={6348354997} />
+        <span className="min-w-full">
+          <ResponsiveHorizontalAdUnitMobile slot={6348354997} />
+        </span>
         <section className={styles.statTableTitle}>
           <h1>Top 10 cards (DDB)</h1>
           <h2>{data.last_set}</h2>
