@@ -199,7 +199,14 @@ mapped_tournament_names = {}
 for tournament in list_of_tournaments_to_process:
   # Algunos torneos tienen espacios al final del nombre y por ello le hacemos un trim
   # Pero para poder hacer los request a la API de EDH Top 16 necesitamos el nombre sin trim
-  mapped_tournament_names[tournament] = raw_lists_by_hash[decklist_hashes_by_tournament[tournament][0]]['tournamentName']
+  t_name = ""
+  for hash in decklist_hashes_by_tournament[tournament]:
+    # TODO: este es un parche feo por el problema que tengo de cachear listas por hash cuando estas listas se juegan en más de un torneo
+    # Hay que cachearlas por hash-base64(torneo) y hacer split donde requiera el hash
+    t_name = raw_lists_by_hash[hash]['tournamentName']
+    if t_name.strip() == tournament:
+      break
+  mapped_tournament_names[tournament] = t_name
 tournaments = edhtop16.get_tournaments_resume(tournaments, list_of_tournaments_to_process, mapped_tournament_names)
 logs.end_log_block('Tournaments list got!')
 
