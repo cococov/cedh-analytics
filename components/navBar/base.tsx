@@ -27,7 +27,7 @@ import styles from '@/styles/Home.module.css';
 
 export default function BaseNavBar() {
   return (
-    <div className={styles.navBar} >
+    <nav className={styles.navBar} >
       <Link href="/">
         Home
       </Link>
@@ -49,6 +49,6 @@ export default function BaseNavBar() {
       <Link href="/about">
         About
       </Link>
-    </div>
+    </nav>
   );
 };
