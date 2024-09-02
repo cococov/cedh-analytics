@@ -35,10 +35,13 @@ export default function PhoneNavBar({
   toggleOpen: () => void,
 }) {
   return (
-    <div className={styles.navBarPhone}>
-      <a className={styles.navBarPhoneIcon} onClick={toggleOpen}>
-        {isOpen ? <MenuOpenIcon /> : <MenuClosedIcon />}
-      </a>
+    <nav className={styles.navBarPhone}>
+      <span className="pt-2 pb-2 flex pl-4 pr-4 w-full bg-carrotPurple" onClick={toggleOpen}>
+        <span className="text-violet-300 text-nowrap place-self-center tracking-widest font-medium opacity-75">cEDH Analytics</span>
+        <span className="text-violet-50 place-self-end justify-end flex w-full">
+          {isOpen ? <MenuOpenIcon /> : <MenuClosedIcon />}
+        </span>
+      </span>
       {
         isOpen && (
           <>
@@ -66,6 +69,6 @@ export default function PhoneNavBar({
           </>
         )
       }
-    </div>
+    </nav>
   );
 };
