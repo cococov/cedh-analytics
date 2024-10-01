@@ -31,6 +31,7 @@ export interface MetagameCardsTable {
   decklists: any[];
   is_commander: boolean;
   is_in_99: boolean;
+  is_legal: boolean;
   percentage_of_use: number;
   percentage_of_use_by_identity: number;
   avg_win_rate: number;
@@ -43,6 +44,7 @@ export interface DBCardsTable {
   decklists: any[];
   is_commander: boolean;
   is_in_99: boolean;
+  is_legal: boolean;
   percentage_of_use: number;
   percentage_of_use_by_identity: number;
 };

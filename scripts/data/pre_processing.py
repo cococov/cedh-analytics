@@ -127,6 +127,7 @@ def build_reduce_deck(has_multiple_printings, get_last_set_for_card):
       'toughness': current['card']['toughness'] if 'toughness' in current['card'] else current['card']['card_faces'][0]['toughness'] if len(current['card']['card_faces']) > 0 and 'toughness' in current['card']['card_faces'][0] else '',
       "isCommander": isCommander(current['card'], current['deck']),
       "isIn99": not isCommander(current['card'], current['deck']),
+      "isLegal": current['card']['legalities']['commander'] == 'legal'
     }
 
     saved_card_index = next((index for (index, d) in enumerate(accumulated) if d['cardName'] == current['card']['name']), -1)

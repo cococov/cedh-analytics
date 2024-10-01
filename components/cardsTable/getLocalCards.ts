@@ -24,7 +24,7 @@
 "use client";
 
 /* Vendor */
-import { sort, filter, includes, isNotNil, isEmpty, reduce, is, map } from 'ramda';
+import { sort, filter, includes, isNotNil, isEmpty, reduce, is, map, isNil } from 'ramda';
 
 type Card = {
   'card_name': string;
@@ -37,6 +37,7 @@ type Card = {
   'avg_draw_rate': number;
   'is_commander': boolean;
   'is_in_99': boolean;
+  'is_legal': boolean;
   'tags': string[];
   'decklists': any[];
   'cmc': number;
@@ -68,7 +69,7 @@ export default async function getLocalCards(
   search?: string,
   filters?: { column: Columns, operator: '=' | '>' | '<', value: string | string[] }[],
 ) {
-  // Validations and fixes
+  // Fix filters
   const fixedFilters = isNotNil(filters) && !isEmpty(filters)
     ? map(filter => {
       if (isNumeric(`${filter.value}`) && Number.parseInt(`${filter.value}`) >= 2147483647) {
@@ -77,6 +78,9 @@ export default async function getLocalCards(
       return filter;
     }, filters)
     : filters;
+
+  // Fix values (May be some old registers without the legality)
+  const fixedCards = map(card => ({...card, 'is_legal': isNil(card['is_legal'] ? true : card['is_legal'])}), cards);
 
   // Filter
   const filteredCards = isNotNil(fixedFilters) && !isEmpty(fixedFilters)
@@ -108,8 +112,8 @@ export default async function getLocalCards(
             return false;
         }
       }
-    }, true, fixedFilters), cards)
-    : cards;
+    }, true, fixedFilters), fixedCards)
+    : fixedCards;
 
   // Search
   const searchedCards = isNotNil(search)

@@ -73,6 +73,7 @@ const COLUMNS_INDEXED = {
   15: 'tags',
   16: 'avg_win_rate',
   17: 'avg_draw_rate',
+  18: 'is_legal',
 };
 
 const DEFAULT_SORT: { column: number, sortDirection: SortDirection } = { column: 1, sortDirection: 'desc' };
@@ -544,6 +545,26 @@ export default function CardsTable({
         'false': 'No',
       },
       defaultSort: isSortedInUrl(queryParams, 11, !!withUrlPArams, setQueryParams),
+      // @ts-ignore
+      filterComponent: ({ columnDef, onFilterChanged }) => (
+        <SelectFilter columnDef={columnDef} onFilterChanged={onFilterChanged} />
+      ),
+    },
+    {
+      title: 'is legal',
+      field: 'is_legal',
+      align: 'center',
+      grouping: false,
+      filtering: true,
+      editable: 'never',
+      hidden: !isShowInUrl(queryParams, 18, !!withUrlPArams, setQueryParams),
+      defaultFilter: defaultFilterForColumn(queryParams, 18, !!withUrlPArams) || ['true'],
+      searchable: false,
+      lookup: {
+        'true': 'Yes',
+        'false': 'No',
+      },
+      defaultSort: isSortedInUrl(queryParams, 18, !!withUrlPArams, setQueryParams),
       // @ts-ignore
       filterComponent: ({ columnDef, onFilterChanged }) => (
         <SelectFilter columnDef={columnDef} onFilterChanged={onFilterChanged} />
