@@ -74,6 +74,7 @@ def update_metagame_cards():
       'decklists': json.dumps(card['decklists']),
       'is_commander': card['isCommander'],
       'is_in_99': card['isIn99'],
+      'is_legal': card['isLegal'],
       'percentage_of_use': card['percentageOfUse'],
       'percentage_of_use_by_identity': card['percentageOfUseByIdentity'],
       'avg_win_rate': card['avgWinRate'],
@@ -86,7 +87,7 @@ def update_metagame_cards():
   cursor.execute('BEGIN')
   cursor.execute('DELETE FROM metagame_cards')
   cursor.executemany('INSERT INTO cards VALUES (%(card_name)s, %(card_faces)s, %(color_identity)s, %(colors)s, %(cmc)s, %(prices)s, %(reserved)s, %(multiple_printings)s, %(last_print)s, %(multiverse_ids)s, %(type)s, %(type_line)s, %(power)s, %(toughness)s) ON CONFLICT (card_name) DO UPDATE SET last_print = %(last_print)s, prices = %(prices)s, multiverse_ids = %(multiverse_ids)s', card_tuples)
-  cursor.executemany('INSERT INTO metagame_cards VALUES (%(occurrences)s, %(card_name)s, %(decklists)s, %(is_commander)s, %(is_in_99)s, %(percentage_of_use)s, %(percentage_of_use_by_identity)s, %(avg_win_rate)s, %(avg_draw_rate)s)', metagame_card_tuples)
+  cursor.executemany('INSERT INTO metagame_cards VALUES (%(occurrences)s, %(card_name)s, %(decklists)s, %(is_commander)s, %(is_in_99)s, %(percentage_of_use)s, %(percentage_of_use_by_identity)s, %(avg_win_rate)s, %(avg_draw_rate)s, %(is_legal)s)', metagame_card_tuples)
   cursor.execute('COMMIT')
   cursor.close()
   close_connection(connection)
@@ -123,6 +124,7 @@ def update_db_cards():
       'decklists': json.dumps(card['decklists']),
       'is_commander': card['isCommander'],
       'is_in_99': card['isIn99'],
+      'is_legal': card['isLegal'],
       'percentage_of_use': card['percentageOfUse'],
       'percentage_of_use_by_identity': card['percentageOfUseByIdentity'],
     } # type: ignore
@@ -133,7 +135,7 @@ def update_db_cards():
   cursor.execute('BEGIN')
   cursor.execute('DELETE FROM db_cards')
   cursor.executemany('INSERT INTO cards VALUES (%(card_name)s, %(card_faces)s, %(color_identity)s, %(colors)s, %(cmc)s, %(prices)s, %(reserved)s, %(multiple_printings)s, %(last_print)s, %(multiverse_ids)s, %(type)s, %(type_line)s, %(power)s, %(toughness)s) ON CONFLICT (card_name) DO UPDATE SET last_print = %(last_print)s, prices = %(prices)s, multiverse_ids = %(multiverse_ids)s', card_tuples)
-  cursor.executemany('INSERT INTO db_cards VALUES (%(occurrences)s, %(card_name)s, %(decklists)s, %(is_commander)s, %(is_in_99)s, %(percentage_of_use)s, %(percentage_of_use_by_identity)s)', db_card_tuples)
+  cursor.executemany('INSERT INTO db_cards VALUES (%(occurrences)s, %(card_name)s, %(decklists)s, %(is_commander)s, %(is_in_99)s, %(percentage_of_use)s, %(percentage_of_use_by_identity)s, %(is_legal)s)', db_card_tuples)
   cursor.execute('COMMIT')
   cursor.close()
   close_connection(connection)

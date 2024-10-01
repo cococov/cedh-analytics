@@ -45,6 +45,7 @@ class MetagameCardTuple(CardTuple):
   decklists: str
   is_commander: bool
   is_in_99: bool
+  is_legal: bool
   percentage_of_use: float
   percentage_of_use_by_identity: float
   avg_win_rate: float
@@ -56,6 +57,7 @@ class DbCardTuple(CardTuple):
   decklists: str
   is_commander: bool
   is_in_99: bool
+  is_legal: bool
   percentage_of_use: float
   percentage_of_use_by_identity: float
 

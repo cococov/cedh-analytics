@@ -50,6 +50,7 @@ async function getData(cardsURL?: string, tagsByCardURL?: string, fromMetagame?:
         multiple_printings: card.multiplePrintings,
         reserved: card.reserved,
         is_in_99: card.isIn99,
+        is_legal: card.isLegal,
         is_commander: card.isCommander,
         percentage_of_use: card.percentageOfUse,
         percentage_of_use_by_identity: card.percentageOfUseByIdentity,

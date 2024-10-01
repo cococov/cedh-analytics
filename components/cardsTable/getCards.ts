@@ -22,8 +22,12 @@
  */
 
 "use server";
+/* Vendor */
+import { sql } from 'kysely';
 import { createKysely } from "@vercel/postgres-kysely";
-import { isNotNil, isEmpty, map } from 'ramda';
+import { isNotNil, isEmpty, map, includes } from 'ramda';
+/* Static */
+import banlist from 'banlist.json';
 
 export interface CardsTable {
   card_name: string;
@@ -50,6 +54,7 @@ export interface MetagameCardsTable {
   decklists: any[];
   is_commander: boolean;
   is_in_99: boolean;
+  is_legal: boolean;
   percentage_of_use: number;
   percentage_of_use_by_identity: number;
   avg_win_rate: number;
@@ -62,6 +67,7 @@ export interface DBCardsTable {
   decklists: any[];
   is_commander: boolean;
   is_in_99: boolean;
+  is_legal: boolean;
   percentage_of_use: number;
   percentage_of_use_by_identity: number;
 };
@@ -72,6 +78,8 @@ export interface TagsByCommander {
 };
 
 type Columns = keyof CardsTable | keyof MetagameCardsTable | keyof TagsByCommander;
+
+type Card = CardsTable & (MetagameCardsTable | TagsByCommander);
 
 interface Database {
   cards: CardsTable;
@@ -114,11 +122,11 @@ export default async function getCards(
     .offset(page * pageSize);
 
   if (table === 'metagame_cards') {
-    cardsQuery = cardsQuery.select([`${table}.card_name`, 'color_identity', 'colors', 'cmc', 'reserved', 'multiple_printings', 'last_print', 'type', 'power', 'toughness', 'is_commander', 'is_in_99', 'percentage_of_use', 'percentage_of_use_by_identity', 'occurrences', 'avg_win_rate', 'avg_draw_rate', 'tags_by_card.tags']);
+    cardsQuery = cardsQuery.select([`${table}.card_name`, 'color_identity', 'colors', 'cmc', 'reserved', 'multiple_printings', 'last_print', 'type', 'power', 'toughness', 'is_commander', 'is_in_99', 'is_legal', 'percentage_of_use', 'percentage_of_use_by_identity', 'occurrences', 'avg_win_rate', 'avg_draw_rate', 'tags_by_card.tags']);
   }
 
   if (table === 'db_cards') {
-    cardsQuery = cardsQuery.select([`${table}.card_name`, 'color_identity', 'colors', 'cmc', 'reserved', 'multiple_printings', 'last_print', 'type', 'power', 'toughness', 'is_commander', 'is_in_99', 'percentage_of_use', 'percentage_of_use_by_identity', 'occurrences', 'tags_by_card.tags']);
+    cardsQuery = cardsQuery.select([`${table}.card_name`, 'color_identity', 'colors', 'cmc', 'reserved', 'multiple_printings', 'last_print', 'type', 'power', 'toughness', 'is_commander', 'is_in_99', sql`coalesce(is_legal, true)`.as('is_legal'), 'percentage_of_use', 'percentage_of_use_by_identity', 'occurrences', 'tags_by_card.tags']);
   }
 
   let totalCountQuery = db
@@ -143,7 +151,13 @@ export default async function getCards(
       if (filter.value.length === 0) return;
       cardsQuery = cardsQuery.where(eb => eb.or(
         (filter.value as string[]).map(value => {
-          if (value === 'true' || value === 'false') { // Selects with booleans
+          if (filter.column === 'is_legal') { // (May be some old registers without the legality)
+            if (value === 'true') {
+              return eb(`${table}.card_name`, 'not in', banlist);
+            } else {
+              return eb(`${table}.card_name`, 'in', banlist);
+            }
+          } else if (value === 'true' || value === 'false') { // Selects with booleans
             return eb(filter.column, '=', value);
           } else {
             return eb(filter.column, 'like', `${value}`); // Selects with strings
@@ -166,7 +180,8 @@ export default async function getCards(
   });
 
   const cards = await cardsQuery.execute();
+  const cardsWithBans = (cards as Card[]).map(card => ({...card, is_legal: !includes(card['card_name'], banlist)}));
   const totalCount = (await totalCountQuery.execute())[0].total;
 
-  return { data: cards, page: page, totalCount: parseInt(`${totalCount}`) };
+  return { data: cardsWithBans, page: page, totalCount: parseInt(`${totalCount}`) };
 };
