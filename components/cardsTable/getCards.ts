@@ -166,7 +166,13 @@ export default async function getCards(
       ))
       totalCountQuery = totalCountQuery.where(eb => eb.or(
         (filter.value as string[]).map(value => {
-          if (value === 'true' || value === 'false') { // Selects with booleans
+          if (filter.column === 'is_legal') { // (May be some old registers without the legality)
+            if (value === 'true') {
+              return eb(`${table}.card_name`, 'not in', banlist);
+            } else {
+              return eb(`${table}.card_name`, 'in', banlist);
+            }
+          } else if (value === 'true' || value === 'false') { // Selects with booleans
             return eb(filter.column, '=', value);
           } else {
             return eb(filter.column, 'like', `${value}`); // Selects with strings
@@ -180,8 +186,7 @@ export default async function getCards(
   });
 
   const cards = await cardsQuery.execute();
-  const cardsWithBans = (cards as Card[]).map(card => ({...card, is_legal: !includes(card['card_name'], banlist)}));
   const totalCount = (await totalCountQuery.execute())[0].total;
 
-  return { data: cardsWithBans, page: page, totalCount: parseInt(`${totalCount}`) };
+  return { data: cards, page: page, totalCount: parseInt(`${totalCount}`) };
 };
