@@ -23,16 +23,19 @@ Original Repo: https://github.com/cococov/cedh-analytics
 https://www.cedh-analytics.com/
 """
 
+import os
 import json
 import time
 import requests
 import data.moxfield_t as moxfield_t
 import utils.logs as logs
 from typing import Union
+from dotenv import load_dotenv
 import utils.misc as misc
 
+load_dotenv()
 VALID_DECKS = 0
-HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36'}
+HEADERS = {'User-Agent': os.getenv('MOXFIELD_USER_AGENT')}
 decklists_data_obtained_number = 0
 
 def get_decklists_from_bookmark(id: str) -> dict[str, Union[int, list[dict]]]:
