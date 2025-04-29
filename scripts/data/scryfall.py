@@ -25,6 +25,8 @@ https://www.cedh-analytics.com/
 
 import json
 import requests
+import data.scryfall_t as scryfall_t
+import db.update as update_db
 
 API_URL = 'https://api.scryfall.com'
 TAGS_URL = 'https://tagger.scryfall.com/graphql'
@@ -50,3 +52,29 @@ def get_tags_from_card(name: str) -> list[str]:
   raw_tags = json.loads(requests.post(TAGS_URL, json=data, headers=headers).text)
   tags = list(filter(lambda x: x['tag']['type'] == 'ORACLE_CARD_TAG', raw_tags['data']['card']['taggings']))
   return list(map(lambda x: x['tag']['name'], tags))
+
+def get_banned_cards_commander() -> list[dict]:
+  """ Get all cards banned in Commander format from Scryfall.
+
+  Returns:
+      list[dict]: A list of card objects that are banned in Commander format.
+  """
+  banned_cards: list[scryfall_t.Card] = []
+  has_more = True
+  url = f'{API_URL}/cards/search?q=banned:commander'
+
+  while has_more:
+    response = requests.get(url)
+    data: scryfall_t.SearchResponse = json.loads(response.text)
+
+    if 'data' in data:
+      banned_cards.extend(data['data'])
+
+    has_more = data.get('has_more', False)
+    url = data.get('next_page', None)
+
+    if not url:
+      has_more = False
+
+  name_list: list[str] = list(map(lambda x: x['name'], banned_cards))
+  return name_list

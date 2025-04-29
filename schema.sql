@@ -84,3 +84,8 @@ CREATE TABLE tournament_cards (
   UNIQUE (card_name, tournament),
   CONSTRAINT fk_card FOREIGN KEY(card_name) REFERENCES cards(card_name)
 );
+
+CREATE TABLE ban_list (
+  card_name                       varchar(128) UNIQUE,
+  PRIMARY KEY (card_name)
+);
