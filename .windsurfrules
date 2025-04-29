@@ -1,0 +1,57 @@
+# cEDH Analytics Project Rules
+
+## Database Rules
+
+1. The database schema is defined in schema.sql
+2. The database is updated using the update_db.py script
+3. Use transactions for database operations
+4. Keep JSON files in sync with database tables when applicable
+
+## Code Style
+
+1. Use snake_case for Python variables and functions
+2. Use camelCase for TypeScript/JavaScript variables and functions
+3. Include comprehensive docstrings in Python files
+4. Add type annotations in both Python and TypeScript
+5. The project is a Next.js application
+6. The project uses Next.js's app directory for pages
+7. Use TypeScript for server-side code
+8. The data for the website is stored in the database and json files that can be found in the public/data directory
+9. The data is update using python scripts in the scripts directory
+10. Use Tailwind over CSS for simple styling
+11. Use module CSS for complex styling
+12. Use kysely for database operations in Next.js server-side code
+13. Try to use nextui components when possible
+14. If nextui doesn't have a component, use mui
+15. If mui doesn't have a component, create a custom component
+16. Use fortawesome for icons
+17. Use @mui/icons-material for icons if fortawesome doesn't have the icon
+18. The custom components should be placed in the components directory
+19. Use kebab-case for page names
+
+## Project Structure
+
+1. Keep database operations in scripts/db directory
+2. Store type definitions in separate _t.py files (e.g., scryfall_t.py)
+3. Python utility functions should be placed in scripts/utils directory
+4. Use logs.begin_log_block and logs.end_log_block for operation logging in python scripts
+5. Use logs.simple_log for simple logging in python scripts
+6. Use logs.error_log for error logging in python scripts
+7. Use logs.warning_log for warning logging in python scripts
+8. Use logs.info_log for info logging in python scripts
+9. Page CSS should be placed in the styles directory
+10. Component CSS should be placed in the component directory inside the components directory
+
+## API Usage
+
+1. Handle pagination when fetching data from external APIs
+2. Use proper error handling for API requests
+3. Implement rate limiting for external API calls
+4. Use the scryfall API for card data
+5. Use the mtgjson API for sets data
+6. Use topdeck.gg for tournaments data
+
+## License
+
+1. Include the GPL license header in all source files
+2. Maintain copyright notices in all files
