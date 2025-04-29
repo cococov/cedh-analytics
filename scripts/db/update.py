@@ -162,3 +162,16 @@ def update_tags_by_card(tags_by_card_to_update: dict[str, list[str]], force=Fals
   cursor.close()
   close_connection(connection)
   logs.end_log_block('Tags by card updated!')
+
+def update_ban_list(card_list: list[str]):
+  logs.begin_log_block('Updating ban list')
+  card_list_tuples: list[dict[str, str]] = list(map(lambda x: {'card_name': x}, card_list))
+  connection = open_connection()
+  cursor = connection.cursor()
+  cursor.execute('BEGIN')
+  cursor.execute('DELETE FROM ban_list')
+  cursor.executemany('INSERT INTO ban_list VALUES (%(card_name)s)', card_list_tuples)
+  cursor.execute('COMMIT')
+  cursor.close()
+  close_connection(connection)
+  logs.end_log_block('Ban list updated!')
