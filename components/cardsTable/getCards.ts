@@ -26,8 +26,6 @@
 import { sql } from 'kysely';
 import { createKysely } from "@vercel/postgres-kysely";
 import { isNotNil, isEmpty, map, includes } from 'ramda';
-/* Static */
-import banlist from 'banlist.json';
 
 export interface CardsTable {
   card_name: string;
@@ -77,6 +75,10 @@ export interface TagsByCommander {
   tags: string;
 };
 
+export interface BanList {
+  card_name: string;
+};
+
 type Columns = keyof CardsTable | keyof MetagameCardsTable | keyof TagsByCommander;
 
 type Card = CardsTable & (MetagameCardsTable | TagsByCommander);
@@ -86,6 +88,7 @@ interface Database {
   metagame_cards: MetagameCardsTable;
   db_cards: DBCardsTable;
   tags_by_card: TagsByCommander;
+  ban_list: BanList;
 };
 
 function isNumeric(str: string) {
@@ -151,11 +154,15 @@ export default async function getCards(
       if (filter.value.length === 0) return;
       cardsQuery = cardsQuery.where(eb => eb.or(
         (filter.value as string[]).map(value => {
-          if (filter.column === 'is_legal') { // (May be some old registers without the legality)
+          if (filter.column === 'is_legal') { // metagame_cards is_legal column is DEPRECATED, use ban_list table instead
             if (value === 'true') {
-              return eb(`${table}.card_name`, 'not in', banlist);
+              return eb(`${table}.card_name`, 'not in', eb =>
+                eb.selectFrom('ban_list').select('card_name')
+              );
             } else {
-              return eb(`${table}.card_name`, 'in', banlist);
+              return eb(`${table}.card_name`, 'in', eb =>
+                eb.selectFrom('ban_list').select('card_name')
+              );
             }
           } else if (value === 'true' || value === 'false') { // Selects with booleans
             return eb(filter.column, '=', value);
@@ -166,7 +173,17 @@ export default async function getCards(
       ))
       totalCountQuery = totalCountQuery.where(eb => eb.or(
         (filter.value as string[]).map(value => {
-          if (value === 'true' || value === 'false') { // Selects with booleans
+          if (filter.column === 'is_legal') { // metagame_cards is_legal column is DEPRECATED, use ban_list table instead
+            if (value === 'true') {
+              return eb(`${table}.card_name`, 'not in', eb =>
+                eb.selectFrom('ban_list').select('card_name')
+              );
+            } else {
+              return eb(`${table}.card_name`, 'in', eb =>
+                eb.selectFrom('ban_list').select('card_name')
+              );
+            }
+          } else if (value === 'true' || value === 'false') { // Selects with booleans
             return eb(filter.column, '=', value);
           } else {
             return eb(filter.column, 'like', `${value}`); // Selects with strings
@@ -180,8 +197,14 @@ export default async function getCards(
   });
 
   const cards = await cardsQuery.execute();
-  const cardsWithBans = (cards as Card[]).map(card => ({...card, is_legal: !includes(card['card_name'], banlist)}));
-  const totalCount = (await totalCountQuery.execute())[0].total;
+
+  // Get banned cards from database
+  const bannedCardsResult = await createKysely<Database>().selectFrom('ban_list').select('card_name').execute();
+  const bannedCardsList = bannedCardsResult.map(card => card.card_name);
+
+  const cardsWithBans = (cards as Card[]).map(card => ({...card, is_legal: !includes(card['card_name'], bannedCardsList)}));
+  const rawTotalCount = await totalCountQuery.execute();
+  const totalCount = rawTotalCount[0].total;
 
   return { data: cardsWithBans, page: page, totalCount: parseInt(`${totalCount}`) };
 };
