@@ -24,6 +24,7 @@ https://www.cedh-analytics.com/
 import utils.logs as logs
 import data.scryfall as scryfall
 import db.update as update_db
+import utils.files as files
 
 def update_ban_list():
   logs.simple_log('Beginning')
@@ -31,6 +32,10 @@ def update_ban_list():
   banned_cards = scryfall.get_banned_cards_commander()
   logs.end_log_block('Banned cards retrieved!')
   update_db.update_ban_list(banned_cards)
+  logs.begin_log_block('Updating banlist.json')
+  files.create_file('.', 'banlist.json', banned_cards)
+  logs.end_log_block('banlist.json updated!')
+
   print('\033[K\033[92mBan list updated!\033[0m')
 
 if __name__ == '__main__':
