@@ -1,11 +1,12 @@
 FROM node:22.16.0
 
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y \
   python3 \
   make \
   g++ \
   bash \
-  curl
+  curl \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
