@@ -23,7 +23,7 @@
 
 import { Suspense } from 'react';
 /* Vendor */
-import { CircularProgress } from "@nextui-org/react";
+import { CircularProgress } from '@heroui/react';
 /* Own */
 import { RadarChart, BoxwhiskerChart, BarChart } from '@/components/charts';
 import { HeadlessTable } from '@/components/vendor/nextUi';

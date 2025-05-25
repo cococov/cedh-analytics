@@ -24,7 +24,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 /* Vendor */
-import { Tooltip } from "@nextui-org/tooltip";
+import { Tooltip } from '@heroui/tooltip';
 /* Static */
 import styles from './kofiButton.module.css'
 

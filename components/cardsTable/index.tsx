@@ -32,7 +32,7 @@ import { replace, findIndex, includes, filter, isNotNil, not, equals, has, isNil
 import { MaterialReadMoreIcon } from '@/components/vendor/materialIcon';
 import { MaterialChip } from '@/components/vendor/materialUi';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { CircularProgress } from "@nextui-org/react";
+import { CircularProgress } from '@heroui/react';
 import { parse as qsParse } from 'qs';
 /* Own */
 import Table, { TextFilter, SelectFilter, NumberFilterWithOperator } from '@/components/table';

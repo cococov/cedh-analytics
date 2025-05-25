@@ -27,7 +27,7 @@ import { useState, useEffect, useCallback, useContext, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 /* Vendor */
 import { find, pipe, replace, filter, has } from 'ramda';
-import { CircularProgress } from "@nextui-org/react";
+import { CircularProgress } from '@heroui/react';
 /* Own */
 import Table, { NumberFilterWithOperator, DateRangeFilter } from '@/components/table';
 import AppContext from '@/contexts/appStore';

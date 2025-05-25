@@ -28,7 +28,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { MaterialOpenInNewIcon } from '@/components/vendor/materialIcon';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { find, filter, has } from 'ramda';
-import { CircularProgress } from "@nextui-org/react";
+import { CircularProgress } from '@heroui/react';
 /* Own */
 import Table, { TextFilter, SelectFilter, DateRangeFilter, NumberFilterWithOperator } from '@/components/table';
 import getLocalDecklists from './getLocalDecklists';

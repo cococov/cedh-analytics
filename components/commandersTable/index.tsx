@@ -30,7 +30,7 @@ import Image from 'next/image';
 import { MaterialReadMoreIcon } from '@/components/vendor/materialIcon';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { replace, filter, has } from 'ramda';
-import { CircularProgress } from "@nextui-org/react";
+import { CircularProgress } from '@heroui/react';
 /* Own */
 import Table, { SelectFilter, NumberFilterWithOperator } from '@/components/table';
 import getLocalCommanders from './getLocalCommanders';

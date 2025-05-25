@@ -27,7 +27,7 @@ import { notFound } from 'next/navigation';
 import { promises as fs } from 'fs';
 /* Vendor */
 import { replace, pipe } from 'ramda';
-import { CircularProgress } from "@nextui-org/react";
+import { CircularProgress } from '@heroui/react';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
 import MetagameResumePage from '@/components/metagameResumePage';
