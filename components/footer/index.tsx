@@ -43,7 +43,7 @@ export default function Footer() {
       </span>
       <span className={styles.final}>
         <p className={styles.cc}>
-          © 2024 cEDH Analytics
+          © 2025 cEDH Analytics
         </p>
         <p className={styles.separator}>-</p>
         <span className={styles.mailContainer}>
