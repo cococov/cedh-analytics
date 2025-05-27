@@ -28,7 +28,6 @@ import Script from 'next/script';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { config } from '@fortawesome/fontawesome-svg-core';
-import { Analytics } from '@vercel/analytics/react';
 /* Own */
 import { openGraphMetadata, twitterMetadata, descriptionMetadata } from '@shared-metadata';
 import NavBar from '@/components/navBar';
@@ -122,7 +121,6 @@ export default function RootLayout({ children }: {
             <Footer />
           </span >
         </Providers>
-        <Analytics />
       </body>
     </html>
   );

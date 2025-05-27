@@ -92,21 +92,6 @@ dist
 # https://nextjs.org/blog/next-9-1#public-directory-support
 # public
 
-# vuepress build output
-.vuepress/dist
-
-# Serverless directories
-.serverless/
-
-# FuseBox cache
-.fusebox/
-
-# DynamoDB Local files
-.dynamodb/
-
-# TernJS port file
-.tern-port
-
 # Big Files
 public/data/metagame/metagame_cards_by_commander.json
 public/data/cards/competitiveCards.json
@@ -116,5 +101,3 @@ public/data/metagame/**/decklists.t.json
 
 csv/
 .csv
-
-.vercel
