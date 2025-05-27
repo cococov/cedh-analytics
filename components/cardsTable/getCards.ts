@@ -123,11 +123,11 @@ export default async function getCards(
       port: Number.parseInt(process.env.DB_PORT || '5432'),
       max: 10,
     })
-  })
+  });
 
   const db = new Kysely<Database>({
     dialect,
-  })
+  });
 
   let cardsQuery = db
     .selectFrom(table)
