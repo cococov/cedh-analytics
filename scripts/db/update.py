@@ -33,11 +33,11 @@ def open_connection():
   load_dotenv()
 
   return psycopg2.connect (
-    host = os.getenv('POSTGRES_HOST'),
-    dbname = os.getenv('POSTGRES_DATABASE'),
-    user = os.getenv('POSTGRES_USER'),
-    password = os.getenv('POSTGRES_PASSWORD'),
-    port = 5432,
+    host = os.getenv('DB_HOST'),
+    dbname = os.getenv('DB_NAME'),
+    user = os.getenv('DB_USER'),
+    password = os.getenv('DB_PASSWORD'),
+    port = os.getenv('DB_PORT'),
   )
 
 def close_connection(connection):
