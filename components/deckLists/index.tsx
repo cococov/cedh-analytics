@@ -23,7 +23,7 @@
 
 import Image from 'next/image';
 /* Vendor */
-import { CircularProgress } from '@nextui-org/react';
+import { CircularProgress } from '@heroui/react';
 /* Static */
 import styles from '@/styles/DeckLists.module.css';
 import B from '@/public/images/B.png';

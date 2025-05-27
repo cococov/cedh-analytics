@@ -23,7 +23,7 @@
 
 /* Vendor */
 import Snackbar from '@mui/material/Snackbar';
-import { CircularProgress } from "@nextui-org/react";
+import { CircularProgress } from '@heroui/react';
 /* Static */
 import styles from '@/styles/SnackbarLoading.module.css';
 

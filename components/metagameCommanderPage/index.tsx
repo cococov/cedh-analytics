@@ -25,7 +25,7 @@ import { Suspense } from 'react';
 import Image from 'next/image';
 /* Vendor */
 import { any, equals, reduce, max } from 'ramda';
-import { CircularProgress } from "@nextui-org/react";
+import { CircularProgress } from '@heroui/react';
 /* Own */
 import { RadarChart, BoxwhiskerChart, BarChart, PieChart } from '@/components/charts';
 import { HeadlessTable } from '@/components/vendor/nextUi';

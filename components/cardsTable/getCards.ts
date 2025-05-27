@@ -23,8 +23,8 @@
 
 "use server";
 /* Vendor */
-import { sql } from 'kysely';
-import { createKysely } from "@vercel/postgres-kysely";
+import { Pool } from 'pg';
+import { sql, Kysely, PostgresDialect } from 'kysely';
 import { isNotNil, isEmpty, map, includes } from 'ramda';
 
 export interface CardsTable {
@@ -114,7 +114,20 @@ export default async function getCards(
     }, filters)
     : filters;
 
-  const db = createKysely<Database>();
+  const dialect = new PostgresDialect({
+    pool: new Pool({
+      database: process.env.DB_NAME,
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      port: Number.parseInt(process.env.DB_PORT || '5432'),
+      max: 10,
+    })
+  });
+
+  const db = new Kysely<Database>({
+    dialect,
+  });
 
   let cardsQuery = db
     .selectFrom(table)
@@ -199,8 +212,8 @@ export default async function getCards(
   const cards = await cardsQuery.execute();
 
   // Get banned cards from database
-  const bannedCardsResult = await createKysely<Database>().selectFrom('ban_list').select('card_name').execute();
-  const bannedCardsList = bannedCardsResult.map(card => card.card_name);
+  const bannedCardsResult = await db.selectFrom('ban_list').select('card_name').execute();
+  const bannedCardsList = bannedCardsResult.map((card: { card_name: string }) => card.card_name);
 
   const cardsWithBans = (cards as Card[]).map(card => ({...card, is_legal: !includes(card['card_name'], bannedCardsList)}));
   const rawTotalCount = await totalCountQuery.execute();

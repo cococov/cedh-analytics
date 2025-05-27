@@ -22,8 +22,9 @@
  */
 
 "use server";
-
-import { createKysely } from "@vercel/postgres-kysely";
+/* Vendor */
+import { Pool } from 'pg';
+import { Kysely, PostgresDialect } from 'kysely';
 
 export interface MetagameCardsTable {
   occurrences: number;
@@ -58,7 +59,20 @@ export default async function getDecklistsForCardByContext(
   selectedCard: string,
   table: 'metagame_cards' | 'db_cards',
 ) {
-  const db = createKysely<Database>();
+  const dialect = new PostgresDialect({
+    pool: new Pool({
+      database: process.env.DB_NAME,
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      port: Number.parseInt(process.env.DB_PORT || '5432'),
+      max: 10,
+    })
+  });
+
+  const db = new Kysely<Database>({
+    dialect,
+  });
 
   let cardData = (await db
     .selectFrom(table)
