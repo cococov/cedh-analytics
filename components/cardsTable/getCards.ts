@@ -22,6 +22,9 @@
  */
 
 "use server";
+import { headers } from "next/headers";
+import * as Sentry from "@sentry/nextjs";
+
 /* Vendor */
 import { Pool } from 'pg';
 import { sql, Kysely, PostgresDialect } from 'kysely';
@@ -104,120 +107,129 @@ export default async function getCards(
   search?: string,
   filters?: { column: Columns, operator: '=' | '>' | '<', value: string | string[] }[],
 ) {
-  // Validations and fixes
-  const fixedFilters = isNotNil(filters) && !isEmpty(filters)
-    ? map(filter => {
-      if (isNumeric(`${filter.value}`) && Number.parseInt(`${filter.value}`) >= 2147483647) {
-        return { ...filter, value: '2147483647' };
+  return await Sentry.withServerActionInstrumentation(
+    "getCardsAction",
+    {
+      headers: await headers(),
+      recordResponse: true,
+    },
+    async () => {
+      // Validations and fixes
+      const fixedFilters = isNotNil(filters) && !isEmpty(filters)
+        ? map(filter => {
+          if (isNumeric(`${filter.value}`) && Number.parseInt(`${filter.value}`) >= 2147483647) {
+            return { ...filter, value: '2147483647' };
+          }
+          return filter;
+        }, filters)
+        : filters;
+
+      const dialect = new PostgresDialect({
+        pool: new Pool({
+          database: process.env.DB_NAME,
+          host: process.env.DB_HOST,
+          user: process.env.DB_USER,
+          password: process.env.DB_PASSWORD,
+          port: Number.parseInt(process.env.DB_PORT || '5432'),
+          max: 10,
+        })
+      });
+
+      const db = new Kysely<Database>({
+        dialect,
+      });
+
+      let cardsQuery = db
+        .selectFrom(table)
+        .innerJoin('cards', `${table}.card_name`, 'cards.card_name')
+        .innerJoin('tags_by_card', `${table}.card_name`, 'tags_by_card.card_name')
+        .orderBy(orderBy || 'occurrences', orderDirection || 'desc')
+        .limit(pageSize)
+        .offset(page * pageSize);
+
+      if (table === 'metagame_cards') {
+        cardsQuery = cardsQuery.select([`${table}.card_name`, 'color_identity', 'colors', 'cmc', 'reserved', 'multiple_printings', 'last_print', 'type', 'power', 'toughness', 'is_commander', 'is_in_99', 'is_legal', 'percentage_of_use', 'percentage_of_use_by_identity', 'occurrences', 'avg_win_rate', 'avg_draw_rate', 'tags_by_card.tags']);
       }
-      return filter;
-    }, filters)
-    : filters;
 
-  const dialect = new PostgresDialect({
-    pool: new Pool({
-      database: process.env.DB_NAME,
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      port: Number.parseInt(process.env.DB_PORT || '5432'),
-      max: 10,
-    })
-  });
+      if (table === 'db_cards') {
+        cardsQuery = cardsQuery.select([`${table}.card_name`, 'color_identity', 'colors', 'cmc', 'reserved', 'multiple_printings', 'last_print', 'type', 'power', 'toughness', 'is_commander', 'is_in_99', sql`coalesce(is_legal, true)`.as('is_legal'), 'percentage_of_use', 'percentage_of_use_by_identity', 'occurrences', 'tags_by_card.tags']);
+      }
 
-  const db = new Kysely<Database>({
-    dialect,
-  });
+      let totalCountQuery = db
+        .selectFrom(table)
+        .innerJoin('cards', `${table}.card_name`, 'cards.card_name')
+        .innerJoin('tags_by_card', `${table}.card_name`, 'tags_by_card.card_name')
+        .select((eb) => eb.fn.countAll().as('total'));
 
-  let cardsQuery = db
-    .selectFrom(table)
-    .innerJoin('cards', `${table}.card_name`, 'cards.card_name')
-    .innerJoin('tags_by_card', `${table}.card_name`, 'tags_by_card.card_name')
-    .orderBy(orderBy || 'occurrences', orderDirection || 'desc')
-    .limit(pageSize)
-    .offset(page * pageSize);
+      if (Boolean(search)) {
+        cardsQuery = cardsQuery.where(`${table}.card_name`, 'ilike', `%${search}%`)
+        totalCountQuery = totalCountQuery.where(`${table}.card_name`, 'ilike', `%${search}%`)
+      }
 
-  if (table === 'metagame_cards') {
-    cardsQuery = cardsQuery.select([`${table}.card_name`, 'color_identity', 'colors', 'cmc', 'reserved', 'multiple_printings', 'last_print', 'type', 'power', 'toughness', 'is_commander', 'is_in_99', 'is_legal', 'percentage_of_use', 'percentage_of_use_by_identity', 'occurrences', 'avg_win_rate', 'avg_draw_rate', 'tags_by_card.tags']);
-  }
+      fixedFilters?.forEach((filter) => {
+        if (filter.column === 'last_print') {
+          cardsQuery = cardsQuery.where(filter.column, 'ilike', `%${filter.value}%`);
+          totalCountQuery = totalCountQuery.where(filter.column, 'ilike', `%${filter.value}%`);
+        } else if (filter.column === 'tags') {
+          cardsQuery = cardsQuery.where(`tags_by_card.${filter.column}`, 'ilike', `%${filter.value}%`);
+          totalCountQuery = totalCountQuery.where(`tags_by_card.${filter.column}`, 'ilike', `%${filter.value}%`);
+        } else if (Array.isArray(filter.value)) { // Selects
+          if (filter.value.length === 0) return;
+          cardsQuery = cardsQuery.where(eb => eb.or(
+            (filter.value as string[]).map(value => {
+              if (filter.column === 'is_legal') { // metagame_cards is_legal column is DEPRECATED, use ban_list table instead
+                if (value === 'true') {
+                  return eb(`${table}.card_name`, 'not in', eb =>
+                    eb.selectFrom('ban_list').select('card_name')
+                  );
+                } else {
+                  return eb(`${table}.card_name`, 'in', eb =>
+                    eb.selectFrom('ban_list').select('card_name')
+                  );
+                }
+              } else if (value === 'true' || value === 'false') { // Selects with booleans
+                return eb(filter.column, '=', value);
+              } else {
+                return eb(filter.column, 'like', `${value}`); // Selects with strings
+              }
+            })
+          ))
+          totalCountQuery = totalCountQuery.where(eb => eb.or(
+            (filter.value as string[]).map(value => {
+              if (filter.column === 'is_legal') { // metagame_cards is_legal column is DEPRECATED, use ban_list table instead
+                if (value === 'true') {
+                  return eb(`${table}.card_name`, 'not in', eb =>
+                    eb.selectFrom('ban_list').select('card_name')
+                  );
+                } else {
+                  return eb(`${table}.card_name`, 'in', eb =>
+                    eb.selectFrom('ban_list').select('card_name')
+                  );
+                }
+              } else if (value === 'true' || value === 'false') { // Selects with booleans
+                return eb(filter.column, '=', value);
+              } else {
+                return eb(filter.column, 'like', `${value}`); // Selects with strings
+              }
+            })
+          ))
+        } else {
+          cardsQuery = cardsQuery.where(filter.column, filter.operator || '=', filter.value);
+          totalCountQuery = totalCountQuery.where(filter.column, filter.operator || '=', filter.value);
+        }
+      });
 
-  if (table === 'db_cards') {
-    cardsQuery = cardsQuery.select([`${table}.card_name`, 'color_identity', 'colors', 'cmc', 'reserved', 'multiple_printings', 'last_print', 'type', 'power', 'toughness', 'is_commander', 'is_in_99', sql`coalesce(is_legal, true)`.as('is_legal'), 'percentage_of_use', 'percentage_of_use_by_identity', 'occurrences', 'tags_by_card.tags']);
-  }
+      const cards = await cardsQuery.execute();
 
-  let totalCountQuery = db
-    .selectFrom(table)
-    .innerJoin('cards', `${table}.card_name`, 'cards.card_name')
-    .innerJoin('tags_by_card', `${table}.card_name`, 'tags_by_card.card_name')
-    .select((eb) => eb.fn.countAll().as('total'));
+      // Get banned cards from database
+      const bannedCardsResult = await db.selectFrom('ban_list').select('card_name').execute();
+      const bannedCardsList = bannedCardsResult.map((card: { card_name: string }) => card.card_name);
 
-  if (Boolean(search)) {
-    cardsQuery = cardsQuery.where(`${table}.card_name`, 'ilike', `%${search}%`)
-    totalCountQuery = totalCountQuery.where(`${table}.card_name`, 'ilike', `%${search}%`)
-  }
+      const cardsWithBans = (cards as Card[]).map(card => ({ ...card, is_legal: !includes(card['card_name'], bannedCardsList) }));
+      const rawTotalCount = await totalCountQuery.execute();
+      const totalCount = rawTotalCount[0].total;
 
-  fixedFilters?.forEach((filter) => {
-    if (filter.column === 'last_print') {
-      cardsQuery = cardsQuery.where(filter.column, 'ilike', `%${filter.value}%`);
-      totalCountQuery = totalCountQuery.where(filter.column, 'ilike', `%${filter.value}%`);
-    } else if (filter.column === 'tags') {
-      cardsQuery = cardsQuery.where(`tags_by_card.${filter.column}`, 'ilike', `%${filter.value}%`);
-      totalCountQuery = totalCountQuery.where(`tags_by_card.${filter.column}`, 'ilike', `%${filter.value}%`);
-    } else if (Array.isArray(filter.value)) { // Selects
-      if (filter.value.length === 0) return;
-      cardsQuery = cardsQuery.where(eb => eb.or(
-        (filter.value as string[]).map(value => {
-          if (filter.column === 'is_legal') { // metagame_cards is_legal column is DEPRECATED, use ban_list table instead
-            if (value === 'true') {
-              return eb(`${table}.card_name`, 'not in', eb =>
-                eb.selectFrom('ban_list').select('card_name')
-              );
-            } else {
-              return eb(`${table}.card_name`, 'in', eb =>
-                eb.selectFrom('ban_list').select('card_name')
-              );
-            }
-          } else if (value === 'true' || value === 'false') { // Selects with booleans
-            return eb(filter.column, '=', value);
-          } else {
-            return eb(filter.column, 'like', `${value}`); // Selects with strings
-          }
-        })
-      ))
-      totalCountQuery = totalCountQuery.where(eb => eb.or(
-        (filter.value as string[]).map(value => {
-          if (filter.column === 'is_legal') { // metagame_cards is_legal column is DEPRECATED, use ban_list table instead
-            if (value === 'true') {
-              return eb(`${table}.card_name`, 'not in', eb =>
-                eb.selectFrom('ban_list').select('card_name')
-              );
-            } else {
-              return eb(`${table}.card_name`, 'in', eb =>
-                eb.selectFrom('ban_list').select('card_name')
-              );
-            }
-          } else if (value === 'true' || value === 'false') { // Selects with booleans
-            return eb(filter.column, '=', value);
-          } else {
-            return eb(filter.column, 'like', `${value}`); // Selects with strings
-          }
-        })
-      ))
-    } else {
-      cardsQuery = cardsQuery.where(filter.column, filter.operator || '=', filter.value);
-      totalCountQuery = totalCountQuery.where(filter.column, filter.operator || '=', filter.value);
+      return { data: cardsWithBans, page: page, totalCount: parseInt(`${totalCount}`) };
     }
-  });
-
-  const cards = await cardsQuery.execute();
-
-  // Get banned cards from database
-  const bannedCardsResult = await db.selectFrom('ban_list').select('card_name').execute();
-  const bannedCardsList = bannedCardsResult.map((card: { card_name: string }) => card.card_name);
-
-  const cardsWithBans = (cards as Card[]).map(card => ({...card, is_legal: !includes(card['card_name'], bannedCardsList)}));
-  const rawTotalCount = await totalCountQuery.execute();
-  const totalCount = rawTotalCount[0].total;
-
-  return { data: cardsWithBans, page: page, totalCount: parseInt(`${totalCount}`) };
+  );
 };
