@@ -74,6 +74,7 @@
       "@fortawesome/free-brands-svg-icons",
       "@fortawesome/free-solid-svg-icons",
       "@heroui/shared-utils",
+      "@sentry/cli",
       "bufferutil",
       "core-js",
       "sharp",
