@@ -23,8 +23,11 @@
 
 "use client";
 
-import type { Metadata } from 'next';
+import { useEffect } from "react";
 import Image from "next/image";
+import Error from "next/error";
+import * as Sentry from "@sentry/nextjs";
+import type { Metadata } from 'next';
 /* Static */
 import MuddleTheMixture from '@/public/images/muddle-the-mixture.jpg';
 
@@ -35,6 +38,10 @@ export default function GlobalError({
 }: {
   error: Error & { digest?: string }
 }) {
+  useEffect(() => {
+    Sentry.captureException(error);
+  }, [error]);
+
   return (
     <html>
       <body>
