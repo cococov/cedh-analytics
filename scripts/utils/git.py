@@ -25,22 +25,49 @@ import os
 import time
 import utils.logs as logs
 import utils.date as date
+import subprocess
 from datetime import datetime
-from subprocess import DEVNULL, STDOUT, check_call
+from subprocess import DEVNULL, STDOUT
 
 ENV = os.environ.copy()
 
 def add_all():
-  check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT, env=ENV)
+  subprocess.check_call(['git', 'add', '.'], stdout=DEVNULL, stderr=STDOUT, env=ENV)
 
 def commit(message):
-  check_call(['git', 'commit', '-m', message], stdout=DEVNULL, stderr=STDOUT, env=ENV)
+  try:
+    # First check if there are changes to commit
+    status_output = subprocess.check_output(['git', 'status', '--porcelain'], env=ENV).decode('utf-8').strip()
+    if not status_output:
+      logs.warning_log("No changes to commit. Skipping commit operation.")
+      return
+
+    # Try normal commit
+    process = subprocess.Popen(
+      ['git', 'commit', '-m', message],
+      stdout=subprocess.PIPE,
+      stderr=subprocess.PIPE,
+      env=ENV
+    )
+    _, stderr = process.communicate()
+
+    if process.returncode != 0:
+      error_msg = stderr.decode('utf-8').strip() if stderr else "Unknown error"
+      logs.warning_log(f"Git commit initial attempt failed: {error_msg}")
+
+      # Try with --allow-empty flag
+      logs.info_log("Attempting commit with --allow-empty flag")
+      subprocess.check_call(['git', 'commit', '--allow-empty', '-m', message], env=ENV)
+  except Exception as e:
+    logs.error_log(f"Exception during git commit: {str(e)}")
+    # Don't raise the exception - we want to continue with the script even if commit fails
+    logs.warning_log("Continuing despite git commit failure")
 
 def push():
-  check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT, env=ENV)
+  subprocess.check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT, env=ENV)
 
 def push_set_upstream(origin: str) -> None:
-  check_call(['git', 'push', '--set-upstream', 'origin', origin], stdout=DEVNULL, stderr=STDOUT, env=ENV)
+  subprocess.check_call(['git', 'push', '--set-upstream', 'origin', origin], stdout=DEVNULL, stderr=STDOUT, env=ENV)
 
 def add_and_commit_tournament(tournament):
   logs.begin_log_block('Commit changes')
@@ -67,7 +94,7 @@ def update_to_new_branch(msg: str, branch_name: str) -> None:
   logs.begin_log_block('Uploading changes')
   date_str = date.custom_strftime('%B_{S}_%Y', datetime.today())
   branch_name_with_date = f'{branch_name.lower()}_{date_str}'
-  check_call(['git', 'checkout', '-b', branch_name_with_date], stdout=DEVNULL, stderr=STDOUT, env=ENV)
+  subprocess.check_call(['git', 'checkout', '-b', branch_name_with_date], stdout=DEVNULL, stderr=STDOUT, env=ENV)
   add_all()
   commit(msg)
   push_set_upstream(branch_name_with_date)
