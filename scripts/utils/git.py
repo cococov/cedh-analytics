@@ -36,32 +36,22 @@ def add_all():
 
 def commit(message):
   try:
-    # First check if there are changes to commit
     status_output = subprocess.check_output(['git', 'status', '--porcelain'], env=ENV).decode('utf-8').strip()
     if not status_output:
       logs.warning_log("No changes to commit. Skipping commit operation.")
       return
 
-    # Try normal commit
-    process = subprocess.Popen(
-      ['git', 'commit', '-m', message],
-      stdout=subprocess.PIPE,
-      stderr=subprocess.PIPE,
-      env=ENV
-    )
+    process = subprocess.Popen(['git', 'commit', '-m', message], stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=ENV)
     _, stderr = process.communicate()
 
     if process.returncode != 0:
       error_msg = stderr.decode('utf-8').strip() if stderr else "Unknown error"
       logs.warning_log(f"Git commit initial attempt failed: {error_msg}")
-
-      # Try with --allow-empty flag
       logs.info_log("Attempting commit with --allow-empty flag")
       subprocess.check_call(['git', 'commit', '--allow-empty', '-m', message], env=ENV)
   except Exception as e:
     logs.error_log(f"Exception during git commit: {str(e)}")
-    # Don't raise the exception - we want to continue with the script even if commit fails
-    logs.warning_log("Continuing despite git commit failure")
+    raise
 
 def push():
   subprocess.check_call(['git', 'push'], stdout=DEVNULL, stderr=STDOUT, env=ENV)
