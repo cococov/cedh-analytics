@@ -2,7 +2,7 @@
 cEDH Analytics - A website that analyzes and cross-references several
 EDH (Magic: The Gathering format) community's resources to give insights
 on the competitive metagame.
-Copyright (C) 2022-present CoCoCov
+Copyright (C) 2025-present CoCoCov
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,7 +21,9 @@ Original Repo: https://github.com/cococov/cedh-analytics
 https://www.cedh-analytics.com/
 """
 
-from scripts.utils.number import suffix
+import sys
+import os
 
-def custom_strftime(format, t):
-    return t.strftime(format).replace('{S}', str(t.day) + suffix(t.day))
+# Add the project root to the Python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+sys.path.insert(0, project_root)

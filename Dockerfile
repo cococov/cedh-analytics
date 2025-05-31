@@ -27,10 +27,19 @@ COPY pnpm-lock.yaml* package.json .npmrc* ./
 RUN corepack enable && corepack prepare pnpm@latest --activate
 RUN pnpm install --frozen-lockfile
 
-FROM base AS builder
+FROM base AS tester
 WORKDIR /app
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
+RUN corepack enable && corepack prepare pnpm@latest --activate
+# Run tests and fail the build if tests fail
+RUN pnpm test
+
+FROM base AS builder
+WORKDIR /app
+# Copy node_modules and source code from the tester stage (which has passed tests)
+COPY --from=tester /app/node_modules ./node_modules
+COPY --from=tester /app ./
 ENV NODE_ENV=production
 ENV DOCKER_BUILD=true
 ENV NEXT_TELEMETRY_DISABLED=1
