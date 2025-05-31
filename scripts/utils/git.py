@@ -23,10 +23,9 @@ https://www.cedh-analytics.com/
 
 import os
 import time
-import utils.logs as logs
-import utils.date as date
 import subprocess
 from datetime import datetime
+from scripts.utils import logs, date
 from subprocess import DEVNULL, STDOUT
 
 ENV = os.environ.copy()
