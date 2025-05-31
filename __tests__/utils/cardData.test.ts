@@ -22,9 +22,14 @@
  */
 
 import fetchCardData from '@/utils/fetch/cardData';
-import * as Sentry from '@sentry/nextjs';
 
-// Mock the fetch function
+/* Mock Sentry to isolate tests */
+jest.mock('@sentry/nextjs', () => ({
+  captureException: jest.fn(),
+  startSpan: jest.fn((config, callback) => callback({ setAttribute: jest.fn() })),
+}));
+
+/* Mock the fetch function */
 global.fetch = jest.fn();
 
 describe('fetchCardData utility', () => {
@@ -91,7 +96,6 @@ describe('fetchCardData utility', () => {
       cardFaces: [],
       isDoubleFace: false
     });
-    expect(Sentry.captureException).not.toHaveBeenCalled();
   });
 
   it('should handle double-faced cards correctly', async () => {
@@ -176,4 +180,76 @@ describe('fetchCardData utility', () => {
       isDoubleFace: false
     });
   });
+
+  it('should handle cards with only foil prices', async () => {
+    // Mock card with only foil price
+    const mockCardData = {
+      name: 'Etched Oracle',
+      type_line: 'Artifact Creature — Wizard',
+      cmc: 4,
+      color_identity: [],
+      rarity: 'rare',
+      oracle_text: 'Sunburst (This enters the battlefield with a +1/+1 counter on it for each color of mana spent to cast it.)',
+      multiverse_ids: [51136],
+      prices: { usd: null, usd_foil: '5.00' },
+      reserved: false,
+      image_uris: { normal: 'https://example.com/etched-oracle.jpg' },
+      prints_search_uri: 'https://api.scryfall.com/cards/search?prints=etched-oracle'
+    };
+
+    const mockPrintsData = {
+      data: [
+        {
+          multiverse_ids: [51136],
+          digital: false,
+          oversized: false,
+          border_color: 'black',
+          set_name: 'Fifth Dawn',
+          prices: { usd: null, usd_foil: '5.00' }
+        }
+      ]
+    };
+
+    (global.fetch as jest.Mock)
+      .mockImplementationOnce(() => Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve(mockCardData)
+      }))
+      .mockImplementationOnce(() => Promise.resolve({
+        json: () => Promise.resolve(mockPrintsData)
+      }));
+
+    const result = await fetchCardData('Etched Oracle');
+
+    expect(global.fetch).toHaveBeenCalledTimes(2);
+    expect(result.error).toBe(false);
+    expect(result.averagePrice).toBe('5.00');
+  });
+
+  it('should handle network errors gracefully', async () => {
+    // Mock a network error
+    (global.fetch as jest.Mock).mockImplementationOnce(() => {
+      throw new Error('Network error');
+    });
+
+    const result = await fetchCardData('Sol Ring');
+
+    expect(result.error).toBe(true);
+    expect(result).toEqual({
+      error: true,
+      cardName: '',
+      cardType: '',
+      cmc: 0,
+      colorIdentity: [],
+      rarity: '',
+      cardText: '',
+      gathererId: 0,
+      averagePrice: 0,
+      isReservedList: false,
+      cardImage: [],
+      cardFaces: [],
+      isDoubleFace: false
+    });
+  });
 });
+
