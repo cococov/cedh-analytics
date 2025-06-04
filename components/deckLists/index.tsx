@@ -83,7 +83,7 @@ export default function DeckLists({
           </span>
         ) : (
           (!!decklists && decklists?.length > 0) ? (
-            decklists.map(({ commanders, decks, colorIdentity }) => (
+            decklists.map(({ commanders, decks, colorIdentity }, indexCommander) => (
               <details key={`${commanders}-details`}>
                 <summary className={styles.commander} key={`${commanders}-summary`}>
                   {getIdentityImages(colorIdentity)}
@@ -91,15 +91,15 @@ export default function DeckLists({
                 </summary>
                 <ul className={styles.cardLists} key={`${commanders}-decklists`}>
                   {
-                    decks.map(({ name, url }) => (
+                    decks.map(({ name, url }, indexDecklist) => (
                       <a
-                        key={`card-list-${url}`}
+                        key={`${indexCommander}-card-list-${indexDecklist}`}
                         rel="author noopener noreferrer"
                         target="_blank"
                         href={url}
                       >
                         <li
-                          key={`li-card-list-${url}`}
+                          key={`${indexCommander}-li-card-list-${indexDecklist}`}
                           className={styles.cardList}
                         >
                           {name}
