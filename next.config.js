@@ -12,7 +12,6 @@ const withPWA = !isDockerBuild ? require('next-pwa')({
 module.exports = withPWA({
   output: 'standalone',
   reactStrictMode: true,
-  swcMinify: true,
   images: {
     minimumCacheTTL: 60 * 60 * 24, // 1 day
     remotePatterns: [
