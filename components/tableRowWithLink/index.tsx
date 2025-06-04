@@ -29,12 +29,12 @@ import { useRouter } from 'next/navigation';
 import AppContext from '@/contexts/appStore';
 
 export default function TableRowWithLink({
-  key,
+  rowId,
   link,
   className,
   children
 }: {
-  key: string,
+  rowId: string,
   link: string,
   className: string,
   children: React.ReactNode,
@@ -48,7 +48,7 @@ export default function TableRowWithLink({
   };
 
   return (
-    <tr key={key} className={className} onClick={handleClickTopRow(link)}>
+    <tr key={rowId} className={className} onClick={handleClickTopRow(link)}>
       {children}
     </tr>
   );
