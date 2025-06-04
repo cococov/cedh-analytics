@@ -83,6 +83,14 @@
   max-height: 40vh;
 }
 
+.contentMedium {
+  max-height: 100%;
+}
+
+.contentLarge {
+  max-height: 100%;
+}
+
 .content::-webkit-scrollbar-track {
   background: var(--scrollbarBG2);
 }
