@@ -65,11 +65,11 @@ describe('Exporters', () => {
   });
 
   describe('CSV Exporter', () => {
-    it('exports data as CSV', () => {
+    it('exports data as CSV with object data', () => {
       Sentry.startSpan(
         {
           op: 'test',
-          name: 'CSV export test',
+          name: 'CSV export test with object data',
         },
         () => {
           const columns = [
@@ -97,6 +97,101 @@ describe('Exporters', () => {
           expect(mockCsvBuilder.exportFile).toHaveBeenCalled();
         }
       );
+    });
+    
+    it('exports data as CSV with array data', () => {
+      const columns = [
+        { title: 'Column 1', field: '0' },
+        { title: 'Column 2', field: '1' }
+      ];
+      
+      const data = [
+        ['Row 1 Col 1', 'Row 1 Col 2'],
+        ['Row 2 Col 1', 'Row 2 Col 2']
+      ];
+      
+      ExportCsv(columns, data, 'array-export');
+      
+      const { CsvBuilder } = require('filefy');
+      const mockCsvBuilder = CsvBuilder.mock.results[0].value;
+      
+      expect(CsvBuilder).toHaveBeenCalledWith('array-export.csv');
+      expect(mockCsvBuilder.setColumns).toHaveBeenCalledWith(['Column 1', 'Column 2']);
+      expect(mockCsvBuilder.addRows).toHaveBeenCalledWith(data);
+    });
+    
+    it('exports CSV with custom delimiter', () => {
+      const columns = [{ title: 'Name', field: 'name' }];
+      const data = [{ name: 'Test' }];
+      
+      ExportCsv(columns, data, 'custom-delimiter', ';');
+      
+      const { CsvBuilder } = require('filefy');
+      const mockCsvBuilder = CsvBuilder.mock.results[0].value;
+      
+      expect(mockCsvBuilder.setDelimeter).toHaveBeenCalledWith(';');
+    });
+    
+    it('handles empty data array', () => {
+      const columns = [{ title: 'Name', field: 'name' }];
+      const data: any[] = [];
+      
+      ExportCsv(columns, data);
+      
+      const { CsvBuilder } = require('filefy');
+      const mockCsvBuilder = CsvBuilder.mock.results[0].value;
+      
+      expect(mockCsvBuilder.addRows).toHaveBeenCalledWith([]);
+    });
+    
+    it('uses default filename when not provided', () => {
+      const columns = [{ title: 'Name', field: 'name' }];
+      const data = [{ name: 'Test' }];
+      
+      ExportCsv(columns, data);
+      
+      const { CsvBuilder } = require('filefy');
+      
+      expect(CsvBuilder).toHaveBeenCalledWith('data.csv');
+    });
+    
+    it('handles export transformers', () => {
+      const columns = [
+        { 
+          title: 'Name', 
+          field: 'name',
+          exportTransformer: (row: any) => `Transformed ${row.name}` 
+        },
+        { title: 'Value', field: 'value' }
+      ];
+      
+      const data = [
+        { name: 'Item 1', value: 100 },
+        { name: 'Item 2', value: 200 }
+      ];
+      
+      ExportCsv(columns, data);
+      
+      const { CsvBuilder } = require('filefy');
+      const mockCsvBuilder = CsvBuilder.mock.results[0].value;
+      
+      expect(mockCsvBuilder.addRows).toHaveBeenCalledWith([
+        ['Transformed Item 1', 100],
+        ['Transformed Item 2', 200]
+      ]);
+    });
+    
+    it('handles errors gracefully', () => {
+      const columns = [{ title: 'Name', field: 'name' }];
+      
+      // Force an error by passing invalid data
+      const invalidData = null as any;
+      
+      ExportCsv(columns, invalidData);
+      
+      expect(consoleErrorSpy).toHaveBeenCalled();
+      const errorMessage = consoleErrorSpy.mock.calls[0][0];
+      expect(errorMessage).toContain('error in ExportCsv');
     });
 
     it('handles export transformation', () => {
@@ -167,7 +262,7 @@ describe('Exporters', () => {
   });
 
   describe('PDF Exporter', () => {
-    it('exports data as PDF', () => {
+    it('exports data as PDF with object data', () => {
       const columns = [
         { title: 'Name', field: 'name' },
         { title: 'Value', field: 'value' }
@@ -197,12 +292,35 @@ describe('Exporters', () => {
       expect(mockJsPdf.save).toHaveBeenCalledWith('test-export.pdf');
     });
 
+    it('exports data as PDF with array data', () => {
+      const columns = [
+        { title: 'Column 1', field: '0' },
+        { title: 'Column 2', field: '1' }
+      ];
+      
+      const data = [
+        ['Row 1 Col 1', 'Row 1 Col 2'],
+        ['Row 2 Col 1', 'Row 2 Col 2']
+      ];
+      
+      ExportPdf(columns, data, 'array-export');
+      
+      const { jsPDF } = require('jspdf');
+      const mockJsPdf = jsPDF.mock.results[0].value;
+      
+      expect(mockJsPdf.autoTable).toHaveBeenCalledWith({
+        startY: 50,
+        head: [['Column 1', 'Column 2']],
+        body: data
+      });
+    });
+
     it('handles export transformation', () => {
       const columns = [
         { 
           title: 'Name', 
           field: 'name',
-          exportTransformer: (row: any) => `Transformed: ${row.name}`
+          exportTransformer: (row: any) => `Transformed ${row.name}` 
         },
         { title: 'Value', field: 'value' }
       ];
@@ -217,54 +335,59 @@ describe('Exporters', () => {
       const { jsPDF } = require('jspdf');
       const mockJsPdf = jsPDF.mock.results[0].value;
       
-      expect(mockJsPdf.autoTable).toHaveBeenCalledWith(expect.objectContaining({
+      expect(mockJsPdf.autoTable).toHaveBeenCalledWith({
+        startY: 50,
+        head: [['Name', 'Value']],
         body: [
-          ['Transformed: Item 1', 100],
-          ['Transformed: Item 2', 200]
+          ['Transformed Item 1', 100],
+          ['Transformed Item 2', 200]
         ]
-      }));
-    });
-
-    it('handles errors gracefully', () => {
-      // Test the error handling directly
-      const errorHandlingFunction = (callback: () => void): boolean => {
-        try {
-          callback();
-          return true; // No error occurred
-        } catch (error) {
-          // Error was caught and handled gracefully
-          return false;
-        }
-      };
-      
-      // This should return false since we're throwing an error
-      const result = errorHandlingFunction(() => {
-        throw new Error('Test error');
       });
-      
-      // Verify the error was handled gracefully
-      expect(result).toBe(false);
     });
-
-    it('handles already formatted data arrays', () => {
-      const columns = [
-        { title: 'Name', field: 'name' },
-        { title: 'Value', field: 'value' }
-      ];
+    
+    it('handles empty data array', () => {
+      const columns = [{ title: 'Name', field: 'name' }];
+      const data: any[] = [];
       
-      const data = [
-        ['Item 1', 100],
-        ['Item 2', 200]
-      ];
-      
-      ExportPdf(columns, data, 'test-export');
+      ExportPdf(columns, data);
       
       const { jsPDF } = require('jspdf');
       const mockJsPdf = jsPDF.mock.results[0].value;
       
-      expect(mockJsPdf.autoTable).toHaveBeenCalledWith(expect.objectContaining({
-        body: data
-      }));
+      expect(mockJsPdf.autoTable).toHaveBeenCalledWith({
+        startY: 50,
+        head: [['Name']],
+        body: []
+      });
+    });
+    
+    it('uses default filename when not provided', () => {
+      const columns = [{ title: 'Name', field: 'name' }];
+      const data = [{ name: 'Test' }];
+      
+      ExportPdf(columns, data);
+      
+      const { jsPDF } = require('jspdf');
+      const mockJsPdf = jsPDF.mock.results[0].value;
+      
+      expect(mockJsPdf.text).toHaveBeenCalledWith('data', 40, 40);
+      expect(mockJsPdf.save).toHaveBeenCalledWith('data.pdf');
+    });
+    
+    it('handles errors gracefully', () => {
+      const columns = [{ title: 'Name', field: 'name' }];
+      
+      // Force an error by making jsPDF throw an error
+      const { jsPDF } = require('jspdf');
+      jsPDF.mockImplementationOnce(() => {
+        throw new Error('Mock PDF error');
+      });
+      
+      ExportPdf(columns, [{ name: 'Test' }]);
+      
+      expect(consoleErrorSpy).toHaveBeenCalled();
+      const errorMessage = consoleErrorSpy.mock.calls[0][0];
+      expect(errorMessage).toContain('exporting pdf');
     });
   });
 
