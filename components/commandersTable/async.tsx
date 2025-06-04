@@ -1,3 +1,5 @@
+"use client";
+
 /**
  *  cEDH Analytics - A website that analyzes and cross-references several
  *  EDH (Magic: The Gathering format) community's resources to give insights
@@ -21,21 +23,15 @@
  *  https://www.cedh-analytics.com/
  */
 
+import { useState, useEffect } from 'react';
+import { CircularProgress } from '@heroui/react';
 /* Own */
 import CommandersTable from './index';
+import { fetchCommandersData } from './actions';
 /* Static */
 import styles from '@/styles/CardsList.module.css';
 
-async function getData(commandersURL: string) {
-  const rawCommanders = await fetch(commandersURL);
-  const commanders = await rawCommanders.json();
-
-  return {
-    commanders,
-  };
-};
-
-export default async function AsyncCommandersTable({
+export default function AsyncCommandersTable({
   title,
   commandersURL,
   noCommanderPage,
@@ -44,7 +40,31 @@ export default async function AsyncCommandersTable({
   commandersURL: string,
   noCommanderPage?: boolean,
 }) {
-  const { commanders } = await getData(commandersURL);
+  const [commanders, setCommanders] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const result = await fetchCommandersData(commandersURL);
+        setCommanders(result.commanders);
+      } catch (error) {
+        console.error('Error loading commanders data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadData();
+  }, [commandersURL]);
+
+  if (loading) {
+    return (
+      <div className={styles.loadingContainer}>
+        <CircularProgress size="lg" color="secondary" aria-label="Loading..." />
+      </div>
+    );
+  }
 
   return (
     <span className={styles.commandersContainer}>
@@ -55,4 +75,4 @@ export default async function AsyncCommandersTable({
       />
     </span>
   );
-};
+}
