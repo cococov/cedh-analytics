@@ -35,7 +35,7 @@
     "framer-motion": "^12.16.0",
     "geist": "^1.4.2",
     "jspdf": "^3.0.1",
-    "jspdf-autotable": "^3.8.4",
+    "jspdf-autotable": "^5.0.2",
     "kysely": "^0.27.6",
     "lucide-react": "^0.513.0",
     "next": "^15.3.3",
