@@ -1,3 +1,5 @@
+"use client";
+
 /**
  *  cEDH Analytics - A website that analyzes and cross-references several
  *  EDH (Magic: The Gathering format) community's resources to give insights
@@ -21,61 +23,16 @@
  *  https://www.cedh-analytics.com/
  */
 
+import { useState, useEffect } from 'react';
+import { CircularProgress } from '@heroui/react';
 /* Own */
 import CardsTableWithProvider from './wrapperWithProvider';
 import CardsTable from './index';
+import { fetchCardData } from './actions';
 /* Static */
 import styles from '@/styles/CardsList.module.css';
 
-async function getData(cardsURL?: string, tagsByCardURL?: string, fromMetagame?: boolean) {
-  if (!cardsURL || !tagsByCardURL) return { cards: [] };
-
-  try {
-    const rawCards = await fetch(cardsURL, { cache: 'no-store' });
-    const cards = await rawCards.json();
-    const rawTagsByCard = await fetch(tagsByCardURL);
-    const tagsByCard = await rawTagsByCard.json();
-
-    const mappedCards = cards.map((card: any) => {
-      const obj = {
-        card_name: card.cardName,
-        occurrences: card.occurrences,
-        type: card.type,
-        color_identity: card.colorIdentity,
-        colors: card.colors,
-        cmc: card.cmc,
-        power: card.power,
-        toughness: card.toughness,
-        last_print: card.lastPrint,
-        multiple_printings: card.multiplePrintings,
-        reserved: card.reserved,
-        is_in_99: card.isIn99,
-        is_legal: card.isLegal,
-        is_commander: card.isCommander,
-        percentage_of_use: card.percentageOfUse,
-        percentage_of_use_by_identity: card.percentageOfUseByIdentity,
-        tags: tagsByCard[card.cardName],
-      };
-
-      if (fromMetagame) {
-        // @ts-ignore
-        obj['avg_win_rate'] = card.avgWinRate;
-        // @ts-ignore
-        obj['avg_draw_rate'] = card.avgDrawRate;
-      }
-
-      return obj;
-    });
-
-    return {
-      cards: mappedCards,
-    };
-  } catch (_err) {
-    return { cards: [] };
-  }
-};
-
-export default async function AsyncCardsTable({
+export default function AsyncCardsTable({
   title,
   table,
   cardsURL,
@@ -94,7 +51,31 @@ export default async function AsyncCardsTable({
   noInfo?: boolean,
   withUrlPArams?: boolean,
 }) {
-  const { cards } = await getData(cardsURL, tagsByCardURL, fromMetagame);
+  const [cards, setCards] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const result = await fetchCardData(cardsURL, tagsByCardURL, fromMetagame);
+        setCards(result.cards);
+      } catch (error) {
+        console.error('Error loading card data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadData();
+  }, [cardsURL, tagsByCardURL, fromMetagame]);
+
+  if (loading) {
+    return (
+      <div className={styles.loadingContainer}>
+        <CircularProgress size="lg" color="secondary" aria-label="Loading..." />
+      </div>
+    );
+  }
 
   return (
     <span className={styles.cardsContainer}>
@@ -124,4 +105,4 @@ export default async function AsyncCardsTable({
       }
     </span>
   );
-};
+}

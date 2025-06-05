@@ -76,12 +76,13 @@ type Params = { cardName: string | string[] | undefined };
 export async function generateMetadata({
   params,
 }: {
-  params: Params,
+  params: Promise<Params>,
 }): Promise<Metadata> {
-  const cardName = replace(/%2C/, ',', decodeURI(String(params.cardName)));
-  const description = `${cardName} info and usage in cEDH decks from the cEDH database. | ${descriptionMetadata}`;
-  const result = await fetchCards(cardName);
-  const capitalizedCardName = cardName.split(' ').map((w, i) => {
+  const { cardName } = await params;
+  const decodedCardName = replace(/%2C/, ',', decodeURI(String(cardName)));
+  const description = `${decodedCardName} info and usage in cEDH decks from the cEDH database. | ${descriptionMetadata}`;
+  const result = await fetchCards(decodedCardName);
+  const capitalizedCardName = decodedCardName.split(' ').map((w, i) => {
     if (i === 0) return w.charAt(0).toUpperCase() + w.slice(1);
     if (w === 'of' || w === 'the' || w === 'from') return w;
     return w.charAt(0).toUpperCase() + w.slice(1);
@@ -157,9 +158,10 @@ async function fetchData({ cardName }: Params): Promise<ResponseData> {
 export default async function Card({
   params
 }: {
-  params: { cardName: string }
+  params: Promise<Params>
 }) {
-  const response = await fetchData({ cardName: replace(/%2C/, ',', decodeURI(String(params.cardName))) });
+  const { cardName } = await params;
+  const response = await fetchData({ cardName: replace(/%2C/, ',', decodeURI(String(cardName))) });
   if (response.notFound) notFound();
 
   const data = response as PageData;

@@ -1,8 +1,10 @@
+'use server';
+
 /**
  *  cEDH Analytics - A website that analyzes and cross-references several
  *  EDH (Magic: The Gathering format) community's resources to give insights
  *  on the competitive metagame.
- *  Copyright (C) 2023-present CoCoCov
+ *  Copyright (C) 2025-present CoCoCov
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,35 +23,17 @@
  *  https://www.cedh-analytics.com/
  */
 
-"use client";
+// Server action to fetch commanders data
+export async function fetchCommandersData(commandersURL: string) {
+  try {
+    const rawCommanders = await fetch(commandersURL);
+    const commanders = await rawCommanders.json();
 
-import { useContext } from 'react';
-import { useRouter } from 'next/navigation';
-/* Own */
-import AppContext from '@/contexts/appStore';
-
-export default function TableRowWithLink({
-  rowId,
-  link,
-  className,
-  children
-}: {
-  rowId: string,
-  link: string,
-  className: string,
-  children: React.ReactNode,
-}) {
-  const router = useRouter();
-  const { toggleLoading } = useContext(AppContext);
-
-  const handleClickTopRow = (link: string) => (_event: React.MouseEvent<HTMLTableRowElement, MouseEvent> | undefined) => {
-    toggleLoading(true);
-    router.push(link);
-  };
-
-  return (
-    <tr key={rowId} className={className} onClick={handleClickTopRow(link)}>
-      {children}
-    </tr>
-  );
-};
+    return {
+      commanders,
+    };
+  } catch (err) {
+    console.error('Error fetching commanders data:', err);
+    return { commanders: [] };
+  }
+}

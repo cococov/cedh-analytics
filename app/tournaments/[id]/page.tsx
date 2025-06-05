@@ -45,8 +45,9 @@ type Params = { id: string | string[] | undefined };
 export async function generateMetadata({
   params,
 }: {
-  params: Params,
+  params: Promise<Params>,
 }): Promise<Metadata> {
+  const { id } = await params;
   const tournamentName = pipe(
     String,
     decodeURI,
@@ -63,7 +64,7 @@ export async function generateMetadata({
     replace(/%28/g, '('),
     replace(/%29/g, ')'),
     replace(/%26/g, '&'),
-  )(params.id);
+  )(id);
 
   return {
     title: tournamentName,
@@ -110,11 +111,12 @@ async function fetchData({ id }: Params): Promise<ResponseDataWithError> {
   }
 };
 
-export default async function Metagame({
-  params,
+export default async function Tournament({
+  params
 }: {
-  params: Params,
+  params: Promise<Params>,
 }) {
+  const { id } = await params;
   const tournamentName = pipe(
     String,
     decodeURI,
@@ -131,7 +133,7 @@ export default async function Metagame({
     replace(/%28/g, '('),
     replace(/%29/g, ')'),
     replace(/%26/g, '&'),
-  )(params.id);
+  )(id);
   const response = await fetchData({ id: tournamentName });
 
   if (response.notFound) notFound();
@@ -143,7 +145,7 @@ export default async function Metagame({
       <MetagameResumePage
         title={tournamentName}
         resume={data.resume}
-        commandersURL={`${server}/data/metagame/tournaments/${decodeURI(String(params.id))}/condensed_commanders_data.json`}
+        commandersURL={`${server}/data/metagame/tournaments/${decodeURI(String(id))}/condensed_commanders_data.json`}
         lastSetTop10UrlBase="/metagame-cards"
         noCommanderPage
         fromTournament
@@ -152,7 +154,7 @@ export default async function Metagame({
         <Suspense fallback={<CircularProgress size="lg" color="secondary" aria-label="Loading..." />}>
           <AsyncCardsTable
             title="Cards"
-            cardsURL={`${server}/data/metagame/tournaments/${params.id}/competitiveCards.json`}
+            cardsURL={`${server}/data/metagame/tournaments/${id}/competitiveCards.json`}
             tagsByCardURL={`${server}/data/cards/tags.json`}
             fromMetagame
           />

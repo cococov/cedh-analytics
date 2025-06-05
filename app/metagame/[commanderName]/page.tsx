@@ -39,12 +39,13 @@ type Params = { commanderName: string | string[] | undefined };
 export async function generateMetadata({
   params,
 }: {
-  params: Params,
+  params: Promise<Params>,
 }): Promise<Metadata> {
+  const { commanderName } = await params;
   const decodedCommanderName = pipe(
     replace(/%2C/g, ','),
     replace(/%2F/g, '/'),
-  )(decodeURI(String(params.commanderName)));
+  )(decodeURI(String(commanderName)));
 
   const commanders = split(' / ', decodedCommanderName);
   const commanderNumber = commanders.length;
@@ -136,9 +137,10 @@ async function fetchData({ commanderName }: Params): Promise<ResponseData> {
 export default async function MetagameCommander({
   params
 }: {
-  params: { commanderName: string }
+  params: Promise<{ commanderName: string }>
 }) {
-  const response = await fetchData({ commanderName: decodeURI(String(params.commanderName)) });
+  const { commanderName } = await params;
+  const response = await fetchData({ commanderName: decodeURI(String(commanderName)) });
 
   if (response.notFound) notFound();
 

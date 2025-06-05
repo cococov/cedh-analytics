@@ -61,7 +61,35 @@ jest.mock('next/navigation', () => ({
 // Set up global fetch mock
 global.fetch = jest.fn();
 
+// Store original console methods
+const originalConsoleError = console.error;
+
+// List of error messages to ignore (won't fail tests)
+const ignoredErrors = [
+  // Add specific error messages to ignore here
+];
+
+// Override console.error to fail tests on React-specific warnings
+console.error = (...args) => {
+  // Still show the error in the console
+  originalConsoleError(...args);
+
+  // Check if this is an error that should be ignored
+  const message = args.join(' ');
+  const shouldIgnore = ignoredErrors.some(ignoredMsg => message.includes(ignoredMsg));
+
+  if (!shouldIgnore) {
+    // Fail the test for non-ignored errors
+    throw new Error(`Test failed due to console error: ${message}`);
+  }
+};
+
 // Reset all mocks after each test
 afterEach(() => {
   jest.clearAllMocks();
+});
+
+// Restore original console methods after all tests
+afterAll(() => {
+  console.error = originalConsoleError;
 });
