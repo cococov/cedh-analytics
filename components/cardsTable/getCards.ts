@@ -27,7 +27,7 @@ import * as Sentry from "@sentry/nextjs";
 
 /* Vendor */
 import { Pool } from 'pg';
-import { sql, Kysely, PostgresDialect } from 'kysely';
+import { Kysely, PostgresDialect } from 'kysely';
 import { isNotNil, isEmpty, map, includes } from 'ramda';
 
 export interface CardsTable {
@@ -99,7 +99,7 @@ function isNumeric(str: string) {
 };
 
 export default async function getCards(
-  table: 'metagame_cards' | 'db_cards',
+  t: 'metagame_cards' | 'db_cards',
   page: number,
   pageSize: number,
   orderBy?: Columns,
@@ -139,31 +139,25 @@ export default async function getCards(
         dialect,
       });
 
+      const { table, ref } = db.dynamic;
+
       let cardsQuery = db
-        .selectFrom(table)
-        .innerJoin('cards', `${table}.card_name`, 'cards.card_name')
-        .innerJoin('tags_by_card', `${table}.card_name`, 'tags_by_card.card_name')
-        .orderBy(orderBy || 'occurrences', orderDirection || 'desc')
+        .selectFrom(table(t).as('t'))
+        .innerJoin('cards', 't.card_name', 'cards.card_name')
+        .innerJoin('tags_by_card', 't.card_name', 'tags_by_card.card_name')
+        .orderBy(ref(orderBy || 'occurrences'), orderDirection || 'desc')
         .limit(pageSize)
         .offset(page * pageSize);
 
-      if (table === 'metagame_cards') {
-        cardsQuery = cardsQuery.select([`${table}.card_name`, 'color_identity', 'colors', 'cmc', 'reserved', 'multiple_printings', 'last_print', 'type', 'power', 'toughness', 'is_commander', 'is_in_99', 'is_legal', 'percentage_of_use', 'percentage_of_use_by_identity', 'occurrences', 'avg_win_rate', 'avg_draw_rate', 'tags_by_card.tags']);
-      }
-
-      if (table === 'db_cards') {
-        cardsQuery = cardsQuery.select([`${table}.card_name`, 'color_identity', 'colors', 'cmc', 'reserved', 'multiple_printings', 'last_print', 'type', 'power', 'toughness', 'is_commander', 'is_in_99', sql`coalesce(is_legal, true)`.as('is_legal'), 'percentage_of_use', 'percentage_of_use_by_identity', 'occurrences', 'tags_by_card.tags']);
-      }
-
       let totalCountQuery = db
-        .selectFrom(table)
-        .innerJoin('cards', `${table}.card_name`, 'cards.card_name')
-        .innerJoin('tags_by_card', `${table}.card_name`, 'tags_by_card.card_name')
+        .selectFrom(table(t).as('t'))
+        .innerJoin('cards', 't.card_name', 'cards.card_name')
+        .innerJoin('tags_by_card', 't.card_name', 'tags_by_card.card_name')
         .select((eb) => eb.fn.countAll().as('total'));
 
       if (Boolean(search)) {
-        cardsQuery = cardsQuery.where(`${table}.card_name`, 'ilike', `%${search}%`)
-        totalCountQuery = totalCountQuery.where(`${table}.card_name`, 'ilike', `%${search}%`)
+        cardsQuery = cardsQuery.where('t.card_name', 'ilike', `%${search}%`)
+        totalCountQuery = totalCountQuery.where('t.card_name', 'ilike', `%${search}%`)
       }
 
       fixedFilters?.forEach((filter) => {
@@ -179,18 +173,18 @@ export default async function getCards(
             (filter.value as string[]).map(value => {
               if (filter.column === 'is_legal') { // metagame_cards is_legal column is DEPRECATED, use ban_list table instead
                 if (value === 'true') {
-                  return eb(`${table}.card_name`, 'not in', eb =>
+                  return eb('t.card_name', 'not in', eb =>
                     eb.selectFrom('ban_list').select('card_name')
                   );
                 } else {
-                  return eb(`${table}.card_name`, 'in', eb =>
+                  return eb('t.card_name', 'in', eb =>
                     eb.selectFrom('ban_list').select('card_name')
                   );
                 }
               } else if (value === 'true' || value === 'false') { // Selects with booleans
-                return eb(filter.column, '=', value);
+                return eb(ref<Columns>(filter.column), '=', value);
               } else {
-                return eb(filter.column, 'like', `${value}`); // Selects with strings
+                return eb(ref<Columns>(filter.column), 'like', `${value}`); // Selects with strings
               }
             })
           ))
@@ -198,26 +192,28 @@ export default async function getCards(
             (filter.value as string[]).map(value => {
               if (filter.column === 'is_legal') { // metagame_cards is_legal column is DEPRECATED, use ban_list table instead
                 if (value === 'true') {
-                  return eb(`${table}.card_name`, 'not in', eb =>
+                  return eb('t.card_name', 'not in', eb =>
                     eb.selectFrom('ban_list').select('card_name')
                   );
                 } else {
-                  return eb(`${table}.card_name`, 'in', eb =>
+                  return eb('t.card_name', 'in', eb =>
                     eb.selectFrom('ban_list').select('card_name')
                   );
                 }
               } else if (value === 'true' || value === 'false') { // Selects with booleans
-                return eb(filter.column, '=', value);
+                return eb(ref<Columns>(filter.column), '=', value);
               } else {
-                return eb(filter.column, 'like', `${value}`); // Selects with strings
+                return eb(ref<Columns>(filter.column), 'like', `${value}`); // Selects with strings
               }
             })
           ))
         } else {
-          cardsQuery = cardsQuery.where(filter.column, filter.operator || '=', filter.value);
-          totalCountQuery = totalCountQuery.where(filter.column, filter.operator || '=', filter.value);
+          cardsQuery = cardsQuery.where(ref<Columns>(filter.column), filter.operator || '=', filter.value);
+          totalCountQuery = totalCountQuery.where(ref<Columns>(filter.column), filter.operator || '=', filter.value);
         }
       });
+
+      cardsQuery = cardsQuery.selectAll();
 
       const cards = await cardsQuery.execute();
 

@@ -57,7 +57,7 @@ interface Database {
 
 export default async function getDecklistsForCardByContext(
   selectedCard: string,
-  table: 'metagame_cards' | 'db_cards',
+  t: 'metagame_cards' | 'db_cards',
 ) {
   const dialect = new PostgresDialect({
     pool: new Pool({
@@ -74,10 +74,12 @@ export default async function getDecklistsForCardByContext(
     dialect,
   });
 
+  const { table } = db.dynamic;
+
   let cardData = (await db
-    .selectFrom(table)
-    .where('card_name', '=', selectedCard)
-    .select(['occurrences', 'decklists', 'percentage_of_use'])
+    .selectFrom(table(t).as('t'))
+    .where('t.card_name', '=', selectedCard)
+    .select(['t.occurrences', 't.decklists', 't.percentage_of_use'])
     .execute())[0]
 
   return { occurrences: cardData.occurrences, percentage: cardData.percentage_of_use, decklists: cardData.decklists };
