@@ -27,7 +27,7 @@ import * as Sentry from "@sentry/nextjs";
 
 /* Vendor */
 import { Pool } from 'pg';
-import { Kysely, PostgresDialect } from 'kysely';
+import { Kysely, PostgresDialect, sql } from 'kysely';
 import { isNotNil, isEmpty, map, includes } from 'ramda';
 
 export interface CardsTable {
@@ -71,6 +71,8 @@ export interface DBCardsTable {
   is_legal: boolean;
   percentage_of_use: number;
   percentage_of_use_by_identity: number;
+  avg_win_rate: number; // Not used, just to avoid error for use dynamic tables
+  avg_draw_rate: number; // Not used, just to avoid error for use dynamic tables
 };
 
 export interface TagsByCommander {
@@ -213,7 +215,13 @@ export default async function getCards(
         }
       });
 
-      cardsQuery = cardsQuery.selectAll();
+      if (t === 'metagame_cards') {
+        cardsQuery = cardsQuery.select(['t.card_name', 'color_identity', 'colors', 'cmc', 'reserved', 'multiple_printings', 'last_print', 'type', 'power', 'toughness', 'is_commander', 'is_in_99', sql`coalesce(is_legal, true)`.as('is_legal'), 'percentage_of_use', 'percentage_of_use_by_identity', 'occurrences', 'avg_win_rate', 'avg_draw_rate', 'tags_by_card.tags']);
+      }
+
+      if (t === 'db_cards') {
+        cardsQuery = cardsQuery.select(['t.card_name', 'color_identity', 'colors', 'cmc', 'reserved', 'multiple_printings', 'last_print', 'type', 'power', 'toughness', 'is_commander', 'is_in_99', sql`coalesce(is_legal, true)`.as('is_legal'), 'percentage_of_use', 'percentage_of_use_by_identity', 'occurrences', 'tags_by_card.tags']);
+      }
 
       const cards = await cardsQuery.execute();
 
