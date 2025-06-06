@@ -21,7 +21,7 @@ Original Repo: https://github.com/cococov/cedh-analytics
 https://www.cedh-analytics.com/
 """
 
-from scripts.utils.number import suffix
+from utils.number import suffix
 
 def custom_strftime(format, t):
     return t.strftime(format).replace('{S}', str(t.day) + suffix(t.day))

@@ -30,7 +30,7 @@ import utils.git as git
 import utils.logs as logs
 import utils.misc as misc
 import data.moxfield as moxfield
-import scripts.data.edhtop16 as edhtop16
+import data.edhtop16 as edhtop16
 import data.mtg_json as mtg_json
 import data.pre_processing as pre_processing
 import data.processing as processing

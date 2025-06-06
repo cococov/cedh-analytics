@@ -25,7 +25,7 @@ import os
 import time
 import subprocess
 from datetime import datetime
-from scripts.utils import logs, date
+from utils import logs, date
 from subprocess import DEVNULL, STDOUT
 
 ENV = os.environ.copy()

@@ -27,7 +27,7 @@ import os
 import json
 import psycopg2
 from contextlib import contextmanager
-from scripts.utils import logs
+from utils import logs
 
 DB_PARAMS = {
     'dbname': os.getenv('DB_NAME'),
