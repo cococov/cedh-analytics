@@ -19,7 +19,7 @@
 # Original Repo: https://github.com/cococov/cedh-analytics
 # https://www.cedh-analytics.com/
 
-FROM node:24.1.0 AS base
+FROM node:25.2.1 AS base
 
 FROM base AS dependencies
 WORKDIR /app
