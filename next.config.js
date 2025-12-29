@@ -1,4 +1,7 @@
+require('./polyfills/node-util-extend');
+
 /** @type {import('next').NextConfig} */
+const path = require('node:path');
 const runtimeCaching = require('next-pwa/cache');
 const isDockerBuild = process.env.DOCKER_BUILD === 'true';
 const withPWA = !isDockerBuild ? require('next-pwa')({
@@ -11,6 +14,7 @@ const withPWA = !isDockerBuild ? require('next-pwa')({
 
 module.exports = withPWA({
   output: 'standalone',
+  outputFileTracingRoot: path.resolve(__dirname),
   reactStrictMode: true,
   images: {
     minimumCacheTTL: 60 * 60 * 24, // 1 day
