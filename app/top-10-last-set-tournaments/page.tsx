@@ -29,7 +29,7 @@ import VerticalAdUnit from '@/components/googleAds/verticalAdUnit';
 import ResponsiveHorizontalAdUnitMobile from '@/components/googleAds/responsiveHorizontalAdUnitMobile';
 /* Static */
 import styles from '@/styles/Top10LastSet.module.css';
-import { server } from '@config';
+import metagameResume from '@/public/data/metagame/metagame_resume.json';
 
 type Data = {
   lastSet: string,
@@ -63,8 +63,7 @@ export const metadata: Metadata = {
 };
 
 const fetchData = async () => {
-  const rawResult = await fetch(`${server}/data/metagame/metagame_resume.json`);
-  const result: Data = await rawResult.json();
+  const result = metagameResume as Data;
   return { last_set: result['lastSet'], last_set_top_10: result['lastSetTop10'] };
 };
 
