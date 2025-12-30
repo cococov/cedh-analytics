@@ -29,7 +29,7 @@ import VerticalAdUnit from '@/components/googleAds/verticalAdUnit';
 import ResponsiveHorizontalAdUnitMobile from '@/components/googleAds/responsiveHorizontalAdUnitMobile';
 /* Static */
 import styles from '@/styles/Top10LastSet.module.css';
-import { server } from '@config';
+import homeOverview from '@/public/data/home_overview.json';
 
 type Data = {
   last_set: string,
@@ -63,8 +63,7 @@ export const metadata: Metadata = {
 };
 
 const fetchData = async () => {
-  const rawResult = await fetch(`${server}/data/home_overview.json`);
-  const result: Data = await rawResult.json();
+  const result = homeOverview as Data;
   return { last_set: result['last_set'], last_set_top_10: result['last_set_top_10'] };
 };
 
